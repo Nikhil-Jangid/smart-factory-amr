@@ -1,0 +1,2 @@
+# Evidence files are raw captured output and must not be edited; exempt them from whitespace checks.
+docs/evidence/** -whitespace

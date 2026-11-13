@@ -1,0 +1,9 @@
+# TEST-M1-06 gz model --list, 2026-10-21 16:34:30 IST (GZ_PARTITION=amr_m1_test)
+$ timeout 10 gz model --list
+
+Requesting state for world [empty]...
+
+Available models:
+    - ground_plane
+    - amr
+# exit 0

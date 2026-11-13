@@ -1,0 +1,29 @@
+LAUNCH START 2026-10-21 16:04:25 IST
+[INFO] [launch]: All log files can be found below <home>/.ros/log/2026-10-21-16-04-25-751147-<host>-45087
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [robot_state_publisher-1]: process started with pid [45130]
+[INFO] [joint_state_publisher_gui-2]: process started with pid [45131]
+[INFO] [rviz2-3]: process started with pid [45132]
+[robot_state_publisher-1] [INFO] [1792578865.948185058] [robot_state_publisher]: Robot initialized
+[rviz2-3] [INFO] [1792578866.143628132] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-3] [INFO] [1792578866.143765149] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-3] [INFO] [1792578866.163416639] [rviz2]: Stereo is NOT SUPPORTED
+[joint_state_publisher_gui-2] QSocketNotifier: Can only be used with threads started with QThread
+[joint_state_publisher_gui-2] [INFO] [1792578866.362269780] [joint_state_publisher]: Waiting for robot_description to be published on the robot_description topic...
+[joint_state_publisher_gui-2] [INFO] [1792578866.373831548] [joint_state_publisher]: Centering
+[joint_state_publisher_gui-2] [INFO] [1792578866.498418612] [joint_state_publisher]: Got description, configuring robot
+[joint_state_publisher_gui-2] [INFO] [1792578866.508525202] [joint_state_publisher]: Centering
+[joint_state_publisher_gui-2] [INFO] [1792579299.697529910] [joint_state_publisher]: Centering
+[joint_state_publisher_gui-2] [INFO] [1792579318.628167229] [joint_state_publisher]: Centering
+[joint_state_publisher_gui-2] [INFO] [1792579358.105166625] [joint_state_publisher]: Centering
+[joint_state_publisher_gui-2] [INFO] [1792579571.513135037] [joint_state_publisher]: Centering
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [rviz2-3]: sending signal 'SIGINT' to process[rviz2-3]
+[INFO] [joint_state_publisher_gui-2]: sending signal 'SIGINT' to process[joint_state_publisher_gui-2]
+[INFO] [robot_state_publisher-1]: sending signal 'SIGINT' to process[robot_state_publisher-1]
+[rviz2-3] [INFO] [1792579645.576533130] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-1] [INFO] [1792579645.581374195] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[ERROR] [joint_state_publisher_gui-2]: process has died [pid 45131, exit code -2, cmd '/opt/ros/jazzy/lib/joint_state_publisher_gui/joint_state_publisher_gui --ros-args'].
+[INFO] [robot_state_publisher-1]: process has finished cleanly [pid 45130]
+[INFO] [rviz2-3]: process has finished cleanly [pid 45132]
+LAUNCH STOPPED 2026-10-21 16:17:41 IST

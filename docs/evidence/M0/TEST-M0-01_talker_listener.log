@@ -1,0 +1,17 @@
+2026-10-19T04:35:21+05:30
+[INFO] [1792364724.386803495] [talker]: Publishing: 'Hello World: 1'
+[INFO] [1792364725.386808742] [talker]: Publishing: 'Hello World: 2'
+[INFO] [1792364726.386810815] [talker]: Publishing: 'Hello World: 3'
+[INFO] [1792364727.386912030] [talker]: Publishing: 'Hello World: 4'
+[INFO] [1792364728.386794402] [talker]: Publishing: 'Hello World: 5'
+[INFO] [1792364729.386892225] [talker]: Publishing: 'Hello World: 6'
+[INFO] [1792364730.386913717] [talker]: Publishing: 'Hello World: 7'
+[INFO] [1792364731.246428065] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [1792364724.387209640] [listener]: I heard: [Hello World: 1]
+[INFO] [1792364725.387032711] [listener]: I heard: [Hello World: 2]
+[INFO] [1792364726.387027138] [listener]: I heard: [Hello World: 3]
+[INFO] [1792364727.387284840] [listener]: I heard: [Hello World: 4]
+[INFO] [1792364728.387020255] [listener]: I heard: [Hello World: 5]
+[INFO] [1792364729.387226872] [listener]: I heard: [Hello World: 6]
+[INFO] [1792364730.387289500] [listener]: I heard: [Hello World: 7]
+[INFO] [1792364733.245938119] [rclcpp]: signal_handler(SIGINT/SIGTERM)

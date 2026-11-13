@@ -1,0 +1,4 @@
+src/amr_description/urdf/amr_properties.xacro: 0 <mesh> elements []
+src/amr_description/urdf/amr.urdf.xacro: 0 <mesh> elements []
+src/amr_description/urdf/inertial_macros.xacro: 0 <mesh> elements []
+/tmp/amr.urdf: 0 <mesh> elements []

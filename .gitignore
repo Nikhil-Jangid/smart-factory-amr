@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ROS 2 / colcon build artifacts
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+amr_ws/build/
+amr_ws/install/
+amr_ws/log/
+
+# ROS 2 bag recordings (bulky; see docs/evidence/README.md)
+rosbag2_*/
+*.mcap
+*.db3
+
+# IDE
+.vscode/
+.idea/
+
+# OS / temporary files
+*.swp
+*.tmp
+
+# Gallery captures awaiting user review: committed only after approval (docs/gallery/README.md)
+docs/gallery/_pending/

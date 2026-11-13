@@ -1,0 +1,143 @@
+# TEST-M1-04 tf2_echo, START 2026-10-21 16:04:44 IST
+# ROS_DOMAIN_ID=47; display.launch.py running; wheel sliders at their initial (centred, 0) position
+
+$ timeout 4 ros2 run tf2_ros tf2_echo base_footprint left_wheel_link
+[INFO] [1792578884.642866804] [tf2_echo]: Waiting for transform base_footprint ->  left_wheel_link: Invalid frame ID "base_footprint" passed to canTransform argument target_frame - frame does not exist
+At time 1792578885.569097082
+- Translation: [0.000, 0.200, 0.075]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000  0.000
+  0.000  1.000  0.000  0.200
+  0.000  0.000  1.000  0.075
+  0.000  0.000  0.000  1.000
+At time 1792578886.569102715
+- Translation: [0.000, 0.200, 0.075]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000  0.000
+  0.000  1.000  0.000  0.200
+  0.000  0.000  1.000  0.075
+  0.000  0.000  0.000  1.000
+At time 1792578887.569111685
+- Translation: [0.000, 0.200, 0.075]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000  0.000
+  0.000  1.000  0.000  0.200
+  0.000  0.000  1.000  0.075
+  0.000  0.000  0.000  1.000
+[INFO] [1792578888.481502354] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+# exit 124 (124 = stopped by timeout, expected: tf2_echo runs until interrupted)
+
+$ timeout 4 ros2 run tf2_ros tf2_echo base_footprint right_wheel_link
+[INFO] [1792578888.688579677] [tf2_echo]: Waiting for transform base_footprint ->  right_wheel_link: Invalid frame ID "base_footprint" passed to canTransform argument target_frame - frame does not exist
+At time 1792578889.669129695
+- Translation: [0.000, -0.200, 0.075]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000  0.000
+  0.000  1.000  0.000 -0.200
+  0.000  0.000  1.000  0.075
+  0.000  0.000  0.000  1.000
+At time 1792578890.669229774
+- Translation: [0.000, -0.200, 0.075]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000  0.000
+  0.000  1.000  0.000 -0.200
+  0.000  0.000  1.000  0.075
+  0.000  0.000  0.000  1.000
+At time 1792578891.669172727
+- Translation: [0.000, -0.200, 0.075]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000  0.000
+  0.000  1.000  0.000 -0.200
+  0.000  0.000  1.000  0.075
+  0.000  0.000  0.000  1.000
+[INFO] [1792578892.484322861] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+# exit 124 (124 = stopped by timeout, expected: tf2_echo runs until interrupted)
+
+$ timeout 4 ros2 run tf2_ros tf2_echo base_footprint caster_link
+[INFO] [1792578892.650297170] [tf2_echo]: Waiting for transform base_footprint ->  caster_link: Invalid frame ID "base_footprint" passed to canTransform argument target_frame - frame does not exist
+At time 0.0
+- Translation: [-0.360, 0.000, 0.025]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000 -0.360
+  0.000  1.000  0.000  0.000
+  0.000  0.000  1.000  0.025
+  0.000  0.000  0.000  1.000
+At time 0.0
+- Translation: [-0.360, 0.000, 0.025]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000 -0.360
+  0.000  1.000  0.000  0.000
+  0.000  0.000  1.000  0.025
+  0.000  0.000  0.000  1.000
+At time 0.0
+- Translation: [-0.360, 0.000, 0.025]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000 -0.360
+  0.000  1.000  0.000  0.000
+  0.000  0.000  1.000  0.025
+  0.000  0.000  0.000  1.000
+[INFO] [1792578896.487388758] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+# exit 124 (124 = stopped by timeout, expected: tf2_echo runs until interrupted)
+
+$ timeout 4 ros2 run tf2_ros tf2_echo base_footprint lidar_mount_link
+[INFO] [1792578896.666274377] [tf2_echo]: Waiting for transform base_footprint ->  lidar_mount_link: Invalid frame ID "base_footprint" passed to canTransform argument target_frame - frame does not exist
+At time 0.0
+- Translation: [0.070, 0.000, 0.200]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000  0.070
+  0.000  1.000  0.000  0.000
+  0.000  0.000  1.000  0.200
+  0.000  0.000  0.000  1.000
+At time 0.0
+- Translation: [0.070, 0.000, 0.200]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000  0.070
+  0.000  1.000  0.000  0.000
+  0.000  0.000  1.000  0.200
+  0.000  0.000  0.000  1.000
+At time 0.0
+- Translation: [0.070, 0.000, 0.200]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+- Rotation: in RPY (degree) [0.000, -0.000, 0.000]
+- Matrix:
+  1.000  0.000  0.000  0.070
+  0.000  1.000  0.000  0.000
+  0.000  0.000  1.000  0.200
+  0.000  0.000  0.000  1.000
+[INFO] [1792578900.492670613] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+# exit 124 (124 = stopped by timeout, expected: tf2_echo runs until interrupted)
+# END 2026-10-21 16:05:00 IST

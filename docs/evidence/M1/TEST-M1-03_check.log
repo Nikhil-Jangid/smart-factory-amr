@@ -1,0 +1,55 @@
+== (a) URDF level: /tmp/amr.urdf
+PASS  6 links with the designed names (found 6)
+PASS  5 joints with the designed names (found 5)
+PASS  joint base_footprint_joint: fixed, base_footprint -> base_link, xyz [0, 0, 0.075], axis None  [xyz [0.0, 0.0, 0.075] rpy [0.0, 0.0, 0.0]]
+PASS  joint left_wheel_joint: continuous, base_link -> left_wheel_link, xyz [0, 0.2, 0], axis [0, 1, 0]  [xyz [0.0, 0.2, 0.0] rpy [0.0, 0.0, 0.0]]
+PASS  joint right_wheel_joint: continuous, base_link -> right_wheel_link, xyz [0, -0.2, 0], axis [0, 1, 0]  [xyz [0.0, -0.2, 0.0] rpy [0.0, 0.0, 0.0]]
+PASS  joint caster_joint: fixed, base_link -> caster_link, xyz [-0.36, 0, -0.05], axis None  [xyz [-0.36, 0.0, -0.049999999999999996] rpy [0.0, 0.0, 0.0]]
+PASS  joint lidar_mount_joint: fixed, base_link -> lidar_mount_link, xyz [0.07, 0, 0.125], axis None  [xyz [0.07, 0.0, 0.125] rpy [0.0, 0.0, 0.0]]
+PASS  base_footprint is massless (root)
+PASS  base_link: mass 8.0 kg, inertial origin [-0.1, 0, 0.035]  [mass 8.0, xyz [-0.1, 0.0, 0.035]]
+PASS  base_link: (Ixx, Iyy, Izz) = (0.09127, 0.1446, 0.2167) to 4 s.f., off-diagonal 0  [0.0912667, 0.1446, 0.216667]
+PASS  base_link: moments > 0 and triangle inequality
+PASS  left_wheel_link: mass 0.5 kg, inertial origin [0, 0, 0]  [mass 0.5, xyz [0.0, 0.0, 0.0]]
+PASS  left_wheel_link: (Ixx, Iyy, Izz) = (0.0007542, 0.001406, 0.0007542) to 4 s.f., off-diagonal 0  [0.000754167, 0.00140625, 0.000754167]
+PASS  left_wheel_link: moments > 0 and triangle inequality
+PASS  right_wheel_link: mass 0.5 kg, inertial origin [0, 0, 0]  [mass 0.5, xyz [0.0, 0.0, 0.0]]
+PASS  right_wheel_link: (Ixx, Iyy, Izz) = (0.0007542, 0.001406, 0.0007542) to 4 s.f., off-diagonal 0  [0.000754167, 0.00140625, 0.000754167]
+PASS  right_wheel_link: moments > 0 and triangle inequality
+PASS  caster_link: mass 0.2 kg, inertial origin [0, 0, 0]  [mass 0.2, xyz [0.0, 0.0, 0.0]]
+PASS  caster_link: (Ixx, Iyy, Izz) = (5e-05, 5e-05, 5e-05) to 4 s.f., off-diagonal 0  [5e-05, 5e-05, 5e-05]
+PASS  caster_link: moments > 0 and triangle inequality
+PASS  lidar_mount_link: mass 0.2 kg, inertial origin [0, 0, -0.015]  [mass 0.2, xyz [0.0, 0.0, -0.015]]
+PASS  lidar_mount_link: (Ixx, Iyy, Izz) = (0.0001217, 0.0001217, 0.0002133) to 4 s.f., off-diagonal 0  [0.000121667, 0.000121667, 0.000213333]
+PASS  lidar_mount_link: moments > 0 and triangle inequality
+PASS  total mass 9.4 kg (CALC-M1-06)  [9.4 kg]
+PASS  base_link visual: box {'size': [0.45, 0.35, 0.12]} at xyz [-0.1, 0, 0.035] rpy [0, 0, 0]
+PASS  base_link collision: box {'size': [0.45, 0.35, 0.12]} at xyz [-0.1, 0, 0.035] rpy [0, 0, 0]
+PASS  left_wheel_link visual: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  left_wheel_link collision: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  right_wheel_link visual: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  right_wheel_link collision: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  caster_link visual: sphere {'radius': [0.025]} at xyz [0, 0, 0] rpy [0, 0, 0]
+PASS  caster_link collision: sphere {'radius': [0.025]} at xyz [0, 0, 0] rpy [0, 0, 0]
+PASS  lidar_mount_link visual: box {'size': [0.08, 0.08, 0.03]} at xyz [0, 0, -0.015] rpy [0, 0, 0]
+PASS  lidar_mount_link collision: box {'size': [0.08, 0.08, 0.03]} at xyz [0, 0, -0.015] rpy [0, 0, 0]
+PASS  left_wheel_joint: wheel bottom at z = 0 above ground  [0 m]
+PASS  right_wheel_joint: wheel bottom at z = 0 above ground  [0 m]
+PASS  caster bottom at z = 0 above ground  [0 m]
+FAIL  no mesh references (REQ-M1-10)
+FAIL  no Gazebo sensor or plugin elements (REQ-M1-09)
+== (b) SDF level after fixed-joint lumping: /tmp/amr.sdf
+PASS  3 links: base_footprint (lumped) + 2 wheels (found ['base_footprint', 'left_wheel_link', 'right_wheel_link'])
+PASS  lumped base_footprint mass 8.4 kg (CALC-M1-15)  [8.4 kg]
+PASS  lumped CoM (-0.1021, 0, +0.1098) m in base_footprint, 4 s.f.; no rotation  [pose [-0.1021428571428572, 0.0, 0.1097619047619048, 0.0, 0.0, 0.0]]
+PASS  SDF total mass 9.4 kg  [9.4 kg]
+PASS  lumped ixx = parallel-axis combination 0.09401 kg m^2 (4 s.f.)  [0.0940079]
+PASS  lumped iyy = parallel-axis combination 0.1666 kg m^2 (4 s.f.)  [0.166603]
+PASS  lumped izz = parallel-axis combination 0.2362 kg m^2 (4 s.f.)  [0.236191]
+PASS  lumped ixy = parallel-axis combination 0 kg m^2 (4 s.f.)  [0]
+PASS  lumped ixz = parallel-axis combination -0.006966 kg m^2 (4 s.f.)  [-0.00696571]
+PASS  lumped iyz = parallel-axis combination 0 kg m^2 (4 s.f.)  [0]
+PASS  base_footprint holds the 3 lumped collisions (chassis, caster, bracket)  [base_footprint_fixed_joint_lump__base_link_collision, base_footprint_fixed_joint_lump__caster_link_collision_1, base_footprint_fixed_joint_lump__lidar_mount_link_collision_2]
+PASS  lumped links survive as <frame> elements  [base_footprint_joint, base_link, caster_joint, caster_link, lidar_mount_joint, lidar_mount_link]
+PASS  only the 2 wheel joints remain, converted to revolute  [{'left_wheel_joint': 'revolute', 'right_wheel_joint': 'revolute'}]
+== 2 CHECK(S) FAILED

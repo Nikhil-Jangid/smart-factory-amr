@@ -1,0 +1,29 @@
+# TEST-M1-07 START 2026-10-21 16:34:36 IST (GZ_PARTITION=amr_m1_test)
+$ python3 -I docs/evidence/M1/TEST-M1-07_measure.py empty amr 30
+# TEST-M1-07 measurement: world "empty", model "amr", window 30.0 s of sim time
+# thresholds: |dz| < 2 mm, |roll|,|pitch| < 0.5 deg, horizontal drift < 5 mm (OPEN-07, provisional)
+P0 (first read after spawn): sim_time 7.589 s  position (m) [+0.000003435 +0.000000000 -0.000000007]  quaternion (xyzw) [-2.120e-19 -8.534e-07 +1.633e-19 0.999999999999636]  RPY (deg) [-0.000000 -0.000098 +0.000000]
+A  (>= P0 + 1 s)        : sim_time 8.686 s  position (m) [+0.000003435 +0.000000000 -0.000000007]  quaternion (xyzw) [-2.120e-19 -8.534e-07 +1.633e-19 0.999999999999636]  RPY (deg) [-0.000000 -0.000098 +0.000000]
+   stats near A: sim_time 8.886 s, real_time 10.766 s, real_time_factor 0.9960
+B  (>= A + 30 s)       : sim_time 38.793 s  position (m) [+0.000003435 +0.000000000 -0.000000007]  quaternion (xyzw) [-2.120e-19 -8.534e-07 +1.633e-19 0.999999999999636]  RPY (deg) [-0.000000 -0.000098 +0.000000]
+   stats near B: sim_time 39.041 s, real_time 40.934 s, real_time_factor 0.9907
+# cross-check, gz model -m amr -p (exit 0):
+#   Requesting state for world [empty]...
+#
+#   Model: [10]
+#     - Name: amr
+#     - Pose [ XYZ (m) ] [ RPY (rad) ]:
+#       [0.000003 0.000000 -0.000000]
+#       [-0.000000 -0.000002 0.000000]
+# 29 pose samples from A to B (about 1 per second of sim time)
+sim time A -> B: 30.107 s; real time between the stats reads: 30.167 s; RTF over the window: 0.9996
+spread A..B: z 0.000000 mm, roll 0.000000 deg, pitch 0.000000 deg
+PASS  |dz| = 0.000000 mm < 2 mm
+PASS  |roll| A 0.000000 deg, B 0.000000 deg < 0.5 deg
+PASS  |pitch| A 0.000098 deg, B 0.000098 deg < 0.5 deg
+PASS  horizontal drift = 0.000000 mm < 5 mm
+PASS  window covers 30.107 s >= 30 s of sim time
+yaw change A -> B (information only): +0.000000 deg
+== ALL NUMERIC CRITERIA MET
+# script exit 0
+# END 2026-10-21 16:35:08 IST

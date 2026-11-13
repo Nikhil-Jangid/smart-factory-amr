@@ -1,0 +1,85 @@
+<sdf version='1.11'>
+  <model name='probe'>
+    <link name='root'>
+      <inertial>
+        <pose>0.5 0 0 0 0 0</pose>
+        <mass>2</mass>
+        <inertia>
+          <ixx>0.20000000000000001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.70000000000000018</iyy>
+          <iyz>0</iyz>
+          <izz>0.70000000000000018</izz>
+        </inertia>
+      </inertial>
+      <collision name='root_fixed_joint_lump__a_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.10000000000000001 0.10000000000000001 0.10000000000000001</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name='root_fixed_joint_lump__b_collision_1'>
+        <pose>1 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.050000000000000003</radius>
+          </sphere>
+        </geometry>
+      </collision>
+    </link>
+    <joint name='ac' type='revolute'>
+      <pose relative_to='root'>0 1 0 0 0 0</pose>
+      <parent>root</parent>
+      <child>c</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='c'>
+      <pose relative_to='ac'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='c_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.050000000000000003</radius>
+          </sphere>
+        </geometry>
+      </collision>
+    </link>
+    <frame name='ab' attached_to='a'>
+      <pose>1 0 0 0 0 0</pose>
+    </frame>
+    <frame name='b' attached_to='ab'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='root_joint' attached_to='root'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='a' attached_to='root_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+  </model>
+</sdf>

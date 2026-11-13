@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+  Numeric parameters of the M1 AMR model (single source of truth for code).
+  Values come from docs/design/mechanical_geometry.md §2 and docs/design/mass_inertia.md §1;
+  status labels (Selected / Assumed / Proposed) are given there. SI units, REP-103 frames.
+  Derived placements are expressions in these properties, not independent values.
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Chassis (Selected) -->
+  <xacro:property name="chassis_length" value="0.450"/>
+  <xacro:property name="chassis_width" value="0.350"/>
+  <xacro:property name="chassis_height" value="0.120"/>
+  <xacro:property name="axle_offset_x" value="0.100"/>      <!-- axle forward of chassis centre (DEC-012) -->
+  <xacro:property name="ground_clearance" value="0.050"/>   <!-- OPEN-06, DEC-019 -->
+
+  <!-- Drive wheels (Selected) -->
+  <xacro:property name="wheel_radius" value="0.075"/>
+  <xacro:property name="wheel_width" value="0.035"/>
+  <xacro:property name="wheel_track" value="0.400"/>        <!-- centre-to-centre (DEC-011) -->
+
+  <!-- Rigid spherical caster (Selected; OPEN-01, DEC-013, DEC-019) -->
+  <xacro:property name="caster_radius" value="0.025"/>
+  <xacro:property name="caster_x" value="-0.360"/>
+
+  <!-- Passive LiDAR bracket (Proposed: provisional placeholder until M3; OPEN-03, DEC-014, DEC-019) -->
+  <xacro:property name="lidar_bracket_x" value="0.080"/>
+  <xacro:property name="lidar_bracket_y" value="0.080"/>
+  <xacro:property name="lidar_bracket_z" value="0.030"/>
+  <xacro:property name="lidar_mount_x" value="0.070"/>
+
+  <!-- Masses (Assumed; mass_inertia.md §1, CALC-M1-06). Payload excluded (DEC-015). -->
+  <xacro:property name="chassis_mass" value="8.0"/>
+  <xacro:property name="wheel_mass" value="0.5"/>
+  <xacro:property name="caster_mass" value="0.2"/>
+  <xacro:property name="lidar_bracket_mass" value="0.2"/>
+
+  <!-- Derived placements (Calculated; mechanical_geometry.md §3), in base_link unless noted -->
+  <xacro:property name="base_link_z" value="${wheel_radius}"/>     <!-- above base_footprint (DEC-016) -->
+  <xacro:property name="chassis_x" value="${-axle_offset_x}"/>
+  <xacro:property name="chassis_z" value="${ground_clearance + chassis_height / 2 - wheel_radius}"/>
+  <xacro:property name="wheel_y" value="${wheel_track / 2}"/>
+  <xacro:property name="caster_z" value="${caster_radius - wheel_radius}"/>
+  <xacro:property name="lidar_mount_z" value="${chassis_z + chassis_height / 2 + lidar_bracket_z}"/>  <!-- bracket top surface -->
+
+</robot>

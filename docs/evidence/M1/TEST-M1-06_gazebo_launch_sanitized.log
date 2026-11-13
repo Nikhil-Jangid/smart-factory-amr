@@ -1,0 +1,18 @@
+# LAUNCH START 2026-10-21 16:34:26 IST (GZ_PARTITION=amr_m1_test ROS_DOMAIN_ID=49; spawn pose x=y=z=roll=pitch=yaw=0 by default)
+[INFO] [launch]: All log files can be found below <home>/.ros/log/2026-10-21-16-34-26-245296-<host>-57971
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [robot_state_publisher-1]: process started with pid [58007]
+[INFO] [gz-2]: process started with pid [58008]
+[INFO] [create-3]: process started with pid [58009]
+[robot_state_publisher-1] [INFO] [1792580666.376314728] [robot_state_publisher]: Robot initialized
+[create-3] [INFO] [1792580666.381694630] [ros_gz_sim]: Waiting messages on topic [robot_description].
+[create-3] [INFO] [1792580666.890855185] [ros_gz_sim]: Entity creation successful.
+[INFO] [create-3]: process has finished cleanly [pid 58009]
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [gz-2]: sending signal 'SIGINT' to process[gz-2]
+[INFO] [robot_state_publisher-1]: sending signal 'SIGINT' to process[robot_state_publisher-1]
+[robot_state_publisher-1] [INFO] [1792580917.731484647] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [robot_state_publisher-1]: process has finished cleanly [pid 58007]
+[INFO] [gz-2]: process has finished cleanly [pid 58008]
+[INFO] [launch]: process[gz-2] was required: shutting down launched system
+# LAUNCH STOPPED 2026-10-21 16:38:38 IST

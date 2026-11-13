@@ -1,0 +1,70 @@
+# TEST-M1-04 supporting data (wheel sliders left at the positive values set by hand), START 2026-10-21 16:17:10 IST
+# ROS_DOMAIN_ID=47
+
+$ timeout 5 ros2 topic echo --once /joint_states
+header:
+  stamp:
+    sec: 1792579631
+    nanosec: 169107060
+  frame_id: ''
+name:
+- left_wheel_joint
+- right_wheel_joint
+position:
+- 0.5265309287416491
+- 0.5604601294004188
+velocity: []
+effort: []
+---
+# exit 0
+
+$ timeout 3 ros2 run tf2_ros tf2_echo base_link left_wheel_link
+[INFO] [1792579631.491208279] [tf2_echo]: Waiting for transform base_link ->  left_wheel_link: Invalid frame ID "base_link" passed to canTransform argument target_frame - frame does not exist
+At time 1792579632.469184694
+- Translation: [0.000, 0.200, 0.000]
+- Rotation: in Quaternion (xyzw) [0.000, 0.260, 0.000, 0.966]
+- Rotation: in RPY (radian) [0.000, 0.527, 0.000]
+- Rotation: in RPY (degree) [0.000, 30.168, 0.000]
+- Matrix:
+  0.865  0.000  0.503  0.000
+  0.000  1.000  0.000  0.200
+ -0.503  0.000  0.865  0.000
+  0.000  0.000  0.000  1.000
+At time 1792579633.469104537
+- Translation: [0.000, 0.200, 0.000]
+- Rotation: in Quaternion (xyzw) [0.000, 0.260, 0.000, 0.966]
+- Rotation: in RPY (radian) [0.000, 0.527, 0.000]
+- Rotation: in RPY (degree) [0.000, 30.168, 0.000]
+- Matrix:
+  0.865  0.000  0.503  0.000
+  0.000  1.000  0.000  0.200
+ -0.503  0.000  0.865  0.000
+  0.000  0.000  0.000  1.000
+[INFO] [1792579634.315011503] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+# exit 124 (124 = stopped by timeout)
+
+$ timeout 3 ros2 run tf2_ros tf2_echo base_link right_wheel_link
+[INFO] [1792579634.473673919] [tf2_echo]: Waiting for transform base_link ->  right_wheel_link: Invalid frame ID "base_link" passed to canTransform argument target_frame - frame does not exist
+At time 1792579635.369097714
+- Translation: [0.000, -0.200, 0.000]
+- Rotation: in Quaternion (xyzw) [0.000, 0.277, 0.000, 0.961]
+- Rotation: in RPY (radian) [0.000, 0.560, 0.000]
+- Rotation: in RPY (degree) [0.000, 32.112, 0.000]
+- Matrix:
+  0.847  0.000  0.532  0.000
+  0.000  1.000  0.000 -0.200
+ -0.532  0.000  0.847  0.000
+  0.000  0.000  0.000  1.000
+At time 1792579636.369076542
+- Translation: [0.000, -0.200, 0.000]
+- Rotation: in Quaternion (xyzw) [0.000, 0.277, 0.000, 0.961]
+- Rotation: in RPY (radian) [0.000, 0.560, 0.000]
+- Rotation: in RPY (degree) [0.000, 32.112, 0.000]
+- Matrix:
+  0.847  0.000  0.532  0.000
+  0.000  1.000  0.000 -0.200
+ -0.532  0.000  0.847  0.000
+  0.000  0.000  0.000  1.000
+[INFO] [1792579637.317591029] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+# exit 124 (124 = stopped by timeout)
+# END 2026-10-21 16:17:17 IST

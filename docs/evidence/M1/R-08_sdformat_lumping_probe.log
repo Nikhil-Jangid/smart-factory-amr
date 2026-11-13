@@ -1,0 +1,31 @@
+date: 2026-10-19T18:35:42+05:30
+gz: /opt/ros/jazzy/opt/gz_tools_vendor/bin/gz
+gz sdf --versions: 14.9.0 
+input: R-08_sdformat_lumping_probe.urdf sha256 b08c81ed2eab2c1312e620a3057ed24e9703a627550b389a8445d86670a5ac97
+command: gz sdf -p R-08_sdformat_lumping_probe.urdf > R-08_sdformat_lumping_probe.sdf
+exit code: 0
+output: R-08_sdformat_lumping_probe.sdf sha256 abb2be01f2740ec2654bb408122c9114297e704e2361a74f6c189525b03d00d8
+--- output <link> elements:
+3:    <link name='root'>
+49:    <link name='c'>
+--- output <inertial> of the merged root link:
+    <link name='root'>
+      <inertial>
+        <pose>0.5 0 0 0 0 0</pose>
+        <mass>2</mass>
+        <inertia>
+          <ixx>0.20000000000000001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.70000000000000018</iyy>
+          <iyz>0</iyz>
+          <izz>0.70000000000000018</izz>
+        </inertia>
+      </inertial>
+--- output joint type:
+33:    <joint name='ac' type='revolute'>
+--- self_collide elements in output: 0
+--- installed SDFormat 1.11 spec, model-level self_collide (gz sdf -d 1.11):
+      <element name ='self_collide' required ='0' type ='bool' default ='false'>
+        <description><![CDATA[If set to true, all links in the model will collide with each other (except those connected by a joint). Can be overridden by the link or collision element self_collide property. Two links within a model will collide if link1.self_collide OR link2.self_collide. Links connected by a joint will never collide.]]></description>
+--- spec exit code: 0

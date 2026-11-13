@@ -1,0 +1,61 @@
+TEST-M0-04 re-test 1 (headless /clock bridge)
+date: 2026-10-19T05:34:00+05:30
+repo HEAD: c40e5cd7229e91e74b61c1f360e3b516d5524ea9
+isolation: GZ_PARTITION=amr_m0_retest_40558 ROS_DOMAIN_ID=73 (a pre-existing 'gz sim server' on the default partition was left untouched)
+
+## Pre-check: no /clock in the isolated partition/domain
+$ timeout 5 gz topic -l | grep -x /clock || echo 'no gz /clock'
+no gz /clock
+[exit=0]
+
+$ timeout 10 ros2 topic list | grep -x /clock || echo 'no ROS /clock'
+no ROS /clock
+[exit=0]
+
+## Start headless Gazebo server
+$ gz sim -s -r -v 2 shapes.sdf   (background, own process group)
+gz pid/pgid=40605
+gz /clock advertised after ~1s
+$ timeout 5 gz topic -l | grep -E '^/clock$|^/world/shapes/clock$'
+/clock
+/world/shapes/clock
+[exit=0]
+
+## Start bridge
+$ ros2 run ros_gz_bridge parameter_bridge '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'   (background, own process group)
+bridge pid/pgid=40666
+$ timeout 10 ros2 topic info /clock
+Type: rosgraph_msgs/msg/Clock
+Publisher count: 1
+Subscription count: 0
+[exit=0]
+
+## Sample /clock twice
+$ timeout 15 ros2 topic echo --once /clock > clock1.txt; r=$?; cat clock1.txt; exit $r
+clock:
+  sec: 7
+  nanosec: 340000000
+---
+[exit=0]
+
+$ timeout 15 ros2 topic echo --once /clock > clock2.txt; r=$?; cat clock2.txt; exit $r
+clock:
+  sec: 10
+  nanosec: 349000000
+---
+[exit=0]
+
+## Evaluation
+t1=7.340000000 s  t2=10.349000000 s  (echo exits: 0, 0)
+delta=3.009 s -> /clock ADVANCED
+## Cleanup (only processes started by this test)
+pgid 40666: no processes remain
+pgid 40605: no processes remain
+pre-existing server 34793:   34793 gz sim server
+## Server output (tail)
+[1;33m[Wrn] [SDFFeatures.cc:366] [0m[1;33mDART: Ellipsoid is not a supported collision geomerty[0m[1;33m primitive, using generated mesh of an ellipsoid instead[0m[1;33m[0m
+[1;33m[Wrn] [SDFFeatures.cc:351] [0m[1;33mDART: Cone is not a supported collision geomerty[0m[1;33m primitive, using generated mesh of a cone instead[0m[1;33m[0m
+## Bridge output (tail)
+[INFO] [1792368248.215972389] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[INFO] [1792368256.410745258] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+VERDICT: PASS

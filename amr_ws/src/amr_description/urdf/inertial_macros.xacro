@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+  Inertial blocks for uniform solid primitives (docs/design/mass_inertia.md §3 to §7).
+  Each tensor is about the body's centre of mass, with axes parallel to the link frame,
+  so the off-diagonal terms are zero. xyz is the centre of mass in the link frame.
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Solid cuboid with edges x, y, z along the link axes (CALC-M1-07, CALC-M1-10) -->
+  <xacro:macro name="box_inertia" params="m x y z xyz:='0 0 0'">
+    <inertial>
+      <origin xyz="${xyz}" rpy="0 0 0"/>
+      <mass value="${m}"/>
+      <inertia ixx="${m * (y * y + z * z) / 12}" ixy="0" ixz="0"
+               iyy="${m * (x * x + z * z) / 12}" iyz="0"
+               izz="${m * (x * x + y * y) / 12}"/>
+    </inertial>
+  </xacro:macro>
+
+  <!-- Solid cylinder with its axis along link Y (OPEN-04, DEC-019): Iyy is axial (CALC-M1-08) -->
+  <xacro:macro name="cylinder_inertia" params="m r h xyz:='0 0 0'">
+    <inertial>
+      <origin xyz="${xyz}" rpy="0 0 0"/>
+      <mass value="${m}"/>
+      <inertia ixx="${m * (3 * r * r + h * h) / 12}" ixy="0" ixz="0"
+               iyy="${m * r * r / 2}" iyz="0"
+               izz="${m * (3 * r * r + h * h) / 12}"/>
+    </inertial>
+  </xacro:macro>
+
+  <!-- Solid sphere (CALC-M1-09) -->
+  <xacro:macro name="sphere_inertia" params="m r xyz:='0 0 0'">
+    <inertial>
+      <origin xyz="${xyz}" rpy="0 0 0"/>
+      <mass value="${m}"/>
+      <inertia ixx="${2 * m * r * r / 5}" ixy="0" ixz="0"
+               iyy="${2 * m * r * r / 5}" iyz="0"
+               izz="${2 * m * r * r / 5}"/>
+    </inertial>
+  </xacro:macro>
+
+</robot>

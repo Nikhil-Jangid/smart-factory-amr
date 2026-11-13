@@ -1,0 +1,67 @@
+TEST-M0-05 environment inventory
+date: 2026-10-19T05:33:28+05:30
+repo HEAD: c40e5cd7229e91e74b61c1f360e3b516d5524ea9
+
+$ lsb_release -ds
+Ubuntu 24.04.5 LTS
+[exit=0]
+
+$ uname -r
+7.0.0-38-generic
+[exit=0]
+
+$ echo ROS_DISTRO=$ROS_DISTRO RMW_IMPLEMENTATION=${RMW_IMPLEMENTATION:-unset} ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-unset} ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE:-unset}
+ROS_DISTRO=jazzy RMW_IMPLEMENTATION=unset ROS_DOMAIN_ID=unset ROS_AUTOMATIC_DISCOVERY_RANGE=SUBNET
+[exit=0]
+
+$ ls -d /opt/ros/*
+/opt/ros/jazzy
+[exit=0]
+
+$ gz sim --version | head -1
+Gazebo Sim, version 8.15.0
+[exit=0]
+
+$ python3 --version
+Python 3.12.3
+[exit=0]
+
+$ cmake --version | head -1
+cmake version 3.28.3
+[exit=0]
+
+$ dpkg-query -W -f='${Package} ${Version} ${db:Status-Abbrev}\n' python3-colcon-common-extensions graphviz ros-jazzy-demo-nodes-cpp ros-jazzy-rviz2 ros-jazzy-ros-gz ros-jazzy-ros-gz-bridge ros-jazzy-ros-gz-sim ros-jazzy-xacro ros-jazzy-urdf ros-jazzy-robot-state-publisher ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui ros-jazzy-sdformat-urdf ros-jazzy-tf2-ros ros-jazzy-tf2-tools ros-jazzy-launch-ros ros-jazzy-rmw-fastrtps-cpp ros-jazzy-ros2-control ros-jazzy-ros2-controllers ros-jazzy-diff-drive-controller ros-jazzy-gz-ros2-control ros-jazzy-teleop-twist-keyboard ros-jazzy-slam-toolbox ros-jazzy-navigation2 ros-jazzy-nav2-bringup
+graphviz 2.42.2-9ubuntu0.1 ii 
+python3-colcon-common-extensions 0.3.0-100 ii 
+ros-jazzy-demo-nodes-cpp 0.33.11-1noble.20260920.235420 ii 
+ros-jazzy-diff-drive-controller 4.42.1-1noble.20260924.190414 ii 
+ros-jazzy-gz-ros2-control 1.2.20-1noble.20261006.040504 ii 
+ros-jazzy-joint-state-publisher 2.4.3-1noble.20260912.164308 ii 
+ros-jazzy-joint-state-publisher-gui 2.4.3-1noble.20260912.164400 ii 
+ros-jazzy-launch-ros 0.26.13-1noble.20260920.233704 ii 
+ros-jazzy-nav2-bringup 1.3.13-1noble.20261006.042503 ii 
+ros-jazzy-navigation2 1.3.13-1noble.20260921.033624 ii 
+ros-jazzy-rmw-fastrtps-cpp 8.4.4-1noble.20260911.100940 ii 
+ros-jazzy-robot-state-publisher 3.3.4-1noble.20260915.184559 ii 
+ros-jazzy-ros-gz 1.0.24-1noble.20261006.041805 ii 
+ros-jazzy-ros-gz-bridge 1.0.24-1noble.20260920.234644 ii 
+ros-jazzy-ros-gz-sim 1.0.24-1noble.20261006.035056 ii 
+ros-jazzy-ros2-control 4.48.1-1noble.20261006.040510 ii 
+ros-jazzy-ros2-controllers 4.42.1-1noble.20260924.191822 ii 
+ros-jazzy-rviz2 14.1.24-1noble.20260915.204213 ii 
+ros-jazzy-sdformat-urdf 1.0.2-1noble.20260911.051524 ii 
+ros-jazzy-slam-toolbox 2.8.5-1noble.20260915.204151 ii 
+ros-jazzy-teleop-twist-keyboard 2.4.1-1noble.20260912.164910 ii 
+ros-jazzy-tf2-ros 0.36.23-1noble.20260915.173839 ii 
+ros-jazzy-tf2-tools 0.36.23-1noble.20260915.174418 ii 
+ros-jazzy-urdf 2.10.1-2noble.20260911.051219 ii 
+ros-jazzy-xacro 2.1.1-1noble.20260519.011123 ii 
+[exit=0]
+
+$ command -v check_urdf urdf_to_graphviz gz ros2
+/opt/ros/jazzy/bin/check_urdf
+/opt/ros/jazzy/bin/urdf_to_graphviz
+/opt/ros/jazzy/opt/gz_tools_vendor/bin/gz
+/opt/ros/jazzy/bin/ros2
+[exit=0]
+
