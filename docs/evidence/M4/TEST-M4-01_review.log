@@ -1,0 +1,40 @@
+# TEST-M4-01 review, 2026-11-13 14:09:11 IST, revision 76a67a2 (amr_ws/src clean); baseline 30d737f
+
+## 1. Build
+$ cd amr_ws && colcon build --symlink-install --packages-select amr_description amr_bringup amr_gazebo_plugins
+-- Up-to-date symlink: <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/cmake/amr_bringupConfig-version.cmake
+-- Up-to-date symlink: <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/package.xml
+Finished <<< amr_bringup [0.10s]
+
+Summary: 3 packages finished [0.45s]
+# colcon exit 0; lines matching 'warning': 0
+# exit 0
+
+## 2. Default expansion vs the M1 baseline
+identical
+# exit 0
+
+## 3. M2 enabled expansion vs 30d737f
+identical
+# exit 0
+
+## 4. controllers.yaml vs 30d737f
+diff --git a/amr_ws/src/amr_bringup/config/controllers.yaml b/amr_ws/src/amr_bringup/config/controllers.yaml
+index 25eab73..11382ed 100644
+--- a/amr_ws/src/amr_bringup/config/controllers.yaml
++++ b/amr_ws/src/amr_bringup/config/controllers.yaml
+@@ -32,0 +33,5 @@ diff_drive_controller:
++    # Odometry covariance diagonals (DEC-042; values CALC-M4-04, Assumed model: sigma = 1 % of distance,
++    # 2 % of rotation; accepted 2026-11-13). Order: pose (x, y, z, roll, pitch, yaw),
++    # twist (vx, vy, vz, wx, wy, wz). 1.0e3 = not measured by planar odometry. The installed default is all zeros.
++    pose_covariance_diagonal: [0.01, 0.01, 1.0e3, 1.0e3, 1.0e3, 0.0158]
++    twist_covariance_diagonal: [2.5e-5, 2.5e-5, 1.0e3, 1.0e3, 1.0e3, 4.0e-4]
+# removed lines: 0; added non-comment lines other than the covariance keys: 0; covariance keys added: 2
+# exit 0
+
+## 5. Covariance values vs CALC-M4-04
+PASS  pose_covariance_diagonal = [0.01, 0.01, 1000.0, 1000.0, 1000.0, 0.0158], expected [0.01, 0.01, 1000.0, 1000.0, 1000.0, 0.0158]
+PASS  twist_covariance_diagonal = [2.5e-05, 2.5e-05, 1000.0, 1000.0, 1000.0, 0.0004], expected [2.5e-05, 2.5e-05, 1000.0, 1000.0, 1000.0, 0.0004]
+# exit 0
+
+# overall: ALL STEPS PASSED

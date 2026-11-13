@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<!--
+  M3 sensor description of the AMR (DEC-034), included by amr.urdf.xacro only when use_sensors:=true,
+  so the default (M1) expansion stays byte-identical (TEST-M3-02). Specification: docs/design/sensors.md.
+  - laser_frame (DEC-030) and imu_link (DEC-032) are fixed links WITHOUT <inertial>: SDFormat lumps them
+    into their parent body, so the total mass stays 9.4 kg and no zero-mass link is created (DEC-034).
+    The 0.2 kg bracket mass represents bracket plus LiDAR (Assumed).
+  - 2D LiDAR (DEC-031): a simulation baseline of a generic indoor LiDAR class, not a product datasheet.
+  - IMU (DEC-032, amended by DEC-038): the noise values are simulation assumptions, not hardware specifications.
+    They are specified at the published /imu output. The sensor samples at 1 kHz on the Gazebo-internal topic
+    /imu_raw, and the amr_gazebo_plugins ImuDecimator system publishes Gazebo /imu at 100 Hz as the mean of each
+    complete, aligned 10-sample block (TS-027; sensors.md §8). The sensor's raw noise is derived from the
+    published values (x sqrt(block size)).
+  - No depth camera here: low-obstacle sensing is an M8 item with undecided parameters (DEC-037).
+  - <gz_frame_id> sets the ROS frame_id; gz sdf warns that it is not an SDF element (expected, sensors.md §6.1).
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Sensor frames (Selected): DEC-030 (scan plane 0.200 + 0.030 = 0.230 m), DEC-032 (axle midpoint) -->
+  <xacro:property name="laser_frame_z" value="0.030"/>      <!-- above lidar_mount_link (bracket top) -->
+  <xacro:property name="imu_frame_z" value="0.0"/>          <!-- at the base_link origin (CALC-M3-02) -->
+
+  <!-- 2D LiDAR (Selected, DEC-031) -->
+  <xacro:property name="lidar_update_rate" value="10"/>     <!-- Hz -->
+  <xacro:property name="lidar_samples" value="360"/>        <!-- 1 deg resolution over 360 deg -->
+  <xacro:property name="lidar_range_min" value="0.12"/>     <!-- m -->
+  <xacro:property name="lidar_range_max" value="12.0"/>     <!-- m; below the 13.18 m pitch limit (CALC-M3-01) -->
+  <xacro:property name="lidar_range_resolution" value="0.001"/>  <!-- m -->
+  <xacro:property name="lidar_noise_stddev" value="0.01"/>  <!-- m, Gaussian, mean 0 -->
+  <!-- Gazebo spaces the samples over (max - min) / (samples - 1). For exact 1 deg steps without a duplicated
+       beam at +/-pi, max = pi - 2 pi / samples = 3.12413936106985 rad (gate finding, sensors.md §6.1). This form
+       evaluates to that value exactly in floating point; -pi + (samples - 1) * 2 pi / samples differs by ~1e-15. -->
+  <xacro:property name="lidar_min_angle" value="${-pi}"/>
+  <xacro:property name="lidar_max_angle" value="${pi - 2 * pi / lidar_samples}"/>
+
+  <!-- IMU (Selected, DEC-032 amended by DEC-038; noise values Assumed simulation values) -->
+  <xacro:property name="imu_output_rate" value="100"/>      <!-- Hz, published /imu; equal to the controller rate (DEC-026) -->
+  <xacro:property name="imu_block_size" value="10"/>        <!-- raw samples per published sample (DEC-038) -->
+  <!-- Hz, sensor sampling rate on /imu_raw (Calculated: 100 x 10 = 1000; one sample per 1 ms physics step) -->
+  <xacro:property name="imu_raw_rate" value="${imu_output_rate * imu_block_size}"/>
+  <xacro:property name="imu_gyro_stddev" value="0.001"/>    <!-- rad/s at the /imu output, Gaussian, mean 0, zero bias -->
+  <xacro:property name="imu_accel_stddev" value="0.01"/>    <!-- m/s^2 at the /imu output, Gaussian, mean 0, zero bias -->
+  <!-- Derived raw (per-sample) noise, not an accepted tolerance (Calculated, DEC-038 item 4): the mean of N independent
+       samples has sigma / sqrt(N), so sigma_raw = sqrt(N) x sigma_output = 0.00316227766 rad/s and 0.0316227766 m/s^2.
+       Verified at the output by TEST-M3-07. -->
+  <xacro:property name="imu_gyro_stddev_raw" value="${imu_gyro_stddev * sqrt(imu_block_size)}"/>
+  <xacro:property name="imu_accel_stddev_raw" value="${imu_accel_stddev * sqrt(imu_block_size)}"/>
+
+  <joint name="laser_joint" type="fixed">
+    <parent link="lidar_mount_link"/>
+    <child link="laser_frame"/>
+    <origin xyz="0 0 ${laser_frame_z}" rpy="0 0 0"/>
+  </joint>
+  <link name="laser_frame"/>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 ${imu_frame_z}" rpy="0 0 0"/>
+  </joint>
+  <link name="imu_link"/>
+
+  <gazebo reference="laser_frame">
+    <sensor name="lidar" type="gpu_lidar">
+      <always_on>true</always_on>
+      <visualize>false</visualize>
+      <update_rate>${lidar_update_rate}</update_rate>
+      <topic>/scan</topic>
+      <gz_frame_id>laser_frame</gz_frame_id>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>${lidar_samples}</samples>
+            <resolution>1</resolution>
+            <min_angle>${lidar_min_angle}</min_angle>
+            <max_angle>${lidar_max_angle}</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>1</samples>
+            <resolution>1</resolution>
+            <min_angle>0</min_angle>
+            <max_angle>0</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>${lidar_range_min}</min>
+          <max>${lidar_range_max}</max>
+          <resolution>${lidar_range_resolution}</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>${lidar_noise_stddev}</stddev>
+        </noise>
+      </lidar>
+    </sensor>
+  </gazebo>
+
+  <xacro:macro name="amr_imu_axis_noise" params="stddev">
+    <noise type="gaussian">
+      <mean>0.0</mean>
+      <stddev>${stddev}</stddev>
+    </noise>
+  </xacro:macro>
+
+  <gazebo reference="imu_link">
+    <sensor name="imu" type="imu">
+      <always_on>true</always_on>
+      <update_rate>${imu_raw_rate}</update_rate>
+      <topic>/imu_raw</topic>
+      <gz_frame_id>imu_link</gz_frame_id>
+      <imu>
+        <angular_velocity>
+          <x><xacro:amr_imu_axis_noise stddev="${imu_gyro_stddev_raw}"/></x>
+          <y><xacro:amr_imu_axis_noise stddev="${imu_gyro_stddev_raw}"/></y>
+          <z><xacro:amr_imu_axis_noise stddev="${imu_gyro_stddev_raw}"/></z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x><xacro:amr_imu_axis_noise stddev="${imu_accel_stddev_raw}"/></x>
+          <y><xacro:amr_imu_axis_noise stddev="${imu_accel_stddev_raw}"/></y>
+          <z><xacro:amr_imu_axis_noise stddev="${imu_accel_stddev_raw}"/></z>
+        </linear_acceleration>
+      </imu>
+    </sensor>
+  </gazebo>
+
+  <!-- DEC-038: /imu_raw (1 kHz) -> /imu (100 Hz block mean); package amr_gazebo_plugins. The plugin checks at load
+       that raw_rate = block_size x output_rate, that the raw period is a multiple of the physics step and that the
+       IMU above publishes input_topic at raw_rate; otherwise it logs an error and stays inactive. -->
+  <gazebo>
+    <plugin filename="amr_imu_decimator_system" name="amr_gazebo_plugins::ImuDecimator">
+      <input_topic>/imu_raw</input_topic>
+      <output_topic>/imu</output_topic>
+      <block_size>${imu_block_size}</block_size>
+      <raw_rate>${imu_raw_rate}</raw_rate>
+      <output_rate>${imu_output_rate}</output_rate>
+    </plugin>
+  </gazebo>
+
+</robot>

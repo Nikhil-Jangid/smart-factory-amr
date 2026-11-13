@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<!--
+  M1 static robot description of the Autonomous Smart Factory AMR.
+  Frame tree and joint conventions: docs/design/frames_and_tf.md §2 (DEC-016).
+  Primitive geometry only, no meshes (DEC-017). No sensors, controllers or Gazebo plugins in M1.
+-->
+<robot name="amr" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="use_ros2_control" default="false"/>
+  <xacro:arg name="controllers_file" default=""/>
+  <xacro:arg name="use_sensors" default="false"/>
+
+  <xacro:include filename="amr_properties.xacro"/>
+  <xacro:include filename="inertial_macros.xacro"/>
+
+  <!-- Root: ground point under the axle midpoint (REP-120). Massless, to avoid KDL's root-inertia warning. -->
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${base_link_z}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- base_link: axle midpoint; carries the chassis box, offset behind and above it (OPEN-05) -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="${chassis_x} 0 ${chassis_z}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="${chassis_x} 0 ${chassis_z}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="${chassis_mass}" x="${chassis_length}" y="${chassis_width}" z="${chassis_height}"
+                       xyz="${chassis_x} 0 ${chassis_z}"/>
+  </link>
+
+  <!--
+    Drive wheel. The link frame is unrotated and the joint axis is +Y on both sides, so a positive
+    joint velocity rolls each wheel forward (+X) (OPEN-04; frames_and_tf.md §3). Only the cylinder
+    geometry is rotated by pi/2 about X to lie along link Y; the inertial frame is not rotated.
+    y_sign: +1 for left, -1 for right.
+  -->
+  <xacro:macro name="drive_wheel" params="side y_sign">
+    <joint name="${side}_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${side}_wheel_link"/>
+      <origin xyz="0 ${y_sign * wheel_y} 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+
+    <link name="${side}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="${pi / 2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <xacro:unless value="$(arg use_ros2_control)">
+        <origin xyz="0 0 0" rpy="${pi / 2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+        </xacro:unless>
+        <xacro:if value="$(arg use_ros2_control)">
+        <!-- M2 simulation (DEC-028): sphere of the wheel radius, centred on the wheel, so the ground contact
+             lies on the wheel mid-plane. The DART cylinder contact gave an effective track of ~0.3665 m (TS-014). -->
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${wheel_radius}"/>
+        </geometry>
+        </xacro:if>
+      </collision>
+      <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+    </link>
+  </xacro:macro>
+
+  <xacro:drive_wheel side="left" y_sign="1"/>
+  <xacro:drive_wheel side="right" y_sign="-1"/>
+
+  <!-- Rigid spherical caster on a fixed joint (DEC-013); tangent to the ground (CALC-M1-04) -->
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_link"/>
+    <origin xyz="${caster_x} 0 ${caster_z}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="caster_link">
+    <visual>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+    </collision>
+    <xacro:sphere_inertia m="${caster_mass}" r="${caster_radius}"/>
+  </link>
+
+  <!--
+    Passive LiDAR mount (DEC-014; provisional placeholder until M3, OPEN-03). The link origin is the
+    bracket top surface, where the M3 sensor frame will attach; the bracket box sits below it.
+  -->
+  <joint name="lidar_mount_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_mount_link"/>
+    <origin xyz="${lidar_mount_x} 0 ${lidar_mount_z}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="lidar_mount_link">
+    <visual>
+      <origin xyz="0 0 ${-lidar_bracket_z / 2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${lidar_bracket_x} ${lidar_bracket_y} ${lidar_bracket_z}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${-lidar_bracket_z / 2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${lidar_bracket_x} ${lidar_bracket_y} ${lidar_bracket_z}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="${lidar_bracket_mass}" x="${lidar_bracket_x}" y="${lidar_bracket_y}" z="${lidar_bracket_z}"
+                       xyz="0 0 ${-lidar_bracket_z / 2}"/>
+  </link>
+
+  <xacro:if value="$(arg use_ros2_control)">
+    <!-- M2 (DEC-023): ros2_control system, Gazebo control plugin and contact surfaces; emitted only when enabled. -->
+    <xacro:include filename="amr.ros2_control.xacro"/>
+  </xacro:if>
+
+  <xacro:if value="$(arg use_sensors)">
+    <!-- M3 (DEC-034): LiDAR and IMU frames and Gazebo sensors; emitted only when enabled. -->
+    <xacro:include filename="amr.sensors.xacro"/>
+  </xacro:if>
+
+</robot>

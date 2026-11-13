@@ -1,0 +1,25 @@
+# TEST-M4-09 check, tag "-R1"; tolerance ± 25 % of each prediction (CALC-M4-05)
+PASS  R (radii x 1.01, straight): 3 valid runs (>= 3)
+PASS  R run 1 forward: distance criterion FAIL (expected FAIL), error +0.9975 %, prediction +1.00 % ± 25 %
+PASS  R run 1 reverse: distance criterion FAIL (expected FAIL), error +0.9998 %, prediction +1.00 % ± 25 %
+PASS  R run 2 forward: distance criterion FAIL (expected FAIL), error +0.9971 %, prediction +1.00 % ± 25 %
+PASS  R run 2 reverse: distance criterion FAIL (expected FAIL), error +0.9973 %, prediction +1.00 % ± 25 %
+PASS  R run 3 forward: distance criterion FAIL (expected FAIL), error +0.9984 %, prediction +1.00 % ± 25 %
+PASS  R run 3 reverse: distance criterion FAIL (expected FAIL), error +0.9956 %, prediction +1.00 % ± 25 %
+PASS  B (separation x 1.02, rotate): 3 valid runs (>= 3)
+PASS  B run 1 +360: yaw criterion FAIL (expected FAIL), error -7.190 deg, prediction -7.196 deg ± 25 % (true turn +367.01 deg)
+PASS  B run 1 -360: yaw criterion FAIL (expected FAIL), error +7.213 deg, prediction +7.202 deg ± 25 % (true turn -367.31 deg)
+PASS  B run 2 +360: yaw criterion FAIL (expected FAIL), error -7.202 deg, prediction -7.201 deg ± 25 % (true turn +367.27 deg)
+PASS  B run 2 -360: yaw criterion FAIL (expected FAIL), error +7.191 deg, prediction +7.202 deg ± 25 % (true turn -367.30 deg)
+PASS  B run 3 +360: yaw criterion FAIL (expected FAIL), error -7.196 deg, prediction -7.196 deg ± 25 % (true turn +367.00 deg)
+PASS  B run 3 -360: yaw criterion FAIL (expected FAIL), error +7.208 deg, prediction +7.196 deg ± 25 % (true turn -367.02 deg)
+PASS  L (left radius x 1.005, square CCW): 3 valid runs (>= 3)
+PASS  L CCW run 1: yaw criterion FAIL (expected FAIL), error -1.899 deg, prediction -1.905 deg ± 25 %
+PASS  L CCW run 2: yaw criterion FAIL (expected FAIL), error -1.898 deg, prediction -1.905 deg ± 25 %
+PASS  L CCW run 3: yaw criterion FAIL (expected FAIL), error -1.901 deg, prediction -1.905 deg ± 25 %
+PASS  L (left radius x 1.005, square CW): 3 valid runs (>= 3)
+PASS  L CW run 1: yaw criterion FAIL (expected FAIL), error -3.690 deg, prediction -3.697 deg ± 25 %
+PASS  L CW run 2: yaw criterion FAIL (expected FAIL), error -3.689 deg, prediction -3.696 deg ± 25 %
+PASS  L CW run 3: yaw criterion FAIL (expected FAIL), error -3.691 deg, prediction -3.697 deg ± 25 %
+PASS  product configuration untouched: # product controllers.yaml unchanged by the test: yes
+# overall: ALL CHECKS PASSED

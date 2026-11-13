@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+  M2 simulation control description of the AMR (DEC-023), included by amr.urdf.xacro only when
+  use_ros2_control:=true, so the M1 model expansion stays byte-identical (TEST-M2-02).
+  - ros2_control system: gz_ros2_control/GazeboSimSystem drives the two wheel joints by velocity
+    and reports their position and velocity (docs/milestones/M2_basic_movement.md §6).
+  - Gazebo plugin: hosts controller_manager; the controller parameters file is passed in by the
+    launch file through the controllers_file argument (amr_bringup/config/controllers.yaml).
+  - Contact surfaces (DEC-024): wheel mu = mu2 = 1.0, caster mu = mu2 = 0.01. No torsional or
+    rolling friction, kp/kd, slip or fdir1: the installed DART engine ignores the first group
+    (docs/design/motion_control.md §2), and the rest are not needed.
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="wheel_mu" value="1.0"/>
+  <xacro:property name="caster_mu" value="0.01"/>
+
+  <ros2_control name="AmrGazeboSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <xacro:macro name="wheel_interfaces" params="side">
+      <joint name="${side}_wheel_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </xacro:macro>
+    <xacro:wheel_interfaces side="left"/>
+    <xacro:wheel_interfaces side="right"/>
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(arg controllers_file)</parameters>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="left_wheel_link">
+    <mu1>${wheel_mu}</mu1>
+    <mu2>${wheel_mu}</mu2>
+  </gazebo>
+  <gazebo reference="right_wheel_link">
+    <mu1>${wheel_mu}</mu1>
+    <mu2>${wheel_mu}</mu2>
+  </gazebo>
+  <gazebo reference="caster_link">
+    <mu1>${caster_mu}</mu1>
+    <mu2>${caster_mu}</mu2>
+  </gazebo>
+
+</robot>

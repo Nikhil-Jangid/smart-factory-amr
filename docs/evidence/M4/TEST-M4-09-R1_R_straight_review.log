@@ -1,0 +1,83 @@
+# TEST-M4 procedure: mode=straight, valid runs required=3, 2026-11-13 15:34:46 IST
+# revision 4db5197 (amr_ws/src clean)
+# launch arguments: headless:=false controllers_file:=<tmp>/R.yaml
+# ros2_control 4.48.1-1noble.20261006.040510, diff_drive_controller 4.42.1-1noble.20260924.190414, gz_ros2_control 1.2.20-1noble.20261006.040504
+
+## attempt 1 (ROS_DOMAIN_ID=81, GZ_PARTITION=amr_m4_straight_<pid>_1)
+# sim_record: recording gazebo window to docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_R_straight_a1_gazebo.webm
+# sim_record: recording rviz window to docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_R_straight_a1_rviz.webm
+# TEST-M4 harness mode=straight, wall 2026-11-13 15:34:59 IST
+PASS  forward: robot at rest at the comparison point (ground-truth speed < 5 mm/s for 0.2 s)
+INFO  forward: ground truth d = (+1.9603, +0.0000) m, dpsi +0.000 deg; odometry d = (+1.9798, -0.0000) m, dpsi -0.000 deg
+FAIL  forward: distance error +19.55 mm = +0.9975 % of 1.9603 m, |.| <= 0.5 %
+PASS  forward: heading error -0.0000 deg, |.| <= 0.5 deg
+PASS  reverse: robot at rest at the comparison point (ground-truth speed < 5 mm/s for 0.2 s)
+INFO  reverse: ground truth d = (-1.9604, +0.0000) m, dpsi -0.000 deg; odometry d = (-1.9800, -0.0000) m, dpsi +0.000 deg
+FAIL  reverse: distance error +19.60 mm = +0.9998 % of 1.9604 m, |.| <= 0.5 %
+PASS  reverse: heading error +0.0000 deg, |.| <= 0.5 deg
+INFO  RTF over the measurement window = 0.961 (valid if >= 0.5)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 1771, odometry 1454, joint_states 2907, tf 1453
+# result: 2 CRITERION/CRITERIA FAILED
+# sim_record: wrote docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_R_straight_a1_gazebo.webm
+# sim_record: wrote docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_R_straight_a1_rviz.webm
+# sim_capture: wrote docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_R_straight_a1_gazebo.png
+# sim_capture: wrote docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_R_straight_a1_rviz.png
+# harness exit 1; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#        10 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 2 (ROS_DOMAIN_ID=82, GZ_PARTITION=amr_m4_straight_<pid>_2)
+# TEST-M4 harness mode=straight, wall 2026-11-13 15:35:32 IST
+PASS  forward: robot at rest at the comparison point (ground-truth speed < 5 mm/s for 0.2 s)
+INFO  forward: ground truth d = (+1.9604, +0.0000) m, dpsi +0.000 deg; odometry d = (+1.9799, -0.0000) m, dpsi -0.000 deg
+FAIL  forward: distance error +19.55 mm = +0.9971 % of 1.9604 m, |.| <= 0.5 %
+PASS  forward: heading error -0.0000 deg, |.| <= 0.5 deg
+PASS  reverse: robot at rest at the comparison point (ground-truth speed < 5 mm/s for 0.2 s)
+INFO  reverse: ground truth d = (-1.9585, +0.0000) m, dpsi -0.000 deg; odometry d = (-1.9780, +0.0000) m, dpsi -0.000 deg
+FAIL  reverse: distance error +19.53 mm = +0.9973 % of 1.9585 m, |.| <= 0.5 %
+PASS  reverse: heading error +0.0000 deg, |.| <= 0.5 deg
+INFO  RTF over the measurement window = 0.961 (valid if >= 0.5)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 1841, odometry 1451, joint_states 3136, tf 1451
+# result: 2 CRITERION/CRITERIA FAILED
+# harness exit 1; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 3 (ROS_DOMAIN_ID=83, GZ_PARTITION=amr_m4_straight_<pid>_3)
+# TEST-M4 harness mode=straight, wall 2026-11-13 15:36:10 IST
+PASS  forward: robot at rest at the comparison point (ground-truth speed < 5 mm/s for 0.2 s)
+INFO  forward: ground truth d = (+1.9602, +0.0000) m, dpsi +0.000 deg; odometry d = (+1.9798, -0.0000) m, dpsi -0.000 deg
+FAIL  forward: distance error +19.57 mm = +0.9984 % of 1.9602 m, |.| <= 0.5 %
+PASS  forward: heading error -0.0000 deg, |.| <= 0.5 deg
+PASS  reverse: robot at rest at the comparison point (ground-truth speed < 5 mm/s for 0.2 s)
+INFO  reverse: ground truth d = (-1.9605, +0.0000) m, dpsi -0.000 deg; odometry d = (-1.9800, +0.0000) m, dpsi -0.000 deg
+FAIL  reverse: distance error +19.52 mm = +0.9956 % of 1.9605 m, |.| <= 0.5 %
+PASS  reverse: heading error +0.0000 deg, |.| <= 0.5 deg
+INFO  RTF over the measurement window = 0.962 (valid if >= 0.5)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 1788, odometry 1453, joint_states 3044, tf 1453
+# result: 2 CRITERION/CRITERIA FAILED
+# harness exit 1; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: AT LEAST ONE RUN FAILED OR TOO FEW VALID RUNS
+
+# TEST-M4-09 case R (straight): override lines inserted into a copy of controllers.yaml:
+#   17a18,19
+#   >     left_wheel_radius_multiplier: 1.01  # TEST-M4-09 test-only override (DEC-043)
+#   >     right_wheel_radius_multiplier: 1.01  # TEST-M4-09 test-only override (DEC-043)

@@ -1,0 +1,68 @@
+# ros2_control configuration of the AMR in Gazebo Harmonic (M2; DEC-023, DEC-025, DEC-026).
+# Loaded by gz_ros2_control through the controllers_file Xacro argument (sim.launch.py).
+# Parameter names and sign conventions were checked against the installed Jazzy
+# diff_drive_controller 4.42.1 (docs/design/motion_control.md §4-5, DEC-025).
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz (DEC-026): 10 physics steps of 1 ms per control cycle
+    use_sim_time: true
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    diff_drive_controller:
+      type: diff_drive_controller/DiffDriveController
+
+diff_drive_controller:
+  ros__parameters:
+    use_sim_time: true
+    left_wheel_names: ["left_wheel_joint"]
+    right_wheel_names: ["right_wheel_joint"]
+
+    # Must equal wheel_track and wheel_radius in amr_properties.xacro (checked by TEST-M2-11).
+    wheel_separation: 0.400  # m
+    wheel_radius: 0.075  # m
+
+    odom_frame_id: odom
+    base_frame_id: base_footprint  # installed default is base_link (DEC-016, DEC-026)
+    enable_odom_tf: true
+    open_loop: false
+    position_feedback: true
+
+    publish_rate: 50.0  # Hz (DEC-026)
+    cmd_vel_timeout: 0.5  # s (DEC-026)
+    publish_limited_velocity: true  # /diff_drive_controller/cmd_vel_out, used by TEST-M2-07/08
+
+    # Limits (DEC-025). Installed sign conventions: max_velocity, max_acceleration and
+    # max_deceleration_reverse >= 0; min_velocity, max_deceleration and max_acceleration_reverse <= 0.
+    # The reverse limits are set explicitly: left unset, the installed controller slowed reverse
+    # motion at 0.5 m/s^2 instead of the documented -max_deceleration (TS-012). Jerk limits stay NaN.
+    linear.x.max_velocity: 0.5  # m/s forward
+    linear.x.min_velocity: -0.25  # m/s reverse
+    linear.x.max_acceleration: 0.5  # m/s^2, speeding up forward
+    linear.x.max_deceleration: -1.0  # m/s^2, slowing down from forward
+    linear.x.max_acceleration_reverse: -0.5  # m/s^2, speeding up in reverse
+    linear.x.max_deceleration_reverse: 1.0  # m/s^2, slowing down from reverse
+    angular.z.max_velocity: 1.0  # rad/s
+    angular.z.min_velocity: -1.0  # rad/s
+    angular.z.max_acceleration: 2.0  # rad/s^2
+    angular.z.max_deceleration: -2.0  # rad/s^2
+    angular.z.max_acceleration_reverse: -2.0  # rad/s^2
+    angular.z.max_deceleration_reverse: 2.0  # rad/s^2
+
+joint_state_broadcaster:
+  ros__parameters:
+    use_sim_time: true
+
+# The gz_ros2_control plugin's own ROS node reads this file too; without this entry it ran on
+# wall time (TS-018, REQ-M2-05).
+gz_ros_control:
+  ros__parameters:
+    use_sim_time: true
+
+# Command-freshness guard between /cmd_vel and the controller input (DEC-029, TS-015).
+# cmd_vel_timeout must equal diff_drive_controller cmd_vel_timeout (checked by TEST-M2-11).
+cmd_vel_guard:
+  ros__parameters:
+    use_sim_time: true
+    cmd_vel_timeout: 0.5  # s: forward only if |now - stamp| <= this
