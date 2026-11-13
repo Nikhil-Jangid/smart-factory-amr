@@ -2,6 +2,8 @@
 # Gazebo simulation tests run on my development machine: hosted runners have no GPU for headless rendering.
 # Runs for pushes that change code, configuration, tests or this workflow, and on manual dispatch.
 # The runner never records a PASS by itself; CI shows its classification and keeps the logs as an artifact for 7 days.
+# Run tags are GH<run>a<attempt>: the CI<n> tags belong to archived runs from my development history, and the runner
+# refuses a tag whose logs already exist.
 name: ci
 
 on:
@@ -51,7 +53,7 @@ jobs:
       - name: GPU-free suite (TEST-M3-01 build, TEST-M3-13 unit tests, TEST-M3-02 model regression incl. M1 byte identity, TEST-M4-03 odometry recomputation)
         run: |
           source /opt/ros/jazzy/setup.bash && source amr_ws/install/setup.bash
-          python3 -I tools/run_suite.py ci CI${{ github.run_number }}a${{ github.run_attempt }}
+          python3 -I tools/run_suite.py ci GH${{ github.run_number }}a${{ github.run_attempt }}
 
       - name: Keep the logs
         if: always()
@@ -59,6 +61,6 @@ jobs:
         with:
           name: ci-logs-${{ github.run_number }}-${{ github.run_attempt }}
           path: |
-            docs/evidence/**/*-CI${{ github.run_number }}a${{ github.run_attempt }}_*
+            docs/evidence/**/*-GH${{ github.run_number }}a${{ github.run_attempt }}_*
           retention-days: 7
           if-no-files-found: warn
