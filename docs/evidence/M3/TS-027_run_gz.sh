@@ -5,7 +5,7 @@ OUT=$1; MODEL=$2
 source /opt/ros/jazzy/setup.bash; source <home>/Projects/smart-factory-amr/amr_ws/install/setup.bash
 export GZ_PARTITION=ts027_gz_$$
 W=$(ros2 pkg prefix amr_bringup)/share/amr_bringup/worlds/sensor_test.sdf
-D=<scratch>
+D=${SCRATCH:?set SCRATCH to a scratch directory}   # archived investigation script; the original scratch path is not kept
 {
 echo "# gz sim -r -s --headless-rendering sensor_test.sdf; spawn $(basename $MODEL) at (0,-20,0)"
 gz sim -r -s --headless-rendering "$W" > "$OUT.server" 2>&1 &
