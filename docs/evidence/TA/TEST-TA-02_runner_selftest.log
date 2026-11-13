@@ -1,0 +1,71 @@
+# TEST-TA-02 runner self-test, 2026-11-04 18:23:45 IST, revision c898116 (tools/run_suite.py uncommitted; committed unchanged after this run)
+$ python3 -I tools/run_suite.py --self-test
+## pass: bash -c 'echo "# overall: ALL STEPS PASSED" > "$1"; exit 0' x /tmp/tmp91vc24ew/pass-T1.log
+# pass: exit 0, PASS-candidate, 0 s; # overall: ALL STEPS PASSED
+## fail: bash -c 'echo "# overall: AT LEAST ONE STEP FAILED" > "$1"; exit 1' x /tmp/tmp91vc24ew/fail-T1.log
+# fail: exit 1, FAIL, 0 s; # overall: AT LEAST ONE STEP FAILED
+## mismatch-exit0: bash -c 'echo "# overall: AT LEAST ONE STEP FAILED" > "$1"; exit 0' x /tmp/tmp91vc24ew/mismatch-exit0-T1.log
+# mismatch-exit0: exit 0, MISMATCH, 0 s; # overall: AT LEAST ONE STEP FAILED
+## mismatch-exit1: bash -c 'echo "# overall: ALL 3 VALID RUNS PASSED" > "$1"; exit 1' x /tmp/tmp91vc24ew/mismatch-exit1-T1.log
+# mismatch-exit1: exit 1, MISMATCH, 0 s; # overall: ALL 3 VALID RUNS PASSED
+## no-overall: bash -c 'echo "nothing" > "$1"; exit 0' x /tmp/tmp91vc24ew/no-overall-T1.log
+# no-overall: exit 0, NO-OVERALL, 0 s; None
+## checker: bash -c 'echo "PASS  a"; echo "== ALL CHECKS PASSED"; exit 0'
+# checker: exit 0, PASS-candidate, 0 s; == ALL CHECKS PASSED
+## checker-fail: bash -c 'echo "FAIL  a"; echo "== 1 CHECK(S) FAILED"; exit 1'
+# checker-fail: exit 1, FAIL, 0 s; == 1 CHECK(S) FAILED
+## ts029: bash -c 'printf "# TS-029 attempts declared invalid under DEC-039: 1\n# TS-029 attempts declared invalid under DEC-039: 2\n# overall: ALL 3 VALID RUNS PASSED\n" > "$1"; exit 0' x /tmp/tmp91vc24ew/ts029-T1.log
+# ts029: exit 0, PASS-candidate, 0 s; # overall: ALL 3 VALID RUNS PASSED
+## exists: bash -c 'touch /tmp/tmp91vc24ew/exists-ran; echo "# overall: PASS" > "$1"; exit 0' x /tmp/tmp91vc24ew/exists-T1.log
+# exists: exit None, REFUSED (log exists), 0 s; None
+| # | Entry | Exit | Overall line | Runner classification | TS-029 invalid (DEC-039) | Duration | Log |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | 0 | # overall: ALL STEPS PASSED | PASS-candidate | 0 | 0 s | `/tmp/tmp91vc24ew/pass-T1.log` |
+| 2 | fail | 1 | # overall: AT LEAST ONE STEP FAILED | FAIL | 0 | 0 s | `/tmp/tmp91vc24ew/fail-T1.log` |
+| 3 | mismatch-exit0 | 0 | # overall: AT LEAST ONE STEP FAILED | MISMATCH | 0 | 0 s | `/tmp/tmp91vc24ew/mismatch-exit0-T1.log` |
+| 4 | mismatch-exit1 | 1 | # overall: ALL 3 VALID RUNS PASSED | MISMATCH | 0 | 0 s | `/tmp/tmp91vc24ew/mismatch-exit1-T1.log` |
+| 5 | no-overall | 0 | — | NO-OVERALL | 0 | 0 s | `/tmp/tmp91vc24ew/no-overall-T1.log` |
+| 6 | checker | 0 | == ALL CHECKS PASSED | PASS-candidate | 0 | 0 s | `/tmp/tmp91vc24ew/checker-T1.log` |
+| 7 | checker-fail | 1 | == 1 CHECK(S) FAILED | FAIL | 0 | 0 s | `/tmp/tmp91vc24ew/checker-fail-T1.log` |
+| 8 | ts029 | 0 | # overall: ALL 3 VALID RUNS PASSED | PASS-candidate | 3 | 0 s | `/tmp/tmp91vc24ew/ts029-T1.log` |
+| 9 | exists | — | — | REFUSED (log exists) | 0 | 0 s | `/tmp/tmp91vc24ew/exists-T1.log` |
+# summary: /tmp/tmp91vc24ew/selftest-T1_summary.md
+# overall: AT LEAST ONE ENTRY NOT PASS-candidate
+PASS  pass: classified PASS-candidate (got PASS-candidate)
+PASS  fail: classified FAIL (got FAIL)
+PASS  mismatch-exit0: classified MISMATCH (got MISMATCH)
+PASS  mismatch-exit1: classified MISMATCH (got MISMATCH)
+PASS  no-overall: classified NO-OVERALL (got NO-OVERALL)
+PASS  checker: classified PASS-candidate (got PASS-candidate)
+PASS  checker-fail: classified FAIL (got FAIL)
+PASS  ts029: classified PASS-candidate (got PASS-candidate)
+PASS  exists: classified REFUSED (log exists) (got REFUSED (log exists))
+PASS  TS-029 lines summed to 3 (got 3)
+PASS  an entry whose log exists is not executed
+PASS  mixed suite exits 1 (got 1)
+PASS  summary file written
+# refused: /tmp/tmp91vc24ew/selftest-T1_summary.md exists (choose a new tag)
+PASS  existing summary (reused tag) refused with exit 3 (got 3)
+## pass: bash -c 'echo "# overall: ALL STEPS PASSED" > "$1"; exit 0' x /tmp/tmp91vc24ew/pass-T2.log
+# pass: exit 0, PASS-candidate, 0 s; # overall: ALL STEPS PASSED
+| # | Entry | Exit | Overall line | Runner classification | TS-029 invalid (DEC-039) | Duration | Log |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | 0 | # overall: ALL STEPS PASSED | PASS-candidate | 0 | 0 s | `/tmp/tmp91vc24ew/pass-T2.log` |
+# summary: /tmp/tmp91vc24ew/allpass-T2_summary.md
+# overall: ALL ENTRIES PASS-candidate
+PASS  all-PASS suite exits 0 (got 0)
+# refused: simulation processes are running; nothing was started:
+#   123 gz sim -r
+PASS  a running simulation refuses the start, exit 3, nothing run (got 3)
+## pass: bash -c 'echo "# overall: ALL STEPS PASSED" > "$1"; exit 0' x /tmp/tmp91vc24ew/pass-T4.log
+# pass: exit 0, PASS-candidate, 0 s; # overall: ALL STEPS PASSED
+# suite stopped: simulation processes left after "pass": 456 ros2 launch amr_bringup sim.launch.py
+| # | Entry | Exit | Overall line | Runner classification | TS-029 invalid (DEC-039) | Duration | Log |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | 0 | # overall: ALL STEPS PASSED | PASS-candidate | 0 | 0 s | `/tmp/tmp91vc24ew/pass-T4.log` |
+# summary: /tmp/tmp91vc24ew/leftover-T4_summary.md
+# overall: AT LEAST ONE ENTRY NOT PASS-candidate
+PASS  a leftover process between entries stops the suite, exit 1 (got 1, 1 run)
+PASS  process pattern matches gz sim and ros2 launch, not unrelated processes
+# overall: PASS
+# exit 0

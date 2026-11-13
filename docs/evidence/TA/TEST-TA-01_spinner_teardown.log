@@ -1,0 +1,6 @@
+# TEST-TA-01 spinner teardown, 1000 teardowns, 2026-11-04 18:17:03 IST, revision 68eab15 (harness files with uncommitted changes), ROS_DOMAIN_ID 77
+# duration 120.6 s
+# spin thread ended cleanly: 1000
+# other thread exceptions: 0
+PASS  1000 of 1000 teardowns ended cleanly; threads alive 0; other exceptions 0
+# overall: PASS

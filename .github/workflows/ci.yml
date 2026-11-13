@@ -1,0 +1,64 @@
+# GPU-free checks (DEC-040; REQ-TA-05; plan docs/milestones/M3-M4_test_automation.md §7).
+# Gazebo simulation tests run on my development machine: hosted runners have no GPU for headless rendering.
+# Runs for pushes that change code, configuration, tests or this workflow, and on manual dispatch.
+# The runner never records a PASS by itself; CI shows its classification and keeps the logs as an artifact for 7 days.
+name: ci
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'amr_ws/**'
+      - 'tools/**'
+      - 'docs/evidence/**/*.py'
+      - 'docs/evidence/**/*.sh'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gpu-free:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10   # a normal run takes about 3 min; caps a hung run
+    container: ros:jazzy-ros-base   # official image, same apt packages as the development machine
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Git and ps (before checkout, so that checkout makes a real repository; the procedures call git)
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends git procps   # procps: `ps` for the runner's process check
+          git config --global --add safe.directory '*'
+
+      - uses: actions/checkout@v4
+
+      - name: Package dependencies (rosdep, all types)
+        # All types, not only build/test: TEST-M3-02 runs xacro, `gz sim --version` and `gz sdf -p`,
+        # which come from execution dependencies (xacro, ros_gz_sim / gz_sim_vendor).
+        run: |
+          rosdep update --rosdistro jazzy
+          rosdep install --from-paths amr_ws/src --ignore-src -y --rosdistro jazzy
+
+      - name: Initial build (the runner needs a sourced install space)
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          cd amr_ws && colcon build --symlink-install
+
+      - name: GPU-free suite (TEST-M3-01 build, TEST-M3-13 unit tests, TEST-M3-02 model regression incl. M1 byte identity, TEST-M4-03 odometry recomputation)
+        run: |
+          source /opt/ros/jazzy/setup.bash && source amr_ws/install/setup.bash
+          python3 -I tools/run_suite.py ci CI${{ github.run_number }}a${{ github.run_attempt }}
+
+      - name: Keep the logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-logs-${{ github.run_number }}-${{ github.run_attempt }}
+          path: |
+            docs/evidence/**/*-CI${{ github.run_number }}a${{ github.run_attempt }}_*
+          retention-days: 7
+          if-no-files-found: warn
