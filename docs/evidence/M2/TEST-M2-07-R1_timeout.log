@@ -1,0 +1,50 @@
+# TEST-M2 procedure: mode=timeout, valid runs required=3, 2026-10-22 22:01:51 IST
+# revision 7b90453 (amr_ws/src clean)
+# ros2_control 4.48.1-1noble.20261006.040510, diff_drive_controller 4.42.1-1noble.20260924.190414, gz_ros2_control 1.2.20-1noble.20261006.040504
+
+## attempt 1 (ROS_DOMAIN_ID=71, GZ_PARTITION=amr_m2_timeout_<pid>_1)
+# TEST-M2 harness mode=timeout, wall 2026-10-22 22:01:52 IST
+INFO  RTF over the measurement window = 0.996 (valid if >= 0.5)
+PASS  timeout: cmd_vel_out starts decreasing 0.501 s after the last message <= 0.52 s
+PASS  timeout: at rest 0.726 s after the last message <= 0.90 s
+# samples: ground truth 642, odometry 402, joint_states 1089, cmd_vel_out 804, tf 402
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         4 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 2 (ROS_DOMAIN_ID=72, GZ_PARTITION=amr_m2_timeout_<pid>_2)
+# TEST-M2 harness mode=timeout, wall 2026-10-22 22:02:09 IST
+INFO  RTF over the measurement window = 0.999 (valid if >= 0.5)
+PASS  timeout: cmd_vel_out starts decreasing 0.500 s after the last message <= 0.52 s
+PASS  timeout: at rest 0.715 s after the last message <= 0.90 s
+# samples: ground truth 627, odometry 401, joint_states 1065, cmd_vel_out 802, tf 401
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         4 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 3 (ROS_DOMAIN_ID=73, GZ_PARTITION=amr_m2_timeout_<pid>_3)
+# TEST-M2 harness mode=timeout, wall 2026-10-22 22:02:26 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  timeout: cmd_vel_out starts decreasing 0.486 s after the last message <= 0.52 s
+PASS  timeout: at rest 0.702 s after the last message <= 0.90 s
+# samples: ground truth 589, odometry 403, joint_states 1001, cmd_vel_out 805, tf 403
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         4 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: ALL 3 VALID RUNS PASSED

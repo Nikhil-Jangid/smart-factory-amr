@@ -1,0 +1,11 @@
+# world OPEN-09_friction_probe.sdf; theta 21.801 deg; ground mu 0.6; g sin 3.6433, g cos 9.1084 m/s^2
+# samples at sim t = 0.018 s and 2.636 s (6 reads)
+box              x0 [m]     x1 [m]   a_meas | predicted a [m/s^2] for mu_eff = min / product / max
+box_mu000       0.00062   12.66268   3.6447 | 3.6433 / 3.6433 / 0.0000
+box_mu001       0.00061   12.34611   3.5536 | 3.5523 / 3.5887 / 0.0000
+box_mu030       0.00016    3.16567   0.9112 | 0.9108 / 2.0038 / 0.0000
+box_mu050       0.00000    0.00000   0.0000 | 0.0000 / 0.9108 / 0.0000
+box_mu100       0.00000    0.00000   0.0000 | 0.0000 / 0.0000 / 0.0000
+box_default     0.00000    0.00000   0.0000 | 0.0000 / 0.0000 / 0.0000
+# server stderr (tail):
+

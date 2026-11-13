@@ -1,0 +1,7 @@
+Starting >>> amr_description
+Finished <<< amr_description [0.16s]
+Starting >>> amr_bringup
+Finished <<< amr_bringup [0.18s]
+
+Summary: 2 packages finished [0.55s]
+# exit 0

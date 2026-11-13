@@ -1,0 +1,62 @@
+# TEST-M2 procedure: mode=wallclock, valid runs required=3, 2026-11-13 17:22:05 IST
+# revision 16a5255 (amr_ws/src clean)
+# ros2_control 4.48.1-1noble.20261006.040510, diff_drive_controller 4.42.1-1noble.20260924.190414, gz_ros2_control 1.2.20-1noble.20261006.040504
+
+## attempt 1 (ROS_DOMAIN_ID=71, GZ_PARTITION=amr_m2_wallclock_<pid>_1, headless:=false)
+# TEST-M2 harness mode=wallclock, wall 2026-11-13 17:22:05 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+INFO  wallclock (characterization): displacement while publishing 0.0000 m; at rest 0.008 s after the last message; displacement in the 3 s after 0.0000 m
+PASS  wallclock: commands stamped in wall-clock time cause no motion: 0.000 mm < 5 mm (DEC-029)
+PASS  wallclock: no motion after the last message either: 0.000 mm < 5 mm
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 492, odometry 352, joint_states 837, cmd_vel_out 705, tf 352
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1794570730.116 s, window 0.500 s; 48 rejected so far)
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1794570730.117 s, window 0.500 s; 1 rejected so far)
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         6 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 2 (ROS_DOMAIN_ID=72, GZ_PARTITION=amr_m2_wallclock_<pid>_2, headless:=false)
+# TEST-M2 harness mode=wallclock, wall 2026-11-13 17:22:19 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+INFO  wallclock (characterization): displacement while publishing 0.0000 m; at rest 0.015 s after the last message; displacement in the 3 s after 0.0000 m
+PASS  wallclock: commands stamped in wall-clock time cause no motion: 0.000 mm < 5 mm (DEC-029)
+PASS  wallclock: no motion after the last message either: 0.000 mm < 5 mm
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 493, odometry 352, joint_states 838, cmd_vel_out 703, tf 351
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1794570744.121 s, window 0.500 s; 1 rejected so far)
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1794570744.121 s, window 0.500 s; 48 rejected so far)
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         6 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 3 (ROS_DOMAIN_ID=73, GZ_PARTITION=amr_m2_wallclock_<pid>_3, headless:=false)
+# TEST-M2 harness mode=wallclock, wall 2026-11-13 17:22:33 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+INFO  wallclock (characterization): displacement while publishing 0.0000 m; at rest 0.016 s after the last message; displacement in the 3 s after 0.0000 m
+PASS  wallclock: commands stamped in wall-clock time cause no motion: 0.000 mm < 5 mm (DEC-029)
+PASS  wallclock: no motion after the last message either: 0.000 mm < 5 mm
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 490, odometry 352, joint_states 833, cmd_vel_out 705, tf 352
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1794570758.142 s, window 0.500 s; 1 rejected so far)
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1794570758.143 s, window 0.500 s; 48 rejected so far)
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         6 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: ALL 3 VALID RUNS PASSED

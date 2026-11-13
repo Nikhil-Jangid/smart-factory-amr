@@ -1,0 +1,95 @@
+# TEST-M2 procedure: mode=startup, valid runs required=3, 2026-10-22 21:57:14 IST
+# revision 7b90453 (amr_ws/src clean)
+# ros2_control 4.48.1-1noble.20261006.040510, diff_drive_controller 4.42.1-1noble.20260924.190414, gz_ros2_control 1.2.20-1noble.20261006.040504
+
+## attempt 1 (ROS_DOMAIN_ID=71, GZ_PARTITION=amr_m2_startup_<pid>_1)
+# TEST-M2 harness mode=startup, wall 2026-10-22 21:57:15 IST
+PASS  startup: drive controller active (first odometry) 1.441 s of sim time after spawn <= 10 s
+PASS  startup: displacement before activation 0.000 mm < 5 mm (command 0.2 m/s published throughout)
+INFO  startup: displacement in the 3 s after activation 0.5603 m (commands then apply)
+# samples: ground truth 262, odometry 150, joint_states 445, cmd_vel_out 302, tf 151
+# result: ALL CRITERIA PASSED
+$ ros2 control list_controllers
+diff_drive_controller   diff_drive_controller/DiffDriveController      active
+joint_state_broadcaster joint_state_broadcaster/JointStateBroadcaster  active
+$ ros2 control list_hardware_interfaces
+command interfaces
+	diff_drive_controller/angular/velocity [available] [unclaimed]
+	diff_drive_controller/linear/velocity [available] [unclaimed]
+	left_wheel_joint/velocity [available] [claimed]
+	right_wheel_joint/velocity [available] [claimed]
+state interfaces
+	left_wheel_joint/position
+	left_wheel_joint/velocity
+	right_wheel_joint/position
+	right_wheel_joint/velocity
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Can't accept new commands. subscriber is inactive
+#         4 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 2 (ROS_DOMAIN_ID=72, GZ_PARTITION=amr_m2_startup_<pid>_2)
+# TEST-M2 harness mode=startup, wall 2026-10-22 21:57:30 IST
+PASS  startup: drive controller active (first odometry) 2.170 s of sim time after spawn <= 10 s
+PASS  startup: displacement before activation 0.000 mm < 5 mm (command 0.2 m/s published throughout)
+INFO  startup: displacement in the 3 s after activation 0.5605 m (commands then apply)
+# samples: ground truth 305, odometry 151, joint_states 519, cmd_vel_out 302, tf 151
+# result: ALL CRITERIA PASSED
+$ ros2 control list_controllers
+diff_drive_controller   diff_drive_controller/DiffDriveController      active
+joint_state_broadcaster joint_state_broadcaster/JointStateBroadcaster  active
+$ ros2 control list_hardware_interfaces
+command interfaces
+	diff_drive_controller/angular/velocity [available] [unclaimed]
+	diff_drive_controller/linear/velocity [available] [unclaimed]
+	left_wheel_joint/velocity [available] [claimed]
+	right_wheel_joint/velocity [available] [claimed]
+state interfaces
+	left_wheel_joint/position
+	left_wheel_joint/velocity
+	right_wheel_joint/position
+	right_wheel_joint/velocity
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Can't accept new commands. subscriber is inactive
+#         3 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 3 (ROS_DOMAIN_ID=73, GZ_PARTITION=amr_m2_startup_<pid>_3)
+# TEST-M2 harness mode=startup, wall 2026-10-22 21:57:45 IST
+PASS  startup: drive controller active (first odometry) 2.272 s of sim time after spawn <= 10 s
+PASS  startup: displacement before activation 0.000 mm < 5 mm (command 0.2 m/s published throughout)
+INFO  startup: displacement in the 3 s after activation 0.5618 m (commands then apply)
+# samples: ground truth 311, odometry 151, joint_states 529, cmd_vel_out 302, tf 151
+# result: ALL CRITERIA PASSED
+$ ros2 control list_controllers
+diff_drive_controller   diff_drive_controller/DiffDriveController      active
+joint_state_broadcaster joint_state_broadcaster/JointStateBroadcaster  active
+$ ros2 control list_hardware_interfaces
+command interfaces
+	diff_drive_controller/angular/velocity [available] [unclaimed]
+	diff_drive_controller/linear/velocity [available] [unclaimed]
+	left_wheel_joint/velocity [available] [claimed]
+	right_wheel_joint/velocity [available] [claimed]
+state interfaces
+	left_wheel_joint/position
+	left_wheel_joint/velocity
+	right_wheel_joint/position
+	right_wheel_joint/velocity
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Can't accept new commands. subscriber is inactive
+#         4 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: ALL 3 VALID RUNS PASSED

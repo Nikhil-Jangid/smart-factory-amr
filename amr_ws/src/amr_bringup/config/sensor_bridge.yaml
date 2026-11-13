@@ -1,0 +1,13 @@
+# M3 sensor bridge (DEC-031, DEC-032, DEC-034, Task B). Gazebo -> ROS only.
+# Loaded by sim.launch.py only with sensors:=true. The frame_id comes from each sensor's
+# <gz_frame_id> in amr.sensors.xacro (laser_frame, imu_link).
+- ros_topic_name: /scan
+  gz_topic_name: /scan
+  ros_type_name: sensor_msgs/msg/LaserScan
+  gz_type_name: gz.msgs.LaserScan
+  direction: GZ_TO_ROS
+- ros_topic_name: /imu
+  gz_topic_name: /imu
+  ros_type_name: sensor_msgs/msg/Imu
+  gz_type_name: gz.msgs.IMU
+  direction: GZ_TO_ROS

@@ -1,0 +1,60 @@
+# TEST-M2-04, 2026-11-04 18:27:22 IST, revision cbb80c3 (amr_ws/src clean)
+
+$ ros2 topic echo --once /clock   (twice, about 2 s apart)
+clock.sec: 3 then 6
+# exit 0
+
+$ ros2 param get <node> use_sim_time   (every M2 runtime node)
+nodes: /cmd_vel_guard /controller_manager /diff_drive_controller /gz_ros_control /joint_state_broadcaster /robot_state_publisher /ros_gz_bridge
+/cmd_vel_guard: Boolean value is: True
+/controller_manager: Boolean value is: True
+/diff_drive_controller: Boolean value is: True
+/gz_ros_control: Boolean value is: True
+/joint_state_broadcaster: Boolean value is: True
+/robot_state_publisher: Boolean value is: True
+/ros_gz_bridge: Boolean value is: True
+# exit 0
+
+$ ros2 topic echo --once /joint_states
+name:
+- left_wheel_joint
+- right_wheel_joint
+position:
+- -3.67338607071393e-17
+- -4.406082130549819e-18
+velocity:
+- -3.8172772612172366e-18
+- -2.1390128563940157e-18
+effort:
+# exit 0
+
+$ ros2 topic echo --once /diff_drive_controller/odom   (header and child frame)
+  frame_id: odom
+child_frame_id: base_footprint
+# exit 0
+
+$ ros2 run tf2_ros tf2_echo odom base_footprint   (first transform)
+At time 19.369000000
+- Translation: [-0.000, -0.000, 0.000]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+# exit 0
+
+$ ros2 run tf2_tools view_frames   (TF tree)
+[INFO] [1793797073.925194603] [view_frames]: Listening to tf data for 5.0 seconds...
+[INFO] [1793797078.944348491] [view_frames]: Generating graph...
+[INFO] [1793797078.946189466] [view_frames]: Result:tf2_msgs.srv.FrameGraph_Response(frame_yaml="left_wheel_link: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 19.227\n  most_recent_transform: 32.020000\n  oldest_transform: 27.079000\n  buffer_length: 4.941\nbase_link: \n  parent: 'base_footprint'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\nright_wheel_link: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 19.227\n  most_recent_transform: 32.020000\n  oldest_transform: 27.079000\n  buffer_length: 4.941\nbase_footprint: \n  parent: 'odom'\n  broadcaster: 'default_authority'\n  rate: 50.221\n  most_recent_transform: 32.069000\n  oldest_transform: 27.549000\n  buffer_length: 4.520\ncaster_link: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\nlidar_mount_link: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\n")
+edges: [('base_footprint', 'base_link'), ('base_link', 'caster_link'), ('base_link', 'left_wheel_link'), ('base_link', 'lidar_mount_link'), ('base_link', 'right_wheel_link'), ('odom', 'base_footprint')]
+tree == odom -> base_footprint -> M1 tree, one parent per frame: True
+# exit 0
+
+$ python3 TEST-M2_motion_measure.py tfcheck   (TF odom->base_footprint vs odometry at the same stamp)
+# TEST-M2 harness mode=tfcheck, wall 2026-11-04 18:27:59 IST
+PASS  odometry frame ids [('odom', 'base_footprint')] == [(odom, base_footprint)]
+PASS  TF odom->base_footprint equals odometry at the same stamp: 351 pairs, max 0.000000 mm, 0.000000 deg
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 422, odometry 352, joint_states 703, cmd_vel_out 702, tf 351
+# result: ALL CRITERIA PASSED
+# exit 0
+
+# launch log: 0 [ERROR] lines; leftover gz processes: 0
+# overall: ALL CHECKS PASSED

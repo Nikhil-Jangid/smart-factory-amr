@@ -1,0 +1,291 @@
+# TEST-M2-02 review, 2026-10-22 21:57:13 IST, revision 7b90453 (amr_ws/src clean)
+# xacro 2.1.1-1noble.20260519.011123, sdformat 14.9.0; controllers file <install>/share/amr_bringup/config/controllers.yaml
+
+## Default variant (use_ros2_control unset): M1 baseline must be unchanged
+
+$ (cd amr_ws && xacro src/amr_description/urdf/amr.urdf.xacro) > <tmp>/off.urdf; cmp with docs/evidence/M1/TEST-M1-02_amr.urdf
+identical
+# exit 0
+
+$ gz sdf -p <tmp>/off.urdf > <tmp>/off.sdf; cmp with docs/evidence/M1/TEST-M1-03_amr.sdf
+identical
+# exit 0
+
+$ check_urdf <tmp>/off.urdf
+robot name is: amr
+---------- Successfully Parsed XML ---------------
+root Link: base_footprint has 1 child(ren)
+    child(1):  base_link
+        child(1):  caster_link
+        child(2):  left_wheel_link
+        child(3):  lidar_mount_link
+        child(4):  right_wheel_link
+# exit 0
+
+$ python3 -I docs/evidence/M1/TEST-M1-03_check.py <tmp>/off.urdf <tmp>/off.sdf
+== (a) URDF level: <tmp>/off.urdf
+PASS  6 links with the designed names (found 6)
+PASS  5 joints with the designed names (found 5)
+PASS  joint base_footprint_joint: fixed, base_footprint -> base_link, xyz [0, 0, 0.075], axis None  [xyz [0.0, 0.0, 0.075] rpy [0.0, 0.0, 0.0]]
+PASS  joint left_wheel_joint: continuous, base_link -> left_wheel_link, xyz [0, 0.2, 0], axis [0, 1, 0]  [xyz [0.0, 0.2, 0.0] rpy [0.0, 0.0, 0.0]]
+PASS  joint right_wheel_joint: continuous, base_link -> right_wheel_link, xyz [0, -0.2, 0], axis [0, 1, 0]  [xyz [0.0, -0.2, 0.0] rpy [0.0, 0.0, 0.0]]
+PASS  joint caster_joint: fixed, base_link -> caster_link, xyz [-0.36, 0, -0.05], axis None  [xyz [-0.36, 0.0, -0.049999999999999996] rpy [0.0, 0.0, 0.0]]
+PASS  joint lidar_mount_joint: fixed, base_link -> lidar_mount_link, xyz [0.07, 0, 0.125], axis None  [xyz [0.07, 0.0, 0.125] rpy [0.0, 0.0, 0.0]]
+PASS  base_footprint is massless (root)
+PASS  base_link: mass 8.0 kg, inertial origin [-0.1, 0, 0.035]  [mass 8.0, xyz [-0.1, 0.0, 0.035]]
+PASS  base_link: (Ixx, Iyy, Izz) = (0.09127, 0.1446, 0.2167) to 4 s.f., off-diagonal 0  [0.0912667, 0.1446, 0.216667]
+PASS  base_link: moments > 0 and triangle inequality
+PASS  left_wheel_link: mass 0.5 kg, inertial origin [0, 0, 0]  [mass 0.5, xyz [0.0, 0.0, 0.0]]
+PASS  left_wheel_link: (Ixx, Iyy, Izz) = (0.0007542, 0.001406, 0.0007542) to 4 s.f., off-diagonal 0  [0.000754167, 0.00140625, 0.000754167]
+PASS  left_wheel_link: moments > 0 and triangle inequality
+PASS  right_wheel_link: mass 0.5 kg, inertial origin [0, 0, 0]  [mass 0.5, xyz [0.0, 0.0, 0.0]]
+PASS  right_wheel_link: (Ixx, Iyy, Izz) = (0.0007542, 0.001406, 0.0007542) to 4 s.f., off-diagonal 0  [0.000754167, 0.00140625, 0.000754167]
+PASS  right_wheel_link: moments > 0 and triangle inequality
+PASS  caster_link: mass 0.2 kg, inertial origin [0, 0, 0]  [mass 0.2, xyz [0.0, 0.0, 0.0]]
+PASS  caster_link: (Ixx, Iyy, Izz) = (5e-05, 5e-05, 5e-05) to 4 s.f., off-diagonal 0  [5e-05, 5e-05, 5e-05]
+PASS  caster_link: moments > 0 and triangle inequality
+PASS  lidar_mount_link: mass 0.2 kg, inertial origin [0, 0, -0.015]  [mass 0.2, xyz [0.0, 0.0, -0.015]]
+PASS  lidar_mount_link: (Ixx, Iyy, Izz) = (0.0001217, 0.0001217, 0.0002133) to 4 s.f., off-diagonal 0  [0.000121667, 0.000121667, 0.000213333]
+PASS  lidar_mount_link: moments > 0 and triangle inequality
+PASS  total mass 9.4 kg (CALC-M1-06)  [9.4 kg]
+PASS  base_link visual: box {'size': [0.45, 0.35, 0.12]} at xyz [-0.1, 0, 0.035] rpy [0, 0, 0]
+PASS  base_link collision: box {'size': [0.45, 0.35, 0.12]} at xyz [-0.1, 0, 0.035] rpy [0, 0, 0]
+PASS  left_wheel_link visual: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  left_wheel_link collision: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  right_wheel_link visual: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  right_wheel_link collision: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  caster_link visual: sphere {'radius': [0.025]} at xyz [0, 0, 0] rpy [0, 0, 0]
+PASS  caster_link collision: sphere {'radius': [0.025]} at xyz [0, 0, 0] rpy [0, 0, 0]
+PASS  lidar_mount_link visual: box {'size': [0.08, 0.08, 0.03]} at xyz [0, 0, -0.015] rpy [0, 0, 0]
+PASS  lidar_mount_link collision: box {'size': [0.08, 0.08, 0.03]} at xyz [0, 0, -0.015] rpy [0, 0, 0]
+PASS  left_wheel_joint: wheel bottom at z = 0 above ground  [0 m]
+PASS  right_wheel_joint: wheel bottom at z = 0 above ground  [0 m]
+PASS  caster bottom at z = 0 above ground  [0 m]
+PASS  no <mesh> elements or filename references (REQ-M1-10)  [0 mesh, 0 filename]
+PASS  no <gazebo>, <sensor> or <plugin> elements (REQ-M1-09)  [0 found]
+== (b) SDF level after fixed-joint lumping: <tmp>/off.sdf
+PASS  3 links: base_footprint (lumped) + 2 wheels (found ['base_footprint', 'left_wheel_link', 'right_wheel_link'])
+PASS  lumped base_footprint mass 8.4 kg (CALC-M1-15)  [8.4 kg]
+PASS  lumped CoM (-0.1021, 0, +0.1098) m in base_footprint, 4 s.f.; no rotation  [pose [-0.1021428571428572, 0.0, 0.1097619047619048, 0.0, 0.0, 0.0]]
+PASS  SDF total mass 9.4 kg  [9.4 kg]
+PASS  lumped ixx = parallel-axis combination 0.09401 kg m^2 (4 s.f.)  [0.0940079]
+PASS  lumped iyy = parallel-axis combination 0.1666 kg m^2 (4 s.f.)  [0.166603]
+PASS  lumped izz = parallel-axis combination 0.2362 kg m^2 (4 s.f.)  [0.236191]
+PASS  lumped ixy = parallel-axis combination 0 kg m^2 (4 s.f.)  [0]
+PASS  lumped ixz = parallel-axis combination -0.006966 kg m^2 (4 s.f.)  [-0.00696571]
+PASS  lumped iyz = parallel-axis combination 0 kg m^2 (4 s.f.)  [0]
+PASS  base_footprint holds the 3 lumped collisions (chassis, caster, bracket)  [base_footprint_fixed_joint_lump__base_link_collision, base_footprint_fixed_joint_lump__caster_link_collision_1, base_footprint_fixed_joint_lump__lidar_mount_link_collision_2]
+PASS  lumped links survive as <frame> elements  [base_footprint_joint, base_link, caster_joint, caster_link, lidar_mount_joint, lidar_mount_link]
+PASS  only the 2 wheel joints remain, converted to revolute  [{'left_wheel_joint': 'revolute', 'right_wheel_joint': 'revolute'}]
+== ALL CHECKS PASSED
+# exit 0
+
+$ python3 -I docs/evidence/M1/TEST-M1-08_consistency_check.py <tmp>/off.urdf   # expected: only the M1-scope source-file assertion for amr.ros2_control.xacro fails (TS-016)
+== 1. Parameters: mechanical_geometry.md §2 and mass_inertia.md §1 vs amr_properties.xacro
+PASS  mass_inertia.md §1: left and right wheel masses are equal (one `wheel_mass` property)
+PASS  axle_offset_x = 0.1 (documented)  [xacro 0.1]
+PASS  caster_mass = 0.2 (documented)  [xacro 0.2]
+PASS  caster_radius = 0.025 (documented)  [xacro 0.025]
+PASS  caster_x = -0.36 (documented)  [xacro -0.36]
+PASS  chassis_height = 0.12 (documented)  [xacro 0.12]
+PASS  chassis_length = 0.45 (documented)  [xacro 0.45]
+PASS  chassis_mass = 8 (documented)  [xacro 8.0]
+PASS  chassis_width = 0.35 (documented)  [xacro 0.35]
+PASS  ground_clearance = 0.05 (documented)  [xacro 0.05]
+PASS  lidar_bracket_mass = 0.2 (documented)  [xacro 0.2]
+PASS  lidar_bracket_x = 0.08 (documented)  [xacro 0.08]
+PASS  lidar_bracket_y = 0.08 (documented)  [xacro 0.08]
+PASS  lidar_bracket_z = 0.03 (documented)  [xacro 0.03]
+PASS  lidar_mount_x = 0.07 (documented)  [xacro 0.07]
+PASS  wheel_mass = 0.5 (documented)  [xacro 0.5]
+PASS  wheel_radius = 0.075 (documented)  [xacro 0.075]
+PASS  wheel_track = 0.4 (documented)  [xacro 0.4]
+PASS  wheel_width = 0.035 (documented)  [xacro 0.035]
+PASS  every literal property in amr_properties.xacro is documented  [18 literals]
+PASS  documented masses sum to 9.4 kg (CALC-M1-06)  [9.4 kg]
+== 2. Frames: frames_and_tf.md §2 joint and link inventories vs generated URDF
+PASS  5 joints, names as documented  [base_footprint_joint, caster_joint, left_wheel_joint, lidar_mount_joint, right_wheel_joint]
+PASS  6 links, names as documented  [base_footprint, base_link, caster_link, left_wheel_link, lidar_mount_link, right_wheel_link]
+PASS  single tree rooted at base_footprint  [base_footprint]
+PASS  joint base_footprint_joint: fixed, base_footprint → base_link, xyz (0, 0, 0.075), axis —  [URDF xyz [0.0, 0.0, 0.075] axis None]
+PASS  joint caster_joint: fixed, base_link → caster_link, xyz (−0.360, 0, −0.050), axis —  [URDF xyz [-0.36, 0.0, -0.05] axis None]
+PASS  joint left_wheel_joint: continuous, base_link → left_wheel_link, xyz (0, 0.200, 0), axis (0, 1, 0)  [URDF xyz [0.0, 0.2, 0.0] axis [0.0, 1.0, 0.0]]
+PASS  joint lidar_mount_joint: fixed, base_link → lidar_mount_link, xyz (0.070, 0, 0.125), axis —  [URDF xyz [0.07, 0.0, 0.125] axis None]
+PASS  joint right_wheel_joint: continuous, base_link → right_wheel_link, xyz (0, −0.200, 0), axis (0, 1, 0)  [URDF xyz [0.0, -0.2, 0.0] axis [0.0, 1.0, 0.0]]
+PASS  link base_footprint: massless (no <inertial>)
+PASS  link base_link: mass 8.0 kg, inertial origin (−0.100, 0, +0.035)  [URDF mass 8, origin [-0.1, 0.0, 0.035]]
+PASS  link caster_link: mass 0.2 kg, inertial origin (0, 0, 0)  [URDF mass 0.2, origin [0.0, 0.0, 0.0]]
+PASS  link left_wheel_link: mass 0.5 kg, inertial origin (0, 0, 0)  [URDF mass 0.5, origin [0.0, 0.0, 0.0]]
+PASS  link lidar_mount_link: mass 0.2 kg, inertial origin (0, 0, −0.015)  [URDF mass 0.2, origin [0.0, 0.0, -0.015]]
+PASS  link right_wheel_link: mass 0.5 kg, inertial origin (0, 0, 0)  [URDF mass 0.5, origin [0.0, 0.0, 0.0]]
+== 3. Derived placements (mechanical_geometry.md §3) and clearances (CALC-M1-02 to -05, -13, -14) from the generated URDF
+PASS  base_link: collision geometry and pose equal the visual
+PASS  left_wheel_link: collision geometry and pose equal the visual
+PASS  right_wheel_link: collision geometry and pose equal the visual
+PASS  caster_link: collision geometry and pose equal the visual
+PASS  lidar_mount_link: collision geometry and pose equal the visual
+PASS  base_link height above ground (§2, DEC-016) = 0.075 m  [0.075000000]
+PASS  chassis centre x (§3) = -0.1 m  [-0.100000000]
+PASS  chassis centre z in base_link (§3) = 0.035 m  [0.035000000]
+PASS  wheel joint y, left (§3) = 0.2 m  [0.200000000]
+PASS  wheel joint y, right (§3) = -0.2 m  [-0.200000000]
+PASS  caster centre (§3) x = -0.36 m  [-0.360000000]
+PASS  caster centre (§3) z = -0.05 m  [-0.050000000]
+PASS  lidar_mount_link origin (§3) x = 0.07 m  [0.070000000]
+PASS  lidar_mount_link origin (§3) z = 0.125 m  [0.125000000]
+PASS  bracket box centre below mount origin (frames_and_tf.md §2) = -0.015 m  [-0.015000000]
+PASS  CALC-M1-01 chassis front x = 0.125 m  [0.125000000]
+PASS  CALC-M1-01 chassis rear x = -0.325 m  [-0.325000000]
+PASS  CALC-M1-02 chassis bottom above ground (ground clearance) = 0.05 m  [0.050000000]
+PASS  CALC-M1-02 platform top above ground = 0.17 m  [0.170000000]
+PASS  CALC-M1-02 wheel top above ground = 0.15 m  [0.150000000]
+PASS  CALC-M1-03 wheel-to-chassis gap per side = 0.0075 m  [0.007500000]
+PASS  CALC-M1-03 overall width across wheel outer faces = 0.435 m  [0.435000000]
+PASS  CALC-M1-04 wheel bottom above ground = 0 m  [0.000000000]
+PASS  CALC-M1-04 caster bottom above ground = 0 m  [0.000000000]
+PASS  CALC-M1-05 overall length (chassis front to caster rear) = 0.51 m  [0.510000000]
+PASS  CALC-M1-05 overall height (bracket top) = 0.2 m  [0.200000000]
+PASS  CALC-M1-14 bracket front set back from chassis front = 0.015 m  [0.015000000]
+PASS  CALC-M1-14 bracket base on the platform (contact, not clearance) = 0 m  [0.000000000]
+PASS  CALC-M1-13 caster-to-chassis clearance = 18.0 mm (0.1 mm)  [18.0116 mm]
+PASS  CALC-M1-13 caster sphere entirely behind the chassis rear face  [sphere front -0.335 < rear -0.325]
+PASS  CALC-M1-13 swept radius about base_link = 0.385 m  [0.3850 m]
+PASS  OPEN-04: wheel cylinder geometry rotated rpy (pi/2, 0, 0)  [[1.570796, 0.0, 0.0]]
+PASS  generated URDF reproduces documented chassis_length = 0.45  [0.450000000]
+PASS  generated URDF reproduces documented chassis_width = 0.35  [0.350000000]
+PASS  generated URDF reproduces documented chassis_height = 0.12  [0.120000000]
+PASS  generated URDF reproduces documented wheel_radius = 0.075  [0.075000000]
+PASS  generated URDF reproduces documented wheel_width = 0.035  [0.035000000]
+PASS  generated URDF reproduces documented caster_radius = 0.025  [0.025000000]
+PASS  generated URDF reproduces documented lidar_bracket_x = 0.08  [0.080000000]
+PASS  generated URDF reproduces documented lidar_bracket_y = 0.08  [0.080000000]
+PASS  generated URDF reproduces documented lidar_bracket_z = 0.03  [0.030000000]
+PASS  generated URDF reproduces documented wheel_track = 0.4  [0.400000000]
+PASS  generated URDF reproduces documented caster_x = -0.36  [-0.360000000]
+PASS  generated URDF reproduces documented lidar_mount_x = 0.07  [0.070000000]
+PASS  generated URDF reproduces documented axle_offset_x = 0.1  [0.100000000]
+== 4. M1 scope: no meshes, sensors, plugins, controllers or transmissions
+FAIL  amr_ws/src/amr_description/urdf/amr.ros2_control.xacro: no mesh, gazebo, sensor, plugin, transmission, ros2_control elements  [gazebo=4, plugin=2, ros2_control=1]
+PASS  amr_ws/src/amr_description/urdf/amr.urdf.xacro: no mesh, gazebo, sensor, plugin, transmission, ros2_control elements  [none]
+PASS  amr_ws/src/amr_description/urdf/amr_properties.xacro: no mesh, gazebo, sensor, plugin, transmission, ros2_control elements  [none]
+PASS  amr_ws/src/amr_description/urdf/inertial_macros.xacro: no mesh, gazebo, sensor, plugin, transmission, ros2_control elements  [none]
+PASS  generated URDF: no mesh, gazebo, sensor, plugin, transmission, ros2_control elements  [none]
+== 1 CHECK(S) FAILED
+only the expected M1-scope assertion for the M2 file fails
+# exit 0
+
+$ mesh check: source Xacro files and <tmp>/off.urdf
+amr_properties.xacro: 0 <mesh> elements
+amr.ros2_control.xacro: 0 <mesh> elements
+amr.urdf.xacro: 0 <mesh> elements
+inertial_macros.xacro: 0 <mesh> elements
+off.urdf: 0 <mesh> elements
+# exit 0
+
+## Enabled variant (use_ros2_control:=true controllers_file:=<installed controllers.yaml>)
+
+$ (cd amr_ws && xacro ... use_ros2_control:=true controllers_file:=<ctrl>) > <tmp>/on.urdf; check_urdf
+robot name is: amr
+---------- Successfully Parsed XML ---------------
+root Link: base_footprint has 1 child(ren)
+    child(1):  base_link
+        child(1):  caster_link
+        child(2):  left_wheel_link
+        child(3):  lidar_mount_link
+        child(4):  right_wheel_link
+# exit 0
+
+$ gz sdf -p <tmp>/on.urdf > <tmp>/on.sdf
+# exit 0
+
+$ python3 -I docs/evidence/M1/TEST-M1-03_check.py <tmp>/on.urdf <tmp>/on.sdf   # expected: only REQ-M1-09 and REQ-M1-10 scope assertions fail
+== (a) URDF level: <tmp>/on.urdf
+PASS  6 links with the designed names (found 6)
+PASS  5 joints with the designed names (found 5)
+PASS  joint base_footprint_joint: fixed, base_footprint -> base_link, xyz [0, 0, 0.075], axis None  [xyz [0.0, 0.0, 0.075] rpy [0.0, 0.0, 0.0]]
+PASS  joint left_wheel_joint: continuous, base_link -> left_wheel_link, xyz [0, 0.2, 0], axis [0, 1, 0]  [xyz [0.0, 0.2, 0.0] rpy [0.0, 0.0, 0.0]]
+PASS  joint right_wheel_joint: continuous, base_link -> right_wheel_link, xyz [0, -0.2, 0], axis [0, 1, 0]  [xyz [0.0, -0.2, 0.0] rpy [0.0, 0.0, 0.0]]
+PASS  joint caster_joint: fixed, base_link -> caster_link, xyz [-0.36, 0, -0.05], axis None  [xyz [-0.36, 0.0, -0.049999999999999996] rpy [0.0, 0.0, 0.0]]
+PASS  joint lidar_mount_joint: fixed, base_link -> lidar_mount_link, xyz [0.07, 0, 0.125], axis None  [xyz [0.07, 0.0, 0.125] rpy [0.0, 0.0, 0.0]]
+PASS  base_footprint is massless (root)
+PASS  base_link: mass 8.0 kg, inertial origin [-0.1, 0, 0.035]  [mass 8.0, xyz [-0.1, 0.0, 0.035]]
+PASS  base_link: (Ixx, Iyy, Izz) = (0.09127, 0.1446, 0.2167) to 4 s.f., off-diagonal 0  [0.0912667, 0.1446, 0.216667]
+PASS  base_link: moments > 0 and triangle inequality
+PASS  left_wheel_link: mass 0.5 kg, inertial origin [0, 0, 0]  [mass 0.5, xyz [0.0, 0.0, 0.0]]
+PASS  left_wheel_link: (Ixx, Iyy, Izz) = (0.0007542, 0.001406, 0.0007542) to 4 s.f., off-diagonal 0  [0.000754167, 0.00140625, 0.000754167]
+PASS  left_wheel_link: moments > 0 and triangle inequality
+PASS  right_wheel_link: mass 0.5 kg, inertial origin [0, 0, 0]  [mass 0.5, xyz [0.0, 0.0, 0.0]]
+PASS  right_wheel_link: (Ixx, Iyy, Izz) = (0.0007542, 0.001406, 0.0007542) to 4 s.f., off-diagonal 0  [0.000754167, 0.00140625, 0.000754167]
+PASS  right_wheel_link: moments > 0 and triangle inequality
+PASS  caster_link: mass 0.2 kg, inertial origin [0, 0, 0]  [mass 0.2, xyz [0.0, 0.0, 0.0]]
+PASS  caster_link: (Ixx, Iyy, Izz) = (5e-05, 5e-05, 5e-05) to 4 s.f., off-diagonal 0  [5e-05, 5e-05, 5e-05]
+PASS  caster_link: moments > 0 and triangle inequality
+PASS  lidar_mount_link: mass 0.2 kg, inertial origin [0, 0, -0.015]  [mass 0.2, xyz [0.0, 0.0, -0.015]]
+PASS  lidar_mount_link: (Ixx, Iyy, Izz) = (0.0001217, 0.0001217, 0.0002133) to 4 s.f., off-diagonal 0  [0.000121667, 0.000121667, 0.000213333]
+PASS  lidar_mount_link: moments > 0 and triangle inequality
+PASS  total mass 9.4 kg (CALC-M1-06)  [9.4 kg]
+PASS  base_link visual: box {'size': [0.45, 0.35, 0.12]} at xyz [-0.1, 0, 0.035] rpy [0, 0, 0]
+PASS  base_link collision: box {'size': [0.45, 0.35, 0.12]} at xyz [-0.1, 0, 0.035] rpy [0, 0, 0]
+PASS  left_wheel_link visual: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+FAIL  left_wheel_link collision: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  right_wheel_link visual: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+FAIL  right_wheel_link collision: cylinder {'radius': [0.075], 'length': [0.035]} at xyz [0, 0, 0] rpy [1.5708, 0, 0]
+PASS  caster_link visual: sphere {'radius': [0.025]} at xyz [0, 0, 0] rpy [0, 0, 0]
+PASS  caster_link collision: sphere {'radius': [0.025]} at xyz [0, 0, 0] rpy [0, 0, 0]
+PASS  lidar_mount_link visual: box {'size': [0.08, 0.08, 0.03]} at xyz [0, 0, -0.015] rpy [0, 0, 0]
+PASS  lidar_mount_link collision: box {'size': [0.08, 0.08, 0.03]} at xyz [0, 0, -0.015] rpy [0, 0, 0]
+PASS  left_wheel_joint: wheel bottom at z = 0 above ground  [0 m]
+PASS  right_wheel_joint: wheel bottom at z = 0 above ground  [0 m]
+PASS  caster bottom at z = 0 above ground  [0 m]
+FAIL  no <mesh> elements or filename references (REQ-M1-10)  [0 mesh, 1 filename]
+FAIL  no <gazebo>, <sensor> or <plugin> elements (REQ-M1-09)  [6 found]
+== (b) SDF level after fixed-joint lumping: <tmp>/on.sdf
+PASS  3 links: base_footprint (lumped) + 2 wheels (found ['base_footprint', 'left_wheel_link', 'right_wheel_link'])
+PASS  lumped base_footprint mass 8.4 kg (CALC-M1-15)  [8.4 kg]
+PASS  lumped CoM (-0.1021, 0, +0.1098) m in base_footprint, 4 s.f.; no rotation  [pose [-0.1021428571428572, 0.0, 0.1097619047619048, 0.0, 0.0, 0.0]]
+PASS  SDF total mass 9.4 kg  [9.4 kg]
+PASS  lumped ixx = parallel-axis combination 0.09401 kg m^2 (4 s.f.)  [0.0940079]
+PASS  lumped iyy = parallel-axis combination 0.1666 kg m^2 (4 s.f.)  [0.166603]
+PASS  lumped izz = parallel-axis combination 0.2362 kg m^2 (4 s.f.)  [0.236191]
+PASS  lumped ixy = parallel-axis combination 0 kg m^2 (4 s.f.)  [0]
+PASS  lumped ixz = parallel-axis combination -0.006966 kg m^2 (4 s.f.)  [-0.00696571]
+PASS  lumped iyz = parallel-axis combination 0 kg m^2 (4 s.f.)  [0]
+PASS  base_footprint holds the 3 lumped collisions (chassis, caster, bracket)  [base_footprint_fixed_joint_lump__base_link_collision, base_footprint_fixed_joint_lump__caster_link_collision_1, base_footprint_fixed_joint_lump__lidar_mount_link_collision_2]
+PASS  lumped links survive as <frame> elements  [base_footprint_joint, base_link, caster_joint, caster_link, lidar_mount_joint, lidar_mount_link]
+PASS  only the 2 wheel joints remain, converted to revolute  [{'left_wheel_joint': 'revolute', 'right_wheel_joint': 'revolute'}]
+== 4 CHECK(S) FAILED
+# exit 1
+
+$ python3 -I docs/evidence/M2/TEST-M2-02_control_check.py <tmp>/on.urdf <tmp>/on.sdf <ctrl>
+== URDF: on.urdf
+PASS  6 links / 5 joints (M1 tree unchanged)  [6 / 5]
+PASS  exactly one <ros2_control type="system">
+PASS  hardware plugin gz_ros2_control/GazeboSimSystem  [gz_ros2_control/GazeboSimSystem]
+PASS  only the two wheel joints  [left_wheel_joint, right_wheel_joint]
+PASS  left_wheel_joint: command [velocity], state [position, velocity]  [command ['velocity'], state ['position', 'velocity']]
+PASS  right_wheel_joint: command [velocity], state [position, velocity]  [command ['velocity'], state ['position', 'velocity']]
+PASS  Gazebo plugin gz_ros2_control-system / GazeboSimROS2ControlPlugin
+PASS  plugin <parameters> = controllers file passed by argument  [<ctrl>]
+PASS  left_wheel_link: collision sphere r 0.075 (DEC-028), visual cylinder unchanged  [collision ['sphere'] r 0.075, visual ['cylinder']]
+PASS  right_wheel_link: collision sphere r 0.075 (DEC-028), visual cylinder unchanged  [collision ['sphere'] r 0.075, visual ['cylinder']]
+PASS  no <mesh> elements (REQ-M1-10 intent)
+PASS  no <sensor> elements (no active sensors in M2)
+== SDF: on.sdf
+PASS  left_wheel_link_collision: mu = mu2 = 1 (DEC-024)  [('1', '1')]
+PASS  right_wheel_link_collision: mu = mu2 = 1 (DEC-024)  [('1', '1')]
+PASS  base_footprint_fixed_joint_lump__caster_link_collision_1: mu = mu2 = 0.01 (DEC-024)  [('0.01', '0.01')]
+PASS  no surface parameters on other collisions (chassis, bracket)  [{'base_footprint_fixed_joint_lump__base_link_collision': None, 'base_footprint_fixed_joint_lump__lidar_mount_link_collision_2': None}]
+PASS  no <kp> element (DEC-024)
+PASS  no <kd> element (DEC-024)
+PASS  no <max_vel> element (DEC-024)
+PASS  no <min_depth> element (DEC-024)
+PASS  no <torsional> element (DEC-024)
+PASS  no <slip1> element (DEC-024)
+PASS  no <slip2> element (DEC-024)
+PASS  no <fdir1> element (DEC-024)
+PASS  plugin present in the SDF
+PASS  SDF lumping unchanged: 3 links  [base_footprint, left_wheel_link, right_wheel_link]
+== ALL CHECKS PASSED
+# exit 0
+
+# overall: AT LEAST ONE STEP FAILED

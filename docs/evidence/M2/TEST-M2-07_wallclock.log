@@ -1,0 +1,20 @@
+# TEST-M2 procedure: mode=wallclock, valid runs required=1, 2026-10-22 21:44:28 IST
+# revision 26a6048 (amr_ws/src clean)
+# ros2_control 4.48.1-1noble.20261006.040510, diff_drive_controller 4.42.1-1noble.20260924.190414, gz_ros2_control 1.2.20-1noble.20261006.040504
+
+## attempt 1 (ROS_DOMAIN_ID=71, GZ_PARTITION=amr_m2_wallclock_<pid>_1)
+# TEST-M2 harness mode=wallclock, wall 2026-10-22 21:44:29 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+INFO  wallclock (characterization): displacement while publishing 0.3579 m; at rest never after the last message; displacement in the 3 s after 0.5984 m
+HAZARD  wallclock: the robot did not stop within 0.90 s of the last wall-clock-stamped command (TS entry required)
+# samples: ground truth 523, odometry 352, joint_states 888, cmd_vel_out 704, tf 352
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-3] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-3] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-3] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-3] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-3] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-3] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: ALL 1 VALID RUNS PASSED

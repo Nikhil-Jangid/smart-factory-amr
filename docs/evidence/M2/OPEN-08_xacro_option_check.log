@@ -1,0 +1,35 @@
+# OPEN-08 Xacro option check, 2026-10-22 20:32:40 IST, revision cafc181
+
+$ xacro src/amr_description/urdf/amr.urdf.xacro > off.urdf; cmp off.urdf <repo>/docs/evidence/M1/TEST-M1-02_amr.urdf
+identical
+# exit 0
+
+$ xacro ... use_ros2_control:=false; cmp with default
+identical
+# exit 0
+
+$ xacro ... use_ros2_control:=true controllers_file:=/path/controllers.yaml > on.urdf; check_urdf on.urdf
+---------- Successfully Parsed XML ---------------
+root Link: base_footprint has 1 child(ren)
+# exit 0
+
+$ structure of on.urdf
+links 6 joints 5 ros2_control systems 1 joints ['left_wheel_joint', 'right_wheel_joint'] parameters /path/controllers.yaml
+# exit 0
+
+$ gz sdf -p on.urdf > on.sdf; grep plugin
+1
+# exit 0
+
+$ TEST-M1-03_check.py off.urdf off.sdf   # default variant: all M1 checks expected to pass
+== ALL CHECKS PASSED
+# exit 0
+
+$ TEST-M1-03_check.py on.urdf on.sdf    # enabled variant: only the two M1-scope checks (REQ-M1-09, -10) expected to fail
+FAIL  no <mesh> elements or filename references (REQ-M1-10)  [0 mesh, 1 filename]
+FAIL  no <gazebo>, <sensor> or <plugin> elements (REQ-M1-09)  [3 found]
+== 2 CHECK(S) FAILED
+only the expected M1-scope checks fail
+# exit 0
+
+# overall: ALL CHECKS PASSED
