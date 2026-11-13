@@ -1,0 +1,98 @@
+[INFO] [launch]: All log files can be found below <home>/.ros/log/2026-11-03-16-26-41-236223-nikhiljangid-latitude5330-24551
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [robot_state_publisher-1]: process started with pid [24572]
+[INFO] [parameter_bridge-2]: process started with pid [24573]
+[INFO] [gz-3]: process started with pid [24574]
+[INFO] [create-4]: process started with pid [24575]
+[create-4] [INFO] [1793703401.328613835] [ros_gz_sim]: Waiting messages on topic [robot_description].
+[robot_state_publisher-1] [INFO] [1793703401.332154191] [robot_state_publisher]: Robot initialized
+[parameter_bridge-2] [INFO] [1793703401.340979132] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1793703401.341696110] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/scan (gz.msgs.LaserScan) -> /scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1793703401.344172588] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/imu (gz.msgs.IMU) -> /imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[create-4] [INFO] [1793703401.793495946] [ros_gz_sim]: Entity creation successful.
+[INFO] [create-4]: process has finished cleanly [pid 24575]
+[INFO] [spawner-5]: process started with pid [24639]
+[spawner-5] [INFO] [1793703402.186473534] [spawner_joint_state_broadcaster]: waiting for service /controller_manager/list_controllers to become available...
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [INFO] [1793703403.499922834] [gz_ros_control]: Loading controller_manager
+[gz-3] [INFO] [1793703403.506042783] [controller_manager]: Using ROS clock for triggering controller manager cycles.
+[gz-3] [WARN] [1793703403.506065622] [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+[gz-3] [INFO] [1793703403.510059596] [controller_manager]: Subscribing to '/robot_description' topic for robot description.
+[gz-3] [WARN] [1793703403.510099462] [gz_ros_control]: Waiting RM to load and initialize hardware...
+[gz-3] [INFO] [1793703403.684907960] [controller_manager]: Received robot description from topic.
+[gz-3] [INFO] [1793703403.684972932] [controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[gz-3] [INFO] [1793703403.688753736] [gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gz-3] [INFO] [1793703403.688803603] [gz_ros_control]: Loading joint: left_wheel_joint
+[gz-3] [INFO] [1793703403.688816069] [gz_ros_control]: 	State:
+[gz-3] [INFO] [1793703403.688825722] [gz_ros_control]: 		 position
+[gz-3] [INFO] [1793703403.688833307] [gz_ros_control]: 		 velocity
+[gz-3] [INFO] [1793703403.688845280] [gz_ros_control]: 	Command:
+[gz-3] [INFO] [1793703403.688857514] [gz_ros_control]: 		 velocity
+[gz-3] [INFO] [1793703403.688875358] [gz_ros_control]: Loading joint: right_wheel_joint
+[gz-3] [INFO] [1793703403.688882865] [gz_ros_control]: 	State:
+[gz-3] [INFO] [1793703403.688905969] [gz_ros_control]: 		 position
+[gz-3] [INFO] [1793703403.688927947] [gz_ros_control]: 		 velocity
+[gz-3] [INFO] [1793703403.688930676] [gz_ros_control]: 	Command:
+[gz-3] [INFO] [1793703403.688932741] [gz_ros_control]: 		 velocity
+[gz-3] [INFO] [1793703403.688968116] [gz_ros_control]: Loading sensor: imu
+[gz-3] [INFO] [1793703403.688974802] [gz_ros_control]: 	State:
+[gz-3] [WARN] [1793703403.688977595] [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gz-3] [INFO] [1793703403.689027650] [controller_manager]: Initialize hardware 'AmrGazeboSystem' 
+[gz-3] [WARN] [1793703403.689035682] [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+[gz-3] [INFO] [1793703403.689071063] [controller_manager]: Successful initialization of hardware 'AmrGazeboSystem'
+[gz-3] [INFO] [1793703403.689132753] [controller_manager]: Activating component 'AmrGazeboSystem'.
+[gz-3] [INFO] [1793703403.689138562] [resource_manager]: 'configure' hardware 'AmrGazeboSystem' 
+[gz-3] [INFO] [1793703403.689141206] [gz_ros_control]: System Successfully configured!
+[gz-3] [INFO] [1793703403.689144035] [resource_manager]: Successful 'configure' of hardware 'AmrGazeboSystem'
+[gz-3] [INFO] [1793703403.689148213] [resource_manager]: 'activate' hardware 'AmrGazeboSystem' 
+[gz-3] [INFO] [1793703403.689156632] [resource_manager]: Successful 'activate' of hardware 'AmrGazeboSystem'
+[gz-3] [WARN] [1793703403.689200884] [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+[gz-3] [INFO] [1793703403.689204652] [controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[gz-3] [INFO] [1793703403.938831190] [controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[gz-3] [INFO] [1793703403.938892713] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[gz-3] [INFO] [1793703403.943400670] [controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file <home>/Projects/smart-factory-amr/amr_ws/src/amr_bringup/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-5] [INFO] [1793703403.953488149] [spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[gz-3] [INFO] [1793703403.954295362] [controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[gz-3] [INFO] [1793703403.954437320] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[gz-3] [INFO] [1793703403.961754603] [controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[gz-3] [WARN] [1793703405.527295042] [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+[gz-3] [INFO] [1793703405.705311787] [controller_manager]: Successfully switched controllers!
+[spawner-5] [INFO] [1793703405.716462437] [spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[INFO] [spawner-5]: process has finished cleanly [pid 24639]
+[INFO] [spawner-6]: process started with pid [24753]
+[spawner-6] [INFO] [1793703406.181206648] [spawner_diff_drive_controller]: waiting for service /controller_manager/list_controllers to become available...
+[gz-3] [INFO] [1793703406.682906454] [controller_manager]: Loading controller : 'diff_drive_controller' of type 'diff_drive_controller/DiffDriveController'
+[gz-3] [INFO] [1793703406.682940099] [controller_manager]: Loading controller 'diff_drive_controller'
+[gz-3] [INFO] [1793703406.687423457] [controller_manager]: Controller 'diff_drive_controller' node arguments: --ros-args --params-file <home>/Projects/smart-factory-amr/amr_ws/src/amr_bringup/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-6] [INFO] [1793703406.706560348] [spawner_diff_drive_controller]: Loaded diff_drive_controller
+[gz-3] [INFO] [1793703406.707678149] [controller_manager]: Configuring controller: 'diff_drive_controller'
+[gz-3] [INFO] [1793703406.716818263] [controller_manager]: Activating controllers: [ diff_drive_controller ]
+[gz-3] [INFO] [1793703406.725219536] [controller_manager]: Successfully switched controllers!
+[spawner-6] [INFO] [1793703406.736463180] [spawner_diff_drive_controller]: Configured and activated diff_drive_controller
+[INFO] [spawner-6]: process has finished cleanly [pid 24753]
+[gz-3] [WARN] [1793703407.215129835] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703408.215135970] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703409.215106975] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703410.215121025] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703411.225060238] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703412.225120605] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703413.235097355] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703414.235117364] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703415.235190102] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703416.245081363] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703417.245123030] [diff_drive_controller]: Velocity command timed out. Braking.
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [gz-3]: sending signal 'SIGINT' to process[gz-3]
+[INFO] [parameter_bridge-2]: sending signal 'SIGINT' to process[parameter_bridge-2]
+[INFO] [robot_state_publisher-1]: sending signal 'SIGINT' to process[robot_state_publisher-1]
+[parameter_bridge-2] [INFO] [1793703418.076457008] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-1] [INFO] [1793703418.076959919] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[gz-3] [INFO] [1793703418.109605966] [controller_manager.pal_statistics]: Async messages lost 0
+[gz-3] [INFO] [1793703418.109656841] [controller_manager.pal_statistics]: publish_async_failures_ 0
+[gz-3] [INFO] [1793703418.110833741] [controller_manager.pal_statistics]: Async messages lost 0
+[gz-3] [INFO] [1793703418.110867623] [controller_manager.pal_statistics]: publish_async_failures_ 0
+[INFO] [parameter_bridge-2]: process has finished cleanly [pid 24573]
+[INFO] [robot_state_publisher-1]: process has finished cleanly [pid 24572]
+[INFO] [gz-3]: process has finished cleanly [pid 24574]
+[INFO] [launch]: process[gz-3] was required: shutting down launched system

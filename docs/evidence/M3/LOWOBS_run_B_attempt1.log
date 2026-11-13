@@ -1,0 +1,28 @@
+# LOWOBS run B, 2026-11-03 16:38:20 IST, GPU:  Intel Corporation Alder Lake-UP3 GT2 [Iris Xe Graphics] (rev 0c)
+# gz sim 8.15.0, -s --headless-rendering, ROS_DOMAIN_ID=84 GZ_PARTITION=lowobs_m3
+# launch SigIgn: 0000000000000000
+# MODE B; laser at (0.160, 0, 0.120) m in base_footprint; window 5.0 s after 2.0 s settle
+# real-time factor over the window: 0.998
+# scans in window: 50; frame_id ['laser_frame']
+# beams finite in every scan: 342/360; +inf always: 0; -inf always: 18; nan always: 0
+# non-finite bearings (deg): -116 .. 116 (count 18; contiguous runs: -116..-108, 108..116); values ['-inf']
+# finite returns closer than 0.45 m (self-returns): 3000
+LIDAR  t1_dropped_part 0.03 m         beams on target per scan: mean   0.0; detected in   0.0 % of scans -> NOT DETECTED
+LIDAR  t2_low_tote 0.08 m             beams on target per scan: mean   0.0; detected in   0.0 % of scans -> NOT DETECTED
+LIDAR  t3_box 0.15 m                  beams on target per scan: mean  13.0; detected in 100.0 % of scans -> DETECTED
+LIDAR  t4_EUR_pallet_proxy 0.144 m    beams on target per scan: mean  11.0; detected in 100.0 % of scans -> DETECTED
+LIDAR  t5_rear_box 0.40 m             beams on target per scan: mean  11.0; detected in 100.0 % of scans -> DETECTED
+LIDAR  t6_right_box 0.40 m            beams on target per scan: mean  12.0; detected in 100.0 % of scans -> DETECTED
+# gz topics: /imu /scan /scan/points 
+# measure exit code: 0
+# leftover processes: none (PID 11466, a pre-existing user gz sim server, excluded)
+# launch log: errors/warnings (excluding the diff_drive_controller command-timeout messages)
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [WARN] [1793704103.390003724] [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+[gz-3] [WARN] [1793704103.395081792] [gz_ros_control]: Waiting RM to load and initialize hardware...
+[gz-3] [WARN] [1793704103.569916451] [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gz-3] [WARN] [1793704103.570035016] [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+[gz-3] [WARN] [1793704103.570344039] [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+[gz-3] [WARN] [1793704105.431155566] [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)

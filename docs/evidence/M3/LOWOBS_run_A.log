@@ -1,0 +1,40 @@
+# LOWOBS run A, 2026-11-03 16:37:59 IST, GPU:  Intel Corporation Alder Lake-UP3 GT2 [Iris Xe Graphics] (rev 0c)
+# gz sim 8.15.0, -s --headless-rendering, ROS_DOMAIN_ID=84 GZ_PARTITION=lowobs_m3
+# launch SigIgn: 0000000000000000
+# MODE A; laser at (0.070, 0, 0.230) m in base_footprint; window 5.0 s after 2.0 s settle
+# real-time factor over the window: 0.993
+# scans in window: 50; frame_id ['laser_frame']
+# beams finite in every scan: 360/360; +inf always: 0; -inf always: 0; nan always: 0
+# finite returns closer than 0.45 m (self-returns): 0
+LIDAR  t1_dropped_part 0.03 m         beams on target per scan: mean   0.0; detected in   0.0 % of scans -> NOT DETECTED
+LIDAR  t2_low_tote 0.08 m             beams on target per scan: mean   0.0; detected in   0.0 % of scans -> NOT DETECTED
+LIDAR  t3_box 0.15 m                  beams on target per scan: mean   0.0; detected in   0.0 % of scans -> NOT DETECTED
+LIDAR  t4_EUR_pallet_proxy 0.144 m    beams on target per scan: mean   0.0; detected in   0.0 % of scans -> NOT DETECTED
+LIDAR  t5_rear_box 0.40 m             beams on target per scan: mean  13.0; detected in 100.0 % of scans -> DETECTED
+LIDAR  t6_right_box 0.40 m            beams on target per scan: mean  12.0; detected in 100.0 % of scans -> DETECTED
+# depth clouds analysed: 46; frame_id ['depth_link']; points per cloud: 76800, finite 60771
+# convention link (x fwd, y left, z up): median point height -0.0000 m
+# convention optical (z fwd, x right, y down): median point height +0.2091 m
+# using convention: link (x fwd, y left, z up) (floor is the majority of points)
+# floor points: n 2673520, z mean -0.00000 m, sd 0.00000 m
+# points > 0.015 m above the floor outside every target: max per cloud 0
+DEPTH  t1_dropped_part 0.03 m         points above 0.015 m: median     101; detected (>= 10 pts) in 100.0 % of clouds; median top height 0.030 m -> DETECTED
+DEPTH  t2_low_tote 0.08 m             points above 0.015 m: median     655; detected (>= 10 pts) in 100.0 % of clouds; median top height 0.080 m -> DETECTED
+DEPTH  t3_box 0.15 m                  points above 0.015 m: median     734; detected (>= 10 pts) in 100.0 % of clouds; median top height 0.150 m -> DETECTED
+DEPTH  t4_EUR_pallet_proxy 0.144 m    points above 0.015 m: median     480; detected (>= 10 pts) in 100.0 % of clouds; median top height 0.144 m -> DETECTED
+DEPTH  t5_rear_box 0.40 m             points above 0.015 m: median       0; detected (>= 10 pts) in   0.0 % of clouds; median top height nan m -> NOT DETECTED
+DEPTH  t6_right_box 0.40 m            points above 0.015 m: median       0; detected (>= 10 pts) in   0.0 % of clouds; median top height nan m -> NOT DETECTED
+# gz topics: /depth /depth/points /imu /scan /scan/points 
+# measure exit code: 0
+# leftover processes: none (PID 11466, a pre-existing user gz sim server, excluded)
+# launch log: errors/warnings (excluding the diff_drive_controller command-timeout messages)
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="depth"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [WARN] [1793704082.184195975] [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+[gz-3] [WARN] [1793704082.188978069] [gz_ros_control]: Waiting RM to load and initialize hardware...
+[gz-3] [WARN] [1793704082.366240075] [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gz-3] [WARN] [1793704082.366376899] [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+[gz-3] [WARN] [1793704082.366748147] [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+[gz-3] [WARN] [1793704084.210754125] [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)

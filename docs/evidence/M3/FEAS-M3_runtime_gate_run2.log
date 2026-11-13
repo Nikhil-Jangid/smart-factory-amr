@@ -1,0 +1,42 @@
+# FEAS-M3 runtime gate, 2026-11-03 16:26:40 IST, host GPU:  Intel Corporation Alder Lake-UP3 GT2 [Iris Xe Graphics] (rev 0c)
+# gz sim 8.15.0, mode: -s --headless-rendering, render engine ogre2, ROS_DOMAIN_ID=83 GZ_PARTITION=feas_m3_gate
+# EGL/GL env: DISPLAY=:0 WAYLAND_DISPLAY=wayland-0
+# launch SigIgn: 0000000000000000
+# window: settle 2.0 s after first /scan stamp, then 10.0 s of simulation time
+PASS  /scan received in window: 100 messages
+PASS  /imu received in window: 1000 messages
+PASS  /joint_states received in window: 1000 messages
+PASS  real-time factor over the window: 1.000 (>= 0.5)
+# max |stamp - latest /clock| at receipt: 0.0040 s
+PASS  /scan frame_id: ['laser_frame']
+PASS  /scan rate 10.0000 Hz (10 Hz +-2 %), stamps increasing: True
+# LaserScan fields: angle_min -3.141592741 angle_max 3.124139309 angle_increment 0.017453292 (1.000000 deg) range_min 0.11999999731779099 range_max 12.0 len 360
+PASS  LaserScan: 360 samples at exactly 1.0 deg from -pi
+PASS  LaserScan range_min 0.12, range_max 12.0
+PASS  LiDAR target front 0 deg (face x=2.40): n=2000 mean error -0.07 mm (<= 10 mm), sd 10.05 mm (configured 10 mm)
+PASS  LiDAR target rear 180 deg (face x=-2.90): n=1600 mean error -0.60 mm (<= 10 mm), sd 9.85 mm (configured 10 mm)
+PASS  LiDAR target right -90 deg (face y=-1.90): n=2400 mean error -0.01 mm (<= 10 mm), sd 10.08 mm (configured 10 mm)
+PASS  low target (0.15 m high, +90 deg) below the 0.230 m scan plane: 0 finite returns (expected 0, blind zone)
+PASS  returns closer than 0.45 m (self-returns): 0
+PASS  /imu frame_id: ['imu_link']
+PASS  /imu rate 100.0000 Hz (100 Hz +-2 %), stamps increasing: True
+# IMU accel x: n=1000 mean +0.000231 sd 0.009929 (configured sd 0.01)
+# IMU accel y: n=1000 mean +0.000068 sd 0.010295 (configured sd 0.01)
+# IMU accel z: n=1000 mean +9.799917 sd 0.009787 (configured sd 0.01)
+# IMU gyro x: n=1000 mean +0.000002 sd 0.000993 (configured sd 0.001)
+# IMU gyro y: n=1000 mean -0.000087 sd 0.000977 (configured sd 0.001)
+# IMU gyro z: n=1000 mean +0.000047 sd 0.000982 (configured sd 0.001)
+PASS  IMU gravity: mean accel z +9.79992 m/s^2 (+g up, specific force; 9.8 +- 0.05)
+# IMU orientation (last): x -0.000000 y 0.000000 z 0.000000 w 1.000000
+# /joint_states names: ['left_wheel_joint', 'right_wheel_joint']
+PASS  /joint_states measured rate 100.0000 Hz (stamps increasing: True) -- recorded for DEC-036 D2
+== GATE CRITICAL CHECKS PASSED
+# measure exit code: 0
+# leftover gz sim processes: none
+# launch log: rendering/sensor lines
+[parameter_bridge-2] [INFO] [1793703401.341696110] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/scan (gz.msgs.LaserScan) -> /scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1793703401.344172588] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/imu (gz.msgs.IMU) -> /imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [INFO] [1793703403.688968116] [gz_ros_control]: Loading sensor: imu
+[gz-3] [WARN] [1793703403.688977595] [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.

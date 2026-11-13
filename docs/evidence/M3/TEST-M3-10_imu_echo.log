@@ -1,0 +1,52 @@
+# TEST-M3-10, IMU through the ROS topic (DEC-035: no IMU display in RViz). Run by me in a third terminal during the
+# GUI session of 2026-11-04 (~16:44 IST), output copied from the terminal; reproduced verbatim.
+$ source /opt/ros/jazzy/setup.bash && ros2 topic echo /imu --once
+header:
+  stamp:
+    sec: 32
+    nanosec: 470000000
+  frame_id: imu_link
+orientation:
+  x: -1.9204073530981997e-18
+  y: 4.630905484044797e-09
+  z: 1.1566719763424816e-17
+  w: 1.0
+orientation_covariance:
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+angular_velocity:
+  x: -0.0012207951961978362
+  y: -0.000636267467186821
+  z: 0.0012333590730210255
+angular_velocity_covariance:
+- 9.999999974752427e-07
+- 0.0
+- 0.0
+- 0.0
+- 9.999999974752427e-07
+- 0.0
+- 0.0
+- 0.0
+- 9.999999974752427e-07
+linear_acceleration:
+  x: 0.0011352607739403733
+  y: -0.001103706637215206
+  z: 9.788485347006475
+linear_acceleration_covariance:
+- 0.00010000000474974513
+- 0.0
+- 0.0
+- 0.0
+- 0.00010000000474974513
+- 0.0
+- 0.0
+- 0.0
+- 0.00010000000474974513
+---

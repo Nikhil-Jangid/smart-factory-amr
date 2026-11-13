@@ -1,0 +1,127 @@
+# TEST-M3-14 procedure, valid runs required=3, 2026-11-03 19:59:40 IST, revision 349064c (amr_ws/src has uncommitted changes)
+# Gazebo Sim, version 8.15.0; plugin <home>/Projects/smart-factory-amr/amr_ws/install/amr_gazebo_plugins/lib/libamr_imu_decimator_system.so
+
+## 1. Static rate consistency (f)
+$ python3 -I docs/evidence/M3/TEST-M3-14_static_rate_check.py <share_b>/config/controllers.yaml <tmp>/s2.urdf <share_b>/worlds/sensor_test.sdf <gz_sim_vendor>/worlds/empty.sdf
+# controller_manager.update_rate = 100 Hz (controllers.yaml)
+PASS  1. decimator plugin elements in the model: 1 == 1 (filename amr_imu_decimator_system)
+PASS  1. IMU sensors publishing input_topic /imu_raw: 1 == 1; output_topic /imu
+PASS  2. raw_rate 1000 Hz = block_size 10 x output_rate 100 Hz; IMU <update_rate> 1000 Hz = raw_rate
+PASS  3. output period 10 ms / controller period 10 ms = 1, a positive integer (DEC-038 item 9, DEC-026)
+PASS  4. sensor_test.sdf: raw period 1 ms / physics step 1 ms = 1, a positive integer
+PASS  4. empty.sdf: raw period 1 ms / physics step 1 ms = 1, a positive integer
+# result: ALL CRITERIA PASSED
+# exit 0
+
+## 2. Launch runs
+
+## attempt 1 (ROS_DOMAIN_ID=132)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-14_imu_decimation_check.py
+# TEST-M3-14 harness, wall 2026-11-03 19:59:41 IST, ground truth /world/sensor_test/pose/info, raw gz /imu_raw
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  (a) 1877 of 1877 outputs checked against their 10 raw samples (100.0 %; 0 at the recording edges without all raw samples): max |output - raw mean| 3.55e-15 (<= 1e-9, six channels); stamp = newest raw stamp: 1877 of 1877; orientation = newest raw sample, max |dq| 0.0e+00 (<= 1e-12); covariances (orientation copied, rates / 10) wrong in 0
+PASS  (b) /imu: 1877 stamps, 0 off the 10 ms grid; spacing histogram (ms) {10.0: 1876} (all 10 ms = 100 Hz in simulation time, no missing or repeated output); raw /imu_raw: 18771 samples, spacing histogram (ms) {1: 18770}, repeated stamps 0
+PASS  (c) braking from 0.5 m/s: mean accel x -1.0014 m/s^2 vs ground-truth deceleration -0.9985 m/s^2 (+0.29 %; sign; |.| <= 20 %) over the 90-10 % ramp +0.062 .. +0.453 s after the stop command (39 IMU samples)
+PASS  (d) cruise at 0.5000 m/s: mean accel x +0.00044 m/s^2 (|.| <= 0.02, DEC-036 S1) over 130 IMU samples
+PASS  D10 rotate +0.5: mean gyro z +0.50004 rad/s vs ground-truth yaw rate +0.50000 rad/s (+0.009 %; sign; |.| <= 3 %) over 5.066 s, 506 IMU samples
+INFO  rotate +0.5: mean accel x/y +0.0001 / +0.0001 m/s^2 (expected 0: the IMU is on the rotation axis, CALC-M3-02)
+PASS  (e) published covariance diagonals: angular velocity [9.999999974752427e-07] == 1e-06 (rad/s)^2, linear acceleration [0.00010000000474974513] == 0.0001 (m/s^2)^2 (DEC-032 sigma at the output)
+INFO  acceleration ramp (D11 quantity): mean accel x +0.4991 m/s^2 vs ground truth +0.4999 m/s^2 (-0.16 %), 80 IMU samples
+INFO  controller-step delay: 200 raw steps (|accel x| > 1 m/s^2), stamp mod 10 ms histogram {1: 150, 2: 50}; output stamp minus step stamp (ms) histogram {8: 50, 9: 150} (expected 8-9 ms)
+INFO  transient: largest output accel x during speed-up +0.571 m/s^2, during braking -1.119 m/s^2 (one output per 10 ms block; DEC-025 limits 0.5 / -1.0 m/s^2)
+INFO  orientation: yaw change of the /imu orientation over the rotate window +145.245 deg vs ground truth +145.130 deg (simulator-derived orientation, not ground truth; DEC-032)
+INFO  ground-truth excursion from the spawn point (0, -20): x -1.375 .. -0.000 m, y -0.000 .. +0.002 m (clearance budget in TEST-M3-D_clearance_check.py)
+# samples: ground truth 1106, ROS imu 1882, raw imu 18784, joint_states 1882
+# result: ALL CRITERIA PASSED
+# harness exit 0
+# launch log: 1 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [ERROR] [gz-5]: process[gz-5] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# exit 1
+# plugin lines in the launch log:
+#   [gz-5] [amr_gazebo_plugins::ImuDecimator] active: /imu_raw (1000 Hz) -> /imu (100 Hz), block 10, physics step 0.001 s
+#   [gz-5] [amr_gazebo_plugins::ImuDecimator] shutdown: raw samples 18862, published 1886, dropped_incomplete 0, discarded_partial 1, missing_samples 0, duplicates 0, off_grid 0, resets 0
+PASS  (b) plugin: active line 1 (== 1), configuration errors 0; shutdown counters: raw 18862, published 1886, dropped_incomplete 0, missing_samples 0, duplicates 0, off_grid 0, resets 0 (all 0); discarded_partial 1 (1 or 2: startup, shutdown); raw - 10 x published = 2 (<= 18: only partial blocks unpublished; first output only after a complete block)
+# exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=133)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-14_imu_decimation_check.py
+# TEST-M3-14 harness, wall 2026-11-03 20:00:15 IST, ground truth /world/sensor_test/pose/info, raw gz /imu_raw
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  (a) 2013 of 2013 outputs checked against their 10 raw samples (100.0 %; 0 at the recording edges without all raw samples): max |output - raw mean| 3.55e-15 (<= 1e-9, six channels); stamp = newest raw stamp: 2013 of 2013; orientation = newest raw sample, max |dq| 0.0e+00 (<= 1e-12); covariances (orientation copied, rates / 10) wrong in 0
+PASS  (b) /imu: 2013 stamps, 0 off the 10 ms grid; spacing histogram (ms) {10.0: 2012} (all 10 ms = 100 Hz in simulation time, no missing or repeated output); raw /imu_raw: 20134 samples, spacing histogram (ms) {1: 20133}, repeated stamps 0
+PASS  (c) braking from 0.5 m/s: mean accel x -1.0012 m/s^2 vs ground-truth deceleration -0.9964 m/s^2 (+0.48 %; sign; |.| <= 20 %) over the 90-10 % ramp +0.061 .. +0.469 s after the stop command (41 IMU samples)
+PASS  (d) cruise at 0.5000 m/s: mean accel x -0.00014 m/s^2 (|.| <= 0.02, DEC-036 S1) over 130 IMU samples
+PASS  D10 rotate +0.5: mean gyro z +0.49996 rad/s vs ground-truth yaw rate +0.50000 rad/s (-0.008 %; sign; |.| <= 3 %) over 5.067 s, 507 IMU samples
+INFO  rotate +0.5: mean accel x/y -0.0001 / -0.0009 m/s^2 (expected 0: the IMU is on the rotation axis, CALC-M3-02)
+PASS  (e) published covariance diagonals: angular velocity [9.999999974752427e-07] == 1e-06 (rad/s)^2, linear acceleration [0.00010000000474974513] == 0.0001 (m/s^2)^2 (DEC-032 sigma at the output)
+INFO  acceleration ramp (D11 quantity): mean accel x +0.4993 m/s^2 vs ground truth +0.4998 m/s^2 (-0.10 %), 80 IMU samples
+INFO  controller-step delay: 200 raw steps (|accel x| > 1 m/s^2), stamp mod 10 ms histogram {1: 150, 2: 50}; output stamp minus step stamp (ms) histogram {8: 50, 9: 150} (expected 8-9 ms)
+INFO  transient: largest output accel x during speed-up +0.566 m/s^2, during braking -1.118 m/s^2 (one output per 10 ms block; DEC-025 limits 0.5 / -1.0 m/s^2)
+INFO  orientation: yaw change of the /imu orientation over the rotate window +145.531 deg vs ground truth +145.159 deg (simulator-derived orientation, not ground truth; DEC-032)
+INFO  ground-truth excursion from the spawn point (0, -20): x -1.376 .. -0.000 m, y -0.000 .. +0.002 m (clearance budget in TEST-M3-D_clearance_check.py)
+# samples: ground truth 1186, ROS imu 2019, raw imu 20146, joint_states 2005
+# result: ALL CRITERIA PASSED
+# harness exit 0
+# launch log: 1 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [ERROR] [gz-5]: process[gz-5] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: No clock received, using time argument instead! Check your node's clock configuration (use_sim_time parameter) and if a valid clock source is available
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# exit 1
+# plugin lines in the launch log:
+#   [gz-5] [amr_gazebo_plugins::ImuDecimator] active: /imu_raw (1000 Hz) -> /imu (100 Hz), block 10, physics step 0.001 s
+#   [gz-5] [amr_gazebo_plugins::ImuDecimator] shutdown: raw samples 20232, published 2023, dropped_incomplete 0, discarded_partial 1, missing_samples 0, duplicates 0, off_grid 0, resets 0
+PASS  (b) plugin: active line 1 (== 1), configuration errors 0; shutdown counters: raw 20232, published 2023, dropped_incomplete 0, missing_samples 0, duplicates 0, off_grid 0, resets 0 (all 0); discarded_partial 1 (1 or 2: startup, shutdown); raw - 10 x published = 2 (<= 18: only partial blocks unpublished; first output only after a complete block)
+# exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=134)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-14_imu_decimation_check.py
+# TEST-M3-14 harness, wall 2026-11-03 20:00:46 IST, ground truth /world/sensor_test/pose/info, raw gz /imu_raw
+INFO  RTF over the measurement window = 0.999 (valid if >= 0.5)
+PASS  (a) 2181 of 2181 outputs checked against their 10 raw samples (100.0 %; 0 at the recording edges without all raw samples): max |output - raw mean| 3.55e-15 (<= 1e-9, six channels); stamp = newest raw stamp: 2181 of 2181; orientation = newest raw sample, max |dq| 0.0e+00 (<= 1e-12); covariances (orientation copied, rates / 10) wrong in 0
+PASS  (b) /imu: 2181 stamps, 0 off the 10 ms grid; spacing histogram (ms) {10.0: 2180} (all 10 ms = 100 Hz in simulation time, no missing or repeated output); raw /imu_raw: 21818 samples, spacing histogram (ms) {1: 21817}, repeated stamps 0
+PASS  (c) braking from 0.5 m/s: mean accel x -0.9981 m/s^2 vs ground-truth deceleration -0.9987 m/s^2 (-0.06 %; sign; |.| <= 20 %) over the 90-10 % ramp +0.050 .. +0.458 s after the stop command (41 IMU samples)
+PASS  (d) cruise at 0.5000 m/s: mean accel x -0.00012 m/s^2 (|.| <= 0.02, DEC-036 S1) over 130 IMU samples
+PASS  D10 rotate +0.5: mean gyro z +0.50006 rad/s vs ground-truth yaw rate +0.50000 rad/s (+0.013 %; sign; |.| <= 3 %) over 5.076 s, 508 IMU samples
+INFO  rotate +0.5: mean accel x/y +0.0004 / +0.0007 m/s^2 (expected 0: the IMU is on the rotation axis, CALC-M3-02)
+PASS  (e) published covariance diagonals: angular velocity [9.999999974752427e-07] == 1e-06 (rad/s)^2, linear acceleration [0.00010000000474974513] == 0.0001 (m/s^2)^2 (DEC-032 sigma at the output)
+INFO  acceleration ramp (D11 quantity): mean accel x +0.4978 m/s^2 vs ground truth +0.5001 m/s^2 (-0.45 %), 80 IMU samples
+INFO  controller-step delay: 200 raw steps (|accel x| > 1 m/s^2), stamp mod 10 ms histogram {1: 150, 2: 50}; output stamp minus step stamp (ms) histogram {8: 50, 9: 150} (expected 8-9 ms)
+INFO  transient: largest output accel x during speed-up +0.559 m/s^2, during braking -1.111 m/s^2 (one output per 10 ms block; DEC-025 limits 0.5 / -1.0 m/s^2)
+INFO  orientation: yaw change of the /imu orientation over the rotate window +145.245 deg vs ground truth +144.443 deg (simulator-derived orientation, not ground truth; DEC-032)
+INFO  ground-truth excursion from the spawn point (0, -20): x -1.376 .. -0.000 m, y -0.000 .. +0.002 m (clearance budget in TEST-M3-D_clearance_check.py)
+# samples: ground truth 1286, ROS imu 2187, raw imu 21827, joint_states 2134
+# result: ALL CRITERIA PASSED
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: No clock received, using time argument instead! Check your node's clock configuration (use_sim_time parameter) and if a valid clock source is available
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# exit 0
+# plugin lines in the launch log:
+#   [gz-5] [amr_gazebo_plugins::ImuDecimator] active: /imu_raw (1000 Hz) -> /imu (100 Hz), block 10, physics step 0.001 s
+#   [gz-5] [amr_gazebo_plugins::ImuDecimator] shutdown: raw samples 21906, published 2190, dropped_incomplete 0, discarded_partial 1, missing_samples 0, duplicates 0, off_grid 0, resets 0
+PASS  (b) plugin: active line 1 (== 1), configuration errors 0; shutdown counters: raw 21906, published 2190, dropped_incomplete 0, missing_samples 0, duplicates 0, off_grid 0, resets 0 (all 0); discarded_partial 1 (1 or 2: startup, shutdown); raw - 10 x published = 6 (<= 18: only partial blocks unpublished; first output only after a complete block)
+# exit 0
+
+# overall: AT LEAST ONE RUN FAILED OR TOO FEW VALID RUNS

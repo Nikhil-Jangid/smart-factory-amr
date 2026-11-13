@@ -1,0 +1,20 @@
+# alive 3.5 s after SIGINT; per-thread comm state wchan
+      1 dds.asyn.0.0 S futex_do_wait
+      1 dds.ev.0 S futex_do_wait
+      1 dds.shm.51175 S futex_do_wait
+      1 dds.shm.7021 S futex_do_wait
+      1 dds.shm.wdog S futex_do_wait
+      1 dds.udp.51150 S __skb_wait_for_more_packets
+      1 dds.udp.51174 S __skb_wait_for_more_packets
+      1 dds.udp.51175 S __skb_wait_for_more_packets
+      1 dds.udp.7021 S __skb_wait_for_more_packets
+     48 ruby S futex_do_wait
+      1 ruby S poll_schedule_timeout.constprop.0
+      1 ruby-ust S futex_do_wait
+      1 ruby-ust S unix_stream_read_generic
+      2 sensor_:disk$0 S futex_do_wait
+      2 sensor_tes:sh0 S futex_do_wait
+      1 sensor_t:gdrv0 S futex_do_wait
+      1 sensor:traceq0 S futex_do_wait
+      1 ZMQbg/IO/0 S ep_poll
+      1 ZMQbg/Reaper S ep_poll

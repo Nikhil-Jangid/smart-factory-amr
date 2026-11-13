@@ -1,0 +1,55 @@
+# TS-026 diagnostic (scratch, informal): signed (latest /clock - stamp) per message, sensors launch in sensor_test.sdf, robot at rest.
+# Script: lagdiag.py (reliable and best-effort /scan subscriptions, /imu); runner as TEST-M3-04 part 1 (set -m, own domain/partition).
+## Run 1: 25 s wall, all messages from start-up (lines copied verbatim from the session terminal output; no raw file kept)
+scan reliable: n=248 mean +0.0071 min +0.0020 p50 +0.0040 p95 +0.0110 max +0.3300
+  >0.05: [(3.8, 0.33), (3.9, 0.231), (4.0, 0.141)]
+scan best-effort: n=247 mean +0.0048 min +0.0020 p50 +0.0040 p95 +0.0100 max +0.1180
+  >0.05: [(3.8, 0.118), (3.9, 0.063)]
+imu: n=2447 mean -0.0001 min -0.0970 p50 +0.0000 p95 +0.0000 max +0.0050
+## Run 2: 70 s wall, messages stamped >= 8.0 s (steady state)
+# gz sim -r -s --headless-rendering ~/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/worlds/sensor_test.sdf
+scan reliable: n=653 mean +0.0036 min +0.0020 p50 +0.0030 p95 +0.0050 max +0.0140
+  >0.05: []
+  imu |lag|>0.02 : []
+  scan stamp gaps != 0.1: []
+  wall receipt gaps >0.15 s: []
+scan best-effort: n=653 mean +0.0036 min +0.0020 p50 +0.0030 p95 +0.0050 max +0.0140
+  >0.05: []
+  imu |lag|>0.02 : []
+  scan stamp gaps != 0.1: []
+imu: n=6530 mean +0.0000 min -0.0050 p50 +0.0000 p95 +0.0000 max +0.0020
+left 0
+## lagdiag.py
+import sys, time, statistics as st
+import rclpy
+from rclpy.node import Node
+from rclpy.parameter import Parameter
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, qos_profile_sensor_data
+from rosgraph_msgs.msg import Clock
+from sensor_msgs.msg import LaserScan, Imu
+def sec(s): return s.sec + s.nanosec*1e-9
+class N(Node):
+    def __init__(s):
+        super().__init__('lagdiag', parameter_overrides=[Parameter('use_sim_time', Parameter.Type.BOOL, True)])
+        s.clock=None; s.rel=[]; s.be=[]; s.imu=[]; s.wall=[]
+        s.create_subscription(Clock,'/clock',lambda m: setattr(s,'clock',sec(m.clock)),10)
+        s.create_subscription(LaserScan,'/scan',lambda m: s.rel.append((sec(m.header.stamp), s.clock, time.monotonic())),QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=200,reliability=ReliabilityPolicy.RELIABLE))
+        s.create_subscription(LaserScan,'/scan',lambda m: s.be.append((sec(m.header.stamp), s.clock)),qos_profile_sensor_data)
+        s.create_subscription(Imu,'/imu',lambda m: s.imu.append((sec(m.header.stamp), s.clock)),qos_profile_sensor_data)
+rclpy.init(); n=N(); t=time.monotonic()
+while time.monotonic()-t<70: rclpy.spin_once(n,timeout_sec=0.05)
+for name,d in (('scan reliable',n.rel),('scan best-effort',n.be),('imu',n.imu)):
+    d=[x for x in d if x[0]>=8.0]
+    l=[c-s for s,c,*_ in d if c is not None]
+    l2=sorted(l)
+    print(f'{name}: n={len(l)} mean {st.mean(l):+.4f} min {l2[0]:+.4f} p50 {l2[len(l)//2]:+.4f} p95 {l2[int(.95*len(l))]:+.4f} max {l2[-1]:+.4f}')
+    if name.startswith('scan'):
+        big=[(round(s,3),round(c-s,4)) for s,c,*_ in d if c is not None and abs(c-s)>0.05]
+        print('  >0.05:', big[:15])
+        im=[(round(s,3),round(c-s,4)) for s,c in n.imu if c is not None and s>=8.0 and abs(c-s)>0.02]
+        print('  imu |lag|>0.02 :', im[:15])
+        gaps=[(round(a[0],2),round(b[0]-a[0],3)) for a,b in zip(d,d[1:]) if abs(b[0]-a[0]-0.1)>0.001]
+        print('  scan stamp gaps != 0.1:', gaps[:10])
+        if name=='scan reliable':
+            w=[(round(s,2),round(b[2]-a[2],3)) for a,b in zip(d,d[1:]) for s in [b[0]] if b[2]-a[2]>0.15]
+            print('  wall receipt gaps >0.15 s:', w[:10])

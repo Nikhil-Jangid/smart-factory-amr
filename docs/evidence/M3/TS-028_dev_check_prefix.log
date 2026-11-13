@@ -1,0 +1,18 @@
+# TS-028 development run BEFORE the fix (informal), 2026-11-03 19:55: shows the defect (all cases refused: no physics component).
+# case valid: gz sim exit 0; messages /imu_raw 3998, /imu 0; plugin output lines:
+#   [Err] [imu_decimator.cpp:98] [amr_gazebo_plugins::ImuDecimator] invalid configuration, NOT active (DEC-038): the world has no physics component
+FAIL  valid (control): exit 0; active line once, no error; /imu_raw 3998 (>= 3000 of ~4000), /imu 0 (300..400 of ~400)
+INFO  accel x: raw sigma 0.031271 (derived setting 0.031623); max |r| at lags 1-10 ms 0.043; var(10-sample means) / (raw var / 10) = 0.907 over 3001 samples, 300 blocks
+INFO  accel y: raw sigma 0.031467 (derived setting 0.031623); max |r| at lags 1-10 ms 0.029; var(10-sample means) / (raw var / 10) = 0.963 over 3001 samples, 300 blocks
+INFO  accel z: raw sigma 0.031492 (derived setting 0.031623); max |r| at lags 1-10 ms 0.034; var(10-sample means) / (raw var / 10) = 1.071 over 3001 samples, 300 blocks
+INFO  gyro x: raw sigma 0.003150 (derived setting 0.003162); max |r| at lags 1-10 ms 0.026; var(10-sample means) / (raw var / 10) = 0.964 over 3001 samples, 300 blocks
+INFO  gyro y: raw sigma 0.003079 (derived setting 0.003162); max |r| at lags 1-10 ms 0.038; var(10-sample means) / (raw var / 10) = 0.985 over 3001 samples, 300 blocks
+INFO  gyro z: raw sigma 0.003192 (derived setting 0.003162); max |r| at lags 1-10 ms 0.029; var(10-sample means) / (raw var / 10) = 0.972 over 3001 samples, 300 blocks
+# case bad_rate: gz sim exit 0; messages /imu_raw 4000, /imu 0; plugin output lines:
+#   [Err] [imu_decimator.cpp:98] [amr_gazebo_plugins::ImuDecimator] invalid configuration, NOT active (DEC-038): the world has no physics component
+FAIL  bad_rate: exit 0; error line visible at default verbosity and names raw_rate; /imu_raw 4000 (still published), /imu 0 (== 0: silent)
+# case bad_sensor: gz sim exit 0; messages /imu_raw 401, /imu 0; plugin output lines:
+#   [Err] [imu_decimator.cpp:98] [amr_gazebo_plugins::ImuDecimator] invalid configuration, NOT active (DEC-038): the world has no physics component
+FAIL  bad_sensor: exit 0; error line visible at default verbosity and names the sensor update_rate; /imu_raw 401 (still published, ~400 at 100 Hz), /imu 0 (== 0: silent)
+# result: 3 CRITERION/CRITERIA FAILED
+

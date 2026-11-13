@@ -1,0 +1,91 @@
+# TS-029 rig 2 (informal, scratch; 2026-11-04). Scripts: TS-029_rig2_*.sh. Overlays: V0 = amr_description with
+# amr.sensors.xacro from be788ca (100 Hz /imu, no plugin); V2 = current xacro minus the ImuDecimator element (1 kHz
+# /imu_raw, no plugin); V1 = the installed build (1 kHz + ImuDecimator); V1S = V1 with external subscribers during the
+# hold (ros2 topic echo /scan /imu /joint_states; gz topic -e pose/info and /imu_raw), all exiting 5 s before SIGINT.
+# Each run: sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0, both controllers active, hold,
+# SIGINT to the launch; if gz sim is alive 3.5 s later: thread snapshot + gdb stack traces (TS-029_V2_run15_*).
+smoke run 1: hold 2s; controllers_active=1 gz=8723; gz exit after 0.3 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+# batch1 start 15:00:10
+V0 run 1: hold 25s; controllers_active=1 gz=9238; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 1: hold 25s; controllers_active=1 gz=9826; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 1: hold 25s; controllers_active=1 gz=10294; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 2: hold 25s; controllers_active=1 gz=10719; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 2: hold 25s; controllers_active=1 gz=11118; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 2: hold 25s; controllers_active=1 gz=11498; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 3: hold 25s; controllers_active=1 gz=11845; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 3: hold 25s; controllers_active=1 gz=12273; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 3: hold 25s; controllers_active=1 gz=12658; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 4: hold 25s; controllers_active=1 gz=13035; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 4: hold 25s; controllers_active=1 gz=13404; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 4: hold 25s; controllers_active=1 gz=14126; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 5: hold 25s; controllers_active=1 gz=14555; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 5: hold 25s; controllers_active=1 gz=14938; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 5: hold 25s; controllers_active=1 gz=15348; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 6: hold 25s; controllers_active=1 gz=15775; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 6: hold 25s; controllers_active=1 gz=16119; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 6: hold 25s; controllers_active=1 gz=16513; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 7: hold 25s; controllers_active=1 gz=16927; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 7: hold 25s; controllers_active=1 gz=17298; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 7: hold 25s; controllers_active=1 gz=17682; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 8: hold 25s; controllers_active=1 gz=18051; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 8: hold 25s; controllers_active=1 gz=18424; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 8: hold 25s; controllers_active=1 gz=18787; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 9: hold 25s; controllers_active=1 gz=19130; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 9: hold 25s; controllers_active=1 gz=19476; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 9: hold 25s; controllers_active=1 gz=19840; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 10: hold 25s; controllers_active=1 gz=20205; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 10: hold 25s; controllers_active=1 gz=20551; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 10: hold 25s; controllers_active=1 gz=20918; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 11: hold 25s; controllers_active=1 gz=21298; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 11: hold 25s; controllers_active=1 gz=21689; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 11: hold 25s; controllers_active=1 gz=22094; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 12: hold 25s; controllers_active=1 gz=22457; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 12: hold 25s; controllers_active=1 gz=22816; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 12: hold 25s; controllers_active=1 gz=23158; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 13: hold 25s; controllers_active=1 gz=23505; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 13: hold 25s; controllers_active=1 gz=23871; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 13: hold 25s; controllers_active=1 gz=24237; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 14: hold 25s; controllers_active=1 gz=24597; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 14: hold 25s; controllers_active=1 gz=24978; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 14: hold 25s; controllers_active=1 gz=25338; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 15: hold 25s; controllers_active=1 gz=25693; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 15: hold 25s; controllers_active=1 gz=26462; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 15: hold 25s; controllers_active=1 gz=26826; gz exit after 10.1 s; ERROR lines 3; plugin shutdown line 0; leftover 0; HANG: threads+gdb captured
+V0 run 16: hold 25s; controllers_active=1 gz=27820; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 16: hold 25s; controllers_active=1 gz=28338; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 16: hold 25s; controllers_active=1 gz=28847; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 17: hold 25s; controllers_active=1 gz=29275; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 17: hold 25s; controllers_active=1 gz=29654; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 17: hold 25s; controllers_active=1 gz=30017; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 18: hold 25s; controllers_active=1 gz=30432; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 18: hold 25s; controllers_active=1 gz=30813; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 18: hold 25s; controllers_active=1 gz=31437; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 19: hold 25s; controllers_active=1 gz=31955; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 19: hold 25s; controllers_active=1 gz=32335; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 19: hold 25s; controllers_active=1 gz=32710; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V0 run 20: hold 25s; controllers_active=1 gz=33073; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+V1 run 20: hold 25s; controllers_active=1 gz=33457; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V2 run 20: hold 25s; controllers_active=1 gz=33811; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; leftover 0; clean
+batch1 done 15:34:56
+# batch2 start 15:37:20
+V1S run 1: hold 25s; controllers_active=1 gz=34713; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 2: hold 25s; controllers_active=1 gz=35257; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 3: hold 25s; controllers_active=1 gz=35824; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 4: hold 25s; controllers_active=1 gz=36408; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 5: hold 25s; controllers_active=1 gz=37017; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 6: hold 25s; controllers_active=1 gz=37616; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 7: hold 25s; controllers_active=1 gz=38176; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 8: hold 25s; controllers_active=1 gz=38715; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 9: hold 25s; controllers_active=1 gz=39480; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 10: hold 25s; controllers_active=1 gz=39917; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 11: hold 25s; controllers_active=1 gz=40364; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 12: hold 25s; controllers_active=1 gz=40803; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 13: hold 25s; controllers_active=1 gz=41225; gz exit after 0.3 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 14: hold 25s; controllers_active=1 gz=41641; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 15: hold 25s; controllers_active=1 gz=42061; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 16: hold 25s; controllers_active=1 gz=42472; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 17: hold 25s; controllers_active=1 gz=42903; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 18: hold 25s; controllers_active=1 gz=43371; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 19: hold 25s; controllers_active=1 gz=43812; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+V1S run 20: hold 25s; controllers_active=1 gz=44242; gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; leftover 0; clean
+batch2 done 15:48:50

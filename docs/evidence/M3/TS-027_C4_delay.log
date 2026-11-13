@@ -1,0 +1,68 @@
+# TS-027 C4 effective-delay measurement (scratch prototype, informal; not a test result), 2026-11-03 19:25-19:27 IST. Baseline fbe93e8.
+# Configuration: scratch overlay ws_c4r2 (IMU 1 kHz on gz /imu_raw, raw sigma x sqrt(10), TS-027_C4_imu_decimator.py block mean -> /imu), real
+# sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0 (runner TS-027_C4_run_launch2.sh), stop profile 0.5 m/s 3 s then 0.
+# Probe TS-027_C4_probe_c4_delay.py: additionally records the raw 1 kHz stream; an 'acceleration step' is a raw |ax| > 1.0 m/s^2 sample in the
+# ramps (step ~5 m/s^2 speeding up, ~5-10 m/s^2 braking; raw noise 0.0316 m/s^2); its delay = stamp of the output whose block (t-10 ms, t] contains it - its stamp.
+
+## run 1
+# controllers active: 2
+# leg start 6.353 end 9.355; ROS imu n 901, gz imu n 901
+rest before  [-1.00,-0.05] gt accel +0.0000 | ROS /imu ax -0.0009 az +9.7986 (n 95) | gz /imu ax -0.0009 az +9.7986 (n 95) | ROS ax s 0.0093 min -0.026 max +0.027
+speed-up     [+0.20,+0.80] gt accel +0.5000 | ROS /imu ax +0.4996 az +9.7976 (n 60) | gz /imu ax +0.4996 az +9.7976 (n 60) | ROS ax s 0.0328 min +0.433 max +0.555
+cruise       [+1.50,+2.90] gt accel -0.0000 | ROS /imu ax -0.0000 az +9.7996 (n 140) | gz /imu ax -0.0000 az +9.7996 (n 140) | ROS ax s 0.0093 min -0.023 max +0.026
+braking      [+3.10,+3.40] gt accel -1.0002 | ROS /imu ax -0.9994 az +9.8013 (n 30) | gz /imu ax -0.9994 az +9.8013 (n 30) | ROS ax s 0.0402 min -1.115 max -0.880
+stopped      [+4.00,+5.90] gt accel +0.0000 | ROS /imu ax -0.0004 az +9.8007 (n 190) | gz /imu ax -0.0004 az +9.8007 (n 190) | ROS ax s 0.0103 min -0.024 max +0.026
+# /imu stamp spacing over the profile: n 700, min 10.0 ms, max 10.0 ms, all 10 ms: True
+# speed-up  matched 51: IMU ax mean +0.5021 s 0.0337 | wheel-derived 10 ms accel mean +0.4954 s 0.0426 | residual s 0.0178 max 0.0626 | corr +0.917
+# braking   matched 28: IMU ax mean -1.0037 s 0.0347 | wheel-derived 10 ms accel mean -0.9974 s 0.0467 | residual s 0.0221 max 0.0796 | corr +0.893
+# cruise    matched 130: IMU ax mean +0.0002 s 0.0094 | wheel-derived 10 ms accel mean +0.0000 s 0.0000 | residual s 0.0094 max 0.0259 | corr +nan
+# raw samples 9006; acceleration steps found 200; step stamp mod 10 ms histogram {1: 150, 2: 50}; output-stamp minus step-stamp (ms) histogram {8: 50, 9: 150}
+# probe exit 0
+# leftovers: 0
+# decimator: raw 12381 out 1238 blocks_not_10 0 raw_stamp_gaps 0 block_size_histogram {10: 1238}
+# raw launch log: 0 [ERROR] lines
+
+## run 2
+# controllers active: 2
+# leg start 6.434 end 9.434; ROS imu n 729, gz imu n 880
+rest before  [-1.00,-0.05] gt accel +0.0000 | ROS /imu ax -0.0011 az +9.8001 (n 95) | gz /imu ax -0.0011 az +9.8001 (n 95) | ROS ax s 0.0093 min -0.029 max +0.021
+speed-up     [+0.20,+0.80] gt accel +0.5000 | ROS /imu ax +0.5015 az +9.7996 (n 60) | gz /imu ax +0.5015 az +9.7996 (n 60) | ROS ax s 0.0320 min +0.427 max +0.563
+cruise       [+1.50,+2.90] gt accel -0.0000 | ROS /imu ax -0.0001 az +9.8017 (n 140) | gz /imu ax -0.0001 az +9.8017 (n 140) | ROS ax s 0.0092 min -0.022 max +0.018
+braking      [+3.10,+3.40] gt accel -0.9984 | ROS /imu ax -1.0005 az +9.7973 (n 30) | gz /imu ax -1.0005 az +9.7973 (n 30) | ROS ax s 0.0382 min -1.108 max -0.887
+stopped      [+4.00,+5.90] gt accel +0.0000 | ROS /imu ax -0.0019 az +9.8007 (n 190) | gz /imu ax -0.0019 az +9.8007 (n 190) | ROS ax s 0.0092 min -0.030 max +0.024
+# /imu stamp spacing over the profile: n 700, min 10.0 ms, max 10.0 ms, all 10 ms: True
+# speed-up  matched 50: IMU ax mean +0.5004 s 0.0327 | wheel-derived 10 ms accel mean +0.4915 s 0.0417 | residual s 0.0192 max 0.0581 | corr +0.895
+# braking   matched 28: IMU ax mean -1.0003 s 0.0395 | wheel-derived 10 ms accel mean -0.9942 s 0.0551 | residual s 0.0233 max 0.0925 | corr +0.931
+# cruise    matched 125: IMU ax mean -0.0001 s 0.0091 | wheel-derived 10 ms accel mean +0.0000 s 0.0000 | residual s 0.0091 max 0.0220 | corr +nan
+# raw samples 8802; acceleration steps found 200; step stamp mod 10 ms histogram {1: 150, 2: 50}; output-stamp minus step-stamp (ms) histogram {8: 50, 9: 150}
+# probe exit 0
+# leftovers: 0
+# decimator: raw 12455 out 1245 blocks_not_10 0 raw_stamp_gaps 0 block_size_histogram {10: 1245}
+# raw launch log: 0 [ERROR] lines
+
+## run 3
+# controllers active: 2
+# leg start 9.999 end 13.000; ROS imu n 793, gz imu n 1076
+rest before  [-1.00,-0.05] gt accel +0.0003 | ROS /imu ax +0.0021 az +9.8003 (n 95) | gz /imu ax +0.0021 az +9.8003 (n 95) | ROS ax s 0.0096 min -0.025 max +0.025
+speed-up     [+0.20,+0.80] gt accel +0.5005 | ROS /imu ax +0.5019 az +9.8005 (n 60) | gz /imu ax +0.5019 az +9.8005 (n 60) | ROS ax s 0.0314 min +0.436 max +0.569
+cruise       [+1.50,+2.90] gt accel -0.0000 | ROS /imu ax -0.0012 az +9.8005 (n 140) | gz /imu ax -0.0012 az +9.8005 (n 140) | ROS ax s 0.0098 min -0.021 max +0.025
+braking      [+3.10,+3.40] gt accel -1.0001 | ROS /imu ax -1.0011 az +9.7989 (n 30) | gz /imu ax -1.0011 az +9.7989 (n 30) | ROS ax s 0.0590 min -1.121 max -0.893
+stopped      [+4.00,+5.90] gt accel +0.0000 | ROS /imu ax -0.0006 az +9.7999 (n 191) | gz /imu ax -0.0006 az +9.7999 (n 191) | ROS ax s 0.0101 min -0.032 max +0.028
+# /imu stamp spacing over the profile: n 701, min 10.0 ms, max 10.0 ms, all 10 ms: True
+# speed-up  matched 48: IMU ax mean +0.5027 s 0.0320 | wheel-derived 10 ms accel mean +0.4950 s 0.0392 | residual s 0.0192 max 0.0648 | corr +0.873
+# braking   matched 27: IMU ax mean -1.0014 s 0.0621 | wheel-derived 10 ms accel mean -0.9879 s 0.0835 | residual s 0.0299 max 0.0877 | corr +0.958
+# cruise    matched 118: IMU ax mean -0.0014 s 0.0100 | wheel-derived 10 ms accel mean +0.0000 s 0.0000 | residual s 0.0100 max 0.0251 | corr +nan
+# raw samples 10756; acceleration steps found 200; step stamp mod 10 ms histogram {1: 150, 2: 50}; output-stamp minus step-stamp (ms) histogram {8: 50, 9: 150}
+Exception in thread Thread-1 (spin):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+# probe exit 0
+# leftovers: 0
+# decimator: raw 16033 out 1603 blocks_not_10 0 raw_stamp_gaps 0 block_size_histogram {10: 1603}
+# raw launch log: 0 [ERROR] lines
+
+## Result: identical in all 3 runs. 200 acceleration steps per run: 150 at stamp = 1 ms mod 10 ms and 50 at 2 ms mod 10 ms (the braking
+## steps are split over two physics steps, consistent with the fixture, TS-027_C4_validation.log Stage 1b). The output stamped t contains the
+## physical velocity change of 8-9 ms earlier: delay histogram {8 ms: 50, 9 ms: 150}. The original 100 Hz IMU sampled stamps = 0 mod 10 ms,
+## i.e. never a step (TS-027). The FIR group delay of a 10-sample mean (4.5 ms) applies to acceleration spread evenly over the block;
+## with the 100 Hz command hold the physical step sits at the block start.

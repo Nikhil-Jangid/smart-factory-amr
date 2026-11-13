@@ -1,0 +1,36 @@
+# CALC-M3-04 geometry check; chassis x -0.325..0.125, z 0.050..0.170; wheel top 0.150; caster top 0.050; bracket top 0.200
+
+O1  baseline: bracket top + 0.030 (DEC-030)
+  sensor (x, y, z) = (0.070, 0.000, 0.230) m in base_footprint
+  unobstructed beams: 360/360 (360 deg)
+  floor intersection of a level beam under pitch: 1 deg -> 13.18 m, 2 deg -> 6.59 m (range_max 12 m, DEC-031)
+  obstacles detected only if their top is above 0.230 m (2D plane)
+
+O2a lowered onto chassis top, no bracket (optical +0.020, Assumed)
+  sensor (x, y, z) = (0.070, 0.000, 0.190) m in base_footprint
+  unobstructed beams: 360/360 (360 deg)
+  floor intersection of a level beam under pitch: 1 deg -> 10.89 m, 2 deg -> 5.44 m (range_max 12 m, DEC-031)
+  obstacles detected only if their top is above 0.190 m (2D plane)
+
+O2b front-protruding, plane 0.120 (housing centre 0.035 ahead of chassis face, Assumed)
+  sensor (x, y, z) = (0.160, 0.000, 0.120) m in base_footprint
+  unobstructed beams: 203/360 (203 deg)
+  blocked bearings +102 .. +180 and -180 .. -102 deg (157 beams) by chassis
+  floor intersection of a level beam under pitch: 1 deg -> 6.87 m, 2 deg -> 3.44 m (range_max 12 m, DEC-031)
+  obstacles detected only if their top is above 0.120 m (2D plane)
+
+O2c front-protruding, plane 0.060 (same housing)
+  sensor (x, y, z) = (0.160, 0.000, 0.060) m in base_footprint
+  unobstructed beams: 203/360 (203 deg)
+  blocked bearings +102 .. +180 and -180 .. -102 deg (157 beams) by chassis
+  floor intersection of a level beam under pitch: 1 deg -> 3.44 m, 2 deg -> 1.72 m (range_max 12 m, DEC-031)
+  obstacles detected only if their top is above 0.060 m (2D plane)
+
+O2d under chassis, plane 0.035 (centre, in the 0.050 m ground clearance)
+  sensor (x, y, z) = (-0.100, 0.000, 0.035) m in base_footprint
+  unobstructed beams: 285/360 (285 deg)
+  blocked bearings +175 .. +180 and -180 .. -175 deg ( 11 beams) by caster
+  blocked bearings -80 .. -49 deg ( 32 beams) by wheel
+  blocked bearings +49 .. +80 deg ( 32 beams) by wheel
+  floor intersection of a level beam under pitch: 1 deg -> 2.01 m, 2 deg -> 1.00 m (range_max 12 m, DEC-031)
+  obstacles detected only if their top is above 0.035 m (2D plane)

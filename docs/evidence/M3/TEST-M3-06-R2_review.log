@@ -1,0 +1,88 @@
+# Task C procedure mode=fov, 2026-11-04 15:56:56 IST, revision 4961817 (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; world <share_b>/worlds/sensor_test.sdf sha256 925f995c5192c17b…
+
+## attempt 1 (ROS_DOMAIN_ID=105)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf
+both controllers active
+# exit 0
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+
+$ python3 docs/evidence/M3/TEST-M3-C_lidar_check.py fov <share_b>/worlds/sensor_test.sdf
+# world sensor_test.sdf: targets target_front_1m centre (1.170, 0.000, 0.500) size (0.20, 1.00, 1.00), target_left_3m centre (0.070, 3.100, 0.500) size (1.50, 0.20, 1.00), target_low centre (1.484, 1.414, 0.075) size (0.60, 0.60, 0.15), target_rear_6m centre (-6.030, 0.000, 0.500) size (0.20, 2.00, 1.00), target_right_2m centre (0.070, -2.100, 0.500) size (1.00, 0.20, 1.00)
+# window: settle 2.0 s after the first /scan stamp (3.700 s); 20 scans, stamps 5.700 .. 7.600 s; RTF 1.000
+# laser pose from ground truth (141 samples): x +0.07000 y +0.00000 z 0.23000 m, yaw +0.00000 deg, roll -0.00000 deg, pitch +0.00000 deg
+# scan fields: angle_min -3.141592741 angle_increment 0.017453292 rad, 360 ranges, range 0.120..12.000 m
+== D6 targets at 0, +90, -90, 180 deg: >= 3 finite returns and |median(r - r_true)| <= 0.05 m in every scan
+PASS  target_front_1m (+0 deg): min finite returns per scan 51 >= 3; max |median error| 0.0031 m <= 0.05 m (20 scans)
+PASS  target_left_3m (+90 deg): min finite returns per scan 27 >= 3; max |median error| 0.0060 m <= 0.05 m (20 scans)
+PASS  target_right_2m (-90 deg): min finite returns per scan 27 >= 3; max |median error| 0.0033 m <= 0.05 m (20 scans)
+PASS  target_rear_6m (+180 deg): min finite returns per scan 17 >= 3; max |median error| 0.0062 m <= 0.05 m (20 scans)
+== D7 no self-returns: finite returns closer than 0.45 m (open area: nothing within 0.45 m of the laser)
+PASS  0 finite returns < 0.45 m in 20 scans == 0 (nearest finite return 0.9737 m)
+INFO  -inf (closer than range_min) returns: 0; +inf (no return) returns: 4600 of 7200
+== D8 blind zone: low target (top below the 0.230 m scan plane), whole bearing sector, no edge exclusion
+PASS  target_low: sector +33.02 to +56.98 deg (23 beams per scan), finite returns 0 == 0 over 20 scans
+INFO  blind-zone characterization: laser at z 0.2300 m (nominal 0.230), tilt roll -0.0000 / pitch +0.0000 deg; plane height at the low target (2.000 m): 0.2300 m; low target top 0.150 m, i.e. 0.080 m below the plane, not detected. Plane height at 12 m (range_max): 0.2300 m. Any object whose top is below the plane is invisible to this LiDAR (DEC-030; M8 depth camera, DEC-037)
+== Angular registration and coverage (INFO)
+INFO  target_front_1m: beams geometrically on the target 53, beams returning the target range (+-0.05 m) 53, symmetric difference [] (edge beams only expected)
+INFO  target_rear_6m: beams geometrically on the target 19, beams returning the target range (+-0.05 m) 19, symmetric difference [] (edge beams only expected)
+INFO  seam: beam 0 (-180.000 deg) 6.0053 m and beam 359 (+179.000 deg) 5.9975 m: both on the rear target (expected about 6.0 m)
+== ALL CHECKS PASSED
+# checker exit 0
+# launch log: 3 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [ERROR] [gz-5]: process[gz-5] failed to terminate '10.0' seconds after receiving 'SIGTERM', escalating to 'SIGKILL'
+#         1 [ERROR] [gz-5]: process[gz-5] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+#         1 [ERROR] [gz-5]: process has died [pid 50370, exit code -9, cmd 'gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf'].
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         6 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: TS-029 (only gz-5 escalated after SIGINT (SIGINT->SIGTERM, SIGTERM->SIGKILL, died -9); all other processes finished cleanly)
+# DEC-039: TS-029 shutdown signature only; launch-log condition not counted for this attempt
+# attempt 1 INVALID under DEC-039 (measurement checks passed; not counted, repeated)
+# attempt 1 INVALID (not counted)
+
+## attempt 2 (ROS_DOMAIN_ID=106)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf
+both controllers active
+# exit 0
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+
+$ python3 docs/evidence/M3/TEST-M3-C_lidar_check.py fov <share_b>/worlds/sensor_test.sdf
+# world sensor_test.sdf: targets target_front_1m centre (1.170, 0.000, 0.500) size (0.20, 1.00, 1.00), target_left_3m centre (0.070, 3.100, 0.500) size (1.50, 0.20, 1.00), target_low centre (1.484, 1.414, 0.075) size (0.60, 0.60, 0.15), target_rear_6m centre (-6.030, 0.000, 0.500) size (0.20, 2.00, 1.00), target_right_2m centre (0.070, -2.100, 0.500) size (1.00, 0.20, 1.00)
+# window: settle 2.0 s after the first /scan stamp (4.400 s); 20 scans, stamps 6.400 .. 8.300 s; RTF 1.000
+# laser pose from ground truth (141 samples): x +0.07000 y +0.00000 z 0.23000 m, yaw +0.00000 deg, roll -0.00000 deg, pitch +0.00000 deg
+# scan fields: angle_min -3.141592741 angle_increment 0.017453292 rad, 360 ranges, range 0.120..12.000 m
+== D6 targets at 0, +90, -90, 180 deg: >= 3 finite returns and |median(r - r_true)| <= 0.05 m in every scan
+PASS  target_front_1m (+0 deg): min finite returns per scan 51 >= 3; max |median error| 0.0032 m <= 0.05 m (20 scans)
+PASS  target_left_3m (+90 deg): min finite returns per scan 27 >= 3; max |median error| 0.0035 m <= 0.05 m (20 scans)
+PASS  target_right_2m (-90 deg): min finite returns per scan 27 >= 3; max |median error| 0.0059 m <= 0.05 m (20 scans)
+PASS  target_rear_6m (+180 deg): min finite returns per scan 17 >= 3; max |median error| 0.0071 m <= 0.05 m (20 scans)
+== D7 no self-returns: finite returns closer than 0.45 m (open area: nothing within 0.45 m of the laser)
+PASS  0 finite returns < 0.45 m in 20 scans == 0 (nearest finite return 0.9737 m)
+INFO  -inf (closer than range_min) returns: 0; +inf (no return) returns: 4600 of 7200
+== D8 blind zone: low target (top below the 0.230 m scan plane), whole bearing sector, no edge exclusion
+PASS  target_low: sector +33.02 to +56.98 deg (23 beams per scan), finite returns 0 == 0 over 20 scans
+INFO  blind-zone characterization: laser at z 0.2300 m (nominal 0.230), tilt roll -0.0000 / pitch +0.0000 deg; plane height at the low target (2.000 m): 0.2300 m; low target top 0.150 m, i.e. 0.080 m below the plane, not detected. Plane height at 12 m (range_max): 0.2300 m. Any object whose top is below the plane is invisible to this LiDAR (DEC-030; M8 depth camera, DEC-037)
+== Angular registration and coverage (INFO)
+INFO  target_front_1m: beams geometrically on the target 53, beams returning the target range (+-0.05 m) 53, symmetric difference [] (edge beams only expected)
+INFO  target_rear_6m: beams geometrically on the target 19, beams returning the target range (+-0.05 m) 19, symmetric difference [] (edge beams only expected)
+INFO  seam: beam 0 (-180.000 deg) 6.0067 m and beam 359 (+179.000 deg) 5.9924 m: both on the rear target (expected about 6.0 m)
+== ALL CHECKS PASSED
+# checker exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         7 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# TS-029 attempts declared invalid under DEC-039: 1
+
+# overall: ALL CHECKS PASSED

@@ -1,0 +1,21 @@
+# TEST-M3-03 attempt 1 (formal), aborted with exit 130 before the procedure wrote its review log (TS-025).
+# Preserved from the procedure's temporary directory; the model file s2.urdf is not kept (regenerable).
+
+## raw.log (procedure output up to the abort)
+# TEST-M3-03 sensor frames, 2026-11-03 17:38:00 IST, revision 5b9332e (amr_ws/src has uncommitted Task A changes)
+# model: xacro amr.urdf.xacro use_ros2_control:=true controllers_file:=<ctrl> use_sensors:=true; ROS_DOMAIN_ID=87
+
+$ timeout -s INT 4 ros2 run tf2_ros tf2_echo lidar_mount_link laser_frame   (record; tf2_echo prints 3 decimals)
+
+## rsp.log (robot_state_publisher: first 4 and last 3 lines; the middle is the URDF echoed by rcl)
+[rcutils|error_handling.c:65] an error string (message, file name, or formatted message) will be truncated
+[ERROR] [1793707650.449333708] [rcl]: Failed to parse global arguments
+terminate called after throwing an instance of 'rclcpp::exceptions::RCLInvalidROSArgsError'
+  what():  failed to initialize rcl: Couldn't parse parameter override rule: '-p robot_description:=<?xml version="1.0" ?>
+[... URDF text omitted ...]
+<robot name="amr">
+  <!-- OPEN-06, DE, at ./src/rcl/arguments.c:352
+[ros2run]: Aborted
+
+## jsp.log (joint_state_publisher)
+[INFO] [1793707650.760689278] [joint_state_publisher]: Waiting for robot_description to be published on the robot_description topic...

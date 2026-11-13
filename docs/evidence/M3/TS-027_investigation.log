@@ -1,0 +1,329 @@
+# TS-027 bounded scratch investigation (informal; not a test result), 2026-11-03 18:36-18:50 IST.
+# Baseline: be788ca, working tree clean; amr_ws unchanged; scratch only (<scratch> = a temporary scratch folder). gz-sim 8.15.0, gz-physics 7.8.0, gz_ros2_control 1.2.20.
+# Scripts: TS-027_fixture_exp.py (gz.sim8 TestFixture, no ROS), TS-027_launch_probe.py + TS-027_run_launch.sh (real sim.launch.py),
+#          TS-027_gz_jc_probe.py + TS-027_run_gz.sh (real gz sim server, runtime spawn, gz JointController), and the Task D procedure (C1/C2).
+# Models: amr_s.sdf = xacro use_sensors:=true (no use_ros2_control: no M2 contact surfaces, cylinder wheels);
+#         amr_full_noctl.sdf = the launch expansion (use_ros2_control:=true use_sensors:=true) with only the gz_ros2_control <plugin> removed;
+#         amr_jc.sdf = amr_full_noctl.sdf + two gz-sim JointController plugins (velocity mode = JointVelocityCmd).
+# Columns (fixture): true accel = (v(t1)-v(t0))/(t1-t0) from the ground-truth link velocity; physics-reported = mean of the
+#   per-step WorldLinearAcceleration component (the engine frame data the IMU also uses); IMU = mean of /imu linear_acceleration.
+
+## Source reading (gz-sim8 Imu.cc, Physics.cc; gz-physics7 dartsim KinematicsFeatures.cc; gz_ros2_control jazzy gz_system.cpp)
+# IMU system copies the LinearAcceleration component of the IMU entity into gz-sensors ImuSensor (which subtracts gravity).
+# Physics::UpdateSim fills that component from the engine frame data at the sensor offset (LinkFrameDataAtOffset), rotated to the body frame.
+# dartsim FrameDataRelativeToWorld: linearAcceleration = frame->getLinearAcceleration() (instantaneous, this step).
+# gz_ros2_control does not touch IMU components; it writes JointVelocityCmd only in write(), i.e. once per controller_manager cycle.
+
+## E1 rest / free fall / force-driven, M3 model without M2 surfaces (DART)
+# Note: ext_force and wheel_force did not move this model (true ax 0): without the M2 caster surfaces (mu 0.01) the default caster friction holds it. Repeated with the full model in E2.
+### dart_freefall.log
+# engine dart, case freefall, run 1: 400 physics steps, 41 IMU messages; final vx -0.0000 m/s
+free fall                    [0.05,0.30] s: true ax -0.0000 az -9.8000 | physics-reported ax -0.0000 az -9.8000 (n 251) | IMU ax -0.0021 az -0.0010 (n 25) m/s^2
+### dart_float_force.log
+# engine dart, case float_force, run 1: 3000 physics steps, 301 IMU messages; final vx +0.0016 m/s
+settle (no input)            [0.10,0.45] s: true ax +0.0000 az +0.0000 | physics-reported ax +0.0000 az +0.0000 (n 351) | IMU ax +0.0014 az -0.0016 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.4887 az -0.0089 | physics-reported ax +0.4887 az -0.0089 (n 801) | IMU ax +0.4957 az -0.0022 (n 81) m/s^2
+phase 2 (braking)            [1.55,1.95] s: true ax -0.9739 az +0.0200 | physics-reported ax -0.9739 az +0.0200 (n 401) | IMU ax -0.9902 az -0.0435 (n 40) m/s^2
+after                        [2.20,2.95] s: true ax -0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 751) | IMU ax +0.0012 az -0.0009 (n 76) m/s^2
+### dart_ext_force.log
+# engine dart, case ext_force, run 1: 4000 physics steps, 401 IMU messages; final vx +0.0000 m/s
+settle (no input)            [0.10,0.45] s: true ax -0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 351) | IMU ax +0.0016 az +9.7972 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 801) | IMU ax -0.0004 az +9.8008 (n 81) m/s^2
+phase 2 (braking)            [1.55,1.95] s: true ax +0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 401) | IMU ax +0.0021 az +9.7994 (n 40) m/s^2
+after                        [2.20,3.95] s: true ax +0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 1751) | IMU ax -0.0004 az +9.7992 (n 176) m/s^2
+### dart_wheel_force.log
+# engine dart, case wheel_force, run 1: 4000 physics steps, 401 IMU messages; final vx +0.0000 m/s
+settle (no input)            [0.10,0.45] s: true ax -0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 351) | IMU ax -0.0015 az +9.8002 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 801) | IMU ax -0.0013 az +9.8013 (n 81) m/s^2
+phase 2 (braking)            [1.55,1.95] s: true ax +0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 401) | IMU ax -0.0008 az +9.8011 (n 40) m/s^2
+after                        [2.20,3.95] s: true ax +0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 1751) | IMU ax -0.0007 az +9.7992 (n 176) m/s^2
+### dart_wheel_vel.log
+# engine dart, case wheel_vel, run 1: 4000 physics steps, 401 IMU messages; final vx +0.0020 m/s
+settle (no input)            [0.10,0.45] s: true ax -0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 351) | IMU ax +0.0017 az +9.8005 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.5000 az -0.0000 (n 801) | IMU ax +0.5013 az +9.8005 (n 81) m/s^2
+hold (constant 0.5 m/s)      [1.60,2.40] s: true ax +0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 801) | IMU ax -0.0019 az +9.7997 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -1.0000 az +0.0000 (n 401) | IMU ax -1.0019 az +9.8008 (n 41) m/s^2
+after                        [3.20,3.95] s: true ax +0.0000 az +0.0000 | physics-reported ax -1.0000 az +0.0000 (n 751) | IMU ax -0.0013 az +9.8018 (n 76) m/s^2
+
+## E2 full launch model, three drive methods, command updated every 1 ms step (DART)
+### full_dart_wheel_vel.log
+# engine dart, case wheel_vel, run 1: 4000 physics steps, 401 IMU messages; final vx +0.0010 m/s
+settle (no input)            [0.10,0.45] s: true ax +0.0000 az -0.0001 | physics-reported ax +0.0000 az -0.0001 (n 351) | IMU ax +0.0008 az +9.8024 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.5000 az -0.0000 (n 801) | IMU ax +0.5000 az +9.8019 (n 81) m/s^2
+hold (constant 0.5 m/s)      [1.60,2.40] s: true ax -0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 801) | IMU ax +0.0006 az +9.7995 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -1.0000 az +0.0000 (n 401) | IMU ax -1.0029 az +9.8004 (n 41) m/s^2
+after                        [3.20,3.95] s: true ax +0.0000 az +0.0000 | physics-reported ax -1.0000 az -0.0000 (n 751) | IMU ax -0.0002 az +9.8016 (n 76) m/s^2
+### full_dart_ext_force.log
+# engine dart, case ext_force, run 1: 4000 physics steps, 401 IMU messages; final vx -0.0001 m/s
+settle (no input)            [0.10,0.45] s: true ax +0.0000 az -0.0001 | physics-reported ax +0.0000 az -0.0001 (n 351) | IMU ax +0.0003 az +9.8011 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.4512 az -0.0000 | physics-reported ax +0.4512 az -0.0000 (n 801) | IMU ax +0.4515 az +9.8018 (n 81) m/s^2
+phase 2 (braking)            [1.55,1.95] s: true ax -0.9732 az -0.0000 | physics-reported ax -0.9732 az -0.0000 (n 401) | IMU ax -0.9718 az +9.7978 (n 40) m/s^2
+after                        [2.20,3.95] s: true ax +0.0164 az +0.0000 | physics-reported ax +0.0236 az +0.0000 (n 1751) | IMU ax +0.0157 az +9.7985 (n 176) m/s^2
+### full_dart_wheel_force.log
+# engine dart, case wheel_force, run 1: 4000 physics steps, 401 IMU messages; final vx -0.0001 m/s
+settle (no input)            [0.10,0.45] s: true ax +0.0000 az -0.0001 | physics-reported ax +0.0000 az -0.0001 (n 351) | IMU ax +0.0007 az +9.7990 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.4602 az -0.0000 | physics-reported ax +0.4602 az -0.0000 (n 801) | IMU ax +0.4589 az +9.8007 (n 81) m/s^2
+phase 2 (braking)            [1.55,1.95] s: true ax -0.9913 az +0.0000 | physics-reported ax -0.9913 az +0.0000 (n 401) | IMU ax -0.9901 az +9.8016 (n 40) m/s^2
+after                        [2.20,3.95] s: true ax +0.0166 az -0.0000 | physics-reported ax +0.0236 az -0.0000 (n 1751) | IMU ax +0.0173 az +9.8007 (n 176) m/s^2
+
+## E3 configuration differences (DART, full model, wheel_vel)
+### full_dart_wheel_vel_worldsys.log
+# engine dart, case wheel_vel, run 1: 4000 physics steps, 401 IMU messages; final vx +0.0010 m/s
+settle (no input)            [0.10,0.45] s: true ax +0.0000 az -0.0001 | physics-reported ax +0.0000 az -0.0001 (n 351) | IMU ax -0.0007 az +9.8007 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.5000 az -0.0000 (n 801) | IMU ax +0.5001 az +9.7986 (n 81) m/s^2
+hold (constant 0.5 m/s)      [1.60,2.40] s: true ax -0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 801) | IMU ax -0.0009 az +9.8005 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -1.0000 az +0.0000 (n 401) | IMU ax -1.0006 az +9.7983 (n 41) m/s^2
+after                        [3.20,3.95] s: true ax +0.0000 az +0.0000 | physics-reported ax -1.0000 az -0.0000 (n 751) | IMU ax -0.0007 az +9.7966 (n 76) m/s^2
+### full_dart_wheel_vel_noacc.log
+# engine dart, case wheel_vel, run 1: 4000 physics steps, 401 IMU messages; final vx +0.0010 m/s
+settle (no input)            [0.10,0.45] s: true ax +0.0000 az -0.0001 | physics-reported ax +nan az +nan (n 351) | IMU ax +0.0007 az +9.8005 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +nan az +nan (n 801) | IMU ax +0.4985 az +9.7992 (n 81) m/s^2
+hold (constant 0.5 m/s)      [1.60,2.40] s: true ax -0.0000 az +0.0000 | physics-reported ax +nan az +nan (n 801) | IMU ax +0.0012 az +9.7989 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax +nan az +nan (n 401) | IMU ax -0.9981 az +9.8013 (n 41) m/s^2
+after                        [3.20,3.95] s: true ax +0.0000 az +0.0000 | physics-reported ax +nan az +nan (n 751) | IMU ax -0.0014 az +9.7992 (n 76) m/s^2
+### full_dart_wheel_vel_y-20.log
+# engine dart, case wheel_vel, run 1: 4000 physics steps, 401 IMU messages; final vx +0.0010 m/s
+settle (no input)            [0.10,0.45] s: true ax +0.0000 az -0.0001 | physics-reported ax +0.0000 az -0.0001 (n 351) | IMU ax -0.0006 az +9.8027 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.5000 az -0.0000 (n 801) | IMU ax +0.5006 az +9.8001 (n 81) m/s^2
+hold (constant 0.5 m/s)      [1.60,2.40] s: true ax -0.0000 az +0.0000 | physics-reported ax -0.0000 az +0.0000 (n 801) | IMU ax -0.0010 az +9.7991 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -1.0000 az +0.0000 (n 401) | IMU ax -0.9995 az +9.7963 (n 41) m/s^2
+after                        [3.20,3.95] s: true ax +0.0000 az +0.0000 | physics-reported ax -1.0000 az -0.0000 (n 751) | IMU ax +0.0013 az +9.8006 (n 76) m/s^2
+
+## E4 real launch (gz_ros2_control + diff_drive 100 Hz), ROS /imu vs gz /imu, stop profile 0.5 m/s 3 s then 0
+### launch_probe1.log
+# launch: sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0 
+# controllers active: 2
+# gz subscribe /imu: True
+# leg start 4.170 end 7.171; ROS imu n 848, gz imu n 851
+rest before  [-1.00,-0.05] gt accel +0.0000 | ROS /imu ax +0.0020 az +9.8002 (n 95) | gz /imu ax +0.0020 az +9.8002 (n 95)
+speed-up     [+0.20,+0.80] gt accel +0.4998 | ROS /imu ax -0.0001 az +9.8014 (n 60) | gz /imu ax -0.0001 az +9.8014 (n 60)
+cruise       [+1.50,+2.90] gt accel -0.0000 | ROS /imu ax -0.0006 az +9.7977 (n 141) | gz /imu ax -0.0006 az +9.7977 (n 141)
+braking      [+3.10,+3.40] gt accel -0.9995 | ROS /imu ax -0.0016 az +9.7975 (n 30) | gz /imu ax -0.0016 az +9.7975 (n 30)
+stopped      [+4.00,+5.90] gt accel +0.0000 | ROS /imu ax -0.0008 az +9.8006 (n 190) | gz /imu ax -0.0008 az +9.8006 (n 190)
+# probe exit 0
+# leftovers: 0
+# raw launch log: 0 [ERROR] lines
+### probe_base.log
+# launch: sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0 
+# controllers active: 2
+# gz subscribe /imu: True
+# leg start 5.083 end 8.084; ROS imu n 815, gz imu n 815
+rest before  [-1.00,-0.05] gt accel +0.0002 | ROS /imu ax +0.0008 az +9.7979 (n 95) | gz /imu ax +0.0008 az +9.7979 (n 95) | ROS ax s 0.0102 min -0.022 max +0.031
+speed-up     [+0.20,+0.80] gt accel +0.5004 | ROS /imu ax +0.0004 az +9.7999 (n 60) | gz /imu ax +0.0004 az +9.7999 (n 60) | ROS ax s 0.0107 min -0.025 max +0.029
+cruise       [+1.50,+2.90] gt accel -0.0000 | ROS /imu ax +0.0004 az +9.7995 (n 140) | gz /imu ax +0.0004 az +9.7995 (n 140) | ROS ax s 0.0102 min -0.027 max +0.022
+braking      [+3.10,+3.40] gt accel -0.9998 | ROS /imu ax -0.0004 az +9.7973 (n 30) | gz /imu ax -0.0004 az +9.7973 (n 30) | ROS ax s 0.0101 min -0.032 max +0.018
+stopped      [+4.00,+5.90] gt accel +0.0000 | ROS /imu ax -0.0004 az +9.7996 (n 190) | gz /imu ax -0.0004 az +9.7996 (n 190) | ROS ax s 0.0106 min -0.034 max +0.027
+# probe exit 0
+# leftovers: 0
+# raw launch log: 0 [ERROR] lines
+
+## E5 real gz sim server + sensor_test.sdf + runtime spawn, gz JointController (no gz_ros2_control; commands ~2-5 ms wall clock)
+### gz_jc_probe1.log
+# gz sim -r -s --headless-rendering sensor_test.sdf; spawn amr_jc.sdf at (0,-20,0)
+data: true
+
+# marks {'start': 5.947, 'ramp_end': 6.95, 'brake': 8.463, 'stop': 8.973} imu n 690 gt n 407
+rest      [-1.50,-0.10] gt accel +0.0000 (v +0.000 -> +0.000) | gz /imu ax -0.0001 az +9.8016 (n 140)
+speed-up  [+0.20,+0.90] gt accel +0.4957 (v +0.097 -> +0.446) | gz /imu ax +0.6818 az +9.8003 (n 71)
+cruise    [+1.30,+2.42] gt accel -0.0000 (v +0.500 -> +0.500) | gz /imu ax -0.0003 az +9.7988 (n 112)
+braking   [+2.62,+2.93] gt accel -0.9876 (v +0.408 -> +0.102) | gz /imu ax -1.1875 az +9.8003 (n 31)
+stopped   [+3.33,+3.93] gt accel +0.0000 (v +0.000 -> +0.000) | gz /imu ax -0.0018 az +9.8002 (n 60)
+# probe exit 0
+# leftovers 0
+
+## E6 100 Hz zero-order-hold wheel command, phase sweep 0..9 ms (fixture, DART)
+### zoh_phase_sweep.log
+## PHASE 0 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.5056 az -0.0000 (n 801) | IMU ax +4.9994 az +9.8015 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -1.0161 az -0.0000 (n 401) | IMU ax -7.4503 az +9.7982 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 81 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## PHASE 1 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.4994 az -0.0000 (n 801) | IMU ax +0.0015 az +9.8002 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -0.9975 az +0.0000 (n 401) | IMU ax -0.0019 az +9.8026 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 80 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## PHASE 2 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.4994 az -0.0000 (n 801) | IMU ax -0.0000 az +9.8030 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -0.9975 az +0.0000 (n 401) | IMU ax -0.0021 az +9.8003 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 80 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## PHASE 3 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.4994 az -0.0000 (n 801) | IMU ax +0.0017 az +9.7980 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -0.9975 az +0.0000 (n 401) | IMU ax +0.0014 az +9.7990 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 80 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## PHASE 4 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.4994 az -0.0000 (n 801) | IMU ax +0.0003 az +9.7983 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -0.9975 az +0.0000 (n 401) | IMU ax -0.0008 az +9.8002 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 80 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## PHASE 5 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.4994 az -0.0000 (n 801) | IMU ax +0.0007 az +9.8008 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -0.9975 az +0.0000 (n 401) | IMU ax -0.0008 az +9.7962 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 80 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## PHASE 6 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.4994 az -0.0000 (n 801) | IMU ax -0.0014 az +9.7996 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -0.9975 az +0.0000 (n 401) | IMU ax -0.0013 az +9.8003 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 80 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## PHASE 7 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.4994 az -0.0000 (n 801) | IMU ax -0.0011 az +9.8017 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -0.9975 az +0.0000 (n 401) | IMU ax -0.0011 az +9.8003 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 80 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## PHASE 8 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.4994 az -0.0000 (n 801) | IMU ax +0.0026 az +9.7984 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -0.9975 az +0.0000 (n 401) | IMU ax -0.0026 az +9.7987 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 80 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## PHASE 9 ms
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.4994 az -0.0000 (n 801) | IMU ax +0.0006 az +9.7999 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax -1.0039 az +0.0000 (n 401) | IMU ax -2.5495 az +9.8001 (n 41) m/s^2
+# speed-up per-step physics ax: max +4.999, steps > 0.1: 80 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+
+## E7 bullet-featherstone engine (fixture)
+### bulletfs.log
+## bullet-fs rest
+# engine bullet-fs, case rest, run 1: 3000 physics steps, 301 IMU messages; final vx -0.0000 m/s
+rest                         [1.00,3.00] s: true ax +0.0000 az +0.0000 | physics-reported ax +0.0000 az +0.0000 (n 2001) | IMU ax -0.0011 az +9.8005 (n 201) m/s^2
+# speed-up per-step physics ax: max +0.000, steps > 0.1: 0 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## bullet-fs wheel_vel
+settle (no input)            [0.10,0.45] s: true ax +0.0000 az +0.0000 | physics-reported ax +0.0000 az +0.0000 (n 351) | IMU ax -0.0011 az +9.7984 (n 36) m/s^2
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az +0.0000 | physics-reported ax +0.0000 az +0.0000 (n 801) | IMU ax +0.0019 az +9.7981 (n 81) m/s^2
+hold (constant 0.5 m/s)      [1.60,2.40] s: true ax +0.0000 az +0.0000 | physics-reported ax +0.0000 az +0.0000 (n 801) | IMU ax -0.0012 az +9.8001 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az +0.0000 | physics-reported ax +0.0000 az +0.0000 (n 401) | IMU ax +0.0022 az +9.7989 (n 41) m/s^2
+after                        [3.20,3.95] s: true ax +0.0000 az +0.0000 | physics-reported ax +0.0000 az +0.0000 (n 751) | IMU ax -0.0007 az +9.7985 (n 76) m/s^2
+# speed-up per-step physics ax: max +0.000, steps > 0.1: 0 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## bullet-fs zoh PHASE 0
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az +0.0000 | physics-reported ax +0.0000 az +0.0000 (n 801) | IMU ax +0.0002 az +9.8014 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az -0.0000 | physics-reported ax +0.0000 az +0.0000 (n 401) | IMU ax +0.0000 az +9.8011 (n 41) m/s^2
+# speed-up per-step physics ax: max +0.000, steps > 0.1: 0 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## bullet-fs zoh PHASE 1
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az -0.0000 | physics-reported ax +0.0000 az +0.0000 (n 801) | IMU ax -0.0008 az +9.7986 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az -0.0000 | physics-reported ax +0.0000 az +0.0000 (n 401) | IMU ax +0.0007 az +9.8007 (n 41) m/s^2
+# speed-up per-step physics ax: max +0.000, steps > 0.1: 0 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+## bullet-fs zoh PHASE 5
+phase 1 (speed-up)           [0.60,1.40] s: true ax +0.5000 az +0.0000 | physics-reported ax +0.0000 az +0.0000 (n 801) | IMU ax -0.0006 az +9.8004 (n 81) m/s^2
+phase 2 (braking)            [2.55,2.95] s: true ax -1.0000 az -0.0000 | physics-reported ax +0.0000 az +0.0000 (n 401) | IMU ax -0.0002 az +9.7980 (n 41) m/s^2
+# speed-up per-step physics ax: max +0.000, steps > 0.1: 0 of 801; IMU stamps mod 10 ms (ms): [0, 1, 10]
+
+## E8 candidate C2, controller_manager update_rate 1000 Hz (scratch overlay; NOT DEC-026): Task D procedure imu_motion 1 (informal), then the stop-profile probe
+### c2_imu_motion.log
+# Task D procedure mode=imu_motion, valid runs required=1, 2026-11-03 18:48:05 IST, revision be788ca (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; world <share_b>/worlds/sensor_test.sdf sha256 925f995c5192c17b…
+
+$ python3 -I docs/evidence/M3/TEST-M3-D_clearance_check.py <share_b>/worlds/sensor_test.sdf amr_ws/src/amr_description/urdf/amr_properties.xacro
+# amr_properties.xacro: chassis_length 0.45, chassis_width 0.35, wheel_radius 0.075, wheel_track 0.4, caster_x -0.36
+# robot bounding radius R = hypot(0.585, 0.275) + 0.05 = 0.696 m (conservative)
+# centre path: x -1.500 .. +2.625 m at y -20.0 m (profiles +50 %); swept area = path dilated by R
+PASS  ground_plane: plane 100 x 100 m centred at the origin; distance from the swept area to its edge 29.304 m >= 5.0 m
+PASS  target_front_1m: box x +1.070..+1.270, y -0.500..+0.500; clearance from the swept area 18.804 m >= 5.0 m
+PASS  target_left_3m: box x -0.680..+0.820, y +3.000..+3.200; clearance from the swept area 22.304 m >= 5.0 m
+PASS  target_rear_6m: box x -6.130..-5.930, y -1.000..+1.000; clearance from the swept area 18.813 m >= 5.0 m
+PASS  target_right_2m: box x -0.430..+0.570, y -2.200..-2.000; clearance from the swept area 17.104 m >= 5.0 m
+PASS  target_low: box x +1.184..+1.784, y +1.114..+1.714; clearance from the swept area 20.418 m >= 5.0 m
+== CLEARANCE OK
+# exit 0
+
+## attempt 1 (ROS_DOMAIN_ID=116)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-D_imu_encoder_measure.py imu_motion
+# TEST-M3 Task D harness mode=imu_motion, wall 2026-11-03 18:48:06 IST, ground truth /world/sensor_test/pose/info
+INFO  RTF over the measurement window = 0.999 (valid if >= 0.5)
+PASS  D10 rotate +0.5: mean gyro z +0.49997 rad/s vs ground-truth yaw rate +0.50000 rad/s (-0.005 %; sign; |.| <= 3 %) over 5.066 s, 506 IMU samples
+INFO  rotate +0.5: mean accel x/y +0.0002 / -0.0008 m/s^2 (expected 0: the IMU is on the rotation axis, CALC-M3-02)
+PASS  D10 rotate -0.5: mean gyro z -0.49999 rad/s vs ground-truth yaw rate -0.50000 rad/s (-0.002 %; sign; |.| <= 3 %) over 5.055 s, 505 IMU samples
+INFO  rotate -0.5: mean accel x/y -0.0004 / -0.0003 m/s^2 (expected 0: the IMU is on the rotation axis, CALC-M3-02)
+PASS  D11 accelerate to 0.5 m/s: mean accel x +0.5186 m/s^2 vs ground-truth acceleration +0.5001 m/s^2 (+3.72 %; sign; |.| <= 20 %) over the 10-90 % ramp +0.103 .. +0.902 s (80 IMU samples; plateau 0.5000 m/s)
+INFO  ramp ground-truth pitch +0.0000 .. +0.0000 deg -> g sin(pitch) up to 0.0000 m/s^2 in accel x
+INFO  ground-truth excursion from the spawn point (0, -20): x -0.000 .. +1.376 m, y -0.001 .. +0.000 m (clearance budget in TEST-M3-D_clearance_check.py)
+# samples: ground truth 1697, imu 2884, joint_states 28287, odometry 1331
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [controller_manager]: Waiting for data on 'robot_description' topic to finish initialization
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# exit 0
+
+# overall: ALL 1 VALID RUNS PASSED
+### probe_c2.log
+# launch: sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0 
+# controllers active: 2
+# gz subscribe /imu: True
+# leg start 7.512 end 10.514; ROS imu n 903, gz imu n 906
+rest before  [-1.00,-0.05] gt accel +0.0001 | ROS /imu ax +0.0007 az +9.8005 (n 95) | gz /imu ax +0.0007 az +9.8005 (n 95) | ROS ax s 0.0090 min -0.020 max +0.022
+speed-up     [+0.20,+0.80] gt accel +0.5001 | ROS /imu ax +0.5225 az +9.7992 (n 60) | gz /imu ax +0.5225 az +9.7992 (n 60) | ROS ax s 0.1915 min -0.010 max +1.005
+cruise       [+1.50,+2.90] gt accel -0.0000 | ROS /imu ax +0.0002 az +9.7976 (n 140) | gz /imu ax +0.0002 az +9.7976 (n 140) | ROS ax s 0.0107 min -0.024 max +0.027
+braking      [+3.10,+3.40] gt accel -0.9999 | ROS /imu ax -0.8335 az +9.8007 (n 30) | gz /imu ax -0.8335 az +9.8007 (n 30) | ROS ax s 0.3763 min -1.021 max +0.023
+stopped      [+4.00,+5.90] gt accel +0.0000 | ROS /imu ax -0.0007 az +9.7976 (n 190) | gz /imu ax -0.0007 az +9.7976 (n 190) | ROS ax s 0.0100 min -0.027 max +0.024
+# probe exit 0
+# leftovers: 0
+# raw launch log: 0 [ERROR] lines
+
+## E9 candidate C1, IMU update_rate 1000 Hz (scratch overlay; NOT DEC-032): Task D procedure imu_motion 1 (informal), then the stop-profile probe
+### c1_imu_motion.log
+# Task D procedure mode=imu_motion, valid runs required=1, 2026-11-03 18:48:41 IST, revision be788ca (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; world <share_b>/worlds/sensor_test.sdf sha256 925f995c5192c17b…
+
+$ python3 -I docs/evidence/M3/TEST-M3-D_clearance_check.py <share_b>/worlds/sensor_test.sdf amr_ws/src/amr_description/urdf/amr_properties.xacro
+# amr_properties.xacro: chassis_length 0.45, chassis_width 0.35, wheel_radius 0.075, wheel_track 0.4, caster_x -0.36
+# robot bounding radius R = hypot(0.585, 0.275) + 0.05 = 0.696 m (conservative)
+# centre path: x -1.500 .. +2.625 m at y -20.0 m (profiles +50 %); swept area = path dilated by R
+PASS  ground_plane: plane 100 x 100 m centred at the origin; distance from the swept area to its edge 29.304 m >= 5.0 m
+PASS  target_front_1m: box x +1.070..+1.270, y -0.500..+0.500; clearance from the swept area 18.804 m >= 5.0 m
+PASS  target_left_3m: box x -0.680..+0.820, y +3.000..+3.200; clearance from the swept area 22.304 m >= 5.0 m
+PASS  target_rear_6m: box x -6.130..-5.930, y -1.000..+1.000; clearance from the swept area 18.813 m >= 5.0 m
+PASS  target_right_2m: box x -0.430..+0.570, y -2.200..-2.000; clearance from the swept area 17.104 m >= 5.0 m
+PASS  target_low: box x +1.184..+1.784, y +1.114..+1.714; clearance from the swept area 20.418 m >= 5.0 m
+== CLEARANCE OK
+# exit 0
+
+## attempt 1 (ROS_DOMAIN_ID=116)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-D_imu_encoder_measure.py imu_motion
+# TEST-M3 Task D harness mode=imu_motion, wall 2026-11-03 18:48:42 IST, ground truth /world/sensor_test/pose/info
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  D10 rotate +0.5: mean gyro z +0.50001 rad/s vs ground-truth yaw rate +0.50000 rad/s (+0.001 %; sign; |.| <= 3 %) over 5.067 s, 5068 IMU samples
+INFO  rotate +0.5: mean accel x/y +0.0000 / +0.0000 m/s^2 (expected 0: the IMU is on the rotation axis, CALC-M3-02)
+PASS  D10 rotate -0.5: mean gyro z -0.50000 rad/s vs ground-truth yaw rate -0.50000 rad/s (-0.000 %; sign; |.| <= 3 %) over 5.066 s, 5067 IMU samples
+INFO  rotate -0.5: mean accel x/y -0.0001 / +0.0002 m/s^2 (expected 0: the IMU is on the rotation axis, CALC-M3-02)
+PASS  D11 accelerate to 0.5 m/s: mean accel x +0.5001 m/s^2 vs ground-truth acceleration +0.5000 m/s^2 (+0.01 %; sign; |.| <= 20 %) over the 10-90 % ramp +0.115 .. +0.914 s (800 IMU samples; plateau 0.5000 m/s)
+INFO  ramp ground-truth pitch +0.0000 .. +0.0000 deg -> g sin(pitch) up to 0.0000 m/s^2 in accel x
+INFO  ground-truth excursion from the spawn point (0, -20): x -0.000 .. +1.375 m, y -0.000 .. +0.008 m (clearance budget in TEST-M3-D_clearance_check.py)
+# samples: ground truth 1709, imu 29028, joint_states 2901, odometry 1329
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# exit 0
+
+# overall: ALL 1 VALID RUNS PASSED
+### probe_c1.log
+# launch: sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0 
+# controllers active: 2
+# gz subscribe /imu: True
+# leg start 7.816 end 10.817; ROS imu n 8146, gz imu n 8155
+rest before  [-1.00,-0.05] gt accel +0.0004 | ROS /imu ax -0.0002 az +9.7998 (n 950) | gz /imu ax -0.0002 az +9.7998 (n 950) | ROS ax s 0.0097 min -0.030 max +0.042
+speed-up     [+0.20,+0.80] gt accel +0.5000 | ROS /imu ax +0.4998 az +9.7998 (n 600) | gz /imu ax +0.4998 az +9.7998 (n 600) | ROS ax s 1.5011 min -0.026 max +5.512
+cruise       [+1.50,+2.90] gt accel -0.0000 | ROS /imu ax -0.0001 az +9.8002 (n 1401) | gz /imu ax -0.0001 az +9.8002 (n 1401) | ROS ax s 0.0103 min -0.039 max +0.033
+braking      [+3.10,+3.40] gt accel -1.0006 | ROS /imu ax -0.9999 az +9.7999 (n 300) | gz /imu ax -0.9999 az +9.7999 (n 300) | ROS ax s 2.2811 min -7.463 max +0.025
+stopped      [+4.00,+5.90] gt accel +0.0000 | ROS /imu ax -0.0001 az +9.7999 (n 1902) | gz /imu ax -0.0001 az +9.7999 (n 1902) | ROS ax s 0.0102 min -0.031 max +0.040
+# probe exit 0
+# leftovers: 0
+# raw launch log: 0 [ERROR] lines
+
+## Scratch overlay diffs (production files unchanged)
+33c33
+<   <xacro:property name="imu_update_rate" value="100"/>      <!-- Hz, equal to the controller rate (DEC-026) -->
+---
+>   <xacro:property name="imu_update_rate" value="1000"/>      <!-- Hz, equal to the controller rate (DEC-026) -->
+7c7
+<     update_rate: 100  # Hz (DEC-026): 10 physics steps of 1 ms per control cycle
+---
+>     update_rate: 1000  # Hz (SCRATCH C2, not DEC-026): 10 physics steps of 1 ms per control cycle

@@ -1,0 +1,50 @@
+# Task C procedure mode=range, 2026-11-04 15:56:28 IST, revision 4961817 (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; world <share_b>/worlds/sensor_test.sdf sha256 925f995c5192c17b…
+
+## attempt 1 (ROS_DOMAIN_ID=101)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf
+both controllers active
+# exit 0
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+
+$ python3 docs/evidence/M3/TEST-M3-C_lidar_check.py range <share_b>/worlds/sensor_test.sdf
+# world sensor_test.sdf: targets target_front_1m centre (1.170, 0.000, 0.500) size (0.20, 1.00, 1.00), target_left_3m centre (0.070, 3.100, 0.500) size (1.50, 0.20, 1.00), target_low centre (1.484, 1.414, 0.075) size (0.60, 0.60, 0.15), target_rear_6m centre (-6.030, 0.000, 0.500) size (0.20, 2.00, 1.00), target_right_2m centre (0.070, -2.100, 0.500) size (1.00, 0.20, 1.00)
+# window: settle 2.0 s after the first /scan stamp (3.400 s); 60 scans, stamps 5.400 .. 11.300 s; RTF 1.000
+# laser pose from ground truth (379 samples): x +0.07000 y +0.00000 z 0.23000 m, yaw +0.00000 deg, roll -0.00000 deg, pitch +0.00000 deg
+# scan fields: angle_min -3.141592741 angle_increment 0.017453292 rad, 360 ranges, range 0.120..12.000 m
+== TEST-M3-05 target_front_1m: nominal 1.0 m at bearing -0.00 deg, half-width 26.57 deg; 51 face beams per scan after the 1 deg edge exclusion; non-finite face returns: 0
+PASS  target_front_1m: n = 3060 finite target-face samples >= 1000 (sensors.md §7.2)
+      1.0 m: n = 3060, mean error -0.000442 m, s 0.010153 m, min -0.034810, max +0.031635 m
+PASS  S1 1.0 m: |mean error| 0.000442 m <= 0.01 m
+PASS  S2 1.0 m: s / sigma = 0.010153 / 0.01 = 1.0153 in [0.8, 1.2]
+PASS  S3 1.0 m: fraction within 2 s = 0.9529 in [0.93, 0.98]
+PASS  S4 1.0 m: 0 samples beyond 6 sigma (0.06 m) == 0
+== TEST-M3-05 target_left_3m: nominal 3.0 m at bearing +90.00 deg, half-width 14.04 deg; 27 face beams per scan after the 1 deg edge exclusion; non-finite face returns: 0
+PASS  target_left_3m: n = 1620 finite target-face samples >= 1000 (sensors.md §7.2)
+      3.0 m: n = 1620, mean error -0.000389 m, s 0.010174 m, min -0.031413, max +0.034003 m
+PASS  S1 3.0 m: |mean error| 0.000389 m <= 0.01 m
+PASS  S2 3.0 m: s / sigma = 0.010174 / 0.01 = 1.0174 in [0.8, 1.2]
+PASS  S3 3.0 m: fraction within 2 s = 0.9623 in [0.93, 0.98]
+PASS  S4 3.0 m: 0 samples beyond 6 sigma (0.06 m) == 0
+== TEST-M3-05 target_rear_6m: nominal 6.0 m at bearing -180.00 deg, half-width 9.46 deg; 17 face beams per scan after the 1 deg edge exclusion; non-finite face returns: 0
+PASS  target_rear_6m: n = 1020 finite target-face samples >= 1000 (sensors.md §7.2)
+      6.0 m: n = 1020, mean error -0.001463 m, s 0.010199 m, min -0.030090, max +0.030190 m
+PASS  S1 6.0 m: |mean error| 0.001463 m <= 0.01 m
+PASS  S2 6.0 m: s / sigma = 0.010199 / 0.01 = 1.0199 in [0.8, 1.2]
+PASS  S3 6.0 m: fraction within 2 s = 0.9569 in [0.93, 0.98]
+PASS  S4 6.0 m: 0 samples beyond 6 sigma (0.06 m) == 0
+== ALL CHECKS PASSED
+# checker exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#        10 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# TS-029 attempts declared invalid under DEC-039: 0
+
+# overall: ALL CHECKS PASSED

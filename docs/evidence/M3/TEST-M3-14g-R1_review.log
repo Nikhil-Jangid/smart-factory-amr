@@ -1,0 +1,22 @@
+# TEST-M3-14 (g) invalid configuration, 2026-11-04 16:09:37 IST, revision 4961817 (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0
+$ (cd amr_ws && xacro src/amr_description/urdf/amr.urdf.xacro use_sensors:=true) > <tmp>/s1.urdf
+$ python3 docs/evidence/M3/TEST-M3-14_invalid_config_check.py <tmp>/s1.urdf
+# case valid: gz sim exit 0; messages /imu_raw 4000, /imu 400; plugin output lines:
+#   [amr_gazebo_plugins::ImuDecimator] active: /imu_raw (1000 Hz) -> /imu (100 Hz), block 10, physics step 0.001 s
+#   [amr_gazebo_plugins::ImuDecimator] shutdown: raw samples 4000, published 400, dropped_incomplete 0, discarded_partial 0, missing_samples 0, duplicates 0, off_grid 0, resets 0
+PASS  valid (control): exit 0; active line once, no error; /imu_raw 4000 (>= 3000 of ~4000), /imu 400 (300..400 of ~400)
+INFO  accel x: raw sigma 0.031951 (derived setting 0.031623); max |r| at lags 1-10 ms 0.026; var(10-sample means) / (raw var / 10) = 0.993 over 3001 samples, 300 blocks
+INFO  accel y: raw sigma 0.031014 (derived setting 0.031623); max |r| at lags 1-10 ms 0.034; var(10-sample means) / (raw var / 10) = 1.142 over 3001 samples, 300 blocks
+INFO  accel z: raw sigma 0.031997 (derived setting 0.031623); max |r| at lags 1-10 ms 0.046; var(10-sample means) / (raw var / 10) = 0.945 over 3001 samples, 300 blocks
+INFO  gyro x: raw sigma 0.003115 (derived setting 0.003162); max |r| at lags 1-10 ms 0.033; var(10-sample means) / (raw var / 10) = 1.057 over 3001 samples, 300 blocks
+INFO  gyro y: raw sigma 0.003170 (derived setting 0.003162); max |r| at lags 1-10 ms 0.035; var(10-sample means) / (raw var / 10) = 0.905 over 3001 samples, 300 blocks
+INFO  gyro z: raw sigma 0.003160 (derived setting 0.003162); max |r| at lags 1-10 ms 0.027; var(10-sample means) / (raw var / 10) = 0.983 over 3001 samples, 300 blocks
+# case bad_rate: gz sim exit 0; messages /imu_raw 3998, /imu 0; plugin output lines:
+#   [Err] [imu_decimator.cpp:111] [amr_gazebo_plugins::ImuDecimator] invalid configuration, NOT active (DEC-038): raw_rate 500 Hz must equal block_size 10 x output_rate 100 Hz
+PASS  bad_rate: exit 0; error line visible at default verbosity and names raw_rate; /imu_raw 3998 (still published), /imu 0 (== 0: silent)
+# case bad_sensor: gz sim exit 0; messages /imu_raw 400, /imu 0; plugin output lines:
+#   [Err] [imu_decimator.cpp:111] [amr_gazebo_plugins::ImuDecimator] invalid configuration, NOT active (DEC-038): IMU sensor update_rate 100 Hz must equal raw_rate 1000 Hz
+PASS  bad_sensor: exit 0; error line visible at default verbosity and names the sensor update_rate; /imu_raw 400 (still published, ~400 at 100 Hz), /imu 0 (== 0: silent)
+# result: ALL CRITERIA PASSED
+# exit 0

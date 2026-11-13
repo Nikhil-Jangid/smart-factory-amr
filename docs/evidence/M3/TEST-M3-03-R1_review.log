@@ -1,0 +1,34 @@
+# TEST-M3-03 sensor frames, 2026-11-03 17:39:18 IST, revision 5b9332e (amr_ws/src has uncommitted Task A changes)
+# model: xacro amr.urdf.xacro use_ros2_control:=true controllers_file:=<ctrl> use_sensors:=true; ROS_DOMAIN_ID=87
+
+$ timeout --foreground -s INT 4 ros2 run tf2_ros tf2_echo lidar_mount_link laser_frame   (record; tf2_echo prints 3 decimals)
+At time 0.0
+- Translation: [0.000, 0.000, 0.030]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+
+$ timeout --foreground -s INT 4 ros2 run tf2_ros tf2_echo base_link imu_link   (record; tf2_echo prints 3 decimals)
+At time 0.0
+- Translation: [0.000, 0.000, 0.000]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+- Rotation: in RPY (radian) [0.000, -0.000, 0.000]
+
+$ python3 docs/evidence/M3/TEST-M3-03_tf_check.py   (D5 at full precision; single tree)
+PASS  lidar_mount_link -> laser_frame: translation (0.000000000, 0.000000000, 0.030000000) m == (0.0, 0.0, 0.03) and rotation (x y z w) (0.000000000, 0.000000000, 0.000000000, 1.000000000) == identity, to 1e-6
+PASS  base_link -> imu_link: translation (0.000000000, 0.000000000, 0.000000000) m == (0.0, 0.0, 0.0) and rotation (x y z w) (0.000000000, 0.000000000, 0.000000000, 1.000000000) == identity, to 1e-6
+PASS  base_footprint -> laser_frame: translation (0.070000000, 0.000000000, 0.230000000) m == (0.07, 0.0, 0.23) and rotation (x y z w) (0.000000000, 0.000000000, 0.000000000, 1.000000000) == identity, to 1e-6
+PASS  base_footprint -> imu_link: translation (0.000000000, 0.000000000, 0.075000000) m == (0.0, 0.0, 0.075) and rotation (x y z w) (0.000000000, 0.000000000, 0.000000000, 1.000000000) == identity, to 1e-6
+tf frames and parents: [('base_link', 'base_footprint'), ('caster_link', 'base_link'), ('imu_link', 'base_link'), ('laser_frame', 'lidar_mount_link'), ('left_wheel_link', 'base_link'), ('lidar_mount_link', 'base_link'), ('right_wheel_link', 'base_link')]
+PASS  frame set ['base_footprint', 'base_link', 'caster_link', 'imu_link', 'laser_frame', 'left_wheel_link', 'lidar_mount_link', 'right_wheel_link'] == M1 tree + laser_frame + imu_link
+PASS  single tree with root ['base_footprint'] == [base_footprint] (each child has one parent)
+== ALL CHECKS PASSED
+# exit 0
+
+$ ros2 run tf2_tools view_frames   (TF tree diagram)
+# view_frames exit 0
+edges: [('base_footprint', 'base_link'), ('base_link', 'caster_link'), ('base_link', 'imu_link'), ('base_link', 'left_wheel_link'), ('base_link', 'lidar_mount_link'), ('base_link', 'right_wheel_link'), ('lidar_mount_link', 'laser_frame')]
+PASS  view_frames tree == M1 tree + lidar_mount_link -> laser_frame + base_link -> imu_link; one parent per frame
+# exit 0
+
+# node logs: 0 [ERROR]/[FATAL] lines; leftover test processes: 0
+# overall: ALL CHECKS PASSED

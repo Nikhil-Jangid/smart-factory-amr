@@ -1,0 +1,728 @@
+# TEST-M3-10 GUI session launch log, 2026-11-04 16:43-16:52 IST, revision 8e1d623 (local); started on my display:
+$ ros2 launch amr_bringup sim.launch.py sensors:=true world:=sensor_test.sdf
+[INFO] [launch]: All log files can be found below <home>/.ros/log/2026-11-04-16-42-00-412021-<host>-76289
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [robot_state_publisher-1]: process started with pid [76325]
+[INFO] [parameter_bridge-2]: process started with pid [76326]
+[INFO] [parameter_bridge-3]: process started with pid [76327]
+[INFO] [cmd_vel_guard-4]: process started with pid [76328]
+[INFO] [gz-5]: process started with pid [76329]
+[INFO] [create-6]: process started with pid [76330]
+[cmd_vel_guard-4] [INFO] [1793790720.561357942] [cmd_vel_guard]: forwarding commands with |now - stamp| <= 0.500 s
+[robot_state_publisher-1] [INFO] [1793790720.569336811] [robot_state_publisher]: Robot initialized
+[create-6] [INFO] [1793790720.574430610] [ros_gz_sim]: Waiting messages on topic [robot_description].
+[parameter_bridge-2] [INFO] [1793790720.587223336] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[create-6] [INFO] [1793790721.139479575] [ros_gz_sim]: Entity creation successful.
+[INFO] [create-6]: process has finished cleanly [pid 76330]
+[INFO] [spawner-7]: process started with pid [76463]
+[spawner-7] [INFO] [1793790721.540176804] [spawner_joint_state_broadcaster]: waiting for service /controller_manager/list_controllers to become available...
+[parameter_bridge-3] [INFO] [1793790721.583201054] [sensor_bridge]: Creating GZ->ROS Bridge: [/scan (gz.msgs.LaserScan) -> /scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-3] [INFO] [1793790721.585308751] [sensor_bridge]: Creating GZ->ROS Bridge: [/imu (gz.msgs.IMU) -> /imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [INFO] [1793790722.751178039] [gz_ros_control]: Loading controller_manager
+[gz-5] [INFO] [1793790722.761765103] [controller_manager]: Using ROS clock for triggering controller manager cycles.
+[gz-5] [WARN] [1793790722.761799168] [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+[gz-5] [INFO] [1793790722.766982163] [controller_manager]: Subscribing to '/robot_description' topic for robot description.
+[gz-5] [WARN] [1793790722.767037921] [gz_ros_control]: Waiting RM to load and initialize hardware...
+[gz-5] [INFO] [1793790722.928937411] [controller_manager]: Received robot description from topic.
+[gz-5] [INFO] [1793790722.929069536] [controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[gz-5] [INFO] [1793790722.933563275] [gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gz-5] [INFO] [1793790722.933638201] [gz_ros_control]: Loading joint: left_wheel_joint
+[gz-5] [INFO] [1793790722.933652534] [gz_ros_control]: 	State:
+[gz-5] [INFO] [1793790722.933663377] [gz_ros_control]: 		 position
+[gz-5] [INFO] [1793790722.933671454] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1793790722.933685062] [gz_ros_control]: 	Command:
+[gz-5] [INFO] [1793790722.933692238] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1793790722.933711000] [gz_ros_control]: Loading joint: right_wheel_joint
+[gz-5] [INFO] [1793790722.933718766] [gz_ros_control]: 	State:
+[gz-5] [INFO] [1793790722.933725424] [gz_ros_control]: 		 position
+[gz-5] [INFO] [1793790722.933732498] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1793790722.933739402] [gz_ros_control]: 	Command:
+[gz-5] [INFO] [1793790722.933745874] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1793790722.933795626] [gz_ros_control]: Loading sensor: imu
+[gz-5] [INFO] [1793790722.933807592] [gz_ros_control]: 	State:
+[gz-5] [WARN] [1793790722.933814691] [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gz-5] [INFO] [1793790722.933904456] [controller_manager]: Initialize hardware 'AmrGazeboSystem' 
+[gz-5] [WARN] [1793790722.933925544] [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+[gz-5] [INFO] [1793790722.933994388] [controller_manager]: Successful initialization of hardware 'AmrGazeboSystem'
+[gz-5] [INFO] [1793790722.934106770] [controller_manager]: Activating component 'AmrGazeboSystem'.
+[gz-5] [INFO] [1793790722.934122797] [resource_manager]: 'configure' hardware 'AmrGazeboSystem' 
+[gz-5] [INFO] [1793790722.934128727] [gz_ros_control]: System Successfully configured!
+[gz-5] [INFO] [1793790722.934135719] [resource_manager]: Successful 'configure' of hardware 'AmrGazeboSystem'
+[gz-5] [INFO] [1793790722.934144268] [resource_manager]: 'activate' hardware 'AmrGazeboSystem' 
+[gz-5] [INFO] [1793790722.934161668] [resource_manager]: Successful 'activate' of hardware 'AmrGazeboSystem'
+[gz-5] [WARN] [1793790722.934246091] [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+[gz-5] [INFO] [1793790722.934256096] [controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[gz-5] [INFO] [1793790723.042575279] [controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[gz-5] [INFO] [1793790723.042617891] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[gz-5] [INFO] [1793790723.047522936] [controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-7] [INFO] [1793790723.057959032] [spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[gz-5] [INFO] [1793790723.059295677] [controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[gz-5] [INFO] [1793790723.059608738] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[gz-5] [INFO] [1793790723.071477818] [controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[gz-5] [WARN] [1793790724.822734081] [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+[gz-5] [amr_gazebo_plugins::ImuDecimator] active: /imu_raw (1000 Hz) -> /imu (100 Hz), block 10, physics step 0.001 s
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<data-string>:L136]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<data-string>:L170]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [INFO] [1793790724.998373725] [controller_manager]: Successfully switched controllers!
+[spawner-7] [INFO] [1793790725.009825004] [spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[INFO] [spawner-7]: process has finished cleanly [pid 76463]
+[INFO] [spawner-8]: process started with pid [76659]
+[spawner-8] [INFO] [1793790725.670505107] [spawner_diff_drive_controller]: waiting for service /controller_manager/list_controllers to become available...
+[gz-5] [INFO] [1793790725.922911280] [controller_manager]: Loading controller : 'diff_drive_controller' of type 'diff_drive_controller/DiffDriveController'
+[gz-5] [INFO] [1793790725.922961260] [controller_manager]: Loading controller 'diff_drive_controller'
+[gz-5] [INFO] [1793790725.928597385] [controller_manager]: Controller 'diff_drive_controller' node arguments: --ros-args --params-file <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-8] [INFO] [1793790725.952590224] [spawner_diff_drive_controller]: Loaded diff_drive_controller
+[gz-5] [INFO] [1793790725.953878444] [controller_manager]: Configuring controller: 'diff_drive_controller'
+[gz-5] [INFO] [1793790725.972838682] [controller_manager]: Activating controllers: [ diff_drive_controller ]
+[gz-5] [INFO] [1793790725.980895134] [controller_manager]: Successfully switched controllers!
+[spawner-8] [INFO] [1793790725.992575999] [spawner_diff_drive_controller]: Configured and activated diff_drive_controller
+[INFO] [spawner-8]: process has finished cleanly [pid 76659]
+[gz-5] [WARN] [1793790726.460765686] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790727.460797376] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790728.460734748] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790729.460843753] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790730.460680827] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790731.460733620] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790732.470769473] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790733.480719061] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790734.480892509] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790735.481722519] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790736.481711906] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790737.481702195] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790738.481730035] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790739.481693823] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790740.482183498] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790741.484653873] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790742.486172519] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790743.485762396] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790744.486260643] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790745.485730055] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790746.495576138] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790747.495637239] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790748.495648904] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790749.497291489] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790750.507131162] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790751.510543357] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790752.510384079] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790753.520418141] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790754.530434708] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790755.530404535] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790756.531914050] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790757.531798561] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790758.531673633] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790759.531707483] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790760.541839135] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790761.551773731] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790762.551716258] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790763.552866708] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790764.552822831] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790765.552826867] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790766.552854365] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790767.552926254] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790768.566136362] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790769.564985874] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790770.566255749] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790771.570474676] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790772.570413473] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790773.571543610] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790774.571439365] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790775.572620026] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790776.583913209] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790777.585792695] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790778.587013088] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790779.597129391] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790780.598185910] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790781.608364992] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790782.608293746] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790783.619805895] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790784.629565374] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790785.629541001] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790786.630839607] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790787.641365531] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790788.641342525] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790789.641502765] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790790.641929281] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790791.651991755] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790792.651900132] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790793.661838045] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790794.662990091] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790795.662997637] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790796.663041456] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790797.663173233] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790798.662926231] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790799.677037513] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790800.676849269] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790801.681935173] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790802.691799169] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790803.691829986] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790804.691826892] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790805.691856234] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790806.691920033] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790807.717981626] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790808.738832271] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790809.738835820] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790810.738799752] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790811.739084371] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790812.738848101] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790813.738825713] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790814.738853975] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790815.738820105] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790816.749029959] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790817.748912529] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790818.748954598] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790819.749075292] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790820.749111560] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790821.748770822] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790822.748780296] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790823.748900166] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790824.748819334] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790825.748781638] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790826.759535666] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790827.758801893] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790828.759190970] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790829.761301120] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790830.761134874] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790831.761191922] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790832.761164869] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790833.761139371] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790834.761125131] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790835.771086854] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790836.771166322] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790837.771482136] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790838.771797308] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790839.772043167] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790840.781096369] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790841.783970134] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790842.783957498] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790843.784268768] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790844.787742079] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790845.802322701] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790846.803927469] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790847.803932558] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790848.813899602] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790849.823970757] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790850.833999753] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790851.843895134] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790852.846614693] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790853.856410265] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790854.856496563] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790855.856466863] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790856.856502328] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790857.866577442] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790858.866516595] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790859.878007455] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790860.877594774] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790861.878942487] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790862.878887448] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790863.888806942] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790864.888816758] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790865.890252900] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790866.900370966] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790867.900379875] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790868.900437122] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790869.900271150] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790870.909950696] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790871.909810918] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790872.909721771] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790873.909655927] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790874.919557198] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790875.920566574] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790876.920582433] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790877.922168586] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790878.932088268] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790879.932250972] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790880.932141054] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790881.942072140] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790882.942212315] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790883.944243886] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790884.945165076] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790885.947364772] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790886.959081702] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790887.958876918] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790888.958852655] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790889.958816855] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790890.958914864] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790891.958807985] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790892.958784034] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790893.958961126] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790894.968935263] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790895.969953379] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790896.970191499] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790897.969896561] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790898.970084658] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790899.979876519] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790900.979832050] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790901.989958435] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790902.989828528] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790903.989906468] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790904.989834998] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790905.989833461] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790906.989822652] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790907.989825929] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790908.989843245] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790909.989835114] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790910.989814832] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790911.989806726] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790912.989815497] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790913.989829625] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790914.989807344] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790915.989806656] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790916.989947973] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790917.999786556] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790918.999942094] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790919.999895531] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790920.999876033] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790921.999840524] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790922.999823274] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790923.999911241] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790924.999825884] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790926.011724904] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790927.011747977] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790928.012874220] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790929.012907064] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790930.024266412] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790931.034102874] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790932.044221913] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790933.054718925] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790934.064253798] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790935.074513560] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790936.074219044] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790937.084263137] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790938.084235073] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790939.084285799] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790940.085402124] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790941.085392532] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790942.085484411] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790943.085434487] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790944.095358189] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790945.095332270] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790946.095382576] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790947.095339094] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790948.096535216] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790949.108761055] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790950.108696245] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790951.108731371] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790952.108723142] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790953.109960425] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790954.109952246] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790955.121537775] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790956.121883942] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790957.131810127] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790958.141547378] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790959.173012447] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790960.179694798] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790961.179863991] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790962.180810873] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790963.180952539] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790964.190707919] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790965.190759180] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790966.192250196] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790967.194061088] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790968.214937276] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790969.218181298] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790970.218241608] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790971.228372637] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790972.228423419] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790973.238234832] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790974.238264524] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790975.239478692] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790976.239475989] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790977.249484242] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790978.249470106] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790979.249498755] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790980.249475939] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790981.270148893] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790982.280032397] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790983.290368658] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790984.290041107] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790985.290098416] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790986.300066068] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790987.310027482] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790988.310205282] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790989.310060546] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790990.310050279] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790991.320325925] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790992.331196396] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790993.335221211] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790994.346580017] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790995.346525846] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790996.347779223] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790997.347811969] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790998.347762422] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793790999.347893512] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791000.347976813] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791001.349147855] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791002.356423080] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791003.356395296] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791004.357573269] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791005.368104743] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791006.368328178] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791007.368343022] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791008.367998500] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791009.368148959] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791010.377500154] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791011.377444016] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791012.377562228] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791013.377661290] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791014.377565325] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791015.377643070] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791016.377603909] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791017.387426322] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791018.387508303] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791019.387504240] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791020.387482517] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791021.392206481] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791022.402171309] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791023.402177303] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791024.402111209] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791025.402131736] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791026.412181146] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791027.412154643] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791028.412205981] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791029.412263750] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791030.412182423] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791031.412179013] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791032.412383568] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791033.413702561] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791034.413359948] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791035.413382190] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791036.424141648] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791037.433324756] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791038.433384236] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791039.433351557] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791040.443466291] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791041.453395196] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791042.453399981] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791043.453379423] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791044.453385142] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791045.463436935] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791046.463349705] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791047.463436522] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791048.463391877] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791049.463343691] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791050.473595272] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791051.473441376] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791052.473383200] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791053.473806765] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791054.473550301] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791055.473404647] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791056.473379133] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791057.473421293] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791058.483354321] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791059.483545632] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791060.493382163] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791061.493357200] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791062.493467493] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791063.503379008] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791064.513582626] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791065.513505118] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791066.513466951] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791067.513387313] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791068.513572709] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791069.523312232] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791070.523378360] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791071.533399355] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791072.535100517] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791073.535143227] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791074.545696548] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791075.545683028] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791076.545201733] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791077.545311759] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791078.545328751] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791079.555267137] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791080.555137953] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791081.555201283] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791082.555188351] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791083.555169612] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791084.555271296] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791085.555422846] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791086.556963353] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791087.556795448] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791088.566683037] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791089.566674957] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791090.566745765] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791091.576850775] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791092.576826555] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791093.576935885] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791094.576771998] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791095.576742488] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791096.577853483] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791097.577792904] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791098.577792866] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791099.577779907] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791100.587898479] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791101.587893433] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791102.587879241] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791103.587888336] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791104.587984339] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791105.587854783] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791106.587893062] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791107.588047551] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791108.587878738] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791109.587814544] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791110.587921590] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791111.587943269] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791112.588013906] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791113.587791272] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791114.587802193] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791115.587991374] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791116.587890881] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791117.587942695] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791118.587853472] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791119.598300616] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791120.597933768] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791121.598272706] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791122.598212160] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791123.597896499] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791124.607976965] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791125.609444054] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791126.609557470] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791127.609480883] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791128.619383604] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791129.619363284] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791130.619380979] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791131.632681672] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791132.642700734] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791133.643061408] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791134.642755992] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791135.652803508] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791136.652800226] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791137.652706493] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791138.652726775] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791139.652745548] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791140.652758246] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791141.664147857] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791142.675561854] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791143.675646008] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791144.685604487] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791145.695489516] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791146.695642553] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791147.705742316] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791148.705593324] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791149.705674071] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791150.707143785] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791151.717175220] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791152.717362522] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791153.717162884] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791154.722958964] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791155.722836398] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791156.722856254] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791157.722838390] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791158.722902661] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791159.732902647] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791160.742812359] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791161.742814763] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791162.742820080] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791163.757304664] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791164.757294793] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791165.757310077] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791166.757315827] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791167.767442076] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791168.777464762] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791169.777559720] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791170.777426626] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791171.777570425] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791172.779692346] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791173.779470387] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791174.779802683] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791175.779325330] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791176.779432614] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791177.789209373] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791178.789194101] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791179.789295224] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791180.789190868] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791181.789414856] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791182.789311744] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791183.799156539] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791184.799211971] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791185.800516040] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791186.801551977] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791187.801585287] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791188.801664304] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791189.811590777] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791190.822060243] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791191.821649299] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791192.821616838] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791193.821645559] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791194.821756907] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791195.831572625] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791196.831493797] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791197.831605709] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791198.843852927] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791199.854387295] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791200.863832279] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791201.873705355] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791202.874383395] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791203.873851251] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791204.873800963] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791205.873780787] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791206.873759009] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791207.883808736] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791208.883852532] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791209.883777038] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791210.884251530] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791211.883812458] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791212.884377226] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791213.883965114] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791214.883828784] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791215.884085907] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791216.884175759] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791217.883847476] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791218.883825587] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791219.893948517] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791220.903823104] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791221.903787585] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791222.903732719] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791223.905869060] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791224.915936396] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791225.915857902] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791226.917111068] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791227.916944226] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791228.916913207] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791229.919577624] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791230.929539841] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791231.929641914] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791232.929828481] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791233.929619268] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791234.942566576] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791235.942540458] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791236.952420726] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791237.952470349] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791238.952424291] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791239.953629493] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791240.954838157] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791241.968920827] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791242.970050384] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791243.970384249] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791244.979968054] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791245.979979854] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791246.979959712] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791247.982652047] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791248.992757175] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791249.992643458] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791250.992608739] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791252.003143199] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791253.003108865] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791254.003031974] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791255.004461901] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791256.004590095] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791257.016801081] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791258.016962642] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791259.026748246] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791260.037240999] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791261.046809296] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791262.046926836] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791263.046899744] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791264.046850491] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791265.046876464] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791266.056778645] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791267.056796128] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791268.068000775] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791269.067890520] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791270.068335823] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791271.067952785] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791272.067993039] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791273.067934488] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791274.069401279] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791275.070870484] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791276.070710093] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791277.079294300] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791278.079701348] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791279.090264991] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791280.090286665] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791281.090347740] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791282.100203253] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791283.110191346] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791284.110323981] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791285.110557511] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791286.110564264] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791287.120219344] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791288.130284650] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791289.140282332] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791290.150259439] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791291.150270563] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791292.160288801] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791293.160270297] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791294.161462356] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791295.161387330] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791296.161612993] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791297.161597998] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791298.162591338] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791299.162584835] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791300.173232780] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791301.185349101] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791302.185027155] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791303.194998066] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791304.195039692] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791305.195024019] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791306.205152282] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791307.205147464] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791308.208879216] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791309.209858213] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791310.209962005] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791311.219974407] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791312.220110489] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791313.219964613] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791314.220119634] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791315.219882440] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791316.219905285] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791317.229938749] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791318.229898794] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791319.230005388] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791320.229867792] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791321.229915456] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791322.229898174] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791323.230153430] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791324.239846276] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791325.239865892] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791326.241205632] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791327.241164942] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791328.251061531] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791329.251224048] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791330.251153856] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791331.261161066] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791332.261219260] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791333.262445053] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791334.262348016] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791335.262464866] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791336.262611762] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791337.263477260] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791338.265740604] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791339.267074991] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791340.277720498] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791341.277130469] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791342.277366999] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791343.277156298] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791344.287126227] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791345.299554727] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791346.301734378] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791347.301719209] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791348.302736521] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791349.302736533] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791350.304134069] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791351.304389494] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793791352.313759582] [diff_drive_controller]: Velocity command timed out. Braking.
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [gz-5]: sending signal 'SIGINT' to process[gz-5]
+[INFO] [cmd_vel_guard-4]: sending signal 'SIGINT' to process[cmd_vel_guard-4]
+[INFO] [parameter_bridge-3]: sending signal 'SIGINT' to process[parameter_bridge-3]
+[INFO] [parameter_bridge-2]: sending signal 'SIGINT' to process[parameter_bridge-2]
+[INFO] [robot_state_publisher-1]: sending signal 'SIGINT' to process[robot_state_publisher-1]
+[cmd_vel_guard-4] [INFO] [1793791353.092082818] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[parameter_bridge-3] [INFO] [1793791353.092987305] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[parameter_bridge-2] [INFO] [1793791353.093921369] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-1] [INFO] [1793791353.094867012] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [parameter_bridge-3]: process has finished cleanly [pid 76327]
+[INFO] [cmd_vel_guard-4]: process has finished cleanly [pid 76328]
+[INFO] [parameter_bridge-2]: process has finished cleanly [pid 76326]
+[INFO] [robot_state_publisher-1]: process has finished cleanly [pid 76325]
+[gz-5] [INFO] [1793791353.389611025] [controller_manager.pal_statistics]: Async messages lost 0
+[gz-5] [INFO] [1793791353.389673592] [controller_manager.pal_statistics]: publish_async_failures_ 0
+[gz-5] [INFO] [1793791353.391611500] [controller_manager.pal_statistics]: Async messages lost 0
+[gz-5] [INFO] [1793791353.391654662] [controller_manager.pal_statistics]: publish_async_failures_ 6
+[gz-5] [amr_gazebo_plugins::ImuDecimator] shutdown: raw samples 627987, published 62797, dropped_incomplete 0, discarded_partial 2, missing_samples 0, duplicates 0, off_grid 0, resets 0
+[INFO] [gz-5]: process has finished cleanly [pid 76329]
+[INFO] [launch]: process[gz-5] was required: shutting down launched system
+# stopped with SIGINT to the launch process at 16:52; # shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly); leftover processes: 0

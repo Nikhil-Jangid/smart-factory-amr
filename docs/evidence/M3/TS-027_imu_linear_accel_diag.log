@@ -1,0 +1,98 @@
+# TS-027 diagnostic (scratch, informal; not a test result), 2026-11-03 ~18:20 IST, revision f45313c + uncommitted Task C/D test files.
+# Launch: sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0 (ROS_DOMAIN_ID 130, own GZ_PARTITION).
+# Profile: TEST-M2-07 stop profile, 0.5 m/s for 3.0 s, then 0 for 3.0 s, via the Task D harness Recorder.
+# Columns: time relative to the leg start (s); IMU linear_acceleration x and z, mean over 0.05 s (5 samples);
+# ground-truth forward speed from /world/sensor_test/pose/info (central difference over ~0.1 s).
+# leg start 3.515, end 6.515
+## speed-up (t rel start; imu ax 0.05 s mean; gt speed; gt accel from speed over 0.1 s)
+-0.20  ax -0.0047  az +9.8013  v +0.0000  n_imu 5
+-0.15  ax -0.0001  az +9.7989  v +0.0000  n_imu 5
+-0.10  ax +0.0016  az +9.8012  v +0.0000  n_imu 5
+-0.05  ax +0.0028  az +9.7992  v +0.0021  n_imu 5
+-0.00  ax -0.0092  az +9.7982  v +0.0149  n_imu 5
++0.05  ax -0.0059  az +9.8013  v +0.0383  n_imu 5
++0.10  ax -0.0013  az +9.7979  v +0.0638  n_imu 5
++0.15  ax -0.0038  az +9.7993  v +0.0894  n_imu 5
++0.20  ax +0.0021  az +9.8043  v +0.1149  n_imu 5
++0.25  ax +0.0065  az +9.7985  v +0.1403  n_imu 5
++0.30  ax +0.0068  az +9.7984  v +0.1657  n_imu 5
++0.35  ax -0.0001  az +9.8016  v +0.1912  n_imu 5
++0.40  ax -0.0032  az +9.8008  v +0.2125  n_imu 5
++0.45  ax +0.0058  az +9.7963  v +0.2338  n_imu 5
++0.50  ax +0.0019  az +9.8028  v +0.2593  n_imu 5
++0.55  ax +0.0104  az +9.7982  v +0.2848  n_imu 5
++0.60  ax +0.0003  az +9.8054  v +0.3103  n_imu 5
++0.65  ax +0.0054  az +9.7949  v +0.3359  n_imu 5
++0.70  ax -0.0025  az +9.7974  v +0.3615  n_imu 5
++0.75  ax -0.0055  az +9.8012  v +0.3870  n_imu 5
++0.80  ax +0.0025  az +9.8018  v +0.4125  n_imu 5
++0.85  ax -0.0016  az +9.7922  v +0.4379  n_imu 5
++0.90  ax -0.0023  az +9.7993  v +0.4634  n_imu 5
++0.95  ax -0.0025  az +9.8017  v +0.4864  n_imu 5
++1.00  ax -0.0012  az +9.7970  v +0.4984  n_imu 5
++1.05  ax -0.0036  az +9.8014  v +0.5000  n_imu 5
++1.10  ax +0.0013  az +9.8002  v +0.5000  n_imu 5
++1.15  ax -0.0040  az +9.7935  v +0.5000  n_imu 5
++1.20  ax +0.0049  az +9.7940  v +0.5000  n_imu 5
++1.25  ax +0.0043  az +9.7993  v +0.5000  n_imu 5
++1.30  ax +0.0005  az +9.8003  v +0.5000  n_imu 5
+## braking (t rel start; imu ax 0.05 s mean; gt speed; gt accel from speed over 0.1 s)
++2.90  ax -0.0033  az +9.8000  v +0.5000  n_imu 5
++2.95  ax -0.0014  az +9.8026  v +0.4964  n_imu 5
++3.00  ax +0.0039  az +9.8106  v +0.4761  n_imu 5
++3.05  ax -0.0001  az +9.7962  v +0.4316  n_imu 5
++3.10  ax +0.0006  az +9.8013  v +0.3809  n_imu 5
++3.15  ax -0.0027  az +9.8014  v +0.3298  n_imu 5
++3.20  ax -0.0020  az +9.7945  v +0.2787  n_imu 5
++3.25  ax -0.0030  az +9.7943  v +0.2273  n_imu 5
++3.30  ax -0.0070  az +9.8045  v +0.1763  n_imu 5
++3.35  ax +0.0074  az +9.8029  v +0.1253  n_imu 5
++3.40  ax -0.0049  az +9.7995  v +0.0745  n_imu 5
++3.45  ax +0.0026  az +9.7987  v +0.0283  n_imu 5
++3.50  ax -0.0025  az +9.8051  v +0.0037  n_imu 5
++3.55  ax -0.0081  az +9.7976  v +0.0000  n_imu 5
++3.60  ax -0.0022  az +9.7999  v +0.0000  n_imu 5
++3.65  ax -0.0042  az +9.7952  v +0.0000  n_imu 5
++3.70  ax +0.0049  az +9.8006  v +0.0000  n_imu 5
++3.75  ax +0.0017  az +9.7899  v +0.0000  n_imu 5
++3.80  ax -0.0034  az +9.8006  v +0.0000  n_imu 5
+# max |ax| over profile 0.0338930498234079 n 700
+# leftover processes after SIGINT: 0
+
+## d11diag.py
+import importlib.util, math, os, statistics, sys, threading, time
+P='<home>/Projects/smart-factory-amr/docs/evidence/M3/TEST-M3-D_imu_encoder_measure.py'
+spec=importlib.util.spec_from_file_location('d',P); d=importlib.util.module_from_spec(spec); spec.loader.exec_module(d)
+M2=d.M2
+M2.rclpy.init(); rec=d.Recorder(); ex=M2.SingleThreadedExecutor(); ex.add_node(rec)
+threading.Thread(target=ex.spin,daemon=True).start(); r=M2.Run(rec)
+r.ready()
+legs=r.profile([(3.0,0.5,0.0),(3.0,0.0,0.0)])
+t0,t1=legs[0][0],legs[0][1]
+psi0=r.nearest(rec.gt,t0)[6]
+sp=r.body_speed(r.samples(t0-0.5,legs[1][1]),psi0)
+print(f'# leg start {t0:.3f}, end {t1:.3f}')
+for a,b,lab in ((t0-0.2,t0+1.3,'speed-up'),(t1-0.1,t1+0.8,'braking')):
+    print('##',lab,'(t rel start; imu ax 0.05 s mean; gt speed; gt accel from speed over 0.1 s)')
+    t=a
+    while t<b:
+        im=rec.imu_between(t,t+0.05)
+        v=[s for s in sp if t<=s[0]<t+0.05]
+        ax=statistics.fmean(x[1] for x in im) if im else float('nan')
+        vv=statistics.fmean(s[1] for s in v) if v else float('nan')
+        print(f'{t-t0:+.2f}  ax {ax:+.4f}  az {statistics.fmean(x[3] for x in im) if im else float("nan"):+.4f}  v {vv:+.4f}  n_imu {len(im)}')
+        t+=0.05
+allimu=rec.imu_between(t0-1,legs[1][1])
+print('# max |ax| over profile', max(abs(x[1]) for x in allimu), 'n', len(allimu))
+ex.shutdown(); sys.stdout.flush(); os._exit(0)
+
+## informal dry run of TEST-M3-D_procedure.sh imu_motion 1 (18:17), harness lines
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  D10 rotate +0.5: mean gyro z +0.50009 rad/s vs ground-truth yaw rate +0.50000 rad/s (+0.019 %; sign; |.| <= 3 %) over 5.083 s, 509 IMU samples
+INFO  rotate +0.5: mean accel x/y -0.0006 / -0.0002 m/s^2 (expected 0: the IMU is on the rotation axis, CALC-M3-02)
+PASS  D10 rotate -0.5: mean gyro z -0.49999 rad/s vs ground-truth yaw rate -0.50000 rad/s (-0.002 %; sign; |.| <= 3 %) over 5.064 s, 507 IMU samples
+INFO  rotate -0.5: mean accel x/y +0.0002 / -0.0004 m/s^2 (expected 0: the IMU is on the rotation axis, CALC-M3-02)
+FAIL  D11 accelerate to 0.5 m/s: mean accel x -0.0010 m/s^2 vs ground-truth acceleration +0.4999 m/s^2 (-100.20 %; sign; |.| <= 20 %) over the 10-90 % ramp +0.109 .. +0.908 s (80 IMU samples; plateau 0.5000 m/s)
+INFO  ramp ground-truth pitch +0.0000 .. +0.0000 deg -> g sin(pitch) up to 0.0000 m/s^2 in accel x
+INFO  ground-truth excursion from the spawn point (0, -20): x -0.000 .. +1.376 m, y -0.000 .. +0.006 m (clearance budget in TEST-M3-D_clearance_check.py)
+# result: 1 CRITERION/CRITERIA FAILED

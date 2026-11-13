@@ -1,0 +1,100 @@
+# TEST-M3-04 topics and default launch, 2026-11-03 19:53:30 IST, revision 349064c (amr_ws/src has uncommitted Task B changes)
+# Gazebo Sim, version 8.15.0; ros_gz_bridge 1.0.24-1noble.20260920.234644; <share_b> = <install>/share/amr_bringup
+
+## Part 1: sensors on (sensor_test.sdf), D1-D4
+
+### attempt 1
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf   (ROS_DOMAIN_ID=89, GZ_PARTITION=<label>_<pid>)
+diff_drive_controller   diff_drive_controller/DiffDriveController      active
+joint_state_broadcaster joint_state_broadcaster/JointStateBroadcaster  active
+both controllers active
+# exit 0
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+Gazebo command == gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# exit 0
+$ gz topic -l | grep /world/sensor_test/pose/info   (world name sensor_test, from the world file)
+/world/sensor_test/pose/info
+# exit 0
+
+$ python3 docs/evidence/M3/TEST-M3-04_topics_check.py
+# window: 2.0 s after the first /scan stamp (9.400 s), then 10.0 s of simulation time
+# RTF over the window: 1.000
+# messages in window: /scan 100, /imu 1000, /joint_states 1001
+== D1 topic, type, frame_id
+PASS  /scan type ['sensor_msgs/msg/LaserScan'] == [sensor_msgs/msg/LaserScan]
+PASS  /imu type ['sensor_msgs/msg/Imu'] == [sensor_msgs/msg/Imu]
+PASS  /joint_states type ['sensor_msgs/msg/JointState'] == [sensor_msgs/msg/JointState]
+PASS  /scan frame_id of every message ['laser_frame'] == [laser_frame]
+PASS  /imu frame_id of every message ['imu_link'] == [imu_link]
+PASS  /joint_states: every message has ['left_wheel_joint', 'right_wheel_joint'] with finite positions (names ['left_wheel_joint', 'right_wheel_joint'])
+== D2 rate from header stamps (nominal +-2 %); D3 stamps increasing
+PASS  /scan rate 10.0000 Hz == 10 Hz +-2 % (n = 100)
+PASS  /scan stamps strictly increasing
+PASS  /imu rate 100.0000 Hz == 100 Hz +-2 % (n = 1000)
+PASS  /imu stamps strictly increasing
+PASS  /joint_states rate 100.0100 Hz == 100 Hz +-2 % (n = 1001)
+PASS  /joint_states stamps strictly increasing
+PASS  /imu stamps on the 10 ms grid: 1000 of 1000 (DEC-038)
+== D3 |stamp - latest /clock at receipt| <= 0.1 s
+PASS  /scan max |stamp - clock| 0.0060 s over 100 messages (worst at stamp 19.7)
+      clock - stamp: min +0.0020 p50 +0.0030 p95 +0.0040 max +0.0060 s; messages over 0.1 s: 0
+PASS  /imu max |stamp - clock| 0.0010 s over 1000 messages (worst at stamp 14.72)
+      clock - stamp: min +0.0000 p50 +0.0000 p95 +0.0000 max +0.0010 s; messages over 0.1 s: 0
+PASS  /joint_states max |stamp - clock| 0.0010 s over 1001 messages (worst at stamp 21.339)
+      clock - stamp: min +0.0000 p50 +0.0000 p95 +0.0010 max +0.0010 s; messages over 0.1 s: 0
+== D4 LaserScan fields == DEC-031 (1e-6); 360 ranges
+PASS  angle_min ['-3.141592741'] == -3.141592654
+PASS  angle_max ['3.124139309'] == 3.124139361
+PASS  angle_increment ['0.017453292'] == 0.017453293
+PASS  range_min ['0.119999997'] == 0.120000000
+PASS  range_max ['12.000000000'] == 12.000000000
+PASS  len(ranges) [360] == [360]
+== ALL CHECKS PASSED
+# checker exit 0
+# launch log: 3 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [ERROR] : process failed to terminate '10.0' seconds after receiving 'SIGTERM', escalating to 'SIGKILL'
+#         1 [ERROR] : process failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+#         1 [ERROR] : process has died [pid 120063, exit code -9, cmd 'gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf'].
+#         1  [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1  [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1  [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#        20  [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1  [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1  [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1  [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# exit 1
+
+## Part 2: default launch (no sensors, no world argument) == M2
+$ ros2 launch amr_bringup sim.launch.py headless:=true   (ROS_DOMAIN_ID=92, GZ_PARTITION=<label>_<pid>)
+diff_drive_controller   diff_drive_controller/DiffDriveController      active
+joint_state_broadcaster joint_state_broadcaster/JointStateBroadcaster  active
+both controllers active
+# exit 0
+# Gazebo command line: gz sim -r -s empty.sdf
+Gazebo command == gz sim -r -s empty.sdf (M2)
+# exit 0
+$ gz topic -l | grep /world/empty/pose/info   (world empty: the M2 ground-truth topic)
+/world/empty/pose/info
+# exit 0
+
+$ python3 docs/evidence/M3/TEST-M3-04_default_check.py <tmp>/published.urdf
+PASS  robot_description received from robot_state_publisher
+PASS  no /scan or /imu topic (topics: ['/clock', '/cmd_vel', '/controller_manager/activity', '/controller_manager/introspection_data/full', '/controller_manager/introspection_data/names', '/controller_manager/introspection_data/values', '/controller_manager/statistics/full', '/controller_manager/statistics/names', '/controller_manager/statistics/values', '/diagnostics', '/diff_drive_controller/cmd_vel', '/diff_drive_controller/cmd_vel_out', '/diff_drive_controller/odom', '/diff_drive_controller/transition_event', '/dynamic_joint_states', '/joint_state_broadcaster/transition_event', '/joint_states', '/parameter_events', '/robot_description', '/rosout', '/tf', '/tf_static'])
+PASS  no sensor_bridge node (nodes: ['_ros2cli_daemon_92_cbaab2a2876246afb2108e324a4647cc', 'cmd_vel_guard', 'controller_manager', 'diff_drive_controller', 'gz_ros_control', 'joint_state_broadcaster', 'robot_state_publisher', 'ros_gz_bridge', 'test_m3_04_default_check'])
+== ALL CHECKS PASSED
+# exit 0
+$ xacro <share_d>/urdf/amr.urdf.xacro use_ros2_control:=true controllers_file:=<ctrl> > <tmp>/m2.urdf   (the M2 launch command); cmp
+published robot_description byte-identical to the M2 expansion
+# exit 0
+c2a2ab54810650e60a4e8d603188da46fbb26a7d9136664e9190eade3dce5744  <tmp>/published.urdf
+c2a2ab54810650e60a4e8d603188da46fbb26a7d9136664e9190eade3dce5744  <tmp>/m2.urdf
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1  [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1  [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1  [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         7  [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1  [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1  [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# exit 0
+
+# overall: AT LEAST ONE CHECK FAILED

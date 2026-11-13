@@ -1,0 +1,132 @@
+# TEST-M3-11 procedure mode=linear, valid runs required=3, 2026-11-13 17:31:23 IST, revision 16a5255 (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; world <share_b>/worlds/sensor_test.sdf sha256 925f995c5192c17b…
+
+$ python3 -I docs/evidence/M3/TEST-M3-D_clearance_check.py <share_b>/worlds/sensor_test.sdf amr_ws/src/amr_description/urdf/amr_properties.xacro
+# amr_properties.xacro: chassis_length 0.45, chassis_width 0.35, wheel_radius 0.075, wheel_track 0.4, caster_x -0.36
+# robot bounding radius R = hypot(0.585, 0.275) + 0.05 = 0.696 m (conservative)
+# centre path: x -1.500 .. +2.625 m at y -20.0 m (profiles +50 %); swept area = path dilated by R
+PASS  ground_plane: plane 100 x 100 m centred at the origin; distance from the swept area to its edge 29.304 m >= 5.0 m
+PASS  target_front_1m: box x +1.070..+1.270, y -0.500..+0.500; clearance from the swept area 18.804 m >= 5.0 m
+PASS  target_left_3m: box x -0.680..+0.820, y +3.000..+3.200; clearance from the swept area 22.304 m >= 5.0 m
+PASS  target_rear_6m: box x -6.130..-5.930, y -1.000..+1.000; clearance from the swept area 18.813 m >= 5.0 m
+PASS  target_right_2m: box x -0.430..+0.570, y -2.200..-2.000; clearance from the swept area 17.104 m >= 5.0 m
+PASS  target_low: box x +1.184..+1.784, y +1.114..+1.714; clearance from the swept area 20.418 m >= 5.0 m
+== CLEARANCE OK
+# exit 0
+
+## attempt 1 (ROS_DOMAIN_ID=141)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-11_m2_regression.py linear
+# TEST-M3-11 harness mode=linear (M2 mode function unchanged), wall 2026-11-13 17:31:23 IST, ground truth /world/sensor_test/pose/info, sensors on
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  forward: displacement along start heading +0.9802 m, target +0.980 m ± 5 %
+PASS  forward: max |lateral| 0.00 mm <= 20 mm
+PASS  forward: heading change -0.0000 deg, |.| <= 1 deg
+PASS  forward: both wheel velocities > 0 in cruise (400 samples; mean L +2.6667, R +2.6667 rad/s)
+PASS  forward: odometry displacement +0.9802 m, ratio to ground truth 0.9999 (sign; 0.5-1.5)
+PASS  forward: max |roll|,|pitch| 0.0000 deg < 1 deg
+INFO  forward: wheel rolling distance r*mean|dtheta| 0.9802 m, slip -0.005 %
+PASS  reverse: displacement along start heading -0.9800 m, target -0.980 m ± 5 %
+PASS  reverse: max |lateral| 0.00 mm <= 20 mm
+PASS  reverse: heading change +0.0000 deg, |.| <= 1 deg
+PASS  reverse: both wheel velocities < 0 in cruise (400 samples; mean L -2.6667, R -2.6667 rad/s)
+PASS  reverse: odometry displacement -0.9800 m, ratio to ground truth 0.9999 (sign; 0.5-1.5)
+PASS  reverse: max |roll|,|pitch| 0.0000 deg < 1 deg
+INFO  reverse: wheel rolling distance r*mean|dtheta| 0.9800 m, slip -0.006 %
+INFO  /scan during the profile: 160 messages over 16.01 s of simulation time, 10.00 Hz (nominal 10), largest gap 100.0 ms
+INFO  /imu during the profile: 1600 messages over 16.01 s of simulation time, 100.00 Hz (nominal 100), largest gap 10.0 ms
+INFO  ground-truth excursion from the spawn point (0, -20): x +0.000 .. +0.980 m, y +0.000 .. +0.000 m (clearance budget in TEST-M3-D_clearance_check.py)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 1197, odometry 902, joint_states 2029, imu 2029, scan 204
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=142)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-11_m2_regression.py linear
+# TEST-M3-11 harness mode=linear (M2 mode function unchanged), wall 2026-11-13 17:31:50 IST, ground truth /world/sensor_test/pose/info, sensors on
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  forward: displacement along start heading +0.9800 m, target +0.980 m ± 5 %
+PASS  forward: max |lateral| 0.00 mm <= 20 mm
+PASS  forward: heading change -0.0000 deg, |.| <= 1 deg
+PASS  forward: both wheel velocities > 0 in cruise (400 samples; mean L +2.6667, R +2.6667 rad/s)
+PASS  forward: odometry displacement +0.9800 m, ratio to ground truth 0.9999 (sign; 0.5-1.5)
+PASS  forward: max |roll|,|pitch| 0.0000 deg < 1 deg
+INFO  forward: wheel rolling distance r*mean|dtheta| 0.9800 m, slip -0.005 %
+PASS  reverse: displacement along start heading -0.9801 m, target -0.980 m ± 5 %
+PASS  reverse: max |lateral| 0.00 mm <= 20 mm
+PASS  reverse: heading change +0.0000 deg, |.| <= 1 deg
+PASS  reverse: both wheel velocities < 0 in cruise (400 samples; mean L -2.6667, R -2.6667 rad/s)
+PASS  reverse: odometry displacement -0.9800 m, ratio to ground truth 0.9999 (sign; 0.5-1.5)
+PASS  reverse: max |roll|,|pitch| 0.0000 deg < 1 deg
+INFO  reverse: wheel rolling distance r*mean|dtheta| 0.9800 m, slip -0.006 %
+INFO  /scan during the profile: 160 messages over 16.01 s of simulation time, 10.00 Hz (nominal 10), largest gap 100.0 ms
+INFO  /imu during the profile: 1600 messages over 16.01 s of simulation time, 100.00 Hz (nominal 100), largest gap 10.0 ms
+INFO  ground-truth excursion from the spawn point (0, -20): x -0.000 .. +0.980 m, y +0.000 .. +0.000 m (clearance budget in TEST-M3-D_clearance_check.py)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 1137, odometry 901, joint_states 1929, imu 1929, scan 193
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=143)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-11_m2_regression.py linear
+# TEST-M3-11 harness mode=linear (M2 mode function unchanged), wall 2026-11-13 17:32:15 IST, ground truth /world/sensor_test/pose/info, sensors on
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  forward: displacement along start heading +0.9801 m, target +0.980 m ± 5 %
+PASS  forward: max |lateral| 0.00 mm <= 20 mm
+PASS  forward: heading change -0.0000 deg, |.| <= 1 deg
+PASS  forward: both wheel velocities > 0 in cruise (400 samples; mean L +2.6667, R +2.6667 rad/s)
+PASS  forward: odometry displacement +0.9800 m, ratio to ground truth 1.0000 (sign; 0.5-1.5)
+PASS  forward: max |roll|,|pitch| 0.0000 deg < 1 deg
+INFO  forward: wheel rolling distance r*mean|dtheta| 0.9800 m, slip -0.003 %
+PASS  reverse: displacement along start heading -0.9800 m, target -0.980 m ± 5 %
+PASS  reverse: max |lateral| 0.00 mm <= 20 mm
+PASS  reverse: heading change +0.0000 deg, |.| <= 1 deg
+PASS  reverse: both wheel velocities < 0 in cruise (400 samples; mean L -2.6667, R -2.6667 rad/s)
+PASS  reverse: odometry displacement -0.9800 m, ratio to ground truth 1.0000 (sign; 0.5-1.5)
+PASS  reverse: max |roll|,|pitch| 0.0000 deg < 1 deg
+INFO  reverse: wheel rolling distance r*mean|dtheta| 0.9800 m, slip -0.004 %
+INFO  /scan during the profile: 160 messages over 16.01 s of simulation time, 10.00 Hz (nominal 10), largest gap 100.0 ms
+INFO  /imu during the profile: 1601 messages over 16.01 s of simulation time, 100.00 Hz (nominal 100), largest gap 10.0 ms
+INFO  ground-truth excursion from the spawn point (0, -20): x -0.000 .. +0.980 m, y +0.000 .. +0.000 m (clearance budget in TEST-M3-D_clearance_check.py)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 1198, odometry 902, joint_states 2031, imu 2030, scan 204
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# TS-029 attempts declared invalid under DEC-039: 0
+
+# overall: ALL 3 VALID RUNS PASSED

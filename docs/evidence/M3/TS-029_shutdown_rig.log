@@ -1,0 +1,26 @@
+# TS-029 shutdown rig (informal, 2026-11-03 20:02-20:08 IST; serial, nothing else running). Script: TS-029_shutdown_rig.sh
+# V1 = amr_ws build of 2026-11-03 19:51 (1 kHz IMU + ImuDecimator, validation in Configure); V2 = same with the plugin element removed (scratch overlay of amr_description)
+V1_plugin run 1: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 2: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 3: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 4: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 5: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 6: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 7: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 8: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 9: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 10: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 11: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V1_plugin run 12: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 1; 
+V2_noplugin run 1: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 2: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 3: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 4: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 5: gz exit after 10.1 s; ERROR lines 3; plugin shutdown line 0; threads@3s:       1 dds.asyn.0.0:futex_do_wait;      1 dds.ev.0:futex_do_wait;      1 dds.shm.43675:futex_do_wait;      1 dds.shm.7027:futex_do_wait;      1 dds.shm.wdog:futex_do_wait;      1 dds.udp.43650:__skb_wait_for_more_packets;      1 dds.udp.43674:__skb_wait_for_more_packets;      1 dds.udp.43675:__skb_wait_for_more_packets;      1 dds.udp.7027:__skb_wait_for_more_packets;     48 ruby:futex_do_wait;      1 ruby:poll_schedule_timeout.constprop.0;      1 ruby-ust:futex_do_wait;      1 ruby-ust:unix_stream_data_wait;      2 sensor_:disk$0:futex_do_wait;      2 sensor_tes:sh0:futex_do_wait;      1 sensor_t:gdrv0:futex_do_wait;      1 sensor:traceq0:futex_do_wait;      1 ZMQbg/IO/0:ep_poll;      1 ZMQbg/Reaper:ep_poll;
+V2_noplugin run 6: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 7: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 8: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 9: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 10: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 11: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 
+V2_noplugin run 12: gz exit after 0.2 s; ERROR lines 0; plugin shutdown line 0; 

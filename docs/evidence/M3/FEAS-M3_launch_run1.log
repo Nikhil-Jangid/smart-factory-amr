@@ -1,0 +1,114 @@
+[INFO] [launch]: All log files can be found below <home>/.ros/log/2026-11-03-16-23-21-401981-nikhiljangid-latitude5330-23017
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [robot_state_publisher-1]: process started with pid [23042]
+[INFO] [parameter_bridge-2]: process started with pid [23043]
+[INFO] [gz-3]: process started with pid [23044]
+[INFO] [create-4]: process started with pid [23045]
+[robot_state_publisher-1] [INFO] [1793703201.504214996] [robot_state_publisher]: Robot initialized
+[create-4] [INFO] [1793703201.509576658] [ros_gz_sim]: Waiting messages on topic [robot_description].
+[parameter_bridge-2] [INFO] [1793703201.525943009] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1793703201.526664943] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/scan (gz.msgs.LaserScan) -> /scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1793703201.531715037] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/imu (gz.msgs.IMU) -> /imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[create-4] [INFO] [1793703201.917234364] [ros_gz_sim]: Entity creation successful.
+[INFO] [create-4]: process has finished cleanly [pid 23045]
+[INFO] [spawner-5]: process started with pid [23109]
+[spawner-5] [INFO] [1793703202.331741475] [spawner_joint_state_broadcaster]: waiting for service /controller_manager/list_controllers to become available...
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-3] [INFO] [1793703203.670152842] [gz_ros_control]: Loading controller_manager
+[gz-3] [INFO] [1793703203.676624226] [controller_manager]: Using ROS clock for triggering controller manager cycles.
+[gz-3] [WARN] [1793703203.676647538] [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+[gz-3] [INFO] [1793703203.680986424] [controller_manager]: Subscribing to '/robot_description' topic for robot description.
+[gz-3] [WARN] [1793703203.681032359] [gz_ros_control]: Waiting RM to load and initialize hardware...
+[gz-3] [INFO] [1793703204.117575600] [controller_manager]: Received robot description from topic.
+[gz-3] [INFO] [1793703204.117634380] [controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[gz-3] [INFO] [1793703204.121476442] [gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gz-3] [INFO] [1793703204.121528702] [gz_ros_control]: Loading joint: left_wheel_joint
+[gz-3] [INFO] [1793703204.121541258] [gz_ros_control]: 	State:
+[gz-3] [INFO] [1793703204.121551312] [gz_ros_control]: 		 position
+[gz-3] [INFO] [1793703204.121558990] [gz_ros_control]: 		 velocity
+[gz-3] [INFO] [1793703204.121569144] [gz_ros_control]: 	Command:
+[gz-3] [INFO] [1793703204.121577082] [gz_ros_control]: 		 velocity
+[gz-3] [INFO] [1793703204.121594511] [gz_ros_control]: Loading joint: right_wheel_joint
+[gz-3] [INFO] [1793703204.121602018] [gz_ros_control]: 	State:
+[gz-3] [INFO] [1793703204.121608147] [gz_ros_control]: 		 position
+[gz-3] [INFO] [1793703204.121614758] [gz_ros_control]: 		 velocity
+[gz-3] [INFO] [1793703204.121621037] [gz_ros_control]: 	Command:
+[gz-3] [INFO] [1793703204.121627365] [gz_ros_control]: 		 velocity
+[gz-3] [INFO] [1793703204.121669685] [gz_ros_control]: Loading sensor: imu
+[gz-3] [INFO] [1793703204.121681703] [gz_ros_control]: 	State:
+[gz-3] [WARN] [1793703204.121688748] [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gz-3] [INFO] [1793703204.121766307] [controller_manager]: Initialize hardware 'AmrGazeboSystem' 
+[gz-3] [WARN] [1793703204.121785029] [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+[gz-3] [INFO] [1793703204.121845732] [controller_manager]: Successful initialization of hardware 'AmrGazeboSystem'
+[gz-3] [INFO] [1793703204.121958551] [controller_manager]: Activating component 'AmrGazeboSystem'.
+[gz-3] [INFO] [1793703204.121977132] [resource_manager]: 'configure' hardware 'AmrGazeboSystem' 
+[gz-3] [INFO] [1793703204.121983317] [gz_ros_control]: System Successfully configured!
+[gz-3] [INFO] [1793703204.121993965] [resource_manager]: Successful 'configure' of hardware 'AmrGazeboSystem'
+[gz-3] [INFO] [1793703204.122002593] [resource_manager]: 'activate' hardware 'AmrGazeboSystem' 
+[gz-3] [INFO] [1793703204.122019981] [resource_manager]: Successful 'activate' of hardware 'AmrGazeboSystem'
+[gz-3] [WARN] [1793703204.122099968] [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+[gz-3] [INFO] [1793703204.122109662] [controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[gz-3] [INFO] [1793703204.334040401] [controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[gz-3] [INFO] [1793703204.334083366] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[gz-3] [INFO] [1793703204.338503597] [controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file <home>/Projects/smart-factory-amr/amr_ws/src/amr_bringup/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-5] [INFO] [1793703204.348537077] [spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[gz-3] [INFO] [1793703204.349369985] [controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[gz-3] [INFO] [1793703204.349508765] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[gz-3] [INFO] [1793703204.356677702] [controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[gz-3] [WARN] [1793703205.701331697] [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+[gz-3] [INFO] [1793703205.906327161] [controller_manager]: Successfully switched controllers!
+[spawner-5] [INFO] [1793703205.917429554] [spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[INFO] [spawner-5]: process has finished cleanly [pid 23109]
+[INFO] [spawner-6]: process started with pid [23224]
+[spawner-6] [INFO] [1793703206.421859318] [spawner_diff_drive_controller]: waiting for service /controller_manager/list_controllers to become available...
+[gz-3] [INFO] [1793703207.173803748] [controller_manager]: Loading controller : 'diff_drive_controller' of type 'diff_drive_controller/DiffDriveController'
+[gz-3] [INFO] [1793703207.173844238] [controller_manager]: Loading controller 'diff_drive_controller'
+[gz-3] [INFO] [1793703207.178279866] [controller_manager]: Controller 'diff_drive_controller' node arguments: --ros-args --params-file <home>/Projects/smart-factory-amr/amr_ws/src/amr_bringup/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-6] [INFO] [1793703207.197690851] [spawner_diff_drive_controller]: Loaded diff_drive_controller
+[gz-3] [INFO] [1793703207.198673668] [controller_manager]: Configuring controller: 'diff_drive_controller'
+[gz-3] [INFO] [1793703207.207567921] [controller_manager]: Activating controllers: [ diff_drive_controller ]
+[gz-3] [INFO] [1793703207.216280543] [controller_manager]: Successfully switched controllers!
+[spawner-6] [INFO] [1793703207.227425539] [spawner_diff_drive_controller]: Configured and activated diff_drive_controller
+[INFO] [spawner-6]: process has finished cleanly [pid 23224]
+[gz-3] [WARN] [1793703207.706219072] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703208.706246101] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703209.706255403] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703210.706218323] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703211.706191531] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703212.706228044] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703213.731935811] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703214.731905662] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703215.731993260] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703216.731940771] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703217.733079441] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703218.743058795] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703219.743050042] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703220.743073675] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703221.753078555] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703222.762991053] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703223.763041703] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703224.763075142] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703225.773058063] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703226.787177324] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703227.787233293] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703228.787239826] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703229.787254179] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703230.787222193] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703231.796096850] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703232.806059571] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703233.811333641] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703234.822466733] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703235.822590853] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703236.832536627] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703237.832546383] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703238.842549259] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703239.842508331] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703240.852578384] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703241.858935262] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703242.875075833] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703243.875010246] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703244.884983553] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703245.885043074] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703246.885145934] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-3] [WARN] [1793703247.886800439] [diff_drive_controller]: Velocity command timed out. Braking.

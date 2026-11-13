@@ -1,0 +1,20 @@
+--- amr_ws/src/amr_description/urdf/amr.urdf.xacro	2026-10-22 21:53:13.829048896 +0530
++++ prototype/src/amr_description/urdf/amr.urdf.xacro	2026-11-03 16:21:17.915765464 +0530
+@@ -7,6 +7,7 @@
+ <robot name="amr" xmlns:xacro="http://www.ros.org/wiki/xacro">
+   <xacro:arg name="use_ros2_control" default="false"/>
+   <xacro:arg name="controllers_file" default=""/>
++  <xacro:arg name="use_sensors" default="false"/>
+ 
+   <xacro:include filename="amr_properties.xacro"/>
+   <xacro:include filename="inertial_macros.xacro"/>
+@@ -135,4 +136,9 @@
+     <xacro:include filename="amr.ros2_control.xacro"/>
+   </xacro:if>
+ 
++  <xacro:if value="$(arg use_sensors)">
++    <!-- M3 (DEC-034) FEASIBILITY PROTOTYPE: sensor frames and Gazebo sensors; emitted only when enabled. -->
++    <xacro:include filename="amr.sensors.xacro"/>
++  </xacro:if>
++
+ </robot>

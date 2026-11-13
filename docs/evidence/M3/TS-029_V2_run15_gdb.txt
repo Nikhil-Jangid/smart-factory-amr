@@ -1,0 +1,947 @@
+[New LWP 27087]
+[New LWP 27086]
+[New LWP 27085]
+[New LWP 27084]
+[New LWP 27059]
+[New LWP 27058]
+[New LWP 27057]
+[New LWP 27056]
+[New LWP 27055]
+[New LWP 27054]
+[New LWP 27053]
+[New LWP 27052]
+[New LWP 27051]
+[New LWP 27050]
+[New LWP 27049]
+[New LWP 27048]
+[New LWP 27047]
+[New LWP 27046]
+[New LWP 27045]
+[New LWP 27044]
+[New LWP 27043]
+[New LWP 27013]
+[New LWP 27012]
+[New LWP 27011]
+[New LWP 27010]
+[New LWP 27009]
+[New LWP 27008]
+[New LWP 27007]
+[New LWP 26979]
+[New LWP 26978]
+[New LWP 26977]
+[New LWP 26976]
+[New LWP 26975]
+[New LWP 26974]
+[New LWP 26973]
+[New LWP 26972]
+[New LWP 26971]
+[New LWP 26970]
+[New LWP 26969]
+[New LWP 26968]
+[New LWP 26967]
+[New LWP 26966]
+[New LWP 26965]
+[New LWP 26964]
+[New LWP 26963]
+[New LWP 26962]
+[New LWP 26961]
+[New LWP 26960]
+[New LWP 26959]
+[New LWP 26958]
+[New LWP 26957]
+[New LWP 26956]
+[New LWP 26955]
+[New LWP 26954]
+[New LWP 26953]
+[New LWP 26952]
+[New LWP 26951]
+[New LWP 26950]
+[New LWP 26949]
+[New LWP 26948]
+[New LWP 26928]
+[New LWP 26919]
+[New LWP 26918]
+[New LWP 26917]
+[New LWP 26916]
+[New LWP 26915]
+[New LWP 26914]
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007de592898e51 in __futex_abstimed_wait_common64 (private=128, cancel=true, abstime=0x0, op=265, expected=26928, futex_word=0x7de56a7ff990) at ./nptl/futex-internal.c:57
+
+warning: 57	./nptl/futex-internal.c: No such file or directory
+  Id   Target Id                                          Frame 
+* 1    Thread 0x7de59304bc40 (LWP 26826) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=128, cancel=true, abstime=0x0, op=265, expected=26928, futex_word=0x7de56a7ff990) at ./nptl/futex-internal.c:57
+  2    Thread 0x7de44a7fe6c0 (LWP 27087) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de50c2413d8) at ./nptl/futex-internal.c:57
+  3    Thread 0x7de44afff6c0 (LWP 27086) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de50c1cd8a0) at ./nptl/futex-internal.c:57
+  4    Thread 0x7de460ffb6c0 (LWP 27085) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de50c001468) at ./nptl/futex-internal.c:57
+  5    Thread 0x7de462ffd6c0 (LWP 27084) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de51c30d2c4) at ./nptl/futex-internal.c:57
+  6    Thread 0x7de4637fe6c0 (LWP 27059) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  7    Thread 0x7de463fff6c0 (LWP 27058) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  8    Thread 0x7de480ff96c0 (LWP 27057) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  9    Thread 0x7de4817fa6c0 (LWP 27056) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  10   Thread 0x7de481ffb6c0 (LWP 27055) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  11   Thread 0x7de4827fc6c0 (LWP 27054) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  12   Thread 0x7de482ffd6c0 (LWP 27053) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  13   Thread 0x7de4837fe6c0 (LWP 27052) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  14   Thread 0x7de483fff6c0 (LWP 27051) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  15   Thread 0x7de4a8ff96c0 (LWP 27050) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  16   Thread 0x7de4a97fa6c0 (LWP 27049) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  17   Thread 0x7de4c4bfc6c0 (LWP 27048) "ruby"           futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+  18   Thread 0x7de4c75fd6c0 (LWP 27047) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de565e99c90) at ./nptl/futex-internal.c:57
+  19   Thread 0x7de4aaffd6c0 (LWP 27046) "sensor_t:gdrv0" 0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de565a13478) at ./nptl/futex-internal.c:57
+  20   Thread 0x7de4aa7fc6c0 (LWP 27045) "sensor:traceq0" 0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de5641fd6c0) at ./nptl/futex-internal.c:57
+  21   Thread 0x7de4a9ffb6c0 (LWP 27044) "sensor_tes:sh0" 0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de5641a9448) at ./nptl/futex-internal.c:57
+  22   Thread 0x7de4627fc6c0 (LWP 27043) "sensor_:disk$0" 0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de5641f9da8) at ./nptl/futex-internal.c:57
+  23   Thread 0x7de4c81fe6c0 (LWP 27013) "sensor_tes:sh0" 0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de564167728) at ./nptl/futex-internal.c:57
+  24   Thread 0x7de4c89ff6c0 (LWP 27012) "sensor_:disk$0" 0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de564178a28) at ./nptl/futex-internal.c:57
+  25   Thread 0x7de4f8ff96c0 (LWP 27011) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+  26   Thread 0x7de569ffe6c0 (LWP 27010) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=24073, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+  27   Thread 0x7de5697fd6c0 (LWP 27009) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-1902786579, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+  28   Thread 0x7de568ffc6c0 (LWP 27008) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=32229, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+  29   Thread 0x7de563fff6c0 (LWP 27007) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=32229, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+  30   Thread 0x7de4f97fa6c0 (LWP 26979) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de4f0000dd8) at ./nptl/futex-internal.c:57
+  31   Thread 0x7de4f9ffb6c0 (LWP 26978) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de4f00203f8) at ./nptl/futex-internal.c:57
+  32   Thread 0x7de4fa7fc6c0 (LWP 26977) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de51c1188d0) at ./nptl/futex-internal.c:57
+  33   Thread 0x7de4faffd6c0 (LWP 26976) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-83901968, cancel=true, abstime=0x7de4faffc390, op=137, expected=0, futex_word=0x7de4e8000c48) at ./nptl/futex-internal.c:57
+  34   Thread 0x7de4fb7fe6c0 (LWP 26975) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x7de4fb7fd390, op=137, expected=0, futex_word=0x7de4e4000c48) at ./nptl/futex-internal.c:57
+  35   Thread 0x7de4fbfff6c0 (LWP 26974) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e09060abae4) at ./nptl/futex-internal.c:57
+  36   Thread 0x7de520ff96c0 (LWP 26973) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  37   Thread 0x7de5217fa6c0 (LWP 26972) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  38   Thread 0x7de521ffb6c0 (LWP 26971) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  39   Thread 0x7de5227fc6c0 (LWP 26970) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  40   Thread 0x7de522ffd6c0 (LWP 26969) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  41   Thread 0x7de5237fe6c0 (LWP 26968) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  42   Thread 0x7de523fff6c0 (LWP 26967) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  43   Thread 0x7de53cff96c0 (LWP 26966) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  44   Thread 0x7de53d7fa6c0 (LWP 26965) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  45   Thread 0x7de53dffb6c0 (LWP 26964) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e0905c61c50) at ./nptl/futex-internal.c:57
+  46   Thread 0x7de53e7fc6c0 (LWP 26963) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  47   Thread 0x7de53effd6c0 (LWP 26962) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+  48   Thread 0x7de53f7fe6c0 (LWP 26961) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e0905f47d54) at ./nptl/futex-internal.c:57
+  49   Thread 0x7de53ffff6c0 (LWP 26960) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=32229, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de534000c04) at ./nptl/futex-internal.c:57
+  50   Thread 0x7de544ff96c0 (LWP 26959) "dds.udp.7021"   0x00007de59292bf64 in __libc_recvfrom (fd=70, buf=0x5e0905e11f10, len=65500, flags=0, addr=..., addrlen=0x7de544ff8a08) at ../sysdeps/unix/sysv/linux/recvfrom.c:27
+  51   Thread 0x7de5457fa6c0 (LWP 26958) "dds.shm.7021"   0x00007de592898e51 in __futex_abstimed_wait_common64 (private=<optimized out>, cancel=true, abstime=0x7de5457f9800, op=265, expected=0, futex_word=0x7de5625dd110) at ./nptl/futex-internal.c:57
+  52   Thread 0x7de545ffb6c0 (LWP 26957) "dds.asyn.0.0"   0x00007de592898e51 in __futex_abstimed_wait_common64 (private=32229, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e0905cf00ac) at ./nptl/futex-internal.c:57
+  53   Thread 0x7de5467fc6c0 (LWP 26956) "dds.udp.51175"  0x00007de59292bf64 in __libc_recvfrom (fd=65, buf=0x5e0905cdf070, len=65500, flags=0, addr=..., addrlen=0x7de5467fba08) at ../sysdeps/unix/sysv/linux/recvfrom.c:27
+  54   Thread 0x7de546ffd6c0 (LWP 26955) "dds.shm.51175"  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=<optimized out>, cancel=true, abstime=0x7de546ffc800, op=265, expected=0, futex_word=0x7de5625fb110) at ./nptl/futex-internal.c:57
+  55   Thread 0x7de5477fe6c0 (LWP 26954) "dds.udp.51150"  0x00007de59292bf64 in __libc_recvfrom (fd=63, buf=0x5e0905cc8730, len=65500, flags=0, addr=..., addrlen=0x7de5477fda08) at ../sysdeps/unix/sysv/linux/recvfrom.c:27
+  56   Thread 0x7de547fff6c0 (LWP 26953) "dds.udp.51174"  0x00007de59292bf64 in __libc_recvfrom (fd=62, buf=0x5e0905cb8740, len=65500, flags=0, addr=..., addrlen=0x7de547ffea08) at ../sysdeps/unix/sysv/linux/recvfrom.c:27
+  57   Thread 0x7de560bfd6c0 (LWP 26952) "dds.ev.0"       0x00007de592898e51 in __futex_abstimed_wait_common64 (private=97901776, cancel=true, abstime=0x7de560bfcdd0, op=137, expected=0, futex_word=0x5e0905ca00b8) at ./nptl/futex-internal.c:57
+  58   Thread 0x7de5613fe6c0 (LWP 26951) "dds.shm.wdog"   0x00007de592898e51 in __futex_abstimed_wait_common64 (private=3042, cancel=true, abstime=0x7de5613fde60, op=137, expected=0, futex_word=0x5e0905c9da60) at ./nptl/futex-internal.c:57
+  59   Thread 0x7de561bff6c0 (LWP 26950) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=1639967968, cancel=true, abstime=0x7de561bfee50, op=137, expected=0, futex_word=0x5e0905caab20) at ./nptl/futex-internal.c:57
+  60   Thread 0x7de562ffd6c0 (LWP 26949) "ruby-ust"       syscall () at ../sysdeps/unix/sysv/linux/x86_64/syscall.S:38
+  61   Thread 0x7de5637fe6c0 (LWP 26948) "ruby-ust"       0x00007de59292c0cb in __recvmsg_syscall (flags=0, msg=0x7de5637fd650, fd=33) at ../sysdeps/unix/sysv/linux/recvmsg.c:27
+  62   Thread 0x7de56a7ff6c0 (LWP 26928) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e090185eb30) at ../sysdeps/nptl/futex-internal.h:146
+  63   Thread 0x7de581ddf6c0 (LWP 26919) "ruby"           0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x7de581ddee30, op=393, expected=0, futex_word=0x5e09014bc670) at ./nptl/futex-internal.c:57
+  64   Thread 0x7de5825e06c0 (LWP 26918) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e090185eb30) at ../sysdeps/nptl/futex-internal.h:146
+  65   Thread 0x7de582de16c0 (LWP 26917) "ruby"           futex_wait (private=0, expected=2, futex_word=0x5e090185eb30) at ../sysdeps/nptl/futex-internal.h:146
+  66   Thread 0x7de5835e26c0 (LWP 26916) "ruby"           0x00007de59291b79d in __GI___poll (fds=0x7de5835e1d80, nfds=3, timeout=250) at ../sysdeps/unix/sysv/linux/poll.c:29
+  67   Thread 0x7de583de36c0 (LWP 26915) "ZMQbg/IO/0"     0x00007de59292a2d2 in epoll_wait (epfd=10, events=0x7de583de2120, maxevents=256, timeout=175) at ../sysdeps/unix/sysv/linux/epoll_wait.c:30
+  68   Thread 0x7de5845e46c0 (LWP 26914) "ZMQbg/Reaper"   0x00007de59292a2d2 in epoll_wait (epfd=8, events=0x7de5845e3120, maxevents=256, timeout=-1) at ../sysdeps/unix/sysv/linux/epoll_wait.c:30
+
+Thread 68 (Thread 0x7de5845e46c0 (LWP 26914) "ZMQbg/Reaper"):
+#0  0x00007de59292a2d2 in epoll_wait (epfd=8, events=0x7de5845e3120, maxevents=256, timeout=-1) at ../sysdeps/unix/sysv/linux/epoll_wait.c:30
+#1  0x00007de58c6d405b in ?? () from /lib/x86_64-linux-gnu/libzmq.so.5
+#2  0x00007de58c700d79 in ?? () from /lib/x86_64-linux-gnu/libzmq.so.5
+#3  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#4  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 67 (Thread 0x7de583de36c0 (LWP 26915) "ZMQbg/IO/0"):
+#0  0x00007de59292a2d2 in epoll_wait (epfd=10, events=0x7de583de2120, maxevents=256, timeout=175) at ../sysdeps/unix/sysv/linux/epoll_wait.c:30
+#1  0x00007de58c6d405b in ?? () from /lib/x86_64-linux-gnu/libzmq.so.5
+#2  0x00007de58c700d79 in ?? () from /lib/x86_64-linux-gnu/libzmq.so.5
+#3  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#4  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 66 (Thread 0x7de5835e26c0 (LWP 26916) "ruby"):
+#0  0x00007de59291b79d in __GI___poll (fds=0x7de5835e1d80, nfds=3, timeout=250) at ../sysdeps/unix/sysv/linux/poll.c:29
+#1  0x00007de58c70c2e3 in zmq_poll () from /lib/x86_64-linux-gnu/libzmq.so.5
+#2  0x00007de58cf6ad89 in gz::transport::v13::NodeShared::RunReceptionTask() () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#3  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#4  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#5  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 65 (Thread 0x7de582de16c0 (LWP 26917) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e090185eb30) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e090185eb30, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a0237 in lll_mutex_lock_optimized (mutex=0x5e090185eb30) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e090185eb30) at ./nptl/pthread_mutex_lock.c:128
+#4  0x00007de58cf69d60 in gz::transport::v13::NodeShared::OnNewDisconnection(gz::transport::v13::MessagePublisher const&) () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#5  0x00007de58cf7f9b7 in ?? () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#6  0x00007de58cf75628 in gz::transport::v13::Discovery<gz::transport::v13::MessagePublisher>::RecvMessages() () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#7  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 64 (Thread 0x7de5825e06c0 (LWP 26918) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e090185eb30) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e090185eb30, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a0237 in lll_mutex_lock_optimized (mutex=0x5e090185eb30) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e090185eb30) at ./nptl/pthread_mutex_lock.c:128
+#4  0x00007de58cf62c55 in gz::transport::v13::NodeShared::OnNewSrvDisconnection(gz::transport::v13::ServicePublisher const&) () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#5  0x00007de58cf7ff87 in ?? () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#6  0x00007de58cf70438 in gz::transport::v13::Discovery<gz::transport::v13::ServicePublisher>::RecvMessages() () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#7  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 63 (Thread 0x7de581ddf6c0 (LWP 26919) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x7de581ddee30, op=393, expected=0, futex_word=0x5e09014bc670) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=-2147483648, abstime=0x7de581ddee30, clockid=959527222, expected=0, futex_word=0x5e09014bc670) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e09014bc670, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x7de581ddee30, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289bd6e in __pthread_cond_wait_common (abstime=0x7de581ddee30, clockid=0, mutex=0x5e09014bc608, cond=0x5e09014bc648) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_timedwait64 (cond=0x5e09014bc648, mutex=0x5e09014bc608, abstime=0x7de581ddee30) at ./nptl/pthread_cond_wait.c:652
+#5  0x00007de58cf73897 in gz::transport::v13::NodeSharedPrivate::PublishThread() () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#6  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 62 (Thread 0x7de56a7ff6c0 (LWP 26928) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e090185eb30) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e090185eb30, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a0237 in lll_mutex_lock_optimized (mutex=0x5e090185eb30) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e090185eb30) at ./nptl/pthread_mutex_lock.c:128
+#4  0x00007de58cf4e6f2 in ?? () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#5  0x00007de58cf4a72a in ?? () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#6  0x00007de56bf0e8d6 in gz::sensors::v8::GpuLidarSensor::~GpuLidarSensor() () from /opt/ros/jazzy/opt/gz_sensors_vendor/lib/libgz-sensors8-gpu_lidar.so.8
+#7  0x00007de56bf0ed75 in gz::sensors::v8::GpuLidarSensor::~GpuLidarSensor() () from /opt/ros/jazzy/opt/gz_sensors_vendor/lib/libgz-sensors8-gpu_lidar.so.8
+#8  0x00007de56bbf7d33 in ?? () from /opt/ros/jazzy/opt/gz_sensors_vendor/lib/libgz-sensors8.so.8
+#9  0x00007de56bbeb96e in gz::sensors::v8::Manager::Remove(unsigned long) () from /opt/ros/jazzy/opt/gz_sensors_vendor/lib/libgz-sensors8.so.8
+#10 0x00007de57002f92c in gz::sim::v8::systems::SensorsPrivate::RenderThread() () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/gz-sim-8/plugins/libgz-sim-sensors-system.so
+#11 0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#12 0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#13 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 61 (Thread 0x7de5637fe6c0 (LWP 26948) "ruby-ust"):
+#0  0x00007de59292c0cb in __recvmsg_syscall (flags=0, msg=0x7de5637fd650, fd=33) at ../sysdeps/unix/sysv/linux/recvmsg.c:27
+#1  __libc_recvmsg (fd=33, msg=0x7de5637fd650, flags=0) at ../sysdeps/unix/sysv/linux/recvmsg.c:41
+#2  0x00007de5681c27c6 in ?? () from /lib/x86_64-linux-gnu/liblttng-ust.so.1
+#3  0x00007de568197527 in ?? () from /lib/x86_64-linux-gnu/liblttng-ust.so.1
+#4  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#5  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 60 (Thread 0x7de562ffd6c0 (LWP 26949) "ruby-ust"):
+#0  syscall () at ../sysdeps/unix/sysv/linux/x86_64/syscall.S:38
+#1  0x00007de5681972fe in ?? () from /lib/x86_64-linux-gnu/liblttng-ust.so.1
+#2  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#3  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 59 (Thread 0x7de561bff6c0 (LWP 26950) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=1639967968, cancel=true, abstime=0x7de561bfee50, op=137, expected=0, futex_word=0x5e0905caab20) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=1639967968, abstime=0x7de561bfee50, clockid=32229, expected=0, futex_word=0x5e0905caab20) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e0905caab20, expected=expected@entry=0, clockid=clockid@entry=1, abstime=abstime@entry=0x7de561bfee50, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289c1f6 in __pthread_cond_wait_common (abstime=<optimized out>, clockid=<optimized out>, mutex=0x5e0905caaad0, cond=0x5e0905caaaf8) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_clockwait64 (abstime=<optimized out>, clockid=<optimized out>, mutex=0x5e0905caaad0, cond=0x5e0905caaaf8) at ./nptl/pthread_cond_wait.c:691
+#5  ___pthread_cond_clockwait64 (cond=0x5e0905caaaf8, mutex=0x5e0905caaad0, clockid=<optimized out>, abstime=<optimized out>) at ./nptl/pthread_cond_wait.c:679
+#6  0x00007de5684cd575 in ?? () from /opt/ros/jazzy/lib/librcl_logging_spdlog.so
+#7  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 58 (Thread 0x7de5613fe6c0 (LWP 26951) "dds.shm.wdog"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=3042, cancel=true, abstime=0x7de5613fde60, op=137, expected=0, futex_word=0x5e0905c9da60) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=3042, abstime=0x7de5613fde60, clockid=0, expected=0, futex_word=0x5e0905c9da60) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e0905c9da60, expected=expected@entry=0, clockid=clockid@entry=1, abstime=abstime@entry=0x7de5613fde60, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289c1f6 in __pthread_cond_wait_common (abstime=<optimized out>, clockid=<optimized out>, mutex=0x5e0905c9da68, cond=0x5e0905c9da38) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_clockwait64 (abstime=<optimized out>, clockid=<optimized out>, mutex=0x5e0905c9da68, cond=0x5e0905c9da38) at ./nptl/pthread_cond_wait.c:691
+#5  ___pthread_cond_clockwait64 (cond=0x5e0905c9da38, mutex=0x5e0905c9da68, clockid=<optimized out>, abstime=<optimized out>) at ./nptl/pthread_cond_wait.c:679
+#6  0x00007de5621dae1d in void* eprosima::thread::ThreadProxy<eprosima::create_thread<eprosima::fastdds::rtps::SharedMemWatchdog::SharedMemWatchdog()::{lambda()#1}>(eprosima::fastdds::rtps::SharedMemWatchdog::SharedMemWatchdog()::{lambda()#1}, eprosima::fastdds::rtps::ThreadSettings const&, char const*)::{lambda()#1}>(void*) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 57 (Thread 0x7de560bfd6c0 (LWP 26952) "dds.ev.0"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=97901776, cancel=true, abstime=0x7de560bfcdd0, op=137, expected=0, futex_word=0x5e0905ca00b8) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=97901776, abstime=0x7de560bfcdd0, clockid=24073, expected=0, futex_word=0x5e0905ca00b8) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e0905ca00b8, expected=expected@entry=0, clockid=clockid@entry=1, abstime=abstime@entry=0x7de560bfcdd0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289c1f6 in __pthread_cond_wait_common (abstime=<optimized out>, clockid=<optimized out>, mutex=0x5e0905c9c3a0, cond=0x5e0905ca0090) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_clockwait64 (abstime=<optimized out>, clockid=<optimized out>, mutex=0x5e0905c9c3a0, cond=0x5e0905ca0090) at ./nptl/pthread_cond_wait.c:691
+#5  ___pthread_cond_clockwait64 (cond=0x5e0905ca0090, mutex=0x5e0905c9c3a0, clockid=<optimized out>, abstime=<optimized out>) at ./nptl/pthread_cond_wait.c:679
+#6  0x00007de561eb99dc in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de561ebaa7b in eprosima::fastrtps::rtps::ResourceEvent::event_service() () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#8  0x00007de561ebd3a8 in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#9  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#10 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 56 (Thread 0x7de547fff6c0 (LWP 26953) "dds.udp.51174"):
+#0  0x00007de59292bf64 in __libc_recvfrom (fd=62, buf=0x5e0905cb8740, len=65500, flags=0, addr=..., addrlen=0x7de547ffea08) at ../sysdeps/unix/sysv/linux/recvfrom.c:27
+#1  0x00007de561fee836 in eprosima::fastdds::rtps::UDPChannelResource::Receive(unsigned char*, unsigned int, unsigned int&, eprosima::fastrtps::rtps::Locator_t&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#2  0x00007de561feec2e in eprosima::fastdds::rtps::UDPChannelResource::perform_listen_operation(eprosima::fastrtps::rtps::Locator_t) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#3  0x00007de561ff084d in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#4  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#5  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 55 (Thread 0x7de5477fe6c0 (LWP 26954) "dds.udp.51150"):
+#0  0x00007de59292bf64 in __libc_recvfrom (fd=63, buf=0x5e0905cc8730, len=65500, flags=0, addr=..., addrlen=0x7de5477fda08) at ../sysdeps/unix/sysv/linux/recvfrom.c:27
+#1  0x00007de561fee836 in eprosima::fastdds::rtps::UDPChannelResource::Receive(unsigned char*, unsigned int, unsigned int&, eprosima::fastrtps::rtps::Locator_t&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#2  0x00007de561feec2e in eprosima::fastdds::rtps::UDPChannelResource::perform_listen_operation(eprosima::fastrtps::rtps::Locator_t) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#3  0x00007de561ff084d in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#4  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#5  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 54 (Thread 0x7de546ffd6c0 (LWP 26955) "dds.shm.51175"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=<optimized out>, cancel=true, abstime=0x7de546ffc800, op=265, expected=0, futex_word=0x7de5625fb110) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=<optimized out>, abstime=0x7de546ffc800, clockid=0, expected=0, futex_word=0x7de5625fb110) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de5625fb110, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x7de546ffc800, private=<optimized out>) at ./nptl/futex-internal.c:139
+#3  0x00007de5928a4dd0 in do_futex_wait (sem=sem@entry=0x7de5625fb110, abstime=abstime@entry=0x7de546ffc800, clockid=0) at ./nptl/sem_waitcommon.c:111
+#4  0x00007de5928a4e73 in __new_sem_wait_slow64 (sem=0x7de5625fb110, abstime=0x7de546ffc800, clockid=0) at ./nptl/sem_waitcommon.c:183
+#5  0x00007de5621db44f in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#6  0x00007de5621dbccc in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de5621da275 in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#8  0x00007de5621daf7d in void* eprosima::thread::ThreadProxy<eprosima::create_thread<eprosima::fastdds::rtps::SharedMemChannelResource::init_thread(eprosima::fastrtps::rtps::Locator_t const&, eprosima::fastdds::rtps::ThreadSettings const&)::{lambda()#1}, unsigned int>(eprosima::fastdds::rtps::SharedMemChannelResource::init_thread(eprosima::fastrtps::rtps::Locator_t const&, eprosima::fastdds::rtps::ThreadSettings const&)::{lambda()#1}, eprosima::fastdds::rtps::ThreadSettings const&, char const*, unsigned int)::{lambda()#1}>(void*) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#9  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#10 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 53 (Thread 0x7de5467fc6c0 (LWP 26956) "dds.udp.51175"):
+#0  0x00007de59292bf64 in __libc_recvfrom (fd=65, buf=0x5e0905cdf070, len=65500, flags=0, addr=..., addrlen=0x7de5467fba08) at ../sysdeps/unix/sysv/linux/recvfrom.c:27
+#1  0x00007de561fee836 in eprosima::fastdds::rtps::UDPChannelResource::Receive(unsigned char*, unsigned int, unsigned int&, eprosima::fastrtps::rtps::Locator_t&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#2  0x00007de561feec2e in eprosima::fastdds::rtps::UDPChannelResource::perform_listen_operation(eprosima::fastrtps::rtps::Locator_t) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#3  0x00007de561ff084d in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#4  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#5  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 52 (Thread 0x7de545ffb6c0 (LWP 26957) "dds.asyn.0.0"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=32229, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e0905cf00ac) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=32229, abstime=0x0, clockid=0, expected=0, futex_word=0x5e0905cf00ac) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e0905cf00ac, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5e0905ca9b90, cond=0x5e0905cf0080) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x5e0905cf0080, mutex=0x5e0905ca9b90) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de561eb9c51 in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#6  0x00007de56210d22e in void* eprosima::thread::ThreadProxy<eprosima::create_thread<eprosima::fastdds::rtps::FlowControllerImpl<eprosima::fastdds::rtps::FlowControllerSyncPublishMode, eprosima::fastdds::rtps::FlowControllerFifoSchedule>::initialize_async_thread<eprosima::fastdds::rtps::FlowControllerSyncPublishMode>()::{lambda()#1}, unsigned int, unsigned int>(eprosima::fastdds::rtps::FlowControllerImpl<eprosima::fastdds::rtps::FlowControllerSyncPublishMode, eprosima::fastdds::rtps::FlowControllerFifoSchedule>::initialize_async_thread<eprosima::fastdds::rtps::FlowControllerSyncPublishMode>()::{lambda()#1}, eprosima::fastdds::rtps::ThreadSettings const&, char const*, unsigned int, unsigned int)::{lambda()#1}>(void*) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 51 (Thread 0x7de5457fa6c0 (LWP 26958) "dds.shm.7021"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=<optimized out>, cancel=true, abstime=0x7de5457f9800, op=265, expected=0, futex_word=0x7de5625dd110) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=<optimized out>, abstime=0x7de5457f9800, clockid=0, expected=0, futex_word=0x7de5625dd110) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de5625dd110, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x7de5457f9800, private=<optimized out>) at ./nptl/futex-internal.c:139
+#3  0x00007de5928a4dd0 in do_futex_wait (sem=sem@entry=0x7de5625dd110, abstime=abstime@entry=0x7de5457f9800, clockid=0) at ./nptl/sem_waitcommon.c:111
+#4  0x00007de5928a4e73 in __new_sem_wait_slow64 (sem=0x7de5625dd110, abstime=0x7de5457f9800, clockid=0) at ./nptl/sem_waitcommon.c:183
+#5  0x00007de5621db44f in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#6  0x00007de5621dbccc in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de5621da275 in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#8  0x00007de5621daf7d in void* eprosima::thread::ThreadProxy<eprosima::create_thread<eprosima::fastdds::rtps::SharedMemChannelResource::init_thread(eprosima::fastrtps::rtps::Locator_t const&, eprosima::fastdds::rtps::ThreadSettings const&)::{lambda()#1}, unsigned int>(eprosima::fastdds::rtps::SharedMemChannelResource::init_thread(eprosima::fastrtps::rtps::Locator_t const&, eprosima::fastdds::rtps::ThreadSettings const&)::{lambda()#1}, eprosima::fastdds::rtps::ThreadSettings const&, char const*, unsigned int)::{lambda()#1}>(void*) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#9  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#10 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 50 (Thread 0x7de544ff96c0 (LWP 26959) "dds.udp.7021"):
+#0  0x00007de59292bf64 in __libc_recvfrom (fd=70, buf=0x5e0905e11f10, len=65500, flags=0, addr=..., addrlen=0x7de544ff8a08) at ../sysdeps/unix/sysv/linux/recvfrom.c:27
+#1  0x00007de561fee836 in eprosima::fastdds::rtps::UDPChannelResource::Receive(unsigned char*, unsigned int, unsigned int&, eprosima::fastrtps::rtps::Locator_t&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#2  0x00007de561feec2e in eprosima::fastdds::rtps::UDPChannelResource::perform_listen_operation(eprosima::fastrtps::rtps::Locator_t) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#3  0x00007de561ff084d in ?? () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#4  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#5  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 49 (Thread 0x7de53ffff6c0 (LWP 26960) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=32229, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de534000c04) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=32229, abstime=0x0, clockid=0, expected=0, futex_word=0x7de534000c04) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de534000c04, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de534000bb0, cond=0x7de534000bd8) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de534000bd8, mutex=0x7de534000bb0) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de5620af19a in eprosima::fastdds::dds::detail::WaitSetImpl::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t const&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#6  0x00007de5620af24c in eprosima::fastdds::dds::WaitSet::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t) const () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de562769a9e in rmw_fastrtps_shared_cpp::__rmw_wait(char const*, rmw_subscriptions_s*, rmw_guard_conditions_s*, rmw_services_s*, rmw_clients_s*, rmw_events_s*, rmw_wait_set_s*, rmw_time_s const*) () from /opt/ros/jazzy/lib/librmw_fastrtps_shared_cpp.so
+#8  0x00007de56275131b in ?? () from /opt/ros/jazzy/lib/librmw_fastrtps_shared_cpp.so
+#9  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#10 0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#11 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 48 (Thread 0x7de53f7fe6c0 (LWP 26961) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e0905f47d54) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5e0905f47d54) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e0905f47d54, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5e0905f47d00, cond=0x5e0905f47d28) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x5e0905f47d28, mutex=0x5e0905f47d00) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de5620af19a in eprosima::fastdds::dds::detail::WaitSetImpl::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t const&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#6  0x00007de5620af24c in eprosima::fastdds::dds::WaitSet::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t) const () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de562769a9e in rmw_fastrtps_shared_cpp::__rmw_wait(char const*, rmw_subscriptions_s*, rmw_guard_conditions_s*, rmw_services_s*, rmw_clients_s*, rmw_events_s*, rmw_wait_set_s*, rmw_time_s const*) () from /opt/ros/jazzy/lib/librmw_fastrtps_shared_cpp.so
+#8  0x00007de5627c9928 in rmw_wait () from /opt/ros/jazzy/lib/librmw_fastrtps_cpp.so
+#9  0x00007de56ada221c in rcl_wait () from /opt/ros/jazzy/lib/librcl.so
+#10 0x00007de568316746 in ?? () from /opt/ros/jazzy/lib/librclcpp.so
+#11 0x00007de56831946d in rclcpp::Executor::wait_for_work(std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#12 0x00007de568319cab in rclcpp::Executor::get_next_executable(rclcpp::AnyExecutable&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#13 0x00007de568319d16 in rclcpp::Executor::spin_once_impl(std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#14 0x00007de56831349a in rclcpp::Executor::spin_until_future_complete_impl(std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::function<std::future_status (std::chrono::duration<long, std::ratio<1l, 1000000000l> >)> const&) () from /opt/ros/jazzy/lib/librclcpp.so
+#15 0x00007de5683e782d in ?? () from /opt/ros/jazzy/lib/librclcpp.so
+#16 0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#17 0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#18 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 47 (Thread 0x7de53effd6c0 (LWP 26962) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de568342074 in rclcpp::executors::MultiThreadedExecutor::spin() () from /opt/ros/jazzy/lib/librclcpp.so
+#6  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 46 (Thread 0x7de53e7fc6c0 (LWP 26963) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 45 (Thread 0x7de53dffb6c0 (LWP 26964) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e0905c61c50) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5e0905c61c50) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e0905c61c50, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5e0905c61c00, cond=0x5e0905c61c28) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x5e0905c61c28, mutex=0x5e0905c61c00) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de5620af19a in eprosima::fastdds::dds::detail::WaitSetImpl::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t const&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#6  0x00007de5620af24c in eprosima::fastdds::dds::WaitSet::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t) const () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de562769a9e in rmw_fastrtps_shared_cpp::__rmw_wait(char const*, rmw_subscriptions_s*, rmw_guard_conditions_s*, rmw_services_s*, rmw_clients_s*, rmw_events_s*, rmw_wait_set_s*, rmw_time_s const*) () from /opt/ros/jazzy/lib/librmw_fastrtps_shared_cpp.so
+#8  0x00007de5627c9928 in rmw_wait () from /opt/ros/jazzy/lib/librmw_fastrtps_cpp.so
+#9  0x00007de56ada221c in rcl_wait () from /opt/ros/jazzy/lib/librcl.so
+#10 0x00007de568316746 in ?? () from /opt/ros/jazzy/lib/librclcpp.so
+#11 0x00007de56831946d in rclcpp::Executor::wait_for_work(std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#12 0x00007de568319cab in rclcpp::Executor::get_next_executable(rclcpp::AnyExecutable&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#13 0x00007de568341d17 in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#14 0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#15 0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#16 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 44 (Thread 0x7de53d7fa6c0 (LWP 26965) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 43 (Thread 0x7de53cff96c0 (LWP 26966) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 42 (Thread 0x7de523fff6c0 (LWP 26967) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 41 (Thread 0x7de5237fe6c0 (LWP 26968) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 40 (Thread 0x7de522ffd6c0 (LWP 26969) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 39 (Thread 0x7de5227fc6c0 (LWP 26970) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 38 (Thread 0x7de521ffb6c0 (LWP 26971) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 37 (Thread 0x7de5217fa6c0 (LWP 26972) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 36 (Thread 0x7de520ff96c0 (LWP 26973) "ruby"):
+#0  futex_wait (private=0, expected=2, futex_word=0x5e0905fb3dc0) at ../sysdeps/nptl/futex-internal.h:146
+#1  __GI___lll_lock_wait (futex=futex@entry=0x5e0905fb3dc0, private=0) at ./nptl/lowlevellock.c:49
+#2  0x00007de5928a01e1 in lll_mutex_lock_optimized (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:48
+#3  ___pthread_mutex_lock (mutex=0x5e0905fb3dc0) at ./nptl/pthread_mutex_lock.c:93
+#4  0x00007de568341c7a in rclcpp::executors::MultiThreadedExecutor::run(unsigned long) () from /opt/ros/jazzy/lib/librclcpp.so
+#5  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#7  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 35 (Thread 0x7de4fbfff6c0 (LWP 26974) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e09060abae4) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5e09060abae4) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e09060abae4, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5e09060aba90, cond=0x5e09060abab8) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x5e09060abab8, mutex=0x5e09060aba90) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de5620af19a in eprosima::fastdds::dds::detail::WaitSetImpl::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t const&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#6  0x00007de5620af24c in eprosima::fastdds::dds::WaitSet::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t) const () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de562769a9e in rmw_fastrtps_shared_cpp::__rmw_wait(char const*, rmw_subscriptions_s*, rmw_guard_conditions_s*, rmw_services_s*, rmw_clients_s*, rmw_events_s*, rmw_wait_set_s*, rmw_time_s const*) () from /opt/ros/jazzy/lib/librmw_fastrtps_shared_cpp.so
+#8  0x00007de5627c9928 in rmw_wait () from /opt/ros/jazzy/lib/librmw_fastrtps_cpp.so
+#9  0x00007de56ada221c in rcl_wait () from /opt/ros/jazzy/lib/librcl.so
+#10 0x00007de568316746 in ?? () from /opt/ros/jazzy/lib/librclcpp.so
+#11 0x00007de56831946d in rclcpp::Executor::wait_for_work(std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#12 0x00007de568319cab in rclcpp::Executor::get_next_executable(rclcpp::AnyExecutable&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#13 0x00007de568319d16 in rclcpp::Executor::spin_once_impl(std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#14 0x00007de56831349a in rclcpp::Executor::spin_until_future_complete_impl(std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::function<std::future_status (std::chrono::duration<long, std::ratio<1l, 1000000000l> >)> const&) () from /opt/ros/jazzy/lib/librclcpp.so
+#15 0x00007de5683e782d in ?? () from /opt/ros/jazzy/lib/librclcpp.so
+#16 0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#17 0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#18 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 34 (Thread 0x7de4fb7fe6c0 (LWP 26975) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x7de4fb7fd390, op=137, expected=0, futex_word=0x7de4e4000c48) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x7de4fb7fd390, clockid=0, expected=0, futex_word=0x7de4e4000c48) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de4e4000c48, expected=expected@entry=0, clockid=clockid@entry=1, abstime=abstime@entry=0x7de4fb7fd390, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289c1f6 in __pthread_cond_wait_common (abstime=<optimized out>, clockid=<optimized out>, mutex=0x7de4e4000c50, cond=0x7de4e4000c20) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_clockwait64 (abstime=<optimized out>, clockid=<optimized out>, mutex=0x7de4e4000c50, cond=0x7de4e4000c20) at ./nptl/pthread_cond_wait.c:691
+#5  ___pthread_cond_clockwait64 (cond=0x7de4e4000c20, mutex=0x7de4e4000c50, clockid=<optimized out>, abstime=<optimized out>) at ./nptl/pthread_cond_wait.c:679
+#6  0x00007de56830751f in rclcpp::Clock::sleep_until(rclcpp::Time, std::shared_ptr<rclcpp::Context>) () from /opt/ros/jazzy/lib/librclcpp.so
+#7  0x00007de568307a49 in rclcpp::Clock::sleep_for(rclcpp::Duration, std::shared_ptr<rclcpp::Context>) () from /opt/ros/jazzy/lib/librclcpp.so
+#8  0x00007de5683c5811 in rclcpp::Rate::sleep() () from /opt/ros/jazzy/lib/librclcpp.so
+#9  0x00007de56add9cbb in pal_statistics::StatisticsRegistry::publisherThreadCycle() () from /opt/ros/jazzy/lib/libpal_statistics.so
+#10 0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#11 0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#12 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 33 (Thread 0x7de4faffd6c0 (LWP 26976) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-83901968, cancel=true, abstime=0x7de4faffc390, op=137, expected=0, futex_word=0x7de4e8000c48) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=-83901968, abstime=0x7de4faffc390, clockid=32228, expected=0, futex_word=0x7de4e8000c48) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de4e8000c48, expected=expected@entry=0, clockid=clockid@entry=1, abstime=abstime@entry=0x7de4faffc390, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289c1f6 in __pthread_cond_wait_common (abstime=<optimized out>, clockid=<optimized out>, mutex=0x7de4e8000c50, cond=0x7de4e8000c20) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_clockwait64 (abstime=<optimized out>, clockid=<optimized out>, mutex=0x7de4e8000c50, cond=0x7de4e8000c20) at ./nptl/pthread_cond_wait.c:691
+#5  ___pthread_cond_clockwait64 (cond=0x7de4e8000c20, mutex=0x7de4e8000c50, clockid=<optimized out>, abstime=<optimized out>) at ./nptl/pthread_cond_wait.c:679
+#6  0x00007de56830751f in rclcpp::Clock::sleep_until(rclcpp::Time, std::shared_ptr<rclcpp::Context>) () from /opt/ros/jazzy/lib/librclcpp.so
+#7  0x00007de568307a49 in rclcpp::Clock::sleep_for(rclcpp::Duration, std::shared_ptr<rclcpp::Context>) () from /opt/ros/jazzy/lib/librclcpp.so
+#8  0x00007de5683c5811 in rclcpp::Rate::sleep() () from /opt/ros/jazzy/lib/librclcpp.so
+#9  0x00007de56add9cbb in pal_statistics::StatisticsRegistry::publisherThreadCycle() () from /opt/ros/jazzy/lib/libpal_statistics.so
+#10 0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#11 0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#12 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 32 (Thread 0x7de4fa7fc6c0 (LWP 26977) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de51c1188d0) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de51c1188d0) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de51c1188d0, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de51c118880, cond=0x7de51c1188a8) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de51c1188a8, mutex=0x7de51c118880) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de5620af19a in eprosima::fastdds::dds::detail::WaitSetImpl::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t const&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#6  0x00007de5620af24c in eprosima::fastdds::dds::WaitSet::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t) const () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de562769a9e in rmw_fastrtps_shared_cpp::__rmw_wait(char const*, rmw_subscriptions_s*, rmw_guard_conditions_s*, rmw_services_s*, rmw_clients_s*, rmw_events_s*, rmw_wait_set_s*, rmw_time_s const*) () from /opt/ros/jazzy/lib/librmw_fastrtps_shared_cpp.so
+#8  0x00007de5627c9928 in rmw_wait () from /opt/ros/jazzy/lib/librmw_fastrtps_cpp.so
+#9  0x00007de56ada221c in rcl_wait () from /opt/ros/jazzy/lib/librcl.so
+#10 0x00007de568316746 in ?? () from /opt/ros/jazzy/lib/librclcpp.so
+#11 0x00007de56831946d in rclcpp::Executor::wait_for_work(std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#12 0x00007de568319cab in rclcpp::Executor::get_next_executable(rclcpp::AnyExecutable&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#13 0x00007de568319d16 in rclcpp::Executor::spin_once_impl(std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#14 0x00007de56831349a in rclcpp::Executor::spin_until_future_complete_impl(std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::function<std::future_status (std::chrono::duration<long, std::ratio<1l, 1000000000l> >)> const&) () from /opt/ros/jazzy/lib/librclcpp.so
+#15 0x00007de5683e782d in ?? () from /opt/ros/jazzy/lib/librclcpp.so
+#16 0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#17 0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#18 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 31 (Thread 0x7de4f9ffb6c0 (LWP 26978) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de4f00203f8) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de4f00203f8) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de4f00203f8, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de4f00203a8, cond=0x7de4f00203d0) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de4f00203d0, mutex=0x7de4f00203a8) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de54444de5b in realtime_tools::RealtimePublisher<sensor_msgs::msg::JointState_<std::allocator<void> > >::publishingLoop() () from /opt/ros/jazzy/lib/libjoint_state_broadcaster.so
+#6  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 30 (Thread 0x7de4f97fa6c0 (LWP 26979) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de4f0000dd8) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=-2147483648, abstime=0x0, clockid=0, expected=0, futex_word=0x7de4f0000dd8) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de4f0000dd8, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de4f0000d88, cond=0x7de4f0000db0) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de4f0000db0, mutex=0x7de4f0000d88) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de54444e3cf in realtime_tools::RealtimePublisher<control_msgs::msg::DynamicJointState_<std::allocator<void> > >::publishingLoop() () from /opt/ros/jazzy/lib/libjoint_state_broadcaster.so
+#6  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 29 (Thread 0x7de563fff6c0 (LWP 27007) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=32229, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=32229, abstime=0x0, clockid=0, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e090621ef50, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5e090621ef00, cond=0x5e090621ef28) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x5e090621ef28, mutex=0x5e090621ef00) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de58c8cb1e7 in gz::sim::v8::Barrier::Wait() () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#6  0x00007de58c963130 in ?? () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#7  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 28 (Thread 0x7de568ffc6c0 (LWP 27008) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=32229, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=32229, abstime=0x0, clockid=0, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e090621ef50, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5e090621ef00, cond=0x5e090621ef28) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x5e090621ef28, mutex=0x5e090621ef00) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de58c8cb1e7 in gz::sim::v8::Barrier::Wait() () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#6  0x00007de58c963130 in ?? () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#7  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 27 (Thread 0x7de5697fd6c0 (LWP 27009) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-1902786579, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=-1902786579, abstime=0x0, clockid=0, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e090621ef50, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5e090621ef00, cond=0x5e090621ef28) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x5e090621ef28, mutex=0x5e090621ef00) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de58c8cb1e7 in gz::sim::v8::Barrier::Wait() () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#6  0x00007de58c963130 in ?? () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#7  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 26 (Thread 0x7de569ffe6c0 (LWP 27010) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=24073, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=24073, abstime=0x0, clockid=0, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e090621ef50, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5e090621ef00, cond=0x5e090621ef28) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x5e090621ef28, mutex=0x5e090621ef00) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de58c8cb1e7 in gz::sim::v8::Barrier::Wait() () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#6  0x00007de58c963130 in ?? () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#7  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 25 (Thread 0x7de4f8ff96c0 (LWP 27011) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5e090621ef50) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5e090621ef50, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5e090621ef00, cond=0x5e090621ef28) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x5e090621ef28, mutex=0x5e090621ef00) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de58c8cb1e7 in gz::sim::v8::Barrier::Wait() () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#6  0x00007de58c963130 in ?? () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#7  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 24 (Thread 0x7de4c89ff6c0 (LWP 27012) "sensor_:disk$0"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de564178a28) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de564178a28) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de564178a28, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de5641789d0, cond=0x7de564178a00) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de564178a00, mutex=0x7de5641789d0) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de4d1999edd in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#6  0x00007de4d1965fbb in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#7  0x00007de4d1999e0c in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 23 (Thread 0x7de4c81fe6c0 (LWP 27013) "sensor_tes:sh0"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de564167728) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de564167728) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de564167728, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de5641676d0, cond=0x7de564167700) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de564167700, mutex=0x7de5641676d0) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de4d1999edd in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#6  0x00007de4d1965fbb in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#7  0x00007de4d1999e0c in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 22 (Thread 0x7de4627fc6c0 (LWP 27043) "sensor_:disk$0"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de5641f9da8) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de5641f9da8) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de5641f9da8, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de5641f9d50, cond=0x7de5641f9d80) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de5641f9d80, mutex=0x7de5641f9d50) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de4d1999edd in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#6  0x00007de4d1965fbb in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#7  0x00007de4d1999e0c in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 21 (Thread 0x7de4a9ffb6c0 (LWP 27044) "sensor_tes:sh0"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de5641a9448) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de5641a9448) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de5641a9448, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de5641a93f0, cond=0x7de5641a9420) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de5641a9420, mutex=0x7de5641a93f0) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de4d1999edd in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#6  0x00007de4d1965fbb in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#7  0x00007de4d1999e0c in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 20 (Thread 0x7de4aa7fc6c0 (LWP 27045) "sensor:traceq0"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de5641fd6c0) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de5641fd6c0) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de5641fd6c0, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de5641fd668, cond=0x7de5641fd698) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de5641fd698, mutex=0x7de5641fd668) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de4d1999edd in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#6  0x00007de4d1965fbb in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#7  0x00007de4d1999e0c in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 19 (Thread 0x7de4aaffd6c0 (LWP 27046) "sensor_t:gdrv0"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de565a13478) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de565a13478) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de565a13478, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de565a13420, cond=0x7de565a13450) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de565a13450, mutex=0x7de565a13420) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de4d1999edd in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#6  0x00007de4d1965fbb in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#7  0x00007de4d1999e0c in ?? () from /lib/x86_64-linux-gnu/libgallium-25.2.8-0ubuntu0.24.04.4.so
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 18 (Thread 0x7de4c75fd6c0 (LWP 27047) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de565e99c90) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de565e99c90) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de565e99c90, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de565e99c40, cond=0x7de565e99c68) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de565e99c68, mutex=0x7de565e99c40) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de52067182b in Ogre::WaitableEvent::wait() () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#6  0x00007de520606a08 in Ogre::TextureGpuManager::_updateStreamingWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#7  0x00007de5205f3a2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#8  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#9  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 17 (Thread 0x7de4c4bfc6c0 (LWP 27048) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 16 (Thread 0x7de4a97fa6c0 (LWP 27049) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 15 (Thread 0x7de4a8ff96c0 (LWP 27050) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 14 (Thread 0x7de483fff6c0 (LWP 27051) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 13 (Thread 0x7de4837fe6c0 (LWP 27052) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 12 (Thread 0x7de482ffd6c0 (LWP 27053) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 11 (Thread 0x7de4827fc6c0 (LWP 27054) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 10 (Thread 0x7de481ffb6c0 (LWP 27055) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 9 (Thread 0x7de4817fa6c0 (LWP 27056) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 8 (Thread 0x7de480ff96c0 (LWP 27057) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 7 (Thread 0x7de463fff6c0 (LWP 27058) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 6 (Thread 0x7de4637fe6c0 (LWP 27059) "ruby"):
+#0  futex_wait (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:146
+#1  futex_wait_simple (private=0, expected=114218, futex_word=0x7de5641ab164) at ../sysdeps/nptl/futex-internal.h:177
+#2  ___pthread_barrier_wait (barrier=0x7de5641ab160) at ./nptl/pthread_barrier_wait.c:184
+#3  0x00007de5205608ac in Ogre::SceneManager::_updateWorkerThread(Ogre::ThreadHandle*) () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#4  0x00007de520564c2a in ?? () from /opt/ros/jazzy/opt/gz_ogre_next_vendor/lib/libOgreNextMain.so.2.3.3
+#5  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#6  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 5 (Thread 0x7de462ffd6c0 (LWP 27084) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de51c30d2c4) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x7de51c30d2c4) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de51c30d2c4, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de51c30d270, cond=0x7de51c30d298) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de51c30d298, mutex=0x7de51c30d270) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de5620af19a in eprosima::fastdds::dds::detail::WaitSetImpl::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t const&) () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#6  0x00007de5620af24c in eprosima::fastdds::dds::WaitSet::wait(std::vector<eprosima::fastdds::dds::Condition*, std::allocator<eprosima::fastdds::dds::Condition*> >&, eprosima::fastrtps::Time_t) const () from /opt/ros/jazzy/lib/libfastrtps.so.2.14
+#7  0x00007de562769a9e in rmw_fastrtps_shared_cpp::__rmw_wait(char const*, rmw_subscriptions_s*, rmw_guard_conditions_s*, rmw_services_s*, rmw_clients_s*, rmw_events_s*, rmw_wait_set_s*, rmw_time_s const*) () from /opt/ros/jazzy/lib/librmw_fastrtps_shared_cpp.so
+#8  0x00007de5627c9928 in rmw_wait () from /opt/ros/jazzy/lib/librmw_fastrtps_cpp.so
+#9  0x00007de56ada221c in rcl_wait () from /opt/ros/jazzy/lib/librcl.so
+#10 0x00007de568316746 in ?? () from /opt/ros/jazzy/lib/librclcpp.so
+#11 0x00007de56831946d in rclcpp::Executor::wait_for_work(std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#12 0x00007de568319cab in rclcpp::Executor::get_next_executable(rclcpp::AnyExecutable&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#13 0x00007de568319d16 in rclcpp::Executor::spin_once_impl(std::chrono::duration<long, std::ratio<1l, 1000000000l> >) () from /opt/ros/jazzy/lib/librclcpp.so
+#14 0x00007de56831349a in rclcpp::Executor::spin_until_future_complete_impl(std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::function<std::future_status (std::chrono::duration<long, std::ratio<1l, 1000000000l> >)> const&) () from /opt/ros/jazzy/lib/librclcpp.so
+#15 0x00007de5683e782d in ?? () from /opt/ros/jazzy/lib/librclcpp.so
+#16 0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#17 0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#18 0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 4 (Thread 0x7de460ffb6c0 (LWP 27085) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de50c001468) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=-2147483648, abstime=0x0, clockid=0, expected=0, futex_word=0x7de50c001468) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de50c001468, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de50c001418, cond=0x7de50c001440) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de50c001440, mutex=0x7de50c001418) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de4f80dd17f in realtime_tools::RealtimePublisher<geometry_msgs::msg::TwistStamped_<std::allocator<void> > >::publishingLoop() () from /opt/ros/jazzy/lib/libdiff_drive_controller.so
+#6  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 3 (Thread 0x7de44afff6c0 (LWP 27086) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de50c1cd8a0) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=-2147483648, abstime=0x0, clockid=0, expected=0, futex_word=0x7de50c1cd8a0) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de50c1cd8a0, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de50c1cd850, cond=0x7de50c1cd878) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de50c1cd878, mutex=0x7de50c1cd850) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de4f80dd897 in realtime_tools::RealtimePublisher<nav_msgs::msg::Odometry_<std::allocator<void> > >::publishingLoop() () from /opt/ros/jazzy/lib/libdiff_drive_controller.so
+#6  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 2 (Thread 0x7de44a7fe6c0 (LWP 27087) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=-2147483648, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x7de50c2413d8) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=-2147483648, abstime=0x0, clockid=0, expected=0, futex_word=0x7de50c2413d8) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de50c2413d8, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#3  0x00007de59289b8cd in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x7de50c241388, cond=0x7de50c2413b0) at ./nptl/pthread_cond_wait.c:503
+#4  ___pthread_cond_wait (cond=0x7de50c2413b0, mutex=0x7de50c241388) at ./nptl/pthread_cond_wait.c:627
+#5  0x00007de4f80e88d7 in realtime_tools::RealtimePublisher<tf2_msgs::msg::TFMessage_<std::allocator<void> > >::publishingLoop() () from /opt/ros/jazzy/lib/libdiff_drive_controller.so
+#6  0x00007de58d8ecdb4 in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007de59289cb84 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007de592929ecc in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 1 (Thread 0x7de59304bc40 (LWP 26826) "ruby"):
+#0  0x00007de592898e51 in __futex_abstimed_wait_common64 (private=128, cancel=true, abstime=0x0, op=265, expected=26928, futex_word=0x7de56a7ff990) at ./nptl/futex-internal.c:57
+#1  __futex_abstimed_wait_common (cancel=true, private=128, abstime=0x0, clockid=0, expected=26928, futex_word=0x7de56a7ff990) at ./nptl/futex-internal.c:87
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x7de56a7ff990, expected=26928, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=128) at ./nptl/futex-internal.c:139
+#3  0x00007de59289e883 in __pthread_clockjoin_ex (threadid=138424287753920, thread_return=0x0, clockid=0, abstime=0x0, block=<optimized out>) at ./nptl/pthread_join_common.c:102
+#4  0x00007de58d8ece33 in std::thread::join() () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#5  0x00007de57003028c in gz::sim::v8::systems::SensorsPrivate::Stop() () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/gz-sim-8/plugins/libgz-sim-sensors-system.so
+#6  0x00007de58c96aa99 in ?? () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#7  0x00007de58c959aec in ?? () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#8  0x00007de58cfc9b74 in gz::common::SignalHandlerPrivate::OnSignal(int) () from /opt/ros/jazzy/opt/gz_common_vendor/lib/libgz-common5.so.5
+#9  0x00007de58cfc8ca0 in onSignal(int) () from /opt/ros/jazzy/opt/gz_common_vendor/lib/libgz-common5.so.5
+#10 <signal handler called>
+#11 0x00007de59291b79d in __GI___poll (fds=0x7fff66bfaaf0, nfds=1, timeout=0) at ../sysdeps/unix/sysv/linux/poll.c:29
+#12 0x00007de58c6d4f53 in ?? () from /lib/x86_64-linux-gnu/libzmq.so.5
+#13 0x00007de58c6f7ec7 in ?? () from /lib/x86_64-linux-gnu/libzmq.so.5
+#14 0x00007de58c6f8004 in ?? () from /lib/x86_64-linux-gnu/libzmq.so.5
+#15 0x00007de58c70be6f in zmq_msg_send () from /lib/x86_64-linux-gnu/libzmq.so.5
+#16 0x00007de58cf89eea in ?? () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#17 0x00007de58cf61569 in gz::transport::v13::NodeShared::Publish(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char*, unsigned long, void (*)(void*, void*), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#18 0x00007de58cf51ad4 in gz::transport::v13::Node::Publisher::Publish(google::protobuf::Message const&) () from /opt/ros/jazzy/opt/gz_transport_vendor/lib/libgz-transport13.so.13
+#19 0x00007de58c962554 in gz::sim::v8::SimulationRunner::PublishStats() () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#20 0x00007de58c966d4c in gz::sim::v8::SimulationRunner::Step(gz::sim::v8::UpdateInfo const&) () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#21 0x00007de58c967c6f in gz::sim::v8::SimulationRunner::Run(unsigned long) () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#22 0x00007de58c959e5d in ?? () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8.so.8
+#23 0x00007de58db425b0 in runServer () from /opt/ros/jazzy/opt/gz_sim_vendor/lib/libgz-sim8-gz.so.8.15.0
+#24 0x00007de59279ab16 in ?? () from /lib/x86_64-linux-gnu/libffi.so.8
+#25 0x00007de5927973ef in ?? () from /lib/x86_64-linux-gnu/libffi.so.8
+#26 0x00007de59279a0be in ffi_call () from /lib/x86_64-linux-gnu/libffi.so.8
+#27 0x00007de58dcd743c in ?? () from /usr/lib/x86_64-linux-gnu/ruby/3.2.0/fiddle.so
+#28 0x00007de592e1637c in rb_nogvl () from /lib/x86_64-linux-gnu/libruby-3.2.so.3.2
+#29 0x00007de58dcd7b14 in ?? () from /usr/lib/x86_64-linux-gnu/ruby/3.2.0/fiddle.so
+#30 0x00007de592e4d930 in ?? () from /lib/x86_64-linux-gnu/libruby-3.2.so.3.2
+#31 0x00007de592e5013f in ?? () from /lib/x86_64-linux-gnu/libruby-3.2.so.3.2
+#32 0x00007de592e5462c in ?? () from /lib/x86_64-linux-gnu/libruby-3.2.so.3.2
+#33 0x00007de592e57b4a in rb_vm_exec () from /lib/x86_64-linux-gnu/libruby-3.2.so.3.2
+#34 0x00007de592cb4e2c in ?? () from /lib/x86_64-linux-gnu/libruby-3.2.so.3.2
+#35 0x00007de592cb9153 in ruby_run_node () from /lib/x86_64-linux-gnu/libruby-3.2.so.3.2
+#36 0x00005e08fafe3187 in ?? ()
+#37 0x00007de59282a1ca in __libc_start_call_main (main=main@entry=0x5e08fafe3120, argc=argc@entry=7, argv=argv@entry=0x7fff66bfc508) at ../sysdeps/nptl/libc_start_call_main.h:58
+#38 0x00007de59282a28b in __libc_start_main_impl (main=0x5e08fafe3120, argc=7, argv=0x7fff66bfc508, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7fff66bfc4f8) at ../csu/libc-start.c:360
+#39 0x00005e08fafe31d5 in _start ()
+[Inferior 1 (process 26826) detached]

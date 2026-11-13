@@ -1,0 +1,122 @@
+[INFO] [launch]: All log files can be found below <home>/.ros/log/2026-11-04-15-25-39-600598-<host>-26799
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [robot_state_publisher-1]: process started with pid [26822]
+[INFO] [parameter_bridge-2]: process started with pid [26823]
+[INFO] [parameter_bridge-3]: process started with pid [26824]
+[INFO] [cmd_vel_guard-4]: process started with pid [26825]
+[INFO] [gz-5]: process started with pid [26826]
+[INFO] [create-6]: process started with pid [26827]
+[cmd_vel_guard-4] [INFO] [1793786139.782976539] [cmd_vel_guard]: forwarding commands with |now - stamp| <= 0.500 s
+[robot_state_publisher-1] [INFO] [1793786139.807548746] [robot_state_publisher]: Robot initialized
+[create-6] [INFO] [1793786139.811557422] [ros_gz_sim]: Waiting messages on topic [robot_description].
+[parameter_bridge-2] [INFO] [1793786139.824067107] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[create-6] [INFO] [1793786140.273880164] [ros_gz_sim]: Entity creation successful.
+[INFO] [create-6]: process has finished cleanly [pid 26827]
+[INFO] [spawner-7]: process started with pid [26929]
+[spawner-7] [INFO] [1793786140.689344850] [spawner_joint_state_broadcaster]: waiting for service /controller_manager/list_controllers to become available...
+[parameter_bridge-3] [INFO] [1793786140.833148987] [sensor_bridge]: Creating GZ->ROS Bridge: [/scan (gz.msgs.LaserScan) -> /scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-3] [INFO] [1793786140.836171902] [sensor_bridge]: Creating GZ->ROS Bridge: [/imu (gz.msgs.IMU) -> /imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [INFO] [1793786141.985993411] [gz_ros_control]: Loading controller_manager
+[gz-5] [INFO] [1793786141.995352552] [controller_manager]: Using ROS clock for triggering controller manager cycles.
+[gz-5] [WARN] [1793786141.995376012] [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+[gz-5] [INFO] [1793786141.999815669] [controller_manager]: Subscribing to '/robot_description' topic for robot description.
+[gz-5] [WARN] [1793786141.999856999] [gz_ros_control]: Waiting RM to load and initialize hardware...
+[gz-5] [INFO] [1793786142.161863673] [controller_manager]: Received robot description from topic.
+[gz-5] [INFO] [1793786142.161922253] [controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[gz-5] [INFO] [1793786142.165818733] [gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gz-5] [INFO] [1793786142.165866952] [gz_ros_control]: Loading joint: left_wheel_joint
+[gz-5] [INFO] [1793786142.165871353] [gz_ros_control]: 	State:
+[gz-5] [INFO] [1793786142.165875496] [gz_ros_control]: 		 position
+[gz-5] [INFO] [1793786142.165878142] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1793786142.165883065] [gz_ros_control]: 	Command:
+[gz-5] [INFO] [1793786142.165885188] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1793786142.165893825] [gz_ros_control]: Loading joint: right_wheel_joint
+[gz-5] [INFO] [1793786142.165896094] [gz_ros_control]: 	State:
+[gz-5] [INFO] [1793786142.165898010] [gz_ros_control]: 		 position
+[gz-5] [INFO] [1793786142.165900428] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1793786142.165902258] [gz_ros_control]: 	Command:
+[gz-5] [INFO] [1793786142.165904134] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1793786142.165929268] [gz_ros_control]: Loading sensor: imu
+[gz-5] [INFO] [1793786142.165932742] [gz_ros_control]: 	State:
+[gz-5] [WARN] [1793786142.165935490] [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gz-5] [INFO] [1793786142.165984899] [controller_manager]: Initialize hardware 'AmrGazeboSystem' 
+[gz-5] [WARN] [1793786142.165993534] [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+[gz-5] [INFO] [1793786142.166028611] [controller_manager]: Successful initialization of hardware 'AmrGazeboSystem'
+[gz-5] [INFO] [1793786142.166092698] [controller_manager]: Activating component 'AmrGazeboSystem'.
+[gz-5] [INFO] [1793786142.166099066] [resource_manager]: 'configure' hardware 'AmrGazeboSystem' 
+[gz-5] [INFO] [1793786142.166101874] [gz_ros_control]: System Successfully configured!
+[gz-5] [INFO] [1793786142.166104537] [resource_manager]: Successful 'configure' of hardware 'AmrGazeboSystem'
+[gz-5] [INFO] [1793786142.166108782] [resource_manager]: 'activate' hardware 'AmrGazeboSystem' 
+[gz-5] [INFO] [1793786142.166117277] [resource_manager]: Successful 'activate' of hardware 'AmrGazeboSystem'
+[gz-5] [WARN] [1793786142.166161142] [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+[gz-5] [INFO] [1793786142.166165221] [controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[gz-5] [INFO] [1793786142.191800651] [controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[gz-5] [INFO] [1793786142.191840744] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[gz-5] [INFO] [1793786142.196396411] [controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-7] [INFO] [1793786142.204860924] [spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[gz-5] [INFO] [1793786142.205555571] [controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[gz-5] [INFO] [1793786142.205768242] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[gz-5] [INFO] [1793786142.214065214] [controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[gz-5] [WARN] [1793786144.019570719] [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+[gz-5] [INFO] [1793786144.240861646] [controller_manager]: Successfully switched controllers!
+[spawner-7] [INFO] [1793786144.252313040] [spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[INFO] [spawner-7]: process has finished cleanly [pid 26929]
+[INFO] [spawner-8]: process started with pid [27060]
+[spawner-8] [INFO] [1793786144.978870232] [spawner_diff_drive_controller]: waiting for service /controller_manager/list_controllers to become available...
+[gz-5] [INFO] [1793786145.230992084] [controller_manager]: Loading controller : 'diff_drive_controller' of type 'diff_drive_controller/DiffDriveController'
+[gz-5] [INFO] [1793786145.231023744] [controller_manager]: Loading controller 'diff_drive_controller'
+[gz-5] [INFO] [1793786145.236722379] [controller_manager]: Controller 'diff_drive_controller' node arguments: --ros-args --params-file <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-8] [INFO] [1793786145.257393226] [spawner_diff_drive_controller]: Loaded diff_drive_controller
+[gz-5] [INFO] [1793786145.258595031] [controller_manager]: Configuring controller: 'diff_drive_controller'
+[gz-5] [INFO] [1793786145.277329858] [controller_manager]: Activating controllers: [ diff_drive_controller ]
+[gz-5] [INFO] [1793786145.285753097] [controller_manager]: Successfully switched controllers!
+[spawner-8] [INFO] [1793786145.297218162] [spawner_diff_drive_controller]: Configured and activated diff_drive_controller
+[INFO] [spawner-8]: process has finished cleanly [pid 27060]
+[gz-5] [WARN] [1793786145.765648341] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786146.775500956] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786147.775580190] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786148.785548049] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786149.785564615] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786150.785574630] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786151.795631373] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786152.805566859] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786153.815504437] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786154.815502988] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786155.815509923] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786156.815576505] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786157.815572273] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786158.825582850] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786159.825576497] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786160.825596580] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786161.835591700] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786162.845590386] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786163.855572668] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786164.855576109] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786165.855591178] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786166.855593780] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786167.855596055] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786168.855575713] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786169.855590444] [diff_drive_controller]: Velocity command timed out. Braking.
+[gz-5] [WARN] [1793786170.857693758] [diff_drive_controller]: Velocity command timed out. Braking.
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [gz-5]: sending signal 'SIGINT' to process[gz-5]
+[INFO] [cmd_vel_guard-4]: sending signal 'SIGINT' to process[cmd_vel_guard-4]
+[INFO] [parameter_bridge-3]: sending signal 'SIGINT' to process[parameter_bridge-3]
+[INFO] [parameter_bridge-2]: sending signal 'SIGINT' to process[parameter_bridge-2]
+[INFO] [robot_state_publisher-1]: sending signal 'SIGINT' to process[robot_state_publisher-1]
+[cmd_vel_guard-4] [INFO] [1793786171.644224335] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[parameter_bridge-3] [INFO] [1793786171.644841224] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[parameter_bridge-2] [INFO] [1793786171.645558765] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-1] [INFO] [1793786171.646264191] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [cmd_vel_guard-4]: process has finished cleanly [pid 26825]
+[INFO] [parameter_bridge-2]: process has finished cleanly [pid 26823]
+[INFO] [parameter_bridge-3]: process has finished cleanly [pid 26824]
+[INFO] [robot_state_publisher-1]: process has finished cleanly [pid 26822]
+[ERROR] [gz-5]: process[gz-5] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+[INFO] [gz-5]: sending signal 'SIGTERM' to process[gz-5]
+[ERROR] [gz-5]: process[gz-5] failed to terminate '10.0' seconds after receiving 'SIGTERM', escalating to 'SIGKILL'
+[INFO] [gz-5]: sending signal 'SIGKILL' to process[gz-5]
+[ERROR] [gz-5]: process has died [pid 26826, exit code -9, cmd 'gz sim -r -s --headless-rendering <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/worlds/sensor_test.sdf'].
+[INFO] [launch]: process[gz-5] was required: shutting down launched system

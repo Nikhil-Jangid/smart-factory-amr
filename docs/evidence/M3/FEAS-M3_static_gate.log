@@ -1,0 +1,30 @@
+# FEAS-M3 static gate, 2026-11-03 16:26:06 IST, xacro from /opt/ros/jazzy, Gazebo Sim, version 8.15.0
+## G5: sensor option disabled (default) vs M1 evidence
+xacro prototype default exit=0
+061c22ca552fc201d388cb53dd39dd1c730de27c1c6faa0eb1dd5dbca5b197e4  off.urdf
+061c22ca552fc201d388cb53dd39dd1c730de27c1c6faa0eb1dd5dbca5b197e4  docs/evidence/M1/TEST-M1-02_amr.urdf
+PASS  G5a default expansion byte-identical to M1 evidence TEST-M1-02_amr.urdf
+PASS  G5b M2 expansion (use_ros2_control:=true), sensors off, byte-identical to the repo expansion
+## G6: sensors on, generated SDF
+xacro sensors-on exit=0
+robot name is: amr
+---------- Successfully Parsed XML ---------------
+root Link: base_footprint has 1 child(ren)
+    child(1):  base_link
+gz sdf -p exit=0
+gz sdf stderr (colour codes stripped):
+Warning [Utils.cc:132] [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<tmp>/gate/on.urdf:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+Warning [Utils.cc:132] [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<tmp>/gate/on.urdf:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+links: ['base_footprint', 'left_wheel_link', 'right_wheel_link']
+PASS  link base_footprint: mass 8.400000 kg, Ixx/Iyy/Izz 0.0940079/0.166603/0.236191 (all > 0)
+PASS  link left_wheel_link: mass 0.500000 kg, Ixx/Iyy/Izz 0.000754167/0.00140625/0.000754167 (all > 0)
+PASS  link right_wheel_link: mass 0.500000 kg, Ixx/Iyy/Izz 0.000754167/0.00140625/0.000754167 (all > 0)
+PASS  total mass 9.400000 kg == 9.4 kg
+PASS  laser_frame and imu_link are lumped (not separate SDF links)
+sensor imu type=imu parent_link=base_footprint pose=[0 0 0.074999999999999997 0 0 0] relative_to=None gz_frame_id=imu_link
+sensor lidar type=gpu_lidar parent_link=base_footprint pose=[0.070000000000000007 0 0.23000000000000001 0 0 0] relative_to=None gz_frame_id=laser_frame
+PASS  sensor imu position [0.0, 0.0, 0.075] == expected (0.0, 0.0, 0.075) in base_footprint (merged link frame)
+PASS  sensor lidar position [0.07, 0.0, 0.23] == expected (0.07, 0.0, 0.23) in base_footprint (merged link frame)
+== ALL CHECKS PASSED
+sdf_check exit=0
+PASS  G6 inertial blocks identical with sensors on vs off (links: ['base_footprint', 'left_wheel_link', 'right_wheel_link'])
