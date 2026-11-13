@@ -529,6 +529,7 @@ The formal TEST-M2-06/08 runs on the accepted model are recorded as they are.
 - The procedure is correct; the defect is in the workflow's checkout configuration.
 **Fix:** `fetch-depth: 0` in `.github/workflows/ci.yml`, so that the full history is present. The procedure is unchanged.
 **Verification:** CI run 2 (GitHub run 41837931388, `477c880`): TEST-M3-02 all steps passed, step 2 identical to `5b9332e` ([log](evidence/M3/TEST-M3-02-CI2a1_review.log)). Recorded with TEST-TA-05 in `TEST_RESULTS.md`.
+**Note:** in this repository the M2 and pre-M4 baselines are stored as file snapshots (`docs/evidence/M2/M2_baseline/`, `docs/evidence/M4/M4_baseline/`), so the procedures no longer need Git history and CI uses a normal checkout.
 
 ### TS-035 — Odometry and joint_states stamps of the same control cycle differ by 1 ms in about 7 % of the cycles
 **Date:** 2026-11-13   **Context:** M4 Task A, TEST-M4-03 checker dry run (informal, scratch output, revision `557141e`)   **Status:** Resolved (checker design); cause in ros2_control not investigated
