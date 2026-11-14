@@ -103,6 +103,12 @@ an earlier, headless test covered. Details: [docs/gallery/README.md](docs/galler
 
 ## The robot
 
+<p align="center"><img src="docs/design/amr_geometry_drawing.svg" alt="Dimensioned top and side views of the AMR (mm)" width="640"></p>
+
+I didn't draw this by hand: I wrote [`tools/geometry_drawing.py`](tools/geometry_drawing.py) to generate it from the
+same Xacro properties that build the simulated robot, so every dimension shown is the one the model actually uses, and
+`--check` tells me if the drawing or the design table ever drifts from the model.
+
 | Property | Value | Source |
 |---|---|---|
 | Drive | Differential drive, two wheels + rear caster | DEC-005, DEC-013 |
@@ -280,7 +286,7 @@ amr_ws/src/
   amr_description/        robot model: properties, inertia macros, URDF/Xacro, sensors, display/spawn launches
   amr_bringup/            simulation bring-up: sim.launch.py, controllers, bridge, worlds, RViz configs, cmd_vel_guard
   amr_gazebo_plugins/     ImuDecimator Gazebo system plugin + unit tests
-tools/                    suite runner, capture and demo scripts
+tools/                    suite runner, capture and demo scripts, geometry drawing generator
 docs/
   design/                 geometry, mass/inertia, frames/TF, motion control, sensors
   architecture/           ROS architecture and milestone boundaries

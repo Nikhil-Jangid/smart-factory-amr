@@ -11,7 +11,7 @@ This directory holds the detailed engineering records. The root files (`ROADMAP.
 | Results of tests actually performed | [`../TEST_RESULTS.md`](../TEST_RESULTS.md) |
 | Requirements, acceptance criteria, traceability | [`requirements.md`](requirements.md) |
 | Environment and dependency versions | [`environment.md`](environment.md) |
-| Mechanical geometry and placement | [`design/mechanical_geometry.md`](design/mechanical_geometry.md) |
+| Mechanical geometry and placement | [`design/mechanical_geometry.md`](design/mechanical_geometry.md); dimensioned drawing [`design/amr_geometry_drawing.svg`](design/amr_geometry_drawing.svg) (generated from the Xacro by `tools/geometry_drawing.py`) |
 | Mass budget and inertia calculations | [`design/mass_inertia.md`](design/mass_inertia.md) |
 | Contact/friction, motion limits, controller interface, motion-test criteria (M2) | [`design/motion_control.md`](design/motion_control.md) |
 | Sensor models, placement, integration and test criteria (M3; decisions DEC-030 to DEC-037) | [`design/sensors.md`](design/sensors.md); numeric sensor values: named properties in `amr_description/urdf/amr.sensors.xacro` (since M3 Task A) |
