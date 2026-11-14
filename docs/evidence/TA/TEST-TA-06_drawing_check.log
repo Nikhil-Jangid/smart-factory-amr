@@ -1,0 +1,49 @@
+# TEST-TA-06 drawing check; revision 40d8799; 2026-11-14T19:26:29Z
+## repository as committed (expected exit 0)
+    PASS  section 2 chassis_length: doc 0.45 xacro 0.45
+    PASS  section 2 chassis_width: doc 0.35 xacro 0.35
+    PASS  section 2 chassis_height: doc 0.12 xacro 0.12
+    PASS  section 2 wheel_radius: doc 0.075 xacro 0.075
+    PASS  section 2 wheel_width: doc 0.035 xacro 0.035
+    PASS  section 2 wheel_track: doc 0.4 xacro 0.4
+    PASS  section 2 axle_offset_x: doc 0.1 xacro 0.1
+    PASS  section 2 ground_clearance: doc 0.05 xacro 0.05
+    PASS  section 2 caster_radius: doc 0.025 xacro 0.025
+    PASS  section 2 caster_x: doc -0.36 xacro -0.36
+    PASS  section 2 lidar_bracket_*: doc (0.08, 0.08, 0.03) xacro (0.08, 0.08, 0.03)
+    PASS  section 2 lidar_mount_x: doc 0.07 xacro 0.07
+    # overall: PASS (12 table rows, drawing up to date)
+PASS  repository as committed: exit 0
+## negative: drawing edited by hand (stale) (expected exit 1)
+    PASS  section 2 chassis_length: doc 0.45 xacro 0.45
+    PASS  section 2 chassis_width: doc 0.35 xacro 0.35
+    PASS  section 2 chassis_height: doc 0.12 xacro 0.12
+    PASS  section 2 wheel_radius: doc 0.075 xacro 0.075
+    PASS  section 2 wheel_width: doc 0.035 xacro 0.035
+    PASS  section 2 wheel_track: doc 0.4 xacro 0.4
+    PASS  section 2 axle_offset_x: doc 0.1 xacro 0.1
+    PASS  section 2 ground_clearance: doc 0.05 xacro 0.05
+    PASS  section 2 caster_radius: doc 0.025 xacro 0.025
+    PASS  section 2 caster_x: doc -0.36 xacro -0.36
+    PASS  section 2 lidar_bracket_*: doc (0.08, 0.08, 0.03) xacro (0.08, 0.08, 0.03)
+    PASS  section 2 lidar_mount_x: doc 0.07 xacro 0.07
+    FAIL  docs/design/amr_geometry_drawing.svg is missing or stale: run python3 -I tools/geometry_drawing.py
+    # overall: FAIL (12 table rows, drawing stale)
+PASS  negative: drawing edited by hand (stale): exit 1
+## negative: section 2 table disagrees with the Xacro (wheel_track 0.404) (expected exit 1)
+    PASS  section 2 chassis_length: doc 0.45 xacro 0.45
+    PASS  section 2 chassis_width: doc 0.35 xacro 0.35
+    PASS  section 2 chassis_height: doc 0.12 xacro 0.12
+    PASS  section 2 wheel_radius: doc 0.075 xacro 0.075
+    PASS  section 2 wheel_width: doc 0.035 xacro 0.035
+    FAIL  section 2 wheel_track: doc 0.404 xacro 0.4
+    PASS  section 2 axle_offset_x: doc 0.1 xacro 0.1
+    PASS  section 2 ground_clearance: doc 0.05 xacro 0.05
+    PASS  section 2 caster_radius: doc 0.025 xacro 0.025
+    PASS  section 2 caster_x: doc -0.36 xacro -0.36
+    PASS  section 2 lidar_bracket_*: doc (0.08, 0.08, 0.03) xacro (0.08, 0.08, 0.03)
+    PASS  section 2 lidar_mount_x: doc 0.07 xacro 0.07
+    FAIL  mechanical_geometry.md section 2 wheel_track = 0.404, xacro = 0.4
+    # overall: FAIL (12 table rows, drawing up to date)
+PASS  negative: section 2 table disagrees with the Xacro (wheel_track 0.404): exit 1
+# overall: PASS (0 unexpected)

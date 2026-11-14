@@ -1,0 +1,16 @@
+# TEST-TA-06 CI evidence: GitHub Actions run #4 (id 43631890515), commit 40d8799, job conclusion: success
+# Step 'Geometry drawing check' log, copied with: gh run view 43631890515 --log | grep 'Geometry drawing check'
+2026-11-14T19:24:27.9747304Z ##[group]Run python3 -I tools/geometry_drawing.py --check
+2026-11-14T19:24:28.0356540Z PASS  section 2 chassis_length: doc 0.45 xacro 0.45
+2026-11-14T19:24:28.0357003Z PASS  section 2 chassis_width: doc 0.35 xacro 0.35
+2026-11-14T19:24:28.0357423Z PASS  section 2 chassis_height: doc 0.12 xacro 0.12
+2026-11-14T19:24:28.0357720Z PASS  section 2 wheel_radius: doc 0.075 xacro 0.075
+2026-11-14T19:24:28.0357998Z PASS  section 2 wheel_width: doc 0.035 xacro 0.035
+2026-11-14T19:24:28.0358338Z PASS  section 2 wheel_track: doc 0.4 xacro 0.4
+2026-11-14T19:24:28.0358627Z PASS  section 2 axle_offset_x: doc 0.1 xacro 0.1
+2026-11-14T19:24:28.0358978Z PASS  section 2 ground_clearance: doc 0.05 xacro 0.05
+2026-11-14T19:24:28.0359288Z PASS  section 2 caster_radius: doc 0.025 xacro 0.025
+2026-11-14T19:24:28.0359588Z PASS  section 2 caster_x: doc -0.36 xacro -0.36
+2026-11-14T19:24:28.0360307Z PASS  section 2 lidar_bracket_*: doc (0.08, 0.08, 0.03) xacro (0.08, 0.08, 0.03)
+2026-11-14T19:24:28.0360652Z PASS  section 2 lidar_mount_x: doc 0.07 xacro 0.07
+2026-11-14T19:24:28.0360971Z # overall: PASS (12 table rows, drawing up to date)

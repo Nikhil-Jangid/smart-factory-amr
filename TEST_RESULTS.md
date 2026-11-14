@@ -101,6 +101,7 @@ Planned tests, procedures, and state definitions (`PLANNED`, `NOT RUN`, `PASS`, 
 | TEST-TA-03 (R1, suite corrected) | Test automation | PASS (5 of 5 entries PASS-candidate, logs reviewed) | [summary](docs/evidence/TA/static-TA03R1_summary.md) |
 | TEST-TA-04 | Test automation | PASS (20 of 20 regression entries, logs reviewed; spin thread ended cleanly in 55 of 55 runs; TS-029 invalid 0) | [summary](docs/evidence/TA/regression-TA04_summary.md) |
 | TEST-TA-05 | Test automation | FAIL at CI run 1 (TS-034: shallow checkout), then PASS: code push run 2 green, documentation-only push started no run, dispatch run 3 green; about 3 min per run | [run 1](docs/evidence/TA/ci-CI1a1_summary.md), [run 2](docs/evidence/TA/ci-CI2a1_summary.md), [run 3](docs/evidence/TA/ci-CI3a1_summary.md) |
+| TEST-TA-06 | Test automation | PASS (local procedure: 3 of 3 cases as expected; CI run #4: drawing check step PASS, job green) | [local log](docs/evidence/TA/TEST-TA-06_drawing_check.log), [CI step log](docs/evidence/TA/TEST-TA-06_ci_GH4.log) |
 | TEST-M4-03 | M4 | PASS (700/700 odometry messages recomputed from joint_states; max 0.000000 mm, 0.00000000°) | [record log](docs/evidence/M4/TEST-M4-03_record.log), [recompute log](docs/evidence/M4/TEST-M4-03_recompute.log) |
 | TEST-M4-01 | M4 | PASS (build clean; M1 and M2 expansions identical; only the two covariance keys added) | [review log](docs/evidence/M4/TEST-M4-01_review.log) |
 | TEST-M4-02 | M4 | PASS (3/3 runs; covariance = CALC-M4-04, TF = odometry) | [review log](docs/evidence/M4/TEST-M4-02_review.log) |
@@ -1122,6 +1123,14 @@ Plan: [docs/milestones/M3-M4_test_automation.md](docs/milestones/M3-M4_test_auto
 - **Minutes (Measured):** runs 1–3 lasted 179 s, 184 s and 182 s; each is billed as 3 min (one job, rounded up to the minute). GitHub billing on 2026-11-04 showed "Actions Linux 3 min, gross $0.02, billed $0" (observed by me; it had not yet included runs 2 and 3). The timing API reported 0 billable ms, so it is not used.
 - **Deviation from plan §7:** no apt/rosdep cache. At about 3 min per run, a cache would save little and add another thing that can go stale; recorded in the plan.
 - **Result:** TEST-TA-05 **PASS** for REQ-TA-05, after the run-1 FAIL (preserved above).
+
+### TEST-TA-06 — geometry-drawing check in CI, 2026-11-15 00:53–00:58 IST (2026-11-14 19:23–19:28 UTC)
+**Under test:** `tools/geometry_drawing.py --check` (the dimensioned drawing `docs/design/amr_geometry_drawing.svg` is current, and the `mechanical_geometry.md` §2 table equals `amr_properties.xacro`) and its new first step in `.github/workflows/ci.yml`.
+
+- **Local procedure** (`bash docs/evidence/TA/TEST-TA-06_procedure.sh`, clean `40d8799`): exit 0. Repository: exit 0, 12 of 12 table rows PASS, drawing up to date. Negative cases on a scratch copy: a hand-edited SVG gave exit 1 (stale); `wheel_track` 0.404 in the table gave exit 1 (mismatch). The repository was not modified ([log](docs/evidence/TA/TEST-TA-06_drawing_check.log)).
+- **CI run #4** (GitHub run 43631890515, push of `40d8799`): the step ran on the hosted runner in the `ros:jazzy-ros-base` container and printed 12 of 12 rows PASS and `# overall: PASS`; the job passed ([step log](docs/evidence/TA/TEST-TA-06_ci_GH4.log)).
+- **Limitation (by design):** CI starts only on code pushes and on manual dispatch (REQ-TA-05). A push that edits only the drawing or the design table is checked by the next code push or a manual dispatch.
+- **Result:** TEST-TA-06 **PASS** for REQ-TA-05.
 
 ## M4 — Odometry (plan [docs/milestones/M4_odometry.md](docs/milestones/M4_odometry.md); criteria DEC-044)
 

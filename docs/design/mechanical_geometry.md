@@ -140,7 +140,7 @@ Top view (+X up, +Y left):
                      ○          caster x = −0.36 (behind chassis)
 ```
 
-**Dimensioned drawing:** [`amr_geometry_drawing.svg`](amr_geometry_drawing.svg) (top and side views, mm; added 2026-11-15). It is generated from `amr_properties.xacro` (plus `laser_frame_z` from `amr.sensors.xacro` for the scan plane) by `tools/geometry_drawing.py`, so it holds no numbers of its own. `python3 -I tools/geometry_drawing.py --check` fails if the committed SVG is stale or if the §2 table disagrees with the Xacro. *Scope (decided 2026-10-21):* the drawing was **not required for M1 closure**; REQ-M1-11 and TEST-M1-04 used the sketches above.
+**Dimensioned drawing:** [`amr_geometry_drawing.svg`](amr_geometry_drawing.svg) (top and side views, mm; added 2026-11-15). It is generated from `amr_properties.xacro` (plus `laser_frame_z` from `amr.sensors.xacro` for the scan plane) by `tools/geometry_drawing.py`, so it holds no numbers of its own. `python3 -I tools/geometry_drawing.py --check` fails if the committed SVG is stale or if the §2 table disagrees with the Xacro; it is the first CI step (TEST-TA-06). *Scope (decided 2026-10-21):* the drawing was **not required for M1 closure**; REQ-M1-11 and TEST-M1-04 used the sketches above.
 
 ## 6. Limitations
 - Primitive shapes approximate a real chassis. There are no wheel wells, bumpers, fasteners, cable routing, or caster mounting arm.

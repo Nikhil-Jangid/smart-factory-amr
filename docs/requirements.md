@@ -167,7 +167,7 @@ Plan: [milestones/M3-M4_test_automation.md](milestones/M3-M4_test_automation.md)
 | REQ-TA-02 | DEC-040 (d) | `mode_stop` in `TEST-M2_motion_measure.py` | TEST-TA-04 | PASS 2026-11-04 (INFO in all 6 stop runs) |
 | REQ-TA-03 | DEC-040 (a), item 5 | `tools/run_suite.py` | TEST-TA-02, TEST-TA-03 | TEST-TA-02 PASS; TEST-TA-03 FAIL (TS-033), R1 PASS (2026-11-04) |
 | REQ-TA-04 | DEC-040 (c); DEC-027, DEC-036, DEC-038, DEC-039 | `tools/run_suite.py` suite `regression` | TEST-TA-04 | PASS 2026-11-04 (20/20 entries, logs reviewed) |
-| REQ-TA-05 | DEC-040 (b), item 3 | `.github/workflows/ci.yml`; `tools/run_suite.py` suites `ci`, `records` | TEST-TA-05 | FAIL (run 1, TS-034), then PASS 2026-11-04 |
+| REQ-TA-05 | DEC-040 (b), item 3 | `.github/workflows/ci.yml`; `tools/run_suite.py` suites `ci`, `records`; drawing check step (`tools/geometry_drawing.py`) | TEST-TA-05, TEST-TA-06 | FAIL (run 1, TS-034), then PASS 2026-11-04; TEST-TA-06 PASS 2026-11-15 |
 
 ## M4 — Odometry (plan accepted 2026-11-13; DEC-042 to DEC-045)
 
