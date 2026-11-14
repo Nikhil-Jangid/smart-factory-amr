@@ -1,6 +1,8 @@
 # GPU-free checks (DEC-040; REQ-TA-05; plan docs/milestones/M3-M4_test_automation.md §7).
 # Gazebo simulation tests run on my development machine: hosted runners have no GPU for headless rendering.
 # Runs for pushes that change code, configuration, tests or this workflow, and on manual dispatch.
+# The geometry-drawing check (TEST-TA-06) runs first: Python standard library only, under 1 s. A push that edits only
+# the drawing or the design table is checked by the next code push or a manual dispatch.
 # The runner never records a PASS by itself; CI shows its classification and keeps the logs as an artifact for 7 days.
 # Run tags are GH<run>a<attempt>: the CI<n> tags belong to archived runs from my development history, and the runner
 # refuses a tag whose logs already exist.
@@ -37,6 +39,9 @@ jobs:
           git config --global --add safe.directory '*'
 
       - uses: actions/checkout@v4
+
+      - name: Geometry drawing check (TEST-TA-06; drawing current, design table equals the Xacro)
+        run: python3 -I tools/geometry_drawing.py --check
 
       - name: Package dependencies (rosdep, all types)
         # All types, not only build/test: TEST-M3-02 runs xacro, `gz sim --version` and `gz sdf -p`,
