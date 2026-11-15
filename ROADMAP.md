@@ -79,14 +79,15 @@ Milestone plans live in [docs/milestones/](docs/milestones/); every test result 
 - [x] Odometry verification (TEST-M4-04 to -09)
 - [x] Quantitative testing (TEST-M4-04 to -10)
 
-## M5 — SLAM  ← next
-**Status:** ⚪ Not Started
-- [ ] SLAM Toolbox
-- [ ] Map building
-- [ ] Mapping test
-- [ ] Save map
+## M5 — SLAM
+**Status:** ✅ Complete 2026-11-15 (plan [docs/milestones/M5_slam.md](docs/milestones/M5_slam.md); DEC-046 to DEC-055; TEST-M5-01 to -10 PASS, [TEST_RESULTS.md](TEST_RESULTS.md) § M5)
+**Carried forward:** loop-closure verification in a larger or corridor environment (DEC-052); half-cell origin correction for every new map (TS-041).
+- [x] SLAM Toolbox (TEST-M5-01, -02)
+- [x] Map building (TEST-M5-03, -04, -06, -09)
+- [x] Mapping test (TEST-M5-03, -07, -08, -10)
+- [x] Save map (TEST-M5-05)
 
-## M6 — Localization
+## M6 — Localization  ← next
 **Status:** ⚪ Not Started
 - [ ] Localization setup
 - [ ] Pose estimation

@@ -187,6 +187,24 @@ Plan and analysis (CALC-M4-01 to -03): [milestones/M4_odometry.md](milestones/M4
 | REQ-M4-10 | Records consistent under DEC-041 | TEST-M4-12 finds zero mismatches |
 | REQ-M4-11 | Automation | `m4` suite in `tools/run_suite.py`; TEST-M4-03 and -12 run in CI (TEST-M4-12) |
 
+## M5 — SLAM (plan accepted 2026-11-15; DEC-046 to DEC-051)
+
+Plan and analysis (CALC-M5-01 to -04): [milestones/M5_slam.md](milestones/M5_slam.md). Criteria Accepted: DEC-047 (2026-11-15). Results only in [TEST_RESULTS.md](../TEST_RESULTS.md) (DEC-041).
+
+| ID | Requirement | Acceptance criterion |
+|---|---|---|
+| REQ-M5-01 | Mapping world with known geometry (DEC-046), including a feature below the scan plane | `mapping_arena.sdf` per CALC-M5-01; the low box L1 is absent from the map (TEST-M5-03) |
+| REQ-M5-02 | SLAM Toolbox maps online from `/scan` and the odometry TF on sim time; it is the only `map → odom` publisher | TEST-M5-02 |
+| REQ-M5-03 | Map published on `/map` (`OccupancyGrid`, frame `map`, 0.05 m) | TEST-M5-02 |
+| REQ-M5-04 | Map accuracy | Wall P95 ≤ 0.10 m; ghosts ≤ 0.5 % beyond 0.25 m; completeness ≥ 90 %; interior 10.0 × 8.0 m ± 0.10 m, walls within 1.0° (TEST-M5-03) |
+| REQ-M5-05 | Pose accuracy during mapping | `map → base_footprint` within 0.05 m and 1.0° of ground truth at every rest point (TEST-M5-04) |
+| REQ-M5-06 | Map saved, reloadable, committed as the M6 reference | `.pgm`/`.yaml` (+ pose graph per OPEN-27) reload to an identical grid (TEST-M5-05) |
+| REQ-M5-07 | Robust to odometry error | REQ-M5-04/-05 criteria hold with the TEST-M4-09 overrides; odometry drift > 3× the pose bound and within ± 25 % of CALC-M5-04 (TEST-M5-06) |
+| REQ-M5-08 | The map checker detects distorted maps | 5 distortions FAIL, the recorded map PASSES (TEST-M5-07) |
+| REQ-M5-09 | No M1–M4 regression | Build clean; M1 expansion byte-identical; default launch and controller configuration unchanged; suites pass (TEST-M5-01, -08) |
+| REQ-M5-10 | Records consistent under DEC-041; automation | TEST-M5-10 zero mismatches; `m5` suite; TEST-M5-07 and -10 in CI |
+| REQ-M5-11 | Live mapping visible in RViz | `mapping.rviz`, observed by me (TEST-M5-09) |
+
 ## M4 traceability matrix
 
 | Requirement | Design decision | Calculation | Implementation | Test | Result |
@@ -202,3 +220,19 @@ Plan and analysis (CALC-M4-01 to -03): [milestones/M4_odometry.md](milestones/M4
 | REQ-M4-09 | DEC-023, DEC-045 | — | — | TEST-M4-01, TEST-M4-10 | TEST-M4-01 PASS 2026-11-13 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M4 Task B); TEST-M4-10 PASS 2026-11-13 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M4 Task D) |
 | REQ-M4-10 | DEC-041 | — | `docs/evidence/M4/TEST-M4-12_consistency_check.py` | TEST-M4-12 | PASS 2026-11-13 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M4 Task D) |
 | REQ-M4-11 | DEC-040 | — | `tools/run_suite.py`, `.github/workflows/ci.yml` | TEST-M4-12 | PASS 2026-11-13 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M4 Task D) |
+
+## M5 traceability matrix
+
+| Requirement | Design decision | Calculation | Implementation | Test | Result |
+|---|---|---|---|---|---|
+| REQ-M5-01 | DEC-046 | CALC-M5-01 | `amr_bringup/worlds/mapping_arena.sdf` | TEST-M5-03 | PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task C) |
+| REQ-M5-02 | DEC-048, DEC-050 | — | `config/slam_toolbox.yaml`, `launch/slam.launch.py` | TEST-M5-02 | FAIL 2026-11-15; R1 PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task A) |
+| REQ-M5-03 | DEC-048 | — | `config/slam_toolbox.yaml` | TEST-M5-02 | FAIL 2026-11-15; R1 PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task A) |
+| REQ-M5-04 | DEC-047 | CALC-M5-03 | `docs/evidence/M5/TEST-M5_map_check.py` | TEST-M5-03 | PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task C) |
+| REQ-M5-05 | DEC-047, DEC-049 | CALC-M5-02, -04 | `docs/evidence/M5/TEST-M5_map_run.py` | TEST-M5-04 | PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task C) |
+| REQ-M5-06 | DEC-051, DEC-054, DEC-055 | — | `amr_bringup/maps/mapping_arena.*` | TEST-M5-05 | PASS 2026-11-15; R1 PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task C) |
+| REQ-M5-07 | DEC-043, DEC-047 | CALC-M5-04 | `docs/evidence/M5/TEST-M5-06_procedure.sh` | TEST-M5-06 | PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task D) |
+| REQ-M5-08 | DEC-047 | CALC-M5-03 | `docs/evidence/M5/TEST-M5-07_distort.py` | TEST-M5-07 | PASS 2026-11-15; R1 PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task C) |
+| REQ-M5-09 | DEC-053 | — | — | TEST-M5-01, TEST-M5-08 | TEST-M5-01 PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task A); TEST-M5-08 PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task D) |
+| REQ-M5-10 | DEC-041 | — | `tools/run_suite.py` (`m5` suite), `.github/workflows/ci.yml` | TEST-M5-10 | PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task D) |
+| REQ-M5-11 | DEC-050 | — | `rviz/mapping.rviz` | TEST-M5-09 | PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task D) |

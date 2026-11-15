@@ -739,3 +739,94 @@ DEC-001 to DEC-008 predate this format and are kept as originally recorded.
 **Rationale and trade-offs:** faster; avoids the `gpu_lidar` shutdown hang (TS-029, DEC-039). TEST-M3-11 already showed that sensors do not change the motion.
 **Consequences:** none on the model or configuration.
 **Follow-up:** M6 runs odometry with the IMU on.
+
+## DEC-046 — M5 Mapping World: Purpose-Built Test Arena
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** M5 needs a world to map. The world decides how the map's accuracy can be proven. The M3 world `sensor_test.sdf` is open (no enclosing walls) and has four targets; the factory world belongs to M9 (ros_architecture.md: "after M7").
+**Decision:** option (a): a purpose-built enclosed test arena, `amr_bringup/worlds/mapping_arena.sdf`, about 10 × 8 m with asymmetric features at known coordinates and one feature below the scan plane. The map is checked against the world file. Layout: M5 plan §3.1 (CALC-M5-01, Proposed until the plan is finalized).
+**Alternatives considered:** (b) an early, simple factory layout: reusable in M9, but pulls M9 scope forward; (c) map `sensor_test.sdf`: not enclosed, too few features, weak test.
+**Rationale and trade-offs:** known ground truth makes the map measurable, as M3 and M4 measured against ground truth; the factory world stays an M9 deliverable. Cost: one more world file that M9 does not reuse directly.
+**Consequences:** new world file only; the robot, sensors and controllers are unchanged.
+**Follow-up:** layout, route and bounds are finalized with the M5 plan (OPEN-23 to -27).
+
+## DEC-047 — M5 Map and Pose Accuracy Bounds (OPEN-23)
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** the M5 tests need numeric limits for map and pose accuracy (M5 plan §3.3, CALC-M5-03).
+**Decision:** wall accuracy P95 ≤ 0.10 m; ghost cells ≤ 0.5 % beyond 0.25 m; completeness ≥ 90 % within 0.10 m; interior 10.0 × 8.0 m ± 0.10 m and walls within 1.0°; pose (`map → base_footprint` vs ground truth at rest points) ≤ 0.05 m and ≤ 1.0°; the low box L1 absent.
+**Alternatives considered:** tighter or looser bounds not tied to the map resolution.
+**Rationale and trade-offs:** tied to the 0.05 m cell (0.035 m quantization) and the sensor geometry (1° at 6 m = 0.105 m). Expected to pass with margin in simulation; TEST-M5-07 shows they can fail.
+**Consequences:** criteria of TEST-M5-03, -04, -06 Accepted.
+**Follow-up:** a real robot (M13) would need wider bounds.
+
+## DEC-048 — M5 SLAM Toolbox Mode and Parameters (OPEN-24)
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** SLAM Toolbox 2.8.5 offers online async and online sync mapping; its default range limits do not match the sensor.
+**Decision:** option (a): online async; the installed `mapper_params_online_async.yaml` defaults, except `max_laser_range` 12.0 m and `min_laser_range` 0.12 m (the DEC-031 sensor limits).
+**Alternatives considered:** (b) online sync (processes every qualifying scan; more repeatable, can lag); (c) tuned thresholds.
+**Rationale and trade-offs:** M6/M7 run live, so the live mode is tested. At one node per 0.5 m the load is low; TEST-M5-02 logs dropped scans, and (b) is the fallback if they matter.
+**Consequences:** new `amr_bringup/config/slam_toolbox.yaml` (Task A).
+**Follow-up:** revisit only if TEST-M5-02 shows dropped scans that affect the map.
+**Note (2026-11-15, TS-038):** SLAM Toolbox 2.8.5 has no `min_laser_range` parameter; it takes the minimum range from the scan's `range_min` (0.12 m, DEC-031). The `min_laser_range: 0.12` line is therefore inert and is kept only with a comment saying so; the effective minimum range is unchanged.
+
+## DEC-049 — M5 Test Route Driving (OPEN-25)
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** the mapping tests need the robot driven along the same route in every run, including runs with injected odometry errors.
+**Decision:** option (a): a harness waypoint follower steered by Gazebo ground truth, using proportional heading and distance control with the route speed and turn-rate limits (no I or D term).
+**Alternatives considered:** (b) steered by odometry (an injected error would move the path, with collision risk); (c) teleop (not repeatable; used only for demonstration).
+**Rationale and trade-offs:** the system under test is SLAM, not the driver; an identical path makes runs comparable. P control suffices: the simulation has no steady disturbance for an I term, and a D term would amplify pose noise. Ground truth steers the robot only; SLAM never sees it.
+**Consequences:** test tooling only (`docs/evidence/M5/TEST-M5_map_run.py`).
+**Follow-up:** autonomous driving on the map is M7 (Nav2).
+
+## DEC-050 — M5 Launch Structure (OPEN-26)
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** SLAM must run with the simulation without changing the M1–M4 launch behaviour.
+**Decision:** option (a): a new `amr_bringup/launch/slam.launch.py` that starts only SLAM Toolbox (sim time, params file argument), run beside `sim.launch.py sensors:=true world:=mapping_arena.sdf`. `sim.launch.py` is unchanged.
+**Alternatives considered:** (b) a `slam:=true` argument on `sim.launch.py`; (c) one all-in-one mapping launch.
+**Rationale and trade-offs:** the default launch stays byte-for-byte unchanged (TEST-M5-01), and M6 can replace SLAM with localization without touching the simulation launch. Cost: two launch commands for a mapping session.
+**Consequences:** new launch file only.
+**Follow-up:** a convenience launch can be added later if useful.
+
+## DEC-051 — M5 Map Artefacts (OPEN-27)
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** M6 can localize with AMCL on an image map or with SLAM Toolbox localization mode on a serialized pose graph.
+**Decision:** option (b): save and commit both the `.pgm`/`.yaml` map (Nav2 `map_saver_cli`) and the SLAM Toolbox serialized pose graph (`.posegraph` + `.data`), if the pose graph stays under about 5 MB; otherwise (a) and the reason recorded.
+**Alternatives considered:** (a) `.pgm`/`.yaml` only.
+**Rationale and trade-offs:** keeps both M6 options open at a small repository cost.
+**Consequences:** `amr_bringup/maps/` (Task C).
+**Follow-up:** M6 chooses the localization method.
+
+## DEC-052 — M5 Loop Closure Not Separately Verified
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** the M5 plan described loop closure and TEST-M5-09 required "the loop closes". A review note questioned whether a 10 × 8 m arena with a 12 m LiDAR exercises loop closure at all. A scratch spike (M5 plan §12) drove two laps with a 2 % track error injected, with SLAM `max_laser_range` 12 m and 3 m: in both runs `map → odom` corrected the injected heading error at each turn (scan matching), with no correction on return to the start; at 3 m the pose error grew to 0.064 m and part of the arena was not mapped.
+**Decision:** keep the arena (DEC-046) and the DEC-048 configuration; add no short-range test case. TEST-M5-09 checks that the robot returns to the start with no visible misalignment; loop-closure edges are noted if seen, not required. The plan states the limitation; loop-closure verification is deferred to a larger or corridor environment.
+**Alternatives considered:** (a) a TEST-M5-06 case with `max_laser_range` 3.0 m (spike: still scan matching, worse map, pose bound exceeded); (b) a larger arena or corridors now (M9-like scope, outside DEC-046).
+**Rationale and trade-offs:** a test should not claim a mechanism it cannot observe. Cost: M5 does not show loop closure working.
+**Consequences:** wording of TEST-M5-09 (plan §8, test_plan §10) and a plan limitation; no configuration change.
+**Follow-up:** loop-closure verification in a larger or corridor environment (deferred).
+
+## DEC-053 — TEST-M5-01 Criterion Restated: Dependency Declaration Allowed
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** the accepted TEST-M5-01 criterion said M5 adds "only new files". Task A also added one line to an existing file, `<exec_depend>slam_toolbox</exec_depend>` in `amr_bringup/package.xml`, and changed one comment line in `amr_bringup/CMakeLists.txt`. The M5 plan §12 first recorded a reading ("no behavioural change to existing files") without a recorded decision, against the rule that a test criterion is never relaxed silently (precedent DEC-039). A review note raised it before the result was recorded.
+**Decision:** the criterion is restated as exactly what the procedure checks: build clean; the M1 default expansion and the M2 and M3/M5 launch-model expansions byte-identical to the M4 closeout `517608f`; `sim.launch.py`, `controllers.yaml`, `amr.sensors.xacro`, `amr_properties.xacro` unchanged; changes to existing files limited to that one dependency line and comment lines. The run already made counts under this criterion.
+**Alternatives considered:** (a) literal reading: record FAIL, then revert or amend and re-run; (b) remove the dependency line and the comment: `slam_toolbox` would become an undeclared runtime dependency (a fresh install or `rosdep` would miss it).
+**Rationale and trade-offs:** the purpose of the criterion is that M5 does not change verified M1–M4 behaviour; the protected files and expansions are byte-identical, and the dependency line is required for a correct package. The restated rule is narrower and checkable, not looser in what it protects.
+**Consequences:** TEST-M5-01 wording in the M5 plan §8 and `test_plan.md` §10; the plan §12 note corrected.
+**Follow-up:** none; later milestones state allowed edits to existing files explicitly in their criteria.
+
+## DEC-054 — M5 Pose Graph Committed Compressed (amends DEC-051)
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** DEC-051 keeps the SLAM Toolbox serialized pose graph (`.posegraph` + `.data`) with the reference map if it stays under about 5 MB, otherwise the map only. Measured in the Task B dry runs (M5 plan §12): 6.9 MB right after SLAM starts and 7.4 MB + 0.47 MB after the route. The fixed-size part dominates and compresses about 20:1 (gzip -9: 0.33 + 0.23 MB).
+**Decision:** commit the reference pose graph gzip-compressed (`mapping_arena.posegraph.gz`, `mapping_arena.data.gz`) next to `amr_bringup/maps/mapping_arena.{pgm,yaml}`. The serialized files are produced by the procedure and compressed with `gzip -9 -n` (no name or time stamp, so the output is reproducible).
+**Alternatives considered:** (a) map only, the DEC-051 fallback: SLAM Toolbox localization in M6 would need a new mapping run; (c) commit the raw 7.9 MB: permanent binary weight in the history.
+**Rationale and trade-offs:** about 0.56 MB keeps both M6 options (AMCL on the image map, SLAM Toolbox localization on the pose graph) at the cost of one decompression step before SLAM Toolbox loads the files.
+**Consequences:** TEST-M5-05 checks that the compressed files decompress to the serialized pose graph of the reference run (byte-identical). The maps folder is committed in the source tree without an install rule (an install line would change `CMakeLists.txt`, outside the TEST-M5-01 criterion, DEC-053); M6 adds the install rule and the decompression when it loads the map.
+**Follow-up:** M6 localization setup.
+
+## DEC-055 — M5 Reference Map Origin Corrected by Half a Cell (TS-041)
+**Date:** 2026-11-15   **Status:** **Accepted** (decided 2026-11-15)
+**Context:** TS-041: SLAM Toolbox 2.8.5 writes Karto's grid offset, which is the centre of cell 0 (`WorldToGrid` rounds), into `OccupancyGrid.info.origin`, which ROS defines as the corner of cell 0. Every ROS consumer draws the map 0.025 m too far in +x and +y. Shown in the source (`karto_sdk/Karto.h`, `slam_toolbox/visualization_utils.hpp`) and in the data: all four walls of all three TEST-M5-03 maps are offset in +x/+y; a least-squares shift gives −0.020 to −0.030 m. The reference map (`dae225d`) was committed with the shift.
+**Decision:** the reference map's origin is moved by −0.025 m in x and y, yaw unchanged: `origin: [-2.046, -4.055, 0]` → `[-2.071, -4.080, 0]` in `amr_bringup/maps/mapping_arena.yaml`. The image and the pose graph are unchanged. TEST-M5-05 criterion: the `.yaml` equals the attempt 1 file except the image name and this origin correction (checked exactly). TEST-M5-05 and TEST-M5-07 re-run on the corrected map.
+**Alternatives considered:** keep the map as saved and correct it in M6 when loading (the shift would be easy to forget and would bias localization by about 0.035 m diagonally); correct in the map checker for every SLAM map (changes a measurement already used for the recorded TEST-M5-03 results).
+**Rationale and trade-offs:** M6 localizes on this file, so it should be correct for every ROS consumer. The correction is derived from the source, not fitted to the data, and the data agree with it. The reference map is no longer byte-identical to the `map_saver_cli` output in its origin line; the procedure states and checks the exact difference.
+**Consequences:** with the correction, the checker's best-fit offset on the reference map is (0.000, 0.000) and wall P95 0.045 m (was 0.070 m). TEST-M5-03 and TEST-M5-04 results stand as measured: the checker still reads SLAM maps as saved, so TEST-M5-06 maps carry the shift as TEST-M5-03 did (consistent with the recorded runs). Any later map made with SLAM Toolbox needs the same correction until upstream changes.
+**Follow-up:** check whether newer SLAM Toolbox releases change `toNavMap`; M6 uses the corrected file.

@@ -114,6 +114,19 @@ Planned tests, procedures, and state definitions (`PLANNED`, `NOT RUN`, `PASS`, 
 | TEST-M4-09 R1 | M4 | PASS (re-run for clean pictures; 25/25 checks, agrees with the first run) | [check log](docs/evidence/M4/TEST-M4-09-R1_check.log) |
 | TEST-M4-11 | M4 | PASS (observed by me: trail closed in both squares, robot and TF moved smoothly) | [CCW log](docs/evidence/M4/TEST-M4-11_square_ccw_review.log), [CW log](docs/evidence/M4/TEST-M4-11_square_cw_review.log) |
 | TEST-M4-12 | M4 | PASS (checker 0 mismatches locally and in CI; `m4` suite present; TEST-M4-03 in `ci`; CI runs #15 and #16 green) | — (checker reads my private planning files; script and log not published) |
+| TEST-M5-01 | M5 | PASS under DEC-053 (build clean; M1, M2 and M3/M5 expansions identical; protected files unchanged; only the `slam_toolbox` dependency line and a comment in existing files) | [review log](docs/evidence/M5/TEST-M5-01_review.log), [negative control](docs/evidence/M5/TEST-M5-01-negctl_review.log) |
+| TEST-M5-02 | M5 | FAIL (all SLAM interface checks PASS in 3 of 3 attempts; attempt 2: `gz sim` exited with code 1 after the SIGINT→SIGTERM shutdown escalation, outside the DEC-039 signature, TS-039) | [review log](docs/evidence/M5/TEST-M5-02_review.log) |
+| TEST-M5-02 R1 | M5 | PASS (3 of 3 valid attempts, every SLAM interface check PASS; all shutdowns CLEAN, 0 leftovers by name; 1 attempt invalid for RTF 0.49 < 0.5, repeated; TS-029 invalid 0) | [review log](docs/evidence/M5/TEST-M5-02-R1_review.log) |
+| TEST-M5-03 | M5 | PASS (3 of 3 valid mapping runs; wall P95 0.065–0.070 m, ghosts 0, completeness ≥ 99.56 %, interior within 0.019 m, walls within 0.15°, L1 absent) | [review log](docs/evidence/M5/TEST-M5-03_review.log) |
+| TEST-M5-04 | M5 | PASS (same runs; SLAM pose within 13.5 mm and 0.200° at every rest point) | [review log](docs/evidence/M5/TEST-M5-03_review.log) |
+| TEST-M5-05 | M5 | PASS (reference map = attempt 1; pose graph decompresses byte-identical; map_server serves 0 differing cells; negative control detected) | [review log](docs/evidence/M5/TEST-M5-05_review.log) |
+| TEST-M5-05 R1 | M5 | PASS (on the DEC-055 corrected map; origin difference exactly −0.025 m in x and y; 0 differing cells) | [review log](docs/evidence/M5/TEST-M5-05-R1_review.log) |
+| TEST-M5-06 | M5 | PASS (3 of 3 valid runs with the TEST-M4-09 overrides; odometry drift 0.199 m / −3.53°, within 0.2 % of CALC-M5-04; SLAM pose within 35.1 mm and 0.353°; maps within bounds) | [review log](docs/evidence/M5/TEST-M5-06_review.log) |
+| TEST-M5-07 | M5 | PASS (uncorrected reference map; original PASS, 5 of 5 distortions FAIL on their measure) | [review log](docs/evidence/M5/TEST-M5-07_review.log) |
+| TEST-M5-07 R1 | M5 | PASS (corrected reference map, wall P95 0.045 m; 5 of 5 distortions FAIL on their measure) | [review log](docs/evidence/M5/TEST-M5-07-R1_review.log) |
+| TEST-M5-08 | M5 | PASS (static 7/7, regression 20/20, m4 9/9 executed entries reviewed; TEST-M4-12/-03 covered by their static logs; TS-029 invalid 1, repeated) | [regression summary](docs/evidence/TA/regression-M508_summary.md), [m4 summary](docs/evidence/TA/m4-M508_summary.md), [static summary](docs/evidence/TA/static-M508_summary.md) |
+| TEST-M5-09 | M5 | PASS (observed by me: map grew, walls straight and single, W1 mapped on both faces, scan on the walls at the end, returned to the start, no jumps; logged run PASS, SLAM pose within 7.4 mm and 0.200°) | [review log](docs/evidence/M5/TEST-M5-09_review.log) |
+| TEST-M5-10 | M5 | PASS (checker 0 mismatches locally and in CI; every injected fault detected; `m5` suite present; TEST-M5-07 in `ci`; CI run #32 green) | — (checker reads my private planning files; script and log not published) |
 | TEST-M4-10 | M4 | PASS (regression 20/20 and static 5/5 entries reviewed; M2 with GUI, M3 headless) | [regression summary](docs/evidence/TA/regression-M410_summary.md), [static summary](docs/evidence/TA/static-M410R2_summary.md) |
 
 **Disclosure:** the M0 acceptance criteria (REQ-M0-01 to REQ-M0-05 in [docs/requirements.md](docs/requirements.md)) were written on 2026-10-19, *after* TEST-M0-00 to TEST-M0-04 had been run. The tests were judged against the expected results recorded in each entry. TEST-M0-04 re-test 1 and TEST-M0-05 were run after the criteria were written.
@@ -1201,6 +1214,112 @@ Plan: [docs/milestones/M3-M4_test_automation.md](docs/milestones/M3-M4_test_auto
 - Logged accuracy, recorded but not a criterion here (TEST-M4-06 owns it): end point CCW 0.02 mm, CW 0.00 mm; yaw −0.0000° in both.
 - **Pictures:** RViz and Gazebo stills and videos of both runs (`TEST-M4-11_square_{ccw,cw}_a1_{gazebo,rviz}.{png,mp4}`), reviewed: RViz status OK, the closed square trail under the robot at its start, no covered window. Finalized (2026-11-13) and stored in [`docs/gallery/M4/TEST-M4-11/`](docs/gallery/M4/TEST-M4-11/).
 - **Result:** TEST-M4-11 **PASS** for REQ-M4-02 (observed by me).
+
+## M5 — SLAM (epic plan [docs/milestones/M5_slam.md](docs/milestones/M5_slam.md); criteria DEC-047, TEST-M5-01 restated by DEC-053)
+
+### Task A — TEST-M5-01, 2026-11-15 01:50 IST
+**Under test:** the M5 Task A changes (`10a669d`) against the M4 closeout `517608f`. Revision `7be0c86` (`amr_ws/src` clean). Procedure written before its formal run; no simulation (static test).
+**TEST-M5-01** (REQ-M5-09): `bash docs/evidence/M5/TEST-M5-01_procedure.sh`, exit 0 ([log](docs/evidence/M5/TEST-M5-01_review.log)).
+- Build: colcon exit 0, 0 warning lines. Default expansion byte-identical to `TEST-M1-02_amr.urdf`; expansions with `use_ros2_control:=true` (6452 bytes) and with `use_sensors:=true` added (9912 bytes) byte-identical to the `517608f` expansions.
+- `sim.launch.py`, `controllers.yaml`, `amr.sensors.xacro`, `amr_properties.xacro`: unchanged since `517608f`.
+- `amr_ws/src` since `517608f`: 4 new files (`slam_toolbox.yaml`, `slam.launch.py`, `mapping.rviz`, `mapping_arena.sdf`); 2 modified: `package.xml` (only `+  <exec_depend>slam_toolbox</exec_depend>`) and `CMakeLists.txt` (2 changed lines, both comments).
+- **Negative control** (same day, `BASE=30d737f`, before the M4 covariance change): exit 1; step 4 flagged `sim.launch.py` and `controllers.yaml`, step 5 flagged them as modified ([log](docs/evidence/M5/TEST-M5-01-negctl_review.log)). The procedure detects real changes.
+- Criterion: the accepted wording "only new files" is not met literally (`package.xml`, `CMakeLists.txt`). The restated criterion was accepted as DEC-053 before this result was recorded.
+- **Result:** TEST-M5-01 **PASS** (under DEC-053).
+
+### Task A — TEST-M5-02, 2026-11-15 02:02–02:06 IST
+**Under test:** the SLAM interface (REQ-M5-02, -03) on `3157779` (`amr_ws/src` clean); `sim.launch.py headless:=false sensors:=true world:=mapping_arena.sdf` + `slam.launch.py`; Gazebo 8.15.0, slam_toolbox 2.8.5; Gazebo GUI and RViz shown (`SHOW=1`); attempt 1 recorded after I arranged the windows. Procedure and checker committed before the formal run; two scratch dry runs found TS-038 and a parameter-timing defect, fixed before it (M5 plan §12).
+**TEST-M5-02:** `SHOW=1 LAYOUT_FLAG=<flag> bash docs/evidence/M5/TEST-M5-02_procedure.sh 3 docs/evidence/M5/TEST-M5-02_review.log`, exit 1 ([log](docs/evidence/M5/TEST-M5-02_review.log)).
+- Checks, attempts 1–3, each PASS: before SLAM, `/tf` publishers `diff_drive_controller`, `robot_state_publisher`, no `map → odom`, no `/map`. After: `/slam_toolbox` active; `use_sim_time` true; `max_laser_range` 12.0; `/scan` `range_min` 0.12 m (TS-038); `slam_toolbox` subscribes `/scan`; `/map` from `slam_toolbox` only, frame `map`, 0.05 m, 201 × 161 cells; `map → odom` 490 / 482 / 481 messages during the drive, sequence numbers all distinct, no gaps, one transform per message; the only added `/tf` publisher is `slam_toolbox`; never on `/tf_static`; stamps on simulation time; one parent per frame; chain `map → odom → base_footprint → base_link → lidar_mount_link → laser_frame`; `map → laser_frame` resolves.
+- INFO: RTF 0.94 / 0.96 / 0.96; scans 93 per drive (10.04–10.05 Hz); pose-graph nodes 2; dropped-scan lines in the SLAM log 0 / 0 / 0.
+- Shutdown: SLAM launch CLEAN in all three; simulation launch CLEAN in attempts 1 and 3. **Attempt 2:** `gz sim` did not stop within 5 s of SIGINT, was escalated to SIGTERM and died with **exit code 1**; 0 leftover processes. DEC-039 covers only exit codes −9/−15, so the classifier returned OTHER and the attempt FAILED (TS-039). TS-029 invalid attempts: 0.
+- The full launch log of attempt 2 was not kept (procedure defect, TS-039). The attempt-1 pictures were deleted unreviewed-for-commit: portrait camera view with the robot too small, map from 2 scans; to be re-captured.
+- **Result:** TEST-M5-02 **FAIL** (shutdown criterion, attempt 2). Re-test after the TS-039 investigation.
+
+### Task A — TEST-M5-02 R1, 2026-11-15 02:16–02:20 IST
+**Under test:** as the first run, on `8130ee8` (`amr_ws/src` clean), with the procedure changes made after it (full launch logs of unclean shutdowns kept; leftovers also counted by name; camera view from the layout file). Between the runs: TS-039 source reading and rig, 10 of 10 GUI shutdowns CLEAN ([log](docs/evidence/M5/TS-039_gui_shutdown.log)). No criterion changed.
+**TEST-M5-02 R1:** `SHOW=1 LAYOUT_FLAG=<flag> bash docs/evidence/M5/TEST-M5-02_procedure.sh 3 docs/evidence/M5/TEST-M5-02-R1_review.log`, exit 0 ([log](docs/evidence/M5/TEST-M5-02-R1_review.log)). Gazebo GUI and RViz shown; I placed the windows side by side; camera view `0.8 0.0 8.0 3.0 0.0 0`, set from three trial screenshots before the recording.
+- Attempts 1, 2, 4 (valid): every check PASS, as in the first run (lifecycle active; `use_sim_time` true; `max_laser_range` 12.0; `/scan` `range_min` 0.12 m; `/scan` subscribed; `/map` from `slam_toolbox` only, frame `map`, 0.05 m, 201 × 161 cells; `map → odom` 502 / 490 / 477 messages, sequence numbers distinct, no gaps, one transform each; only added `/tf` publisher `slam_toolbox`; not on `/tf_static`; simulation-time stamps; one parent per frame; full chain; `map → laser_frame` resolves).
+- Attempt 3: every check PASS, but RTF 0.49 (9.25 s of simulation time in 18.99 s wall), below the 0.5 validity limit: INVALID, not counted, repeated as attempt 4. Cause not investigated (a one-off; the other attempts 0.93–0.97).
+- INFO: RTF 0.93 / 0.95 / 0.97 (valid attempts); 93 scans per drive (9.99–10.06 Hz); pose-graph nodes 2. Dropped-scan lines: 1 in attempts 1 and 2, both at SLAM start-up (simulation time 14.2 s and 13.2 s, before the drive; tf2 message filter: scan older than the TF cache, and queue full), 0 in attempts 3 and 4.
+- Shutdown: SLAM and simulation launches CLEAN in all 4 attempts; 0 leftover processes by name or by process group; no launch log needed keeping. TS-029 invalid attempts: 0. TS-039 did not recur.
+- Pictures and videos of attempt 1 in `docs/gallery/_pending/M5/TEST-M5-02/` (awaiting review).
+- **Result:** TEST-M5-02 **PASS** (R1). The first run's FAIL stays on record.
+
+### Task C — TEST-M5-03 and TEST-M5-04, 2026-11-15 02:58–03:11 IST
+**Under test:** M5 product configuration (Task A) on `59ee7f0` (`amr_ws/src` clean); tooling from Task B (`TEST-M5_route.py`, `TEST-M5_map_run.py`, `TEST-M5_map_check.py`, `TEST-M5_procedure.sh`), dry-run before this run (M5 plan §12). Product controllers file (no injected odometry error). Reference-map rule fixed before the run: attempt 1's map (M5 plan §12).
+**Command:** `SHOW=1 LAYOUT_FLAG=<flag> PG_DIR=<scratch> bash docs/evidence/M5/TEST-M5_procedure.sh 3 docs/evidence/M5/TEST-M5-03_review.log`, exit 0 ([log](docs/evidence/M5/TEST-M5-03_review.log)). Gazebo GUI and RViz shown; I placed the windows side by side; camera view `0.8 0.0 8.0 3.0 0.0 0`. Per attempt: rest-point CSV, saved map (`.pgm`/`.yaml`) and checker JSON in `docs/evidence/M5/TEST-M5-03_a<N>_*`.
+- Route (all 3 attempts): 11 rest points, about 200.7 s simulation time, RTF 0.96 / 0.99 / 1.00 (all valid), max cross-track 9.8 / 9.8 / 9.7 mm.
+- **TEST-M5-04** (REQ-M5-05), `map → base_footprint` vs ground truth at every rest point (bound 0.05 m, 1.0°): largest position error 13.5 / 12.4 / 9.6 mm; largest heading error 0.200° in each attempt (the heading errors take the values 0 or ±0.200°). End of route: 3.9 / 10.8 / 6.8 mm. Odometry error at the end 0.0 mm (no injected error; drift is tested in TEST-M5-06).
+- **TEST-M5-03** (REQ-M5-01, -04), checker on each saved map (DEC-047 bounds):
+  - wall accuracy P95: 0.070 / 0.065 / 0.068 m (≤ 0.10 m); max 0.079 / 0.065 / 0.072 m;
+  - ghost cells beyond 0.25 m: 0 / 0 / 0 (≤ 0.5 %);
+  - completeness: 99.78 / 99.56 / 99.89 % (≥ 90 %);
+  - interior: 9.993 × 7.985 / 9.985 × 7.981 / 9.989 × 8.000 m (10.0 × 8.0 ± 0.10 m); largest wall rotation 0.05 / 0.15 / 0.10° (≤ 1.0°); parallel and perpendicular within 0.18°;
+  - low box L1: 0 occupied cells in its footprint in each map.
+  - INFO: maps 202 × 162 (attempt 3: 202 × 163) cells; origins (−2.046, −4.055), (−2.062, −4.060), (−2.053, −4.057); best-fit offset (−0.025, −0.025) m in each, rotation ≤ 0.25°. *Correction (2026-11-15, after recording):* the first wording, "half a cell: the cell-centre convention", had not been checked. The offset is a real half-cell shift: SLAM Toolbox writes the centre of cell 0 where ROS expects its corner (TS-041). The measured values above stand.
+- Map save: `map_saver_cli` exit 0 in all 3. Pose graph serialized in all 3 (`result=0`): `.posegraph` 7 403 717 / 7 403 717 / 7 403 933 bytes, `.data` 471 131 bytes (gzip -9 about 333 000 + 233 000 bytes); kept outside the repository (DEC-054: the reference one is committed compressed with TEST-M5-05).
+- SLAM log: 0 [ERROR] lines, 0 dropped-scan lines. Shutdown: SLAM and simulation launches CLEAN in all 3; 0 leftover processes; TS-029 invalid attempts 0.
+- Pictures and videos of attempt 1: accepted, in `docs/gallery/M5/TEST-M5-03/`.
+- **Result:** TEST-M5-03 **PASS**; TEST-M5-04 **PASS**. Attempt 1's map is the reference map (TEST-M5-05).
+
+### Task C — TEST-M5-05, 2026-11-15 03:17 IST
+**Under test:** the reference map `amr_ws/src/amr_bringup/maps/mapping_arena.{pgm,yaml}` and the compressed pose graph `mapping_arena.{posegraph,data}.gz` (DEC-054), made from TEST-M5-03 attempt 1 by the commands in the procedure header; revision `dae225d` (`amr_ws/src` clean). No simulation. Procedure dry-run before the formal run (TS-040 found and fixed).
+**Command:** `bash docs/evidence/M5/TEST-M5-05_procedure.sh docs/evidence/M5/TEST-M5-05_review.log <PG_DIR>/TEST-M5-03_a1_posegraph`, exit 0 ([log](docs/evidence/M5/TEST-M5-05_review.log)).
+- Save (from TEST-M5-03): `map_saver_cli` wrote the `.pgm`/`.yaml` and `serialize_map` returned `result=0` in each attempt (TEST-M5-03 record).
+- Reference = attempt 1: `.pgm` byte-identical to `TEST-M5-03_a1_map.pgm`; `.yaml` identical except the image name (`mapping_arena.pgm`).
+- Pose graph: both `.gz` files pass `gzip -t` and decompress byte-identical to the attempt 1 serialization: `.posegraph` 7 403 717 bytes (SHA-256 `4a2eb700…0269`), `.data` 471 131 bytes (SHA-256 `43f503b8…601d`); committed size 332 464 + 232 760 bytes.
+- Reload: Nav2 `map_server` configured and activated (lifecycle `active`); `/map` from `map_server` only, frame `map`, 202 × 162 cells, 0.05 m, origin (−2.046, −4.055, 0) as in the file; **0 of 32 724 cells differ** (971 occupied, 30 851 free, 902 unknown). `map_server` stopped on SIGINT with exit 0, 0 [ERROR] lines.
+- Negative control: a served copy with one occupied cell turned free: the check FAILS with 1 cell differing (as expected).
+- Leftover `map_server` processes: 0.
+- **Result:** TEST-M5-05 **PASS**.
+
+### Task C — TEST-M5-07, 2026-11-15 03:20 IST (on the uncorrected reference map)
+**Under test:** `TEST-M5-07_distort.py` and `TEST-M5_map_check.py` (Task B, `8ea6f20`) on the reference map as first committed (`dae225d`, origin as SLAM saved it), revision `86e3b56`. No simulation.
+**Command:** `python3 -I docs/evidence/M5/TEST-M5-07_distort.py amr_ws/src/amr_bringup/maps/mapping_arena.yaml <tmp>`, exit 0 ([log](docs/evidence/M5/TEST-M5-07_review.log), [summary](docs/evidence/M5/TEST-M5-07_summary.json)).
+- Original: every measure PASS. Rotate 2°: dimensions FAIL (walls 0.80–1.79°). Shift 0.15 m: wall accuracy FAIL (P95 0.179 m). Scale × 1.02: dimensions FAIL (10.059 × 8.178 m). Erase north wall: completeness FAIL (76.81 %). Ghost wall: ghosts FAIL (7.612 %). Occupied-cell counts of the geometric copies 971 / 971 / 993 (no walls lost off the image).
+- **Result:** PASS. Before it was recorded, TS-041 was found and the reference map corrected (DEC-055); re-run below on the corrected map. This run is kept as history.
+
+### Task C — TEST-M5-05 R1 and TEST-M5-07 R1, 2026-11-15 03:27–03:28 IST (corrected reference map, DEC-055)
+**Under test:** the reference map with its origin moved by −0.025 m in x and y (DEC-055, TS-041), revision `695f5ea` (`amr_ws/src` clean). TEST-M5-05 procedure updated to check the exact origin difference. No simulation.
+**TEST-M5-05 R1:** `bash docs/evidence/M5/TEST-M5-05_procedure.sh docs/evidence/M5/TEST-M5-05-R1_review.log <PG_DIR>/TEST-M5-03_a1_posegraph`, exit 0 ([log](docs/evidence/M5/TEST-M5-05-R1_review.log)).
+- `.pgm` byte-identical to attempt 1; `.yaml` identical except the image name and the origin; origin (−2.071, −4.080, 0) = attempt 1 origin + (−0.025, −0.025, 0) exactly.
+- Pose graph: as the first run (both `.gz` decompress byte-identical to the attempt 1 serialization).
+- Reload: `map_server` active; `/map` frame `map`, 202 × 162, 0.05 m, origin (−2.071, −4.080, 0); 0 of 32 724 cells differ; exit 0 on SIGINT. Negative control: 1 cell differs, FAIL as expected. Leftovers 0.
+- **Result:** TEST-M5-05 **PASS** (R1). The first run (on the uncorrected file) also passed and stays on record.
+**TEST-M5-07 R1:** the same command on the corrected map, exit 0 ([log](docs/evidence/M5/TEST-M5-07-R1_review.log), [summary](docs/evidence/M5/TEST-M5-07-R1_summary.json)).
+- Original: every measure PASS; wall P95 0.045 m (median 0.005 m; was 0.070 m before the correction); interior 9.993 × 7.986 m; checker best-fit offset (0.000, 0.000).
+- Rotate 2°: dimensions FAIL (walls 1.24–1.79°). Shift 0.15 m: wall accuracy FAIL (P95 0.154 m). Scale × 1.02: dimensions FAIL (10.059 × 8.178 m). Erase north wall: completeness FAIL. Ghost wall: ghosts FAIL. Each copy also fails other measures where expected (listed in the log); no walls lost off the image.
+- **Result:** TEST-M5-07 **PASS** (R1).
+
+### Task D — TEST-M5-06, 2026-11-15 03:35–03:48 IST
+**Under test:** M5 product configuration on `6cb8f23` (`amr_ws/src` clean), with the TEST-M4-09 odometry errors injected as test-only overrides (DEC-043): `wheel_separation_multiplier: 1.02`, `left_wheel_radius_multiplier: 1.01`, `right_wheel_radius_multiplier: 1.01` in a temporary copy of `controllers.yaml` (the log shows the diff; the product file was checked unchanged). CALC-M5-04 reviewed before the run (M5 plan §12); procedure dry-run before the formal run (scratch: drift 0.1986 m, −3.530°).
+**Command:** `SHOW=1 LAYOUT_FLAG=<flag> bash docs/evidence/M5/TEST-M5-06_procedure.sh 3 docs/evidence/M5/TEST-M5-06_review.log`, exit 0 ([log](docs/evidence/M5/TEST-M5-06_review.log)). Gazebo GUI and RViz shown; I placed the windows side by side. Per attempt: `TEST-M5-06_a<N>_{rest.csv,map.pgm,map.yaml,check.json}`.
+- Route: 11 rest points each; RTF 0.92 / 0.96 / 0.98 (all valid); max cross-track 9.8 / 9.8 / 9.9 mm.
+- **Odometry drift (the injected error), end of route:** 0.1986 m and −3.530° in each attempt; CALC-M5-04 predicted 0.1983 m and −3.529° (+0.1 to +0.2 % and +0.0 %; bound ± 25 %). Largest odometry error during the route 0.254 m. Exceeds 3× the pose bound (0.15 m, 3.0°) in each attempt.
+- **SLAM pose** (`map → base_footprint` vs ground truth; bound 0.05 m, 1.0° at every rest point): largest 31.0 / 35.1 / 20.9 mm and 0.318 / 0.353 / 0.131°; at the end 17.6 / 6.5 / 20.9 mm. Larger than without injected error (TEST-M5-03/-04: up to 13.5 mm), within the bound. `map → odom` at the end corrects 3.4–3.6° of heading.
+- **Map** (checker, DEC-047 bounds, maps as saved): wall P95 0.060 / 0.064 / 0.026 m; ghosts 0 / 0 / 0; completeness 99.56 / 99.56 / 99.78 %; interior 9.997 × 7.996 / 9.993 × 7.996 / 9.997 × 7.988 m; largest wall rotation 0.23 / 0.33 / 0.08°; L1 absent in each.
+- Map save and pose-graph serialization: OK in each (pose graphs not kept). SLAM log 0 [ERROR] lines, 0 dropped-scan lines; shutdowns CLEAN; 0 leftovers; TS-029 invalid attempts 0.
+- Pictures and videos of attempt 1: accepted, in `docs/gallery/M5/TEST-M5-06/`.
+- **Result:** TEST-M5-06 **PASS**.
+
+### Task D — TEST-M5-08 regression, 2026-11-15 03:51–04:40 IST
+**Scope (REQ-M5-09):** the runner suites `static` (7 entries: TEST-M2-11, TEST-M3-12, TEST-M4-12, TEST-M3-01, -13, -02, TEST-M4-03), `regression` (the 20 M2/M3 entries of TEST-M4-10) and `m4` (TEST-M4-12, -01, -03, -02, -04 to -09), on the M5 product. Same procedures and criteria as their baselines (TEST-M4-10, TEST-M4-12).
+**Commands:** `python3 tools/run_suite.py static M508` (exit 0), `SHOW=1 python3 tools/run_suite.py regression M508` (exit 0), `SHOW=1 python3 tools/run_suite.py m4 M508` (exit 1, see the m4 item). `SHOW=1` shows the Gazebo GUI for the M2 and M4 entries (`headless:=false`); the 8 M3 sensor entries run headless as in TEST-M4-10 (TS-029 addendum). Serial, one simulation at a time.
+- **Product under test:** `amr_ws/src` unchanged from `5a3414a` to `7832350`, and `tools/` unchanged, so every entry ran the same product and runner. The entry logs record the revision at their own start (`5a3414a` static; `64d38f2` for the first regression entry, later ones up to `7832350`); all `amr_ws/src` clean.
+- **Static** ([summary](docs/evidence/TA/static-M508_summary.md), 3 s): 7 of 7 PASS-candidate. TEST-M3-02's four `FAIL` lines are the deliberate M2-scope checks (TS-023), identical to M410R2.
+- **Regression** ([summary](docs/evidence/TA/regression-M508_summary.md), 22 min): 20 of 20 PASS-candidate. Reviewed every log: 0 FAIL in counted attempts, 0 leftover processes, every log's `[ERROR]` count 0 except TEST-M3-14 attempt 3, which shows the TS-029 shutdown signature (only `gz` escalated after SIGINT; measurement checks passed), was declared INVALID under DEC-039 and repeated as attempt 4 (3 of 3 valid runs PASS). TS-030 spin thread ended cleanly in all 24 M3 attempts.
+- **m4** ([summary](docs/evidence/TA/m4-M508_summary.md), 26 min): the 9 entries that ran are PASS-candidate, 0 `[ERROR]` lines, 0 leftovers; TEST-M4-09 every injected error FAILs its per-run criterion as required and lies within ±25 % of CALC-M4-05 ([check log](docs/evidence/M4/TEST-M4-09-M508_check.log)). TEST-M4-12 and TEST-M4-03 were REFUSED (log exists): the static suite had already written their logs under the same tag, and the runner never overwrites evidence. Both are deterministic, simulation-free checks and their static M508 logs PASS, so they are covered; the suite exit 1 comes only from these two refusals. Lesson: separate tags per suite when suites share entries.
+- **Runner defect found:** the summary header showed the revision at the finish of the suite (`7832350` for regression and m4, committed while regression ran). Fixed in `tools/run_suite.py` (revision read at the start; a different HEAD at the finish is stated); the M508 summaries are kept as written.
+- **Result:** TEST-M5-08 **PASS** for REQ-M5-09: M5 changed no M2, M3 or M4 behaviour.
+
+### Task D — TEST-M5-09 RViz (observed by me), 2026-11-15 13:58–14:03 IST
+**Command:** `SHOW=1 LAYOUT_FLAG=<flag> bash docs/evidence/M5/TEST-M5_procedure.sh 1 docs/evidence/M5/TEST-M5-09_review.log`, exit 0 ([log](docs/evidence/M5/TEST-M5-09_review.log)). Revision `7f3d65b` (`amr_ws/src` clean); product configuration; Gazebo GUI and RViz `mapping.rviz` on one laptop screen (no window layout step: no second monitor, so the windows overlapped). 1 of 1 valid run; outputs `TEST-M5-09_a1_{rest.csv,map.pgm,map.yaml,check.json}`.
+- **Observed by me** (2026-11-15): the map grew, also behind the robot; the robot returned to its start point; no sudden jump or snap of the robot model. Checked again on the final RViz frame (`TEST-M5-09_a1_rviz.png`): (A) the four outer walls are straight; (B) no wall is doubled; (C) the W1 partition is mapped as one wall with two faces, its west face seen from the main room and its east face from the alcove, the solid interior unknown; (D) at the end the LiDAR points sit on the mapped walls on every face visible from the start point; (F) the area behind the top-right obstacle stayed unknown (LiDAR shadow). Loop-closure edges: not noticed (not required, DEC-052).
+- Logged, not criteria here (TEST-M5-03/-04 own them): SLAM pose within 7.4 mm and 0.200° at all 11 rest points, 2.9 mm at the end; largest `map → odom` correction 23 mm and −0.20° (W3); RTF 0.85; max cross-track 9.8 mm. Map checker PASS: wall P95 0.038 m, ghosts 0 %, completeness 99.67 %, interior 9.998 × 7.995 m, L1 absent (map as saved, origin not corrected; TS-041).
+- Map save and pose-graph serialization OK (pose graph not kept); SLAM log 0 [ERROR], 0 dropped-scan lines; both shutdowns CLEAN; 0 leftovers; TS-029 invalid attempts 0.
+- Pictures and videos of attempt 1 (`TEST-M5-09_a1_{gazebo,rviz}.{png,mp4}`; the RViz window partly covered on its left by the overlapping Gazebo window): accepted, in `docs/gallery/M5/TEST-M5-09/`.
+- **Result:** TEST-M5-09 **PASS** for REQ-M5-11 (observed by me).
 
 ## Record Format for Future Tests
 

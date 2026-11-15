@@ -14,12 +14,12 @@ every decision has a recorded rationale, and every result is backed by a log in 
 
 <table>
   <tr>
-    <td><a href="docs/gallery/M4/TEST-M4-11/TEST-M4-11_square_ccw_a1_gazebo.mp4"><img src="docs/gallery/M4/TEST-M4-11/TEST-M4-11_square_ccw_a1_gazebo.png" alt="Gazebo: the AMR after driving a 1 m square"></a></td>
-    <td><a href="docs/gallery/M4/TEST-M4-11/TEST-M4-11_square_ccw_a1_rviz.mp4"><img src="docs/gallery/M4/TEST-M4-11/TEST-M4-11_square_ccw_a1_rviz.png" alt="RViz: the odometry trail closing the 1 m square"></a></td>
+    <td><a href="docs/gallery/M5/TEST-M5-03/TEST-M5-03_a1_gazebo.mp4"><img src="docs/gallery/M5/TEST-M5-03/TEST-M5-03_a1_gazebo.png" alt="Gazebo: the AMR in the mapping arena after driving the test route"></a></td>
+    <td><a href="docs/gallery/M5/TEST-M5-03/TEST-M5-03_a1_rviz.mp4"><img src="docs/gallery/M5/TEST-M5-03/TEST-M5-03_a1_rviz.png" alt="RViz: the map SLAM Toolbox built from the LiDAR, with the pose graph"></a></td>
   </tr>
   <tr>
-    <td align="center"><sub>Gazebo: the true motion (1 m square, TEST-M4-11). Click for the video.</sub></td>
-    <td align="center"><sub>RViz: what the robot believes. The odometry trail closes the square.</sub></td>
+    <td align="center"><sub>Gazebo: the true motion (28.8 m mapping route, TEST-M5-03). Click for the video.</sub></td>
+    <td align="center"><sub>RViz: the map SLAM builds from the LiDAR while the robot drives.</sub></td>
   </tr>
 </table>
 
@@ -41,8 +41,8 @@ every decision has a recorded rationale, and every result is backed by a log in 
 | M3 | Sensors (2D LiDAR, IMU, wheel encoders) | ✅ Done |
 | — | Test automation (suite runner, GitHub Actions CI) | ✅ Done |
 | M4 | Wheel odometry, verified against Gazebo ground truth | ✅ Done |
-| M5 | SLAM (`slam_toolbox`) | ⏭️ Next |
-| M6 | Localization | ⚪ Planned |
+| M5 | SLAM (`slam_toolbox`), map verified against the world file | ✅ Done |
+| M6 | Localization | ⏭️ Next |
 | M7 | Autonomous navigation (Nav2) | ⚪ Planned |
 | M8 | Obstacle avoidance (incl. a low-obstacle depth camera) | ⚪ Planned |
 | M9 | Factory environment | ⚪ Planned |
@@ -60,8 +60,8 @@ flowchart LR
   M10 --> M11[M11 Vision] --> M12[M12 Dashboard] -.-> M13[M13 Hardware]
   classDef done fill:#2e7d32,color:#fff,stroke:#1b5e20;
   classDef next fill:#f9a825,color:#000,stroke:#f57f17;
-  class M0,M1,M2,M3,TA,M4 done;
-  class M5 next;
+  class M0,M1,M2,M3,TA,M4,M5 done;
+  class M6 next;
 ```
 
 ## Highlights
@@ -80,10 +80,17 @@ flowchart LR
   lines, in-place turns, squares and circles are 100–1000× below their bounds. To prove the bounds are not vacuous, I
   inject 1 % radius, 2 % track and 0.5 % single-wheel calibration errors. Each is detected, at the size the kinematics
   predicts, within 1 % ([TEST-M4-09](TEST_RESULTS.md)).
+- **SLAM maps checked against the world, not by eye.** An offline checker compares each saved map with the walls
+  and obstacles in the world file: 95 % of the wall cells lie within 0.07 m of the true surface, no ghost walls, the
+  arena within 0.02 m of its true size, and the SLAM pose within 13.5 mm of ground truth at every stop
+  ([TEST-M5-03/-04](TEST_RESULTS.md)). With deliberately wrong odometry (0.20 m and 3.5° of drift) SLAM still keeps
+  the pose within 36 mm ([TEST-M5-06](TEST_RESULTS.md)), and the checker itself is shown to fail rotated, shifted,
+  scaled, erased and ghosted maps ([TEST-M5-07](TEST_RESULTS.md)). Along the way I found that SLAM Toolbox saves its
+  maps half a cell (0.025 m) off ([TS-041](docs/troubleshooting.md), [DEC-055](DECISIONS.md)).
 - **A safety guard for commands.** `cmd_vel_guard` (C++) drops velocity commands whose stamp is stale in *simulation*
   time. I found that wall-clock-stamped commands would otherwise never time out ([TS-015](docs/troubleshooting.md),
   [DEC-029](DECISIONS.md)).
-- **Reproducible testing.** 56 test IDs with written procedures, pass criteria fixed *before* each run, a suite runner
+- **Reproducible testing.** 66 test IDs with written procedures, pass criteria fixed *before* each run, a suite runner
   that refuses unsafe runs, and GitHub Actions for the GPU-free checks. Failures are kept, not hidden.
 
 ## Gallery
@@ -99,6 +106,8 @@ an earlier, headless test covered. Details: [docs/gallery/README.md](docs/galler
 | **M3:** LiDAR scan of the test targets | [<img src="docs/gallery/M3/TEST-M3-10/m3_lidar_demo_gazebo.png" width="380">](docs/gallery/M3/TEST-M3-10/m3_lidar_demo_gazebo.mp4) | [<img src="docs/gallery/M3/TEST-M3-10/m3_lidar_demo_rviz.png" width="380">](docs/gallery/M3/TEST-M3-10/m3_lidar_demo_rviz.mp4) |
 | **M4:** 1 m square, odometry trail | [<img src="docs/gallery/M4/TEST-M4-06/m4_square_demo_gazebo.png" width="380">](docs/gallery/M4/TEST-M4-06/m4_square_demo_gazebo.mp4) | [<img src="docs/gallery/M4/TEST-M4-06/m4_square_demo_rviz.png" width="380">](docs/gallery/M4/TEST-M4-06/m4_square_demo_rviz.mp4) |
 | **M4:** circle, v 0.2 m/s, ω 0.2 rad/s | [<img src="docs/gallery/M4/TEST-M4-07/m4_circle_demo_gazebo.png" width="380">](docs/gallery/M4/TEST-M4-07/m4_circle_demo_gazebo.mp4) | [<img src="docs/gallery/M4/TEST-M4-07/m4_circle_demo_rviz.png" width="380">](docs/gallery/M4/TEST-M4-07/m4_circle_demo_rviz.mp4) |
+| **M5:** mapping the arena with SLAM Toolbox | [<img src="docs/gallery/M5/TEST-M5-09/TEST-M5-09_a1_gazebo.png" width="380">](docs/gallery/M5/TEST-M5-09/TEST-M5-09_a1_gazebo.mp4) | [<img src="docs/gallery/M5/TEST-M5-03/TEST-M5-03_a1_rviz.png" width="380">](docs/gallery/M5/TEST-M5-03/TEST-M5-03_a1_rviz.mp4) |
+| **M5:** SLAM corrects deliberately wrong odometry | [<img src="docs/gallery/M5/TEST-M5-06/TEST-M5-06_a1_gazebo.png" width="380">](docs/gallery/M5/TEST-M5-06/TEST-M5-06_a1_gazebo.mp4) | [<img src="docs/gallery/M5/TEST-M5-06/TEST-M5-06_a1_rviz.png" width="380">](docs/gallery/M5/TEST-M5-06/TEST-M5-06_a1_rviz.mp4) |
 | **M4:** injected 2 % track error: the odometry over-turns | [<img src="docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_L_square_ccw_a1_gazebo.png" width="380">](docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_L_square_ccw_a1_gazebo.mp4) | [<img src="docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_L_square_ccw_a1_rviz.png" width="380">](docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_L_square_ccw_a1_rviz.mp4) |
 
 ## The robot
@@ -123,6 +132,7 @@ same Xacro properties that build the simulated robot, so every dimension shown i
 | IMU | 1 kHz raw, 100 Hz output (10-sample block mean), σ gyro 0.001 rad/s, σ accel 0.01 m/s² | DEC-032, DEC-038 |
 | Encoders | wheel joint positions via `joint_state_broadcaster` | DEC-033 |
 | Odometry covariance | from an assumed 1 % distance / 2 % rotation error model | DEC-042, CALC-M4-04 |
+| SLAM | `slam_toolbox` online asynchronous mode, 0.05 m map cells | DEC-048, `slam_toolbox.yaml` |
 
 Values are owned by the Xacro properties and the controller configuration; the documents name them, and checkers
 compare the two. Every parameter is labelled **Selected**, **Proposed**, **Assumed**, **Calculated**, **Measured** or
@@ -148,11 +158,13 @@ flowchart LR
   lidar -- ros_gz_bridge /scan --> rviz
   imu -- ros_gz_bridge /imu --> tests[tests / later EKF]
   phys -- /clock --> bridge[ros_gz_bridge /clock]
+  lidar -- /scan --> slam[slam_toolbox]
+  slam -- /map + TF map→odom --> rviz
 ```
 
 ```mermaid
 flowchart TD
-  odom --> base_footprint --> base_link
+  map --> odom --> base_footprint --> base_link
   base_link --> left_wheel_link
   base_link --> right_wheel_link
   base_link --> caster_link
@@ -229,6 +241,24 @@ Frames follow REP-103/REP-105 ([frames_and_tf.md](docs/design/frames_and_tf.md))
 - Plan and record: [M4_odometry.md](docs/milestones/M4_odometry.md)
 </details>
 
+<details>
+<summary><b>M5: SLAM</b> (✅ 2026-11-15)</summary>
+
+- **Built:** a purpose-built 10 × 8 m mapping arena with asymmetric features at known positions, `slam.launch.py`
+  with SLAM Toolbox in online asynchronous mode, an RViz mapping view, a route follower steered by Gazebo ground truth
+  (so every run drives the same path), an offline map checker that reads the world file, and the committed reference
+  map with its pose graph.
+- **Tests:** TEST-M5-01 to -10: build and regression identity, the SLAM interface, map accuracy and pose accuracy
+  (three runs), save and reload with Nav2 `map_server`, mapping with injected odometry error, checker sensitivity,
+  regression of M2–M4, live mapping in RViz (observed by me), and records and CI.
+- **Failures kept:** TEST-M5-02 failed once on a `gz sim` exit code after shutdown with the GUI (TS-039, re-run clean).
+  **Found:** SLAM Toolbox writes the centre of the first map cell where ROS expects its corner, so its maps are
+  shifted 0.025 m (TS-041; the reference map is corrected, DEC-055).
+- **Limitation, stated:** in a 10 × 8 m arena with a 12 m LiDAR, scan matching removes the drift continuously, so
+  loop closure is not exercised; it is verified later in a larger environment (DEC-052).
+- Plan and record: [M5_slam.md](docs/milestones/M5_slam.md)
+</details>
+
 ## Key decisions
 
 All decisions, with the alternatives and trade-offs: [DECISIONS.md](DECISIONS.md).
@@ -247,6 +277,9 @@ All decisions, with the alternatives and trade-offs: [DECISIONS.md](DECISIONS.md
 | DEC-040 | Suite runner + CI for GPU-free checks | Cheap checks run on every code push |
 | DEC-042 | Odometry covariance from an error model | Downstream fusion (M6) gets honest uncertainty |
 | DEC-044 | Odometry bounds: straight 0.5 % / 0.5°, turns 1°, closed paths 20 mm / 1° | 30–50× margin over the simulated error, yet the injected errors exceed them 2–7× |
+| DEC-046 | A purpose-built mapping arena with features at known positions | The map can be checked cell by cell against the world file |
+| DEC-049 | The test route is driven on ground truth, not odometry | The system under test is SLAM; the same path makes runs comparable |
+| DEC-052 | Loop closure not claimed in M5 | The small arena cannot exercise it; a test should not claim what it cannot observe |
 
 ## How I test
 
@@ -261,7 +294,8 @@ All decisions, with the alternatives and trade-offs: [DECISIONS.md](DECISIONS.md
 5. **Honest records.** Test states are only `PLANNED`, `NOT RUN`, `PASS`, `FAIL` and `BLOCKED`. Failures stay in the
    record with a diagnosis and a re-test. GUI checks are recorded as "observed by me".
 6. **Automation.** `tools/run_suite.py` runs suites serially and refuses to start when a simulation is still running;
-   CI runs the build, the unit tests, the model regression (including M1 byte identity) and the odometry recomputation.
+   CI runs the build, the unit tests, the model regression (including M1 byte identity), the odometry recomputation
+   and the map-checker sensitivity test.
    Gazebo sensor tests stay local, because hosted runners have no GPU.
 
 ## Problems I solved
@@ -275,16 +309,18 @@ All decisions, with the alternatives and trade-offs: [DECISIONS.md](DECISIONS.md
 | Plugin refused to start in a world file | It validated in `Configure()`, before the world's physics component existed | Validation moved to the first `PreUpdate()` (TS-028) |
 | Rare `gz sim` hang on shutdown | Upstream deadlock (gdb trace) | Reported upstream, invalid-run rule (TS-029, DEC-039) |
 | A low LiDAR "saw" through the chassis | `gpu_lidar` is rendering-based: near clip and back-face culling | Scan plane kept above the body; lower mounts need a masked sector (TS-022) |
+| Saved SLAM maps were 0.025 m off | SLAM Toolbox writes the first cell's centre as the map origin, ROS expects its corner | Reference map origin corrected and re-verified (TS-041, DEC-055) |
 | Test harness fell up to 0.7 s behind simulation time | rclpy processing every 1 kHz `/clock` message | Simulation time taken from the Gazebo pose stream (TS-013) |
 
-All 36 entries, including the small ones: [docs/troubleshooting.md](docs/troubleshooting.md).
+All 41 entries, including the small ones: [docs/troubleshooting.md](docs/troubleshooting.md).
 
 ## Repository layout
 
 ```
 amr_ws/src/
   amr_description/        robot model: properties, inertia macros, URDF/Xacro, sensors, display/spawn launches
-  amr_bringup/            simulation bring-up: sim.launch.py, controllers, bridge, worlds, RViz configs, cmd_vel_guard
+  amr_bringup/            simulation bring-up: sim.launch.py, slam.launch.py, controllers, bridge, worlds, maps,
+                          RViz configs, cmd_vel_guard
   amr_gazebo_plugins/     ImuDecimator Gazebo system plugin + unit tests
 tools/                    suite runner, capture and demo scripts, geometry drawing generator
 docs/
@@ -318,7 +354,11 @@ ros2 launch amr_description display.launch.py
 
 # Simulation with controllers (add sensors:=true world:=sensor_test.sdf for the sensor world)
 ros2 launch amr_bringup sim.launch.py
-# Drive it (second terminal)
+# Mapping instead: the arena with sensors, SLAM (second terminal) and the mapping view (third terminal)
+#   ros2 launch amr_bringup sim.launch.py sensors:=true world:=mapping_arena.sdf
+#   ros2 launch amr_bringup slam.launch.py
+#   rviz2 -d $(ros2 pkg prefix amr_bringup)/share/amr_bringup/rviz/mapping.rviz --ros-args -p use_sim_time:=true
+# Drive it (another terminal)
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -p stamped:=true -p frame_id:=base_footprint -p use_sim_time:=true -r cmd_vel:=/cmd_vel
 
 # The GPU-free test suite (what CI runs)
@@ -332,7 +372,7 @@ The engineering facts (parameters, decisions, results and evidence) all live in 
 
 A note on the records: this repository is a clean copy of my development history, so the revision hashes quoted in
 the test records and logs refer to my development repository. The records-consistency checkers (TEST-M2-11,
-TEST-M3-12, TEST-M4-12) also check private planning files, so their scripts and logs are not included.
+TEST-M3-12, TEST-M4-12, TEST-M5-10) also check private planning files, so their scripts and logs are not included.
 
 ## License and contact
 

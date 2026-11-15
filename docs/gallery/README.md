@@ -41,8 +41,16 @@ rejected media (Git keeps every committed file in its history).
 | M4 | [TEST-M4-07](M4/TEST-M4-07/) | `m4_circle_demo_{gazebo,rviz}.{png,mp4}` | Re-created demonstration | The circle, v 0.2 m/s, ω 0.2 rad/s |
 | M4 | [TEST-M4-09](M4/TEST-M4-09/) | `TEST-M4-09-R1_<case>_a1_{gazebo,rviz}.{png,mp4}` (case R_straight, B_rotate, L_square_ccw, L_square_cw) | Test-run capture (R1) | The injected-calibration-error runs: Gazebo shows the true motion, RViz the odometry with the wrong calibration. The videos start 1–4 s into the first motion (stale frames cut, TS-036) |
 | M4 | [TEST-M4-11](M4/TEST-M4-11/) | `TEST-M4-11_square_{ccw,cw}_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | The two squares I watched for TEST-M4-11: Gazebo shows the true motion, RViz the odometry trail in `odom` closing the 1 m square, with the robot model and TF |
+| M5 | [TEST-M5-02](M5/TEST-M5-02/) | `TEST-M5-02-R1_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture (R1) | The SLAM interface test: the mapping arena from above in Gazebo; in RViz the map that SLAM Toolbox builds while the robot drives 1 m and turns (scan in red, map frame fixed) |
+| M5 | [TEST-M5-03](M5/TEST-M5-03/) | `TEST-M5-03_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | The mapping-accuracy run (TEST-M5-03/-04, attempt 1, whose map became the reference map): the robot drives the 28.8 m test route in Gazebo while RViz shows SLAM Toolbox building the map |
+| M5 | [TEST-M5-06](M5/TEST-M5-06/) | `TEST-M5-06_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | Mapping with deliberately wrong odometry (TEST-M5-06, attempt 1): the robot drives the test route in Gazebo while, in RViz, SLAM Toolbox corrects the drifting odometry and builds a clean map |
+| M5 | [TEST-M5-09](M5/TEST-M5-09/) | `TEST-M5-09_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | Live mapping watched by me (TEST-M5-09): the robot drives the test route in Gazebo while, in RViz, SLAM Toolbox grows the map and the pose graph and the robot returns to its start |
 
 Finalized on 2026-11-13 (first batch: 22 PNG, 18 MP4, 5.7 MB; second batch, TEST-M4-11: 4 PNG, 4 MP4, 1.6 MB, captured on `adfc7ea`). The re-created demonstrations were made on the robot code of `4db5197` (`amr_ws/src` unchanged since), with the capture tools as committed in `1d426eb`; the TEST-M4-09 R1 captures come from the formal run on `4db5197`. Videos converted from WebM to MP4 afterwards (`2b5037f`).
+
+M5: TEST-M5-02 R1 captures (2 PNG, 2 MP4, 0.9 MB) accepted on 2026-11-15, from the formal run on `8130ee8`; the Gazebo and RViz windows were arranged side by side before the recording started (`LAYOUT_FLAG` option of the M5 procedure), and the camera view was chosen from trial screenshots.
+M5: TEST-M5-03 attempt 1 captures (2 PNG, 2 MP4, 8.6 MB) accepted on 2026-11-15, from the formal run on `59ee7f0`; windows side by side, camera view as TEST-M5-02 R1.
+M5: TEST-M5-06 attempt 1 captures (2 PNG, 2 MP4) accepted on 2026-11-15, from the formal run on `6cb8f23`; windows side by side, camera view as TEST-M5-02 R1. TEST-M5-09 attempt 1 captures (2 PNG, 2 MP4) accepted on 2026-11-15, from the formal run on `7f3d65b`; one laptop screen, so the RViz window is partly covered on its left by the Gazebo window.
 
 ## How to regenerate
 
