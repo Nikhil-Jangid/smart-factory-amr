@@ -35,7 +35,7 @@ jobs:
       - name: Git and ps (before checkout, so that checkout makes a real repository; the procedures call git)
         run: |
           apt-get update
-          apt-get install -y --no-install-recommends git procps   # procps: `ps` for the runner's process check
+          apt-get install -y --no-install-recommends git procps python3-numpy python3-yaml   # procps: `ps` for the runner's process check; numpy and yaml: TEST-M5-07 map checker
           git config --global --add safe.directory '*'
 
       - uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
           source /opt/ros/jazzy/setup.bash
           cd amr_ws && colcon build --symlink-install
 
-      - name: GPU-free suite (TEST-M3-01 build, TEST-M3-13 unit tests, TEST-M3-02 model regression incl. M1 byte identity, TEST-M4-03 odometry recomputation)
+      - name: GPU-free suite (TEST-M3-01 build, TEST-M3-13 unit tests, TEST-M3-02 model regression incl. M1 byte identity, TEST-M4-03 odometry recomputation, TEST-M5-07 map-checker sensitivity)
         run: |
           source /opt/ros/jazzy/setup.bash && source amr_ws/install/setup.bash
           python3 -I tools/run_suite.py ci GH${{ github.run_number }}a${{ github.run_attempt }}

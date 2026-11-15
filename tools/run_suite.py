@@ -29,6 +29,7 @@ import tempfile
 import time
 
 EV = 'docs/evidence'
+MAP = 'amr_ws/src/amr_bringup/maps/mapping_arena.yaml'   # M5 reference map (DEC-051, DEC-055)
 PROC_RE = re.compile(r'(^|/)gz sim |ros2 launch|parameter_bridge|ros2_control_node|robot_state_publisher'
                      r'|controller_manager|/spawner |ruby .*gz sim')
 OVERALL_RE = re.compile(r'^(# overall: .*|== (ALL CHECKS PASSED|\d+ CHECK\(S\) FAILED).*)$')
@@ -67,6 +68,7 @@ SUITES = {
         E('TEST-M3-13', f'bash {EV}/M3/TEST-M3-13_procedure.sh -{{tag}}', f'{EV}/M3/TEST-M3-13-{{tag}}_unit.log'),
         E('TEST-M3-02', f'bash {EV}/M3/TEST-M3-02_procedure.sh -{{tag}}', f'{EV}/M3/TEST-M3-02-{{tag}}_review.log'),
         E('TEST-M4-03', f'python3 -I {EV}/M4/TEST-M4-03_recompute.py', f'{EV}/M4/TEST-M4-03-{{tag}}_recompute.log', True),
+        E('TEST-M5-07', f'python3 -I {EV}/M5/TEST-M5-07_distort.py {MAP}', f'{EV}/M5/TEST-M5-07-{{tag}}_review.log', True),
     ],
     # TEST-TA-04: every formal test whose harness uses M2.Spinner (plan §6). Run counts as
     # in the last formal runs (M2 re-test 1, M3 §7.3 re-run, Task E).
@@ -92,8 +94,21 @@ SUITES = {
         m4('TEST-M4-06', 'square_ccw'), m4('TEST-M4-06', 'square_cw'), m4('TEST-M4-07', 'circle'), m4('TEST-M4-08', 'twist'),
         E('TEST-M4-09', f'bash {EV}/M4/TEST-M4-09_procedure.sh -{{tag}} 3', f'{EV}/M4/TEST-M4-09-{{tag}}_check.log'),
     ],
+    # REQ-M5-10: every automatable M5 test with the commands of test_plan.md §10 and TEST_RESULTS.md § M5.
+    # Not here: TEST-M5-04 (checked inside the TEST-M5-03 runs), TEST-M5-08 (the static, regression and m4 suites
+    # themselves) and TEST-M5-09 (observed in RViz).
+    # With SHOW=1 add NOREC=1: otherwise attempt 1 of each mapping procedure records into docs/gallery/_pending/.
+    'm5': [
+        E('TEST-M5-01', f'bash {EV}/M5/TEST-M5-01_procedure.sh -{{tag}}', f'{EV}/M5/TEST-M5-01-{{tag}}_review.log'),
+        E('TEST-M5-07', f'python3 -I {EV}/M5/TEST-M5-07_distort.py {MAP}', f'{EV}/M5/TEST-M5-07-{{tag}}_review.log', True),
+        E('TEST-M5-02', f'bash {EV}/M5/TEST-M5-02_procedure.sh 3 {{log}}', f'{EV}/M5/TEST-M5-02-{{tag}}_review.log'),
+        E('TEST-M5-03', f'bash {EV}/M5/TEST-M5_procedure.sh 3 {{log}}', f'{EV}/M5/TEST-M5-03-{{tag}}_review.log'),
+        E('TEST-M5-05', f'bash {EV}/M5/TEST-M5-05_procedure.sh {{log}}', f'{EV}/M5/TEST-M5-05-{{tag}}_review.log'),
+        E('TEST-M5-06', f'bash {EV}/M5/TEST-M5-06_procedure.sh 3 {{log}}', f'{EV}/M5/TEST-M5-06-{{tag}}_review.log'),
+    ],
 }
 # TEST-TA-05 (CI, .github/workflows/ci.yml; plan §7): the same entries as `static`.
+# TEST-M5-10 (2026-11-15): TEST-M5-07 (map-checker sensitivity) joins the static and ci suites.
 SUITES['ci'] = SUITES['static'][:]
 
 
@@ -168,6 +183,10 @@ def run_suite(name, entries, tag, check=running_sim_processes, summary_dir=f'{EV
         return 3, []
     results, stopped = [], None
     started = time.strftime('%F %T %Z')
+    # Revision and cleanliness at the start: commits made while a long suite runs must not appear as its revision
+    # (the M508 regression and m4 headers showed the revision at the finish).
+    rev = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()
+    dirty = subprocess.run(['git', 'diff', '--quiet', 'HEAD', '--', 'amr_ws/src', 'docs/evidence', 'tools']).returncode
     for e in entries:
         if results:
             busy = check()
@@ -181,10 +200,10 @@ def run_suite(name, entries, tag, check=running_sim_processes, summary_dir=f'{EV
         results.append(r)
     ok = not stopped and len(results) == len(entries) and all(r['verdict'] == 'PASS-candidate' for r in results)
     if header:
-        rev = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()
-        dirty = subprocess.run(['git', 'diff', '--quiet', 'HEAD', '--', 'amr_ws/src', 'docs/evidence', 'tools']).returncode
+        end_rev = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()
         head = (f'# Suite {name}, tag {tag}: started {started}, finished {time.strftime("%F %T %Z")}, revision {rev}'
-                f'{" (amr_ws/src, docs/evidence or tools with uncommitted changes)" if dirty else " (clean)"}\n\n'
+                f'{" (amr_ws/src, docs/evidence or tools with uncommitted changes)" if dirty else " (clean)"} at the start'
+                f'{"" if end_rev == rev else f"; HEAD {end_rev} at the finish"}\n\n'
                 'Runner classification only. **Not a test result**: every log is reviewed by a human before '
                 '`TEST_RESULTS.md` changes (DEC-040 item 5).\n\n')
     else:

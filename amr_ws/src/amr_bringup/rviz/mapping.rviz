@@ -1,0 +1,148 @@
+# M5 live mapping view (TEST-M5-09). Fixed frame map, so the robot moves on the map that SLAM builds.
+#   Map          /map (OccupancyGrid; Transient Local, so the last map appears even if RViz starts late).
+#                Black = occupied, white = free, grey = unknown (not yet seen).
+#   LaserScan    /scan, the current scan (red points). Lying on the black walls = scan and map agree.
+#   Pose graph   /slam_toolbox/graph_visualization: one marker per processed scan (graph node) and lines
+#                between them (edges). A loop closure adds an edge between distant nodes.
+#   Odometry     /diff_drive_controller/odom trail (yellow), drawn in the map frame through map -> odom: it
+#                jumps when SLAM corrects the drift.
+#   RobotModel, TF (map, odom, base_footprint, laser_frame names shown).
+# Usage (after sim.launch.py sensors:=true world:=mapping_arena.sdf and slam.launch.py):
+#   rviz2 -d $(ros2 pkg prefix amr_bringup)/share/amr_bringup/rviz/mapping.rviz --ros-args -p use_sim_time:=true
+# Window 860 x 845 (beside the Gazebo GUI, as odometry.rviz). Top-down view of the whole 10 x 8 m arena.
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid (1 m)
+      Enabled: true
+      Reference Frame: <Fixed Frame>
+      Cell Size: 1
+      Plane Cell Count: 20
+      Offset:
+        X: 3
+        Y: 0
+        Z: 0
+      Value: true
+    - Class: rviz_default_plugins/Map
+      Name: Map (/map)
+      Enabled: true
+      Topic:
+        Value: /map
+        Depth: 1
+        Durability Policy: Transient Local
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Color Scheme: map
+      Alpha: 0.85
+      Draw Behind: true
+      Value: true
+    - Class: rviz_default_plugins/LaserScan
+      Name: LaserScan (/scan)
+      Enabled: true
+      Topic:
+        Value: /scan
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+      Style: Flat Squares
+      Size (m): 0.05
+      Color Transformer: FlatColor
+      Color: 255; 0; 0
+      Alpha: 1
+      Decay Time: 0
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Pose graph (/slam_toolbox/graph_visualization)
+      Enabled: true
+      Topic:
+        Value: /slam_toolbox/graph_visualization
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Value: true
+    - Class: rviz_default_plugins/Odometry
+      Name: Odometry (/diff_drive_controller/odom)
+      Enabled: true
+      Topic:
+        Value: /diff_drive_controller/odom
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Position Tolerance: 0.1
+      Angle Tolerance: 0.2
+      Keep: 500
+      Shape:
+        Value: Arrow
+        Color: 255; 200; 0
+        Alpha: 1
+        Shaft Length: 0.2
+        Shaft Radius: 0.015
+        Head Length: 0.07
+        Head Radius: 0.04
+      Covariance:
+        Value: false
+      Value: true
+    - Class: rviz_default_plugins/RobotModel
+      Name: RobotModel
+      Enabled: true
+      Description Source: Topic
+      Description Topic:
+        Value: /robot_description
+        Depth: 5
+        Durability Policy: Transient Local
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Alpha: 1
+      Visual Enabled: true
+      Collision Enabled: false
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: true
+      Show Axes: true
+      Show Arrows: false
+      Marker Scale: 0.8
+      Frames:
+        All Enabled: false
+        map:
+          Value: true
+        odom:
+          Value: true
+        base_footprint:
+          Value: true
+        laser_frame:
+          Value: true
+      Value: true
+  Global Options:
+    Fixed Frame: map
+    Background Color: 48; 48; 48
+    Frame Rate: 30
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/Measure
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Name: Current View
+      Target Frame: <Fixed Frame>
+      X: 3
+      Y: 0
+      Scale: 60
+      Angle: 0
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 845
+  Width: 860
+  Hide Left Dock: false
+  Hide Right Dock: true

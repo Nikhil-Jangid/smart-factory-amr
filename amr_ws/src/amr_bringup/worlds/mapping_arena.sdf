@@ -1,0 +1,150 @@
+<?xml version="1.0" ?>
+<!--
+  M5 mapping arena (DEC-046; layout CALC-M5-01 in docs/milestones/M5_slam.md §3.1, Task A).
+    ros2 launch amr_bringup sim.launch.py sensors:=true world:=mapping_arena.sdf
+  Systems and physics as in sensor_test.sdf (stock empty.sdf + Sensors (ogre2, gpu_lidar) + IMU).
+
+  This file is the ground truth for the M5 map checker: every obstacle is an axis-aligned static box whose
+  model <pose> is its centre and whose <size> is its extent. Keep it that way (no rotation, no meshes).
+  The robot spawns at the world origin, yaw 0 (sim.launch.py default), so the SLAM map frame starts on the
+  world frame.
+
+  Interior (free floor) x -2.0 .. +8.0 m, y -4.0 .. +4.0 m (10.0 x 8.0 m). Walls 0.2 m thick, 1.0 m high.
+    pillar_p1      centre ( 2.0,  2.0), 0.3 x 0.3 x 1.0      small feature, breaks symmetry
+    pillar_p2      centre ( 5.0, -2.0), 0.3 x 0.3 x 1.0      small feature
+    box_b1         centre ( 6.5,  2.5), 1.0 x 0.6 x 0.5      lower than the walls, above the 0.230 m scan plane
+    partition_w1   x 3.4 .. 3.6, y -4.0 .. -1.5 (1.0 high)   alcove; joined to the south wall
+    low_box_l1     centre ( 0.5, -2.5), 0.4 x 0.4 x 0.15     BELOW the scan plane: must not appear in the map
+-->
+<sdf version="1.6">
+  <world name="mapping_arena">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Perimeter walls. North and south run the full outer length (x -2.2 .. 8.2) and cover the corners. -->
+    <model name="wall_north">
+      <static>true</static>
+      <pose>3.0 4.1 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>10.4 0.2 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>10.4 0.2 1.0</size></box></geometry>
+          <material><ambient>0.55 0.55 0.6 1</ambient><diffuse>0.55 0.55 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="wall_south">
+      <static>true</static>
+      <pose>3.0 -4.1 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>10.4 0.2 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>10.4 0.2 1.0</size></box></geometry>
+          <material><ambient>0.55 0.55 0.6 1</ambient><diffuse>0.55 0.55 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="wall_west">
+      <static>true</static>
+      <pose>-2.1 0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.2 8.0 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.2 8.0 1.0</size></box></geometry>
+          <material><ambient>0.55 0.55 0.6 1</ambient><diffuse>0.55 0.55 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="wall_east">
+      <static>true</static>
+      <pose>8.1 0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.2 8.0 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.2 8.0 1.0</size></box></geometry>
+          <material><ambient>0.55 0.55 0.6 1</ambient><diffuse>0.55 0.55 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Interior features (CALC-M5-01). -->
+    <model name="pillar_p1">
+      <static>true</static>
+      <pose>2.0 2.0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.3 0.3 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+          <material><ambient>0.85 0.45 0.1 1</ambient><diffuse>0.85 0.45 0.1 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="pillar_p2">
+      <static>true</static>
+      <pose>5.0 -2.0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.3 0.3 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+          <material><ambient>0.85 0.45 0.1 1</ambient><diffuse>0.85 0.45 0.1 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="box_b1">
+      <static>true</static>
+      <pose>6.5 2.5 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>1.0 0.6 0.5</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>1.0 0.6 0.5</size></box></geometry>
+          <material><ambient>0.2 0.45 0.8 1</ambient><diffuse>0.2 0.45 0.8 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="partition_w1">
+      <static>true</static>
+      <pose>3.5 -2.75 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.2 2.5 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.2 2.5 1.0</size></box></geometry>
+          <material><ambient>0.45 0.6 0.4 1</ambient><diffuse>0.45 0.6 0.4 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="low_box_l1">
+      <static>true</static>
+      <pose>0.5 -2.5 0.075 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.4 0.4 0.15</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.4 0.4 0.15</size></box></geometry>
+          <material><ambient>0.85 0.2 0.2 1</ambient><diffuse>0.85 0.2 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+  </world>
+</sdf>
