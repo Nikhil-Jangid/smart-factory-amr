@@ -1,0 +1,66 @@
+# TEST-M5-07 checker sensitivity, 2026-11-15 03:20:19 IST, revision 86e3b56 (amr_ws/src and docs/evidence/M5 clean)
+$ python3 -I docs/evidence/M5/TEST-M5-07_distort.py amr_ws/src/amr_bringup/maps/mapping_arena.yaml <tmp>
+# TEST-M5-07 checker sensitivity on mapping_arena.yaml
+
+## original
+# map mapping_arena.yaml: 202 x 162 cells, 0.05 m, origin [-2.046, -4.055]; occupied cells 971; true surfaces: 8 boxes above the scan plane, below it: ['low_box_l1']
+PASS  wall accuracy: P95 distance to the true surface 0.0700 m (<= 0.1 m); median 0.0290 m, max 0.079 m
+PASS  ghosts: 0 of 971 occupied cells farther than 0.25 m from any surface = 0.000 % (<= 0.5 %)
+PASS  completeness: 908 of 910 visible surface points have an occupied cell within 0.1 m = 99.78 % (>= 90 %)
+PASS  dimensions: interior 9.993 x 7.985 m (10.0 x 8.0 +/- 0.1); wall rotation vs the world (deg) west +0.02, east +0.05, south +0.02, north -0.03 (each <= 1.0); parallel 0.05, perpendicular 0.08 deg (<= 1.0)
+PASS  low_box_l1 (top 0.15 m, below the scan plane) absent: 0 occupied cells in its footprint (0)
+INFO  best-fit offset (not applied): dx -0.025 m, dy -0.025 m, rotation +0.00 deg (mean clipped distance 0.0079 m)
+PASS  original map passes every measure
+
+## rotate -> expected FAIL on dimensions
+# map mapping_arena_rotate.yaml: 242 x 202 cells, 0.05 m, origin [-3.046, -5.055]; occupied cells 971; true surfaces: 8 boxes above the scan plane, below it: ['low_box_l1']
+FAIL  wall accuracy: P95 distance to the true surface 0.2700 m (<= 0.1 m); median 0.0710 m, max 0.320 m
+FAIL  ghosts: 55 of 971 occupied cells farther than 0.25 m from any surface = 5.664 % (<= 0.5 %)
+FAIL  completeness: 535 of 910 visible surface points have an occupied cell within 0.1 m = 58.79 % (>= 90 %)
+FAIL  dimensions: interior 9.995 x 7.949 m (10.0 x 8.0 +/- 0.1); wall rotation vs the world (deg) west +1.79, east +1.72, south +1.70, north +0.80 (each <= 1.0); parallel 0.89, perpendicular 0.99 deg (<= 1.0)
+PASS  low_box_l1 (top 0.15 m, below the scan plane) absent: 0 occupied cells in its footprint (0)
+INFO  best-fit offset (not applied): dx -0.050 m, dy -0.075 m, rotation -1.00 deg (mean clipped distance 0.0426 m)
+PASS  rotate: the checker fails dimensions (measures failed: wall_accuracy, ghosts, completeness, dimensions)
+
+## shift -> expected FAIL on wall_accuracy
+# map mapping_arena_shift.yaml: 242 x 202 cells, 0.05 m, origin [-3.046, -5.055]; occupied cells 971; true surfaces: 8 boxes above the scan plane, below it: ['low_box_l1']
+FAIL  wall accuracy: P95 distance to the true surface 0.1790 m (<= 0.1 m); median 0.0210 m, max 0.229 m
+PASS  ghosts: 0 of 971 occupied cells farther than 0.25 m from any surface = 0.000 % (<= 0.5 %)
+FAIL  completeness: 500 of 910 visible surface points have an occupied cell within 0.1 m = 54.95 % (>= 90 %)
+FAIL  dimensions: west: only 5 cells
+PASS  low_box_l1 (top 0.15 m, below the scan plane) absent: 0 occupied cells in its footprint (0)
+INFO  best-fit offset (not applied): dx -0.100 m, dy -0.025 m, rotation +0.00 deg (mean clipped distance 0.0424 m)
+PASS  shift: the checker fails wall_accuracy (measures failed: wall_accuracy, completeness, dimensions)
+
+## scale -> expected FAIL on dimensions
+# map mapping_arena_scale.yaml: 242 x 202 cells, 0.05 m, origin [-3.046, -5.055]; occupied cells 993; true surfaces: 8 boxes above the scan plane, below it: ['low_box_l1']
+PASS  wall accuracy: P95 distance to the true surface 0.0800 m (<= 0.1 m); median 0.0790 m, max 0.179 m
+PASS  ghosts: 0 of 993 occupied cells farther than 0.25 m from any surface = 0.000 % (<= 0.5 %)
+FAIL  completeness: 528 of 910 visible surface points have an occupied cell within 0.1 m = 58.02 % (>= 90 %)
+FAIL  dimensions: interior 10.059 x 8.178 m (10.0 x 8.0 +/- 0.1); wall rotation vs the world (deg) west +0.04, east -0.36, south +0.02, north -0.05 (each <= 1.0); parallel 0.41, perpendicular 0.38 deg (<= 1.0)
+PASS  low_box_l1 (top 0.15 m, below the scan plane) absent: 0 occupied cells in its footprint (0)
+INFO  best-fit offset (not applied): dx +0.025 m, dy +0.075 m, rotation +0.00 deg (mean clipped distance 0.0272 m)
+PASS  scale: the checker fails dimensions (measures failed: completeness, dimensions)
+
+## erase -> expected FAIL on completeness
+# map mapping_arena_erase.yaml: 242 x 202 cells, 0.05 m, origin [-3.046, -5.055]; occupied cells 754; true surfaces: 8 boxes above the scan plane, below it: ['low_box_l1']
+PASS  wall accuracy: P95 distance to the true surface 0.0700 m (<= 0.1 m); median 0.0290 m, max 0.079 m
+PASS  ghosts: 0 of 754 occupied cells farther than 0.25 m from any surface = 0.000 % (<= 0.5 %)
+FAIL  completeness: 699 of 910 visible surface points have an occupied cell within 0.1 m = 76.81 % (>= 90 %)
+FAIL  dimensions: north: only 0 cells
+PASS  low_box_l1 (top 0.15 m, below the scan plane) absent: 0 occupied cells in its footprint (0)
+INFO  best-fit offset (not applied): dx -0.025 m, dy -0.025 m, rotation +0.00 deg (mean clipped distance 0.0086 m)
+PASS  erase: the checker fails completeness (measures failed: completeness, dimensions)
+
+## ghost -> expected FAIL on ghosts
+# map mapping_arena_ghost.yaml: 242 x 202 cells, 0.05 m, origin [-3.046, -5.055]; occupied cells 1051; true surfaces: 8 boxes above the scan plane, below it: ['low_box_l1']
+FAIL  wall accuracy: P95 distance to the true surface 1.5711 m (<= 0.1 m); median 0.0290 m, max 2.520 m
+FAIL  ghosts: 80 of 1051 occupied cells farther than 0.25 m from any surface = 7.612 % (<= 0.5 %)
+PASS  completeness: 908 of 910 visible surface points have an occupied cell within 0.1 m = 99.78 % (>= 90 %)
+PASS  dimensions: interior 9.993 x 7.985 m (10.0 x 8.0 +/- 0.1); wall rotation vs the world (deg) west +0.02, east +0.05, south +0.02, north -0.03 (each <= 1.0); parallel 0.05, perpendicular 0.08 deg (<= 1.0)
+PASS  low_box_l1 (top 0.15 m, below the scan plane) absent: 0 occupied cells in its footprint (0)
+INFO  best-fit offset (not applied): dx -0.025 m, dy -0.025 m, rotation +0.00 deg (mean clipped distance 0.0264 m)
+PASS  ghost: the checker fails ghosts (measures failed: wall_accuracy, ghosts)
+
+# result: PASS
+# exit 0

@@ -1,0 +1,72 @@
+# TEST-M4 procedure: mode=square_cw, valid runs required=3, 2026-11-15 04:37:31 IST
+# revision 7832350 (amr_ws/src clean)
+# launch arguments: headless:=false controllers_file:=<tmp>/L.yaml
+# ros2_control 4.48.1-1noble.20261006.040510, diff_drive_controller 4.42.1-1noble.20260924.190414, gz_ros2_control 1.2.20-1noble.20261006.040504
+
+## attempt 1 (ROS_DOMAIN_ID=81, GZ_PARTITION=amr_m4_square_cw_<pid>_1)
+# sim_record: recording gazebo window to docs/gallery/_pending/M4/TEST-M4-09/TEST-M4-09-M508_L_square_cw_a1_gazebo.webm
+# sim_record: recording rviz window to docs/gallery/_pending/M4/TEST-M4-09/TEST-M4-09-M508_L_square_cw_a1_rviz.webm
+# TEST-M4 harness mode=square_cw, wall 2026-11-15 04:37:47 IST
+PASS  square CW: robot at rest at the comparison point (ground-truth speed < 5 mm/s for 0.2 s)
+INFO  square CW: ground truth d = (-0.0272, -0.0287) m, dpsi -356.711 deg; odometry d = (+0.0037, +0.0037) m, dpsi -360.401 deg
+FAIL  square CW: position error 44.72 mm <= 20 mm
+FAIL  square CW: yaw error -3.6902 deg, |.| <= 1 deg
+INFO  RTF over the measurement window = 0.988 (valid if >= 0.5)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 2721, odometry 2305, joint_states 4613, tf 2305
+# result: 2 CRITERION/CRITERIA FAILED
+# webm_trim: docs/gallery/_pending/M4/TEST-M4-09/TEST-M4-09-M508_L_square_cw_a1_gazebo.webm: first 2.3 s cut, 711 frames kept
+# webm_trim: docs/gallery/_pending/M4/TEST-M4-09/TEST-M4-09-M508_L_square_cw_a1_rviz.webm: first 2.3 s cut, 711 frames kept
+# sim_record: wrote docs/gallery/_pending/M4/TEST-M4-09/TEST-M4-09-M508_L_square_cw_a1_gazebo.mp4
+# sim_record: wrote docs/gallery/_pending/M4/TEST-M4-09/TEST-M4-09-M508_L_square_cw_a1_rviz.mp4
+# sim_capture: wrote docs/gallery/_pending/M4/TEST-M4-09/TEST-M4-09-M508_L_square_cw_a1_gazebo.png
+# sim_capture: wrote docs/gallery/_pending/M4/TEST-M4-09/TEST-M4-09-M508_L_square_cw_a1_rviz.png
+# harness exit 1; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#        17 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 2 (ROS_DOMAIN_ID=82, GZ_PARTITION=amr_m4_square_cw_<pid>_2)
+# TEST-M4 harness mode=square_cw, wall 2026-11-15 04:38:44 IST
+PASS  square CW: robot at rest at the comparison point (ground-truth speed < 5 mm/s for 0.2 s)
+INFO  square CW: ground truth d = (-0.0282, -0.0283) m, dpsi -356.361 deg; odometry d = (+0.0027, +0.0043) m, dpsi -360.051 deg
+FAIL  square CW: position error 44.93 mm <= 20 mm
+FAIL  square CW: yaw error -3.6906 deg, |.| <= 1 deg
+INFO  RTF over the measurement window = 0.989 (valid if >= 0.5)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 2847, odometry 2307, joint_states 4841, tf 2306
+# result: 2 CRITERION/CRITERIA FAILED
+# harness exit 1; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 3 (ROS_DOMAIN_ID=83, GZ_PARTITION=amr_m4_square_cw_<pid>_3)
+# TEST-M4 harness mode=square_cw, wall 2026-11-15 04:39:39 IST
+PASS  square CW: robot at rest at the comparison point (ground-truth speed < 5 mm/s for 0.2 s)
+INFO  square CW: ground truth d = (-0.0279, -0.0296) m, dpsi -356.419 deg; odometry d = (+0.0030, +0.0030) m, dpsi -360.109 deg
+FAIL  square CW: position error 44.84 mm <= 20 mm
+FAIL  square CW: yaw error -3.6897 deg, |.| <= 1 deg
+INFO  RTF over the measurement window = 0.988 (valid if >= 0.5)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 2847, odometry 2306, joint_states 4840, tf 2305
+# result: 2 CRITERION/CRITERIA FAILED
+# harness exit 1; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: AT LEAST ONE RUN FAILED OR TOO FEW VALID RUNS
+
+# TEST-M4-09 case L (square_cw): override lines inserted into a copy of controllers.yaml:
+#   17a18
+#   >     left_wheel_radius_multiplier: 1.005  # TEST-M4-09 test-only override (DEC-043)

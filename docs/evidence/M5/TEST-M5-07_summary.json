@@ -1,0 +1,53 @@
+{
+ "source": "mapping_arena.yaml",
+ "cases": {
+  "original": {
+   "expected": "PASS",
+   "failed_measures": []
+  },
+  "rotate": {
+   "expected": "dimensions",
+   "failed_measures": [
+    "wall_accuracy",
+    "ghosts",
+    "completeness",
+    "dimensions"
+   ],
+   "detected": true
+  },
+  "shift": {
+   "expected": "wall_accuracy",
+   "failed_measures": [
+    "wall_accuracy",
+    "completeness",
+    "dimensions"
+   ],
+   "detected": true
+  },
+  "scale": {
+   "expected": "dimensions",
+   "failed_measures": [
+    "completeness",
+    "dimensions"
+   ],
+   "detected": true
+  },
+  "erase": {
+   "expected": "completeness",
+   "failed_measures": [
+    "completeness",
+    "dimensions"
+   ],
+   "detected": true
+  },
+  "ghost": {
+   "expected": "ghosts",
+   "failed_measures": [
+    "wall_accuracy",
+    "ghosts"
+   ],
+   "detected": true
+  }
+ },
+ "pass": true
+}

@@ -1,0 +1,13 @@
+# TS-039 GUI shutdown rig, 10 cycles, 2026-11-15 02:10:10 IST, revision 089aa31
+# Gazebo Sim, version 8.15.0; launch: sim.launch.py headless:=false sensors:=true world:=mapping_arena.sdf + slam.launch.py
+cycle 1: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+cycle 2: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+cycle 3: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+cycle 4: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+cycle 5: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+cycle 6: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+cycle 7: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+cycle 8: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+cycle 9: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+cycle 10: stop 0.6 s; sim CLEAN (0 [ERROR] lines; 8 processes finished cleanly); gz: [gz-5]: process has finished cleanly; front-end SIGKILL lines: 0; SLAM CLEAN (0 [ERROR] lines; 1 processes finished cleanly); leftovers by name: 0
+# summary: CLEAN 10, TS-029 0, OTHER 0 of 10 cycles

@@ -1,0 +1,24 @@
+# TEST-M2 procedure: mode=fault, valid runs required=1, 2026-11-15 03:52:37 IST
+# revision 64d38f2 (amr_ws/src clean)
+# ros2_control 4.48.1-1noble.20261006.040510, diff_drive_controller 4.42.1-1noble.20260924.190414, gz_ros2_control 1.2.20-1noble.20261006.040504
+
+## attempt 1 (ROS_DOMAIN_ID=71, GZ_PARTITION=amr_m2_fault_<pid>_1, headless:=false)
+# TEST-M2 harness mode=fault, wall 2026-11-15 03:52:38 IST
+INFO  switch_controllers --deactivate diff_drive_controller: exit 0; ['Deactivated controllers: [ diff_drive_controller ]']
+INFO  fault (characterization): ground-truth speed at deactivation +0.2000 m/s, 3 s later +0.0000 m/s; last wheel velocities L +0.0000, R +0.0000 rad/s
+INFO  fault: behaviour after deactivation: stops
+PASS  fault: behaviour recorded (characterization; coasting would be reported as a hazard)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 578, odometry 266, joint_states 986, cmd_vel_out 532, tf 266
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager]: Controller Manager: to switch controllers you need to specify a strictness level of controller_manager_msgs::SwitchController::STRICT (2) or ::BEST_EFFORT (1). When unspecified, the default is BEST_EFFORT
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#       141 [gz-4] [WARN]  [diff_drive_controller]: Can't accept new commands. subscriber is inactive
+#         2 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: ALL 1 VALID RUNS PASSED

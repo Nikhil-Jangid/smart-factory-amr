@@ -1,0 +1,102 @@
+# Task D procedure mode=encoders, valid runs required=3, 2026-11-15 04:05:39 IST, revision 7832350 (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; world <share_b>/worlds/sensor_test.sdf sha256 925f995c5192c17b…
+
+$ python3 -I docs/evidence/M3/TEST-M3-D_clearance_check.py <share_b>/worlds/sensor_test.sdf amr_ws/src/amr_description/urdf/amr_properties.xacro
+# amr_properties.xacro: chassis_length 0.45, chassis_width 0.35, wheel_radius 0.075, wheel_track 0.4, caster_x -0.36
+# robot bounding radius R = hypot(0.585, 0.275) + 0.05 = 0.696 m (conservative)
+# centre path: x -1.500 .. +2.625 m at y -20.0 m (profiles +50 %); swept area = path dilated by R
+PASS  ground_plane: plane 100 x 100 m centred at the origin; distance from the swept area to its edge 29.304 m >= 5.0 m
+PASS  target_front_1m: box x +1.070..+1.270, y -0.500..+0.500; clearance from the swept area 18.804 m >= 5.0 m
+PASS  target_left_3m: box x -0.680..+0.820, y +3.000..+3.200; clearance from the swept area 22.304 m >= 5.0 m
+PASS  target_rear_6m: box x -6.130..-5.930, y -1.000..+1.000; clearance from the swept area 18.813 m >= 5.0 m
+PASS  target_right_2m: box x -0.430..+0.570, y -2.200..-2.000; clearance from the swept area 17.104 m >= 5.0 m
+PASS  target_low: box x +1.184..+1.784, y +1.114..+1.714; clearance from the swept area 20.418 m >= 5.0 m
+== CLEARANCE OK
+# exit 0
+
+## attempt 1 (ROS_DOMAIN_ID=123)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-D_imu_encoder_measure.py encoders
+# TEST-M3 Task D harness mode=encoders, wall 2026-11-15 04:05:40 IST, ground truth /world/sensor_test/pose/info
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  D12 forward: encoder travel (dtheta_L + dtheta_R)/2 * r = (+13.0694 +13.0694) rad -> +0.98020 m vs ground truth +0.98026 m (-0.0052 %; sign; |.| <= 2 %); stamps js 4.290/12.300, gt 4.288/12.296 s
+PASS  D12 reverse: encoder travel (dtheta_L + dtheta_R)/2 * r = (-13.0667 -13.0667) rad -> -0.98000 m vs ground truth -0.98006 m (-0.0056 %; sign; |.| <= 2 %); stamps js 12.300/20.290, gt 12.296/20.287 s
+PASS  D12 rotate +: dtheta_L -8.3734 rad, dtheta_R +8.3734 rad: opposite signs, right positive for wz +0.5 rad/s
+INFO  rotate +: wheel arc r*(dtheta_R - dtheta_L)/2 +0.62800 m vs (track / 2) * ground-truth yaw +0.62799 m (yaw +179.905 deg; informational)
+PASS  D12 rotate -: dtheta_L +8.3868 rad, dtheta_R -8.3868 rad: opposite signs, right negative for wz -0.5 rad/s
+INFO  rotate -: wheel arc r*(dtheta_R - dtheta_L)/2 -0.62901 m vs (track / 2) * ground-truth yaw -0.62898 m (yaw -180.191 deg; informational)
+INFO  ground-truth excursion from the spawn point (0, -20): x -0.000 .. +0.980 m, y -0.000 .. +0.000 m (clearance budget in TEST-M3-D_clearance_check.py)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 2288, imu 3885, joint_states 3886, odometry 1830
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=124)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-D_imu_encoder_measure.py encoders
+# TEST-M3 Task D harness mode=encoders, wall 2026-11-15 04:06:24 IST, ground truth /world/sensor_test/pose/info
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  D12 forward: encoder travel (dtheta_L + dtheta_R)/2 * r = (+13.0666 +13.0666) rad -> +0.97999 m vs ground truth +0.98005 m (-0.0052 %; sign; |.| <= 2 %); stamps js 4.290/12.300, gt 4.289/12.297 s
+PASS  D12 reverse: encoder travel (dtheta_L + dtheta_R)/2 * r = (-13.0399 -13.0399) rad -> -0.97799 m vs ground truth -0.97805 m (-0.0056 %; sign; |.| <= 2 %); stamps js 12.300/20.290, gt 12.297/20.287 s
+PASS  D12 rotate +: dtheta_L -8.3732 rad, dtheta_R +8.3732 rad: opposite signs, right positive for wz +0.5 rad/s
+INFO  rotate +: wheel arc r*(dtheta_R - dtheta_L)/2 +0.62799 m vs (track / 2) * ground-truth yaw +0.62798 m (yaw +179.902 deg; informational)
+PASS  D12 rotate -: dtheta_L +8.3730 rad, dtheta_R -8.3730 rad: opposite signs, right negative for wz -0.5 rad/s
+INFO  rotate -: wheel arc r*(dtheta_R - dtheta_L)/2 -0.62797 m vs (track / 2) * ground-truth yaw -0.62795 m (yaw -179.893 deg; informational)
+INFO  ground-truth excursion from the spawn point (0, -20): x -0.000 .. +0.980 m, y -0.000 .. +0.000 m (clearance budget in TEST-M3-D_clearance_check.py)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 2287, imu 3884, joint_states 3885, odometry 1829
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=125)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-D_imu_encoder_measure.py encoders
+# TEST-M3 Task D harness mode=encoders, wall 2026-11-15 04:07:09 IST, ground truth /world/sensor_test/pose/info
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  D12 forward: encoder travel (dtheta_L + dtheta_R)/2 * r = (+13.0929 +13.0929) rad -> +0.98196 m vs ground truth +0.98202 m (-0.0052 %; sign; |.| <= 2 %); stamps js 4.320/12.329, gt 4.323/12.331 s
+PASS  D12 reverse: encoder travel (dtheta_L + dtheta_R)/2 * r = (-13.0690 -13.0690) rad -> -0.98017 m vs ground truth -0.98023 m (-0.0056 %; sign; |.| <= 2 %); stamps js 12.329/20.339, gt 12.331/20.340 s
+PASS  D12 rotate +: dtheta_L -8.3732 rad, dtheta_R +8.3732 rad: opposite signs, right positive for wz +0.5 rad/s
+INFO  rotate +: wheel arc r*(dtheta_R - dtheta_L)/2 +0.62799 m vs (track / 2) * ground-truth yaw +0.62799 m (yaw +179.905 deg; informational)
+PASS  D12 rotate -: dtheta_L +8.3734 rad, dtheta_R -8.3734 rad: opposite signs, right negative for wz -0.5 rad/s
+INFO  rotate -: wheel arc r*(dtheta_R - dtheta_L)/2 -0.62800 m vs (track / 2) * ground-truth yaw -0.62800 m (yaw -179.910 deg; informational)
+INFO  ground-truth excursion from the spawn point (0, -20): x +0.000 .. +0.982 m, y -0.000 .. +0.000 m (clearance budget in TEST-M3-D_clearance_check.py)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 2290, imu 3889, joint_states 3890, odometry 1831
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# TS-029 attempts declared invalid under DEC-039: 0
+
+# overall: ALL 3 VALID RUNS PASSED

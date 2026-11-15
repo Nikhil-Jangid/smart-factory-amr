@@ -1,0 +1,105 @@
+# TEST-M5-01 review, 2026-11-15 01:50:12 IST, revision 7be0c86 (amr_ws/src clean); baseline 30d737f
+
+## 1. Build
+$ cd amr_ws && colcon build --symlink-install --packages-select amr_description amr_bringup amr_gazebo_plugins
+-- Up-to-date symlink: <home>/Projects/smart-amr-dev/amr_ws/install/amr_bringup/share/amr_bringup/cmake/amr_bringupConfig-version.cmake
+-- Up-to-date symlink: <home>/Projects/smart-amr-dev/amr_ws/install/amr_bringup/share/amr_bringup/package.xml
+Finished <<< amr_bringup [0.09s]
+
+Summary: 3 packages finished [0.28s]
+# colcon exit 0; lines matching 'warning': 0
+# exit 0
+
+## 2. Default expansion vs the M1 baseline
+identical
+# exit 0
+
+## 3. Launch-model expansions vs 30d737f
+$ xacro amr.urdf.xacro use_ros2_control:=true (6452 bytes)
+identical
+# exit 0
+$ xacro amr.urdf.xacro use_ros2_control:=true use_sensors:=true (9912 bytes)
+identical
+# exit 0
+
+## 4. Simulation, controller and sensor files vs 30d737f
+CHANGED    amr_ws/src/amr_bringup/launch/sim.launch.py
+diff --git a/amr_ws/src/amr_bringup/launch/sim.launch.py b/amr_ws/src/amr_bringup/launch/sim.launch.py
+index a0b000b..71188fd 100644
+--- a/amr_ws/src/amr_bringup/launch/sim.launch.py
++++ b/amr_ws/src/amr_bringup/launch/sim.launch.py
+@@ -18,6 +18,8 @@ world name `empty`, and the model expanded with use_sensors:=false (byte-identic
+   world:=<file>  the Gazebo world. A bare file name found in this package's worlds/ directory (e.g.
+                  sensor_test.sdf) is resolved there; anything else is passed to gz sim unchanged
+                  (default: the stock empty.sdf). The spawn uses the <world name> read from the file.
++M4 option: controllers_file:=<path> loads another ros2_control parameter file. It exists for the
++TEST-M4-09 test-only calibration overrides (DEC-043); the default is the package's config/controllers.yaml.
+ M3 sensor tests: ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf
+ Keyboard control (TEST-M2-09), in a second terminal:
+   ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args \
+@@ -71,7 +73,7 @@ def gazebo_process(context):
+ 
+ def generate_launch_description():
+     xacro_file = PathJoinSubstitution([FindPackageShare('amr_description'), 'urdf', 'amr.urdf.xacro'])
+-    controllers_file = PathJoinSubstitution([FindPackageShare('amr_bringup'), 'config', 'controllers.yaml'])
++    controllers_file = LaunchConfiguration('controllers_file')
+     robot_description = ParameterValue(
+         Command(['xacro ', xacro_file, ' use_ros2_control:=true controllers_file:=', controllers_file,
+                  ' use_sensors:=', LaunchConfiguration('sensors')]),
+@@ -84,7 +86,12 @@ def generate_launch_description():
+                                   description='true: LiDAR and IMU in the model, /scan and /imu bridged (M3)'),
+             DeclareLaunchArgument('world', default_value='empty.sdf',
+                                   description='Gazebo world: a file in amr_bringup/worlds (e.g. sensor_test.sdf), '
+-                                              'a path, or a world gz sim resolves (default: stock empty.sdf)')]
++                                              'a path, or a world gz sim resolves (default: stock empty.sdf)'),
++            DeclareLaunchArgument('controllers_file',
++                                  default_value=PathJoinSubstitution(
++                                      [FindPackageShare('amr_bringup'), 'config', 'controllers.yaml']),
++                                  description='ros2_control parameter file (default: this package\'s '
++                                              'config/controllers.yaml). M4 test-only overrides (TEST-M4-09) only')]
+     args += [
+         DeclareLaunchArgument(name, default_value='0.0',
+                               description=f'Spawn pose of base_footprint in the world: {name} (m or rad)')
+# exit 1
+CHANGED    amr_ws/src/amr_bringup/config/controllers.yaml
+diff --git a/amr_ws/src/amr_bringup/config/controllers.yaml b/amr_ws/src/amr_bringup/config/controllers.yaml
+index 25eab73..11382ed 100644
+--- a/amr_ws/src/amr_bringup/config/controllers.yaml
++++ b/amr_ws/src/amr_bringup/config/controllers.yaml
+@@ -30,6 +30,11 @@ diff_drive_controller:
+     position_feedback: true
+ 
+     publish_rate: 50.0  # Hz (DEC-026)
++    # Odometry covariance diagonals (DEC-042; values CALC-M4-04, Assumed model: sigma = 1 % of distance,
++    # 2 % of rotation; finalized 2026-11-13). Order: pose (x, y, z, roll, pitch, yaw),
++    # twist (vx, vy, vz, wx, wy, wz). 1.0e3 = not measured by planar odometry. The installed default is all zeros.
++    pose_covariance_diagonal: [0.01, 0.01, 1.0e3, 1.0e3, 1.0e3, 0.0158]
++    twist_covariance_diagonal: [2.5e-5, 2.5e-5, 1.0e3, 1.0e3, 1.0e3, 4.0e-4]
+     cmd_vel_timeout: 0.5  # s (DEC-026)
+     publish_limited_velocity: true  # /diff_drive_controller/cmd_vel_out, used by TEST-M2-07/08
+ 
+# exit 1
+unchanged  amr_ws/src/amr_description/urdf/amr.sensors.xacro
+# exit 0
+unchanged  amr_ws/src/amr_description/urdf/amr_properties.xacro
+# exit 0
+
+## 5. Existing files changed in amr_ws/src since 30d737f
+M	amr_ws/src/amr_bringup/CMakeLists.txt
+M	amr_ws/src/amr_bringup/config/controllers.yaml
+A	amr_ws/src/amr_bringup/config/slam_toolbox.yaml
+M	amr_ws/src/amr_bringup/launch/sim.launch.py
+A	amr_ws/src/amr_bringup/launch/slam.launch.py
+M	amr_ws/src/amr_bringup/package.xml
+A	amr_ws/src/amr_bringup/rviz/mapping.rviz
+A	amr_ws/src/amr_bringup/rviz/odometry.rviz
+A	amr_ws/src/amr_bringup/worlds/mapping_arena.sdf
+# modified or removed (not new): amr_ws/src/amr_bringup/CMakeLists.txt amr_ws/src/amr_bringup/config/controllers.yaml amr_ws/src/amr_bringup/launch/sim.launch.py amr_ws/src/amr_bringup/package.xml 
+# exit 1
++  <exec_depend>slam_toolbox</exec_depend>
+package.xml: only the slam_toolbox exec_depend added
+# exit 0
+# CMakeLists.txt changed lines: 2, of which not comments: 0
+# exit 0
+
+# overall: AT LEAST ONE STEP FAILED
