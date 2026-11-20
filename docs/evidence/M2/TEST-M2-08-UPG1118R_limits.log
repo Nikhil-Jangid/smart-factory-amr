@@ -1,0 +1,71 @@
+# TEST-M2 procedure: mode=limits, valid runs required=3, 2026-11-18 20:07:01 IST
+# revision b044cdc (amr_ws/src clean)
+# ros2_control 4.50.0-1noble.20261105.150451, diff_drive_controller 4.43.1-1noble.20261105.141205, gz_ros2_control 1.2.20-1noble.20261105.145510
+
+## attempt 1 (ROS_DOMAIN_ID=71, GZ_PARTITION=amr_m2_limits_<pid>_1, headless:=false)
+# TEST-M2 harness mode=limits, wall 2026-11-18 20:07:01 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  limits: cmd_vel_out linear within [-0.25, 0.50] m/s (min -0.2500, max +0.5000)
+PASS  limits: |cmd_vel_out angular| <= 1.0 rad/s (max 1.0000)
+PASS  limits: measured acceleration while speeding up max 0.5037 m/s^2 <= 0.55 (at t+0.319 s, v +0.1578 m/s)
+PASS  limits: measured acceleration while slowing down max 1.0096 m/s^2 <= 1.10 (at t+6.109 s, v -0.1448 m/s)
+PASS  limits: ground-truth speed range [-0.2500, +0.5000] m/s within limits x 1.05
+PASS  limits: ground-truth yaw rate max 1.0000 rad/s <= 1.05
+PASS  limits: measured angular acceleration max 2.0196 rad/s^2 <= 2.2
+PASS  limits: max |roll|,|pitch| 0.0000 deg < 1 deg
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 900, odometry 702, joint_states 1531, cmd_vel_out 1404, tf 702
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 2 (ROS_DOMAIN_ID=72, GZ_PARTITION=amr_m2_limits_<pid>_2, headless:=false)
+# TEST-M2 harness mode=limits, wall 2026-11-18 20:07:22 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  limits: cmd_vel_out linear within [-0.25, 0.50] m/s (min -0.2500, max +0.5000)
+PASS  limits: |cmd_vel_out angular| <= 1.0 rad/s (max 1.0000)
+PASS  limits: measured acceleration while speeding up max 0.5048 m/s^2 <= 0.55 (at t+0.176 s, v +0.0902 m/s)
+PASS  limits: measured acceleration while slowing down max 1.0142 m/s^2 <= 1.10 (at t+3.244 s, v +0.2620 m/s)
+PASS  limits: ground-truth speed range [-0.2500, +0.5000] m/s within limits x 1.05
+PASS  limits: ground-truth yaw rate max 1.0000 rad/s <= 1.05
+PASS  limits: measured angular acceleration max 2.0146 rad/s^2 <= 2.2
+PASS  limits: max |roll|,|pitch| 0.0000 deg < 1 deg
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 902, odometry 702, joint_states 1534, cmd_vel_out 1405, tf 702
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 3 (ROS_DOMAIN_ID=73, GZ_PARTITION=amr_m2_limits_<pid>_3, headless:=false)
+# TEST-M2 harness mode=limits, wall 2026-11-18 20:07:43 IST
+INFO  RTF over the measurement window = 0.999 (valid if >= 0.5)
+PASS  limits: cmd_vel_out linear within [-0.25, 0.50] m/s (min -0.2500, max +0.5000)
+PASS  limits: |cmd_vel_out angular| <= 1.0 rad/s (max 1.0000)
+PASS  limits: measured acceleration while speeding up max 0.5058 m/s^2 <= 0.55 (at t+0.582 s, v +0.2927 m/s)
+PASS  limits: measured acceleration while slowing down max 1.0061 m/s^2 <= 1.10 (at t+6.148 s, v -0.1085 m/s)
+PASS  limits: ground-truth speed range [-0.2500, +0.5000] m/s within limits x 1.05
+PASS  limits: ground-truth yaw rate max 1.0000 rad/s <= 1.05
+PASS  limits: measured angular acceleration max 2.0111 rad/s^2 <= 2.2
+PASS  limits: max |roll|,|pitch| 0.0000 deg < 1 deg
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 993, odometry 702, joint_states 1654, cmd_vel_out 1406, tf 702
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: ALL 3 VALID RUNS PASSED

@@ -1,0 +1,68 @@
+# TEST-M2 procedure: mode=domainswitch, valid runs required=3, 2026-11-20 20:32:38 IST
+# revision 1a691ac (amr_ws/src clean)
+# ros2_control 4.50.0-1noble.20261105.150451, diff_drive_controller 4.43.1-1noble.20261105.141205, gz_ros2_control 1.2.20-1noble.20261105.145510
+
+## attempt 1 (ROS_DOMAIN_ID=71, GZ_PARTITION=amr_m2_domainswitch_<pid>_1, headless:=true)
+# TEST-M2 harness mode=domainswitch, wall 2026-11-20 20:32:39 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+INFO  domainswitch: last valid (simulation-time) command at t=6.235 s, speed then +0.2000 m/s; then wall-clock-stamped commands (stamp domain: wall time) for 3.0 s
+PASS  domainswitch: at rest 0.704 s after the last valid command <= 0.90 s (DEC-027 timeout criterion)
+INFO  domainswitch: distance after the last valid command 0.1146 m (recorded; timeout 0.5 s x 0.2 m/s + slowing 0.02 m = 0.12 m expected)
+PASS  domainswitch: robot at rest at the end of the wall-clock stream (final stopped condition)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 602, odometry 451, joint_states 1023, cmd_vel_out 902, tf 451
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1795186963.241 s, window 0.500 s; 49 rejected so far)
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1795186963.242 s, window 0.500 s; 1 rejected so far)
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1795186963.242 s, window 0.500 s; 97 rejected so far)
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 2 (ROS_DOMAIN_ID=72, GZ_PARTITION=amr_m2_domainswitch_<pid>_2, headless:=true)
+# TEST-M2 harness mode=domainswitch, wall 2026-11-20 20:32:54 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+INFO  domainswitch: last valid (simulation-time) command at t=6.222 s, speed then +0.2000 m/s; then wall-clock-stamped commands (stamp domain: wall time) for 3.0 s
+PASS  domainswitch: at rest 0.716 s after the last valid command <= 0.90 s (DEC-027 timeout criterion)
+INFO  domainswitch: distance after the last valid command 0.1162 m (recorded; timeout 0.5 s x 0.2 m/s + slowing 0.02 m = 0.12 m expected)
+PASS  domainswitch: robot at rest at the end of the wall-clock stream (final stopped condition)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 601, odometry 451, joint_states 1022, cmd_vel_out 903, tf 451
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1795186979.051 s, window 0.500 s; 1 rejected so far)
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1795186979.051 s, window 0.500 s; 49 rejected so far)
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1795186979.051 s, window 0.500 s; 97 rejected so far)
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 3 (ROS_DOMAIN_ID=73, GZ_PARTITION=amr_m2_domainswitch_<pid>_3, headless:=true)
+# TEST-M2 harness mode=domainswitch, wall 2026-11-20 20:33:10 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+INFO  domainswitch: last valid (simulation-time) command at t=6.275 s, speed then +0.2000 m/s; then wall-clock-stamped commands (stamp domain: wall time) for 3.0 s
+PASS  domainswitch: at rest 0.715 s after the last valid command <= 0.90 s (DEC-027 timeout criterion)
+INFO  domainswitch: distance after the last valid command 0.1178 m (recorded; timeout 0.5 s x 0.2 m/s + slowing 0.02 m = 0.12 m expected)
+PASS  domainswitch: robot at rest at the end of the wall-clock stream (final stopped condition)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 604, odometry 452, joint_states 1027, cmd_vel_out 904, tf 452
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1795186994.877 s, window 0.500 s; 49 rejected so far)
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1795186994.878 s, window 0.500 s; 1 rejected so far)
+#         1 [cmd_vel_guard-3] [WARN]  [cmd_vel_guard]: rejected command: future stamp (clock-domain mismatch?) (age -1795186994.880 s, window 0.500 s; 97 rejected so far)
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: ALL 3 VALID RUNS PASSED

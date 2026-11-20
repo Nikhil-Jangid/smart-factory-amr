@@ -1,0 +1,80 @@
+# TEST-M4 procedure: mode=interface, valid runs required=3, 2026-11-18 20:20:21 IST
+# revision b044cdc (amr_ws/src clean)
+# launch arguments: headless:=false
+# ros2_control 4.50.0-1noble.20261105.150451, diff_drive_controller 4.43.1-1noble.20261105.141205, gz_ros2_control 1.2.20-1noble.20261105.145510
+
+## attempt 1 (ROS_DOMAIN_ID=81, GZ_PARTITION=amr_m4_interface_<pid>_1)
+# sim_record: recording gazebo window to docs/gallery/_pending/M4/TEST-M4-02/TEST-M4-02-UPG1118M4_interface_a1_gazebo.webm
+# sim_record: recording rviz window to docs/gallery/_pending/M4/TEST-M4-02/TEST-M4-02-UPG1118M4_interface_a1_rviz.webm
+# TEST-M4 harness mode=interface, wall 2026-11-18 20:20:37 IST
+INFO  RTF over the measurement window = 0.999 (valid if >= 0.5)
+PASS  odometry frame ids [('odom', 'base_footprint')] == [(odom, base_footprint)]
+PASS  odometry rate 50.005 Hz over 500 messages, 50 Hz ± 2 %
+PASS  stamps on simulation time: receipt time - stamp in [-0.0014, +0.0033] s, within [-0.05, +0.2] s
+PASS  covariance diagonals equal controllers.yaml: pose [(0.01, 0.01, 1000.0, 1000.0, 1000.0, 0.0158)] vs (0.01, 0.01, 1000.0, 1000.0, 1000.0, 0.0158); twist [(2.5e-05, 2.5e-05, 1000.0, 1000.0, 1000.0, 0.0004)] vs (2.5e-05, 2.5e-05, 1000.0, 1000.0, 1000.0, 0.0004)
+PASS  covariance diagonals configured and not zero (REQ-M4-07, DEC-042)
+PASS  odom -> base_footprint TF: 500 transforms, no duplicate stamp (a second publisher would duplicate or interleave)
+PASS  TF count 500 equals odometry count 500 (± 2)
+PASS  TF equals odometry at the same stamp: 500/500 matched, max 0.0000 mm, 0.00000 deg (<= 1 mm, 0.1 deg)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 717, odometry 603, joint_states 1205, tf 602
+# result: ALL CRITERIA PASSED
+# webm_trim: docs/gallery/_pending/M4/TEST-M4-02/TEST-M4-02-UPG1118M4_interface_a1_gazebo.webm: first 2.1 s cut, 202 frames kept
+# webm_trim: docs/gallery/_pending/M4/TEST-M4-02/TEST-M4-02-UPG1118M4_interface_a1_rviz.webm: first 2.1 s cut, 202 frames kept
+# sim_record: wrote docs/gallery/_pending/M4/TEST-M4-02/TEST-M4-02-UPG1118M4_interface_a1_gazebo.mp4
+# sim_record: wrote docs/gallery/_pending/M4/TEST-M4-02/TEST-M4-02-UPG1118M4_interface_a1_rviz.mp4
+# sim_capture: wrote docs/gallery/_pending/M4/TEST-M4-02/TEST-M4-02-UPG1118M4_interface_a1_gazebo.png
+# sim_capture: wrote docs/gallery/_pending/M4/TEST-M4-02/TEST-M4-02-UPG1118M4_interface_a1_rviz.png
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 2 (ROS_DOMAIN_ID=82, GZ_PARTITION=amr_m4_interface_<pid>_2)
+# TEST-M4 harness mode=interface, wall 2026-11-18 20:20:57 IST
+INFO  RTF over the measurement window = 0.999 (valid if >= 0.5)
+PASS  odometry frame ids [('odom', 'base_footprint')] == [(odom, base_footprint)]
+PASS  odometry rate 50.000 Hz over 500 messages, 50 Hz ± 2 %
+PASS  stamps on simulation time: receipt time - stamp in [-0.0013, +0.0116] s, within [-0.05, +0.2] s
+PASS  covariance diagonals equal controllers.yaml: pose [(0.01, 0.01, 1000.0, 1000.0, 1000.0, 0.0158)] vs (0.01, 0.01, 1000.0, 1000.0, 1000.0, 0.0158); twist [(2.5e-05, 2.5e-05, 1000.0, 1000.0, 1000.0, 0.0004)] vs (2.5e-05, 2.5e-05, 1000.0, 1000.0, 1000.0, 0.0004)
+PASS  covariance diagonals configured and not zero (REQ-M4-07, DEC-042)
+PASS  odom -> base_footprint TF: 500 transforms, no duplicate stamp (a second publisher would duplicate or interleave)
+PASS  TF count 500 equals odometry count 500 (± 2)
+PASS  TF equals odometry at the same stamp: 500/500 matched, max 0.0000 mm, 0.00000 deg (<= 1 mm, 0.1 deg)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 780, odometry 601, joint_states 1325, tf 601
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 3 (ROS_DOMAIN_ID=83, GZ_PARTITION=amr_m4_interface_<pid>_3)
+# TEST-M4 harness mode=interface, wall 2026-11-18 20:21:18 IST
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+PASS  odometry frame ids [('odom', 'base_footprint')] == [(odom, base_footprint)]
+PASS  odometry rate 50.050 Hz over 501 messages, 50 Hz ± 2 %
+PASS  stamps on simulation time: receipt time - stamp in [-0.0017, +0.0031] s, within [-0.05, +0.2] s
+PASS  covariance diagonals equal controllers.yaml: pose [(0.01, 0.01, 1000.0, 1000.0, 1000.0, 0.0158)] vs (0.01, 0.01, 1000.0, 1000.0, 1000.0, 0.0158); twist [(2.5e-05, 2.5e-05, 1000.0, 1000.0, 1000.0, 0.0004)] vs (2.5e-05, 2.5e-05, 1000.0, 1000.0, 1000.0, 0.0004)
+PASS  covariance diagonals configured and not zero (REQ-M4-07, DEC-042)
+PASS  odom -> base_footprint TF: 501 transforms, no duplicate stamp (a second publisher would duplicate or interleave)
+PASS  TF count 501 equals odometry count 501 (± 2)
+PASS  TF equals odometry at the same stamp: 501/501 matched, max 0.0000 mm, 0.00000 deg (<= 1 mm, 0.1 deg)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 842, odometry 603, joint_states 1430, tf 603
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: ALL 3 VALID RUNS PASSED

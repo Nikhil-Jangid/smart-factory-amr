@@ -1,0 +1,126 @@
+# Task D procedure mode=imu_rest, valid runs required=2, 2026-11-20 20:36:31 IST, revision 1a691ac (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; world <share_b>/worlds/sensor_test.sdf sha256 925f995c5192c17b…
+
+$ python3 -I docs/evidence/M3/TEST-M3-D_clearance_check.py <share_b>/worlds/sensor_test.sdf amr_ws/src/amr_description/urdf/amr_properties.xacro
+# amr_properties.xacro: chassis_length 0.45, chassis_width 0.35, wheel_radius 0.075, wheel_track 0.4, caster_x -0.36
+# robot bounding radius R = hypot(0.585, 0.275) + 0.05 = 0.696 m (conservative)
+# centre path: x -1.500 .. +2.625 m at y -20.0 m (profiles +50 %); swept area = path dilated by R
+PASS  ground_plane: plane 100 x 100 m centred at the origin; distance from the swept area to its edge 29.304 m >= 5.0 m
+PASS  target_front_1m: box x +1.070..+1.270, y -0.500..+0.500; clearance from the swept area 18.804 m >= 5.0 m
+PASS  target_left_3m: box x -0.680..+0.820, y +3.000..+3.200; clearance from the swept area 22.304 m >= 5.0 m
+PASS  target_rear_6m: box x -6.130..-5.930, y -1.000..+1.000; clearance from the swept area 18.813 m >= 5.0 m
+PASS  target_right_2m: box x -0.430..+0.570, y -2.200..-2.000; clearance from the swept area 17.104 m >= 5.0 m
+PASS  target_low: box x +1.184..+1.784, y +1.114..+1.714; clearance from the swept area 20.418 m >= 5.0 m
+== CLEARANCE OK
+# exit 0
+
+## attempt 1 (ROS_DOMAIN_ID=111)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-D_imu_encoder_measure.py imu_rest
+# TEST-M3 Task D harness mode=imu_rest, wall 2026-11-20 20:36:32 IST, ground truth /world/sensor_test/pose/info
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+INFO  window 4.262 .. 14.262 s: 1000 IMU samples; ground-truth max speed 0.000 mm/s, max tilt 0.0000 deg (588 samples)
+PASS  D9: mean specific force z +9.79972 m/s^2 > 0 (+g on +Z, gravity up in imu_link)
+      accel x: n = 1000, mean error -0.000129 m/s^2, s 0.010244 m/s^2, min -0.032459, max +0.034089 m/s^2 (expected 0)
+PASS  S1 accel x: |mean error| 0.000129 m/s^2 <= 0.02 m/s^2
+PASS  S2 accel x: s / sigma = 0.010244 / 0.01 = 1.0244 in [0.8, 1.2]
+PASS  S3 accel x: fraction within 2 s = 0.9520 in [0.93, 0.98]
+PASS  S4 accel x: 0 samples beyond 6 sigma (0.06 m/s^2) == 0
+      accel y: n = 1000, mean error -0.000018 m/s^2, s 0.010178 m/s^2, min -0.031403, max +0.029236 m/s^2 (expected 0)
+PASS  S1 accel y: |mean error| 0.000018 m/s^2 <= 0.02 m/s^2
+PASS  S2 accel y: s / sigma = 0.010178 / 0.01 = 1.0178 in [0.8, 1.2]
+PASS  S3 accel y: fraction within 2 s = 0.9470 in [0.93, 0.98]
+PASS  S4 accel y: 0 samples beyond 6 sigma (0.06 m/s^2) == 0
+      accel z: n = 1000, mean error -0.000279 m/s^2, s 0.009741 m/s^2, min -0.032002, max +0.034869 m/s^2 (expected 9.8)
+PASS  S1 accel z: |mean error| 0.000279 m/s^2 <= 0.02 m/s^2
+PASS  S2 accel z: s / sigma = 0.009741 / 0.01 = 0.9741 in [0.8, 1.2]
+PASS  S3 accel z: fraction within 2 s = 0.9590 in [0.93, 0.98]
+PASS  S4 accel z: 0 samples beyond 6 sigma (0.06 m/s^2) == 0
+      gyro x: n = 1000, mean error -0.000002 rad/s, s 0.000994 rad/s, min -0.003373, max +0.003400 rad/s (expected 0)
+PASS  S1 gyro x: |mean error| 0.000002 rad/s <= 0.001 rad/s
+PASS  S2 gyro x: s / sigma = 0.000994 / 0.001 = 0.9945 in [0.8, 1.2]
+PASS  S3 gyro x: fraction within 2 s = 0.9610 in [0.93, 0.98]
+PASS  S4 gyro x: 0 samples beyond 6 sigma (0.006 rad/s) == 0
+      gyro y: n = 1000, mean error +0.000004 rad/s, s 0.001026 rad/s, min -0.003220, max +0.003795 rad/s (expected 0)
+PASS  S1 gyro y: |mean error| 0.000004 rad/s <= 0.001 rad/s
+PASS  S2 gyro y: s / sigma = 0.001026 / 0.001 = 1.0262 in [0.8, 1.2]
+PASS  S3 gyro y: fraction within 2 s = 0.9540 in [0.93, 0.98]
+PASS  S4 gyro y: 0 samples beyond 6 sigma (0.006 rad/s) == 0
+      gyro z: n = 1000, mean error +0.000007 rad/s, s 0.001019 rad/s, min -0.003185, max +0.003603 rad/s (expected 0)
+PASS  S1 gyro z: |mean error| 0.000007 rad/s <= 0.001 rad/s
+PASS  S2 gyro z: s / sigma = 0.001019 / 0.001 = 1.0187 in [0.8, 1.2]
+PASS  S3 gyro z: fraction within 2 s = 0.9520 in [0.93, 0.98]
+PASS  S4 gyro z: 0 samples beyond 6 sigma (0.006 rad/s) == 0
+INFO  ground-truth excursion from the spawn point (0, -20): x -0.000 .. -0.000 m, y +0.000 .. +0.000 m (clearance budget in TEST-M3-D_clearance_check.py)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 858, imu 1455, joint_states 1455, odometry 617
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=112)
+$ ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf y:=-20.0
+$ python3 docs/evidence/M3/TEST-M3-D_imu_encoder_measure.py imu_rest
+# TEST-M3 Task D harness mode=imu_rest, wall 2026-11-20 20:36:52 IST, ground truth /world/sensor_test/pose/info
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+INFO  window 4.304 .. 14.304 s: 1000 IMU samples; ground-truth max speed 0.000 mm/s, max tilt 0.0000 deg (589 samples)
+PASS  D9: mean specific force z +9.80009 m/s^2 > 0 (+g on +Z, gravity up in imu_link)
+      accel x: n = 1000, mean error -0.000352 m/s^2, s 0.010210 m/s^2, min -0.034739, max +0.033678 m/s^2 (expected 0)
+PASS  S1 accel x: |mean error| 0.000352 m/s^2 <= 0.02 m/s^2
+PASS  S2 accel x: s / sigma = 0.010210 / 0.01 = 1.0210 in [0.8, 1.2]
+PASS  S3 accel x: fraction within 2 s = 0.9540 in [0.93, 0.98]
+PASS  S4 accel x: 0 samples beyond 6 sigma (0.06 m/s^2) == 0
+      accel y: n = 1000, mean error +0.000435 m/s^2, s 0.010385 m/s^2, min -0.039436, max +0.032259 m/s^2 (expected 0)
+PASS  S1 accel y: |mean error| 0.000435 m/s^2 <= 0.02 m/s^2
+PASS  S2 accel y: s / sigma = 0.010385 / 0.01 = 1.0385 in [0.8, 1.2]
+PASS  S3 accel y: fraction within 2 s = 0.9580 in [0.93, 0.98]
+PASS  S4 accel y: 0 samples beyond 6 sigma (0.06 m/s^2) == 0
+      accel z: n = 1000, mean error +0.000090 m/s^2, s 0.009876 m/s^2, min -0.031142, max +0.029654 m/s^2 (expected 9.8)
+PASS  S1 accel z: |mean error| 0.000090 m/s^2 <= 0.02 m/s^2
+PASS  S2 accel z: s / sigma = 0.009876 / 0.01 = 0.9876 in [0.8, 1.2]
+PASS  S3 accel z: fraction within 2 s = 0.9520 in [0.93, 0.98]
+PASS  S4 accel z: 0 samples beyond 6 sigma (0.06 m/s^2) == 0
+      gyro x: n = 1000, mean error +0.000046 rad/s, s 0.000959 rad/s, min -0.003373, max +0.003264 rad/s (expected 0)
+PASS  S1 gyro x: |mean error| 0.000046 rad/s <= 0.001 rad/s
+PASS  S2 gyro x: s / sigma = 0.000959 / 0.001 = 0.9591 in [0.8, 1.2]
+PASS  S3 gyro x: fraction within 2 s = 0.9500 in [0.93, 0.98]
+PASS  S4 gyro x: 0 samples beyond 6 sigma (0.006 rad/s) == 0
+      gyro y: n = 1000, mean error +0.000004 rad/s, s 0.001019 rad/s, min -0.003396, max +0.002813 rad/s (expected 0)
+PASS  S1 gyro y: |mean error| 0.000004 rad/s <= 0.001 rad/s
+PASS  S2 gyro y: s / sigma = 0.001019 / 0.001 = 1.0187 in [0.8, 1.2]
+PASS  S3 gyro y: fraction within 2 s = 0.9620 in [0.93, 0.98]
+PASS  S4 gyro y: 0 samples beyond 6 sigma (0.006 rad/s) == 0
+      gyro z: n = 1000, mean error +0.000021 rad/s, s 0.001027 rad/s, min -0.003064, max +0.003329 rad/s (expected 0)
+PASS  S1 gyro z: |mean error| 0.000021 rad/s <= 0.001 rad/s
+PASS  S2 gyro z: s / sigma = 0.001027 / 0.001 = 1.0271 in [0.8, 1.2]
+PASS  S3 gyro z: fraction within 2 s = 0.9590 in [0.93, 0.98]
+PASS  S4 gyro z: 0 samples beyond 6 sigma (0.006 rad/s) == 0
+INFO  ground-truth excursion from the spawn point (0, -20): x -0.000 .. -0.000 m, y +0.000 .. +0.000 m (clearance budget in TEST-M3-D_clearance_check.py)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 861, imu 1459, joint_states 1459, odometry 618
+# result: ALL CRITERIA PASSED
+# Gazebo command line: gz sim -r -s --headless-rendering <share_b>/worlds/sensor_test.sdf
+# harness exit 0
+# launch log: 0 [ERROR] lines; leftover processes in the launch process group: 0
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# TS-029 attempts declared invalid under DEC-039: 0
+
+# overall: ALL 2 VALID RUNS PASSED

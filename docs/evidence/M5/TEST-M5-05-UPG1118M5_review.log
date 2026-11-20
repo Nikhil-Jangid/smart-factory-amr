@@ -1,0 +1,76 @@
+# TEST-M5-05 save and reload, 2026-11-18 21:01:34 IST, revision b044cdc (amr_ws/src clean)
+# nav2_map_server 1.3.14-1noble.20261105.140934; gzip 1.12
+#   232760 bytes  mapping_arena.data.gz
+#   32739 bytes  mapping_arena.pgm
+#   332464 bytes  mapping_arena.posegraph.gz
+#   135 bytes  mapping_arena.yaml
+
+## 1. reference map = TEST-M5-03 attempt 1
+.pgm byte-identical to TEST-M5-03_a1_map.pgm
+# exit 0
+.yaml identical except the image and origin lines
+# exit 0
+origin [-2.071, -4.08, 0] = attempt 1 origin [-2.046, -4.055, 0] + [-0.025, -0.025, 0] (DEC-055: half a cell, -0.025, -0.025, 0)
+# exit 0
+# exit 0
+#   image: mapping_arena.pgm
+#   mode: trinary
+#   resolution: 0.050
+#   origin: [-2.071, -4.080, 0]
+#   negate: 0
+#   occupied_thresh: 0.65
+#   free_thresh: 0.196
+
+## 2. compressed pose graph (DEC-054)
+mapping_arena.posegraph.gz: gzip -t OK
+# exit 0
+#   decompressed 7403717 bytes, SHA-256 4a2eb70092ede1d1d94d6a19bb71ad6b287bc234bcab855c320f972bcfac0269
+# source not given: byte comparison skipped
+mapping_arena.data.gz: gzip -t OK
+# exit 0
+#   decompressed 471131 bytes, SHA-256 43f503b8c65742fd967ae863e9f5806d4d46be19bbc7a6bb76d0b229fb79601d
+# source not given: byte comparison skipped
+
+## 3. map_server reload
+Transitioning successful
+Transitioning successful
+# lifecycle state: active [3]
+$ python3 TEST-M5-05_reload_check.py amr_ws/src/amr_bringup/maps/mapping_arena.yaml
+PASS  /map received within 15 s (publishers: ['map_server'])
+PASS  only map_server publishes /map
+PASS  frame_id "map" (map)
+PASS  size 202 x 162 cells (file 202 x 162)
+PASS  resolution 0.050000 m (file 0.05)
+PASS  origin (-2.071000, -4.080000, yaw 0.000000) (file [-2.071, -4.08, 0])
+PASS  cells: 0 of 32724 differ (file: 971 occupied, 30851 free, 902 unknown)
+# result: PASS
+# exit 0
+# map_server (ref) exit 0; log: 0 [ERROR] lines
+#   [INFO]  [map_io]: Loading yaml file: amr_ws/src/amr_bringup/maps/mapping_arena.yaml
+#   [INFO]  [map_io]: Loading image_file: amr_ws/src/amr_bringup/maps/mapping_arena.pgm
+#   [INFO]  [map_io]: Read map amr_ws/src/amr_bringup/maps/mapping_arena.pgm: 202 X 162 map @ 0.05 m/cell
+# exit 0
+
+## 4. negative control: one occupied cell turned free in a served copy
+# pixel at byte offset 32536 changed from 0 (occupied) to 254 (free)
+Transitioning successful
+Transitioning successful
+# lifecycle state: active [3]
+PASS  /map received within 15 s (publishers: ['map_server'])
+PASS  only map_server publishes /map
+PASS  frame_id "map" (map)
+PASS  size 202 x 162 cells (file 202 x 162)
+PASS  resolution 0.050000 m (file 0.05)
+PASS  origin (-2.071000, -4.080000, yaw 0.000000) (file [-2.071, -4.08, 0])
+FAIL  cells: 1 of 32724 differ (file: 971 occupied, 30851 free, 902 unknown)
+# result: FAIL
+# negative control checker exit 1 (expected 1)
+# exit 0
+# map_server (neg) exit 0; log: 0 [ERROR] lines
+#   [INFO]  [map_io]: Loading yaml file: <tmp>/neg.yaml
+#   [INFO]  [map_io]: Loading image_file: <tmp>/neg.pgm
+#   [INFO]  [map_io]: Read map <tmp>/neg.pgm: 202 X 162 map @ 0.05 m/cell
+# leftover map_server processes: 0
+# exit 0
+
+# overall: ALL CHECKS PASSED

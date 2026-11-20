@@ -1,0 +1,147 @@
+# TEST-M6 localization procedure, valid runs required=3, 2026-11-19 01:08:04 IST, revision f2d344a (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; nav2_amcl 1.3.14-1noble.20261105.140844; route forward; wrong start 0
+# launch: sim.launch.py headless:=false sensors:=true world:=docs/evidence/M6/TEST-M6_unmapped_arena.sdf + localization.launch.py
+
+## attempt 1 (ROS_DOMAIN_ID=141)
+both controllers active
+# exit 0
+# sim_record: recording gazebo window to docs/gallery/_pending/M6/TEST-M6-06/TEST-M6-06-forward_a1_gazebo.webm
+# sim_record: recording rviz window to docs/gallery/_pending/M6/TEST-M6-06/TEST-M6-06-forward_a1_rviz.webm
+
+$ python3 docs/evidence/M6/TEST-M6_run.py <prefix> --route forward
+# TEST-M6 localization run, wall 2026-11-19 01:08:30 IST; route forward (10 legs, TEST-M6_route.py); wrong start False; follower gains K_TURN 2.0, K_HEAD 2.0, K_DIST 1.0 (DEC-049)
+INFO  rest point  0 at (0.0, 0.0), travel   0.00 m: estimate error    0.0 mm, +0.000 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  1 at (6.5, 0.0), travel   6.49 m: estimate error    3.9 mm, -0.006 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  2 at (6.5, -2.6), travel   9.08 m: estimate error    5.9 mm, +0.093 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  3 at (6.5, 0.9), travel  12.56 m: estimate error    2.6 mm, +0.025 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  4 at (4.1, 0.9), travel  14.95 m: estimate error    5.5 mm, +0.063 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  5 at (4.1, 2.7), travel  16.74 m: estimate error   11.4 mm, -0.019 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  6 at (4.1, 0.6), travel  18.82 m: estimate error    4.4 mm, -0.008 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  7 at (-0.6, 0.6), travel  23.52 m: estimate error    5.4 mm, -0.021 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  8 at (-0.6, 2.6), travel  25.51 m: estimate error    9.8 mm, +0.017 deg; odometry error    0.1 mm,  +0.000 deg
+INFO  rest point  9 at (-0.6, 0.0), travel  28.09 m: estimate error    5.4 mm, -0.059 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point 10 at (0.0, 0.0), travel  28.68 m: estimate error    6.5 mm, -0.053 deg; odometry error    0.0 mm,  -0.001 deg
+# TS-030 check: spin thread ended cleanly
+INFO  route: 201.4 s simulation time in 206.1 s wall, RTF 0.98; max cross-track 9.8 mm; 11 rest points, 1947 track samples (0 missing of 1947); travel 28.68 m
+# result: route driven and recorded (judged by TEST-M6_pose_check.py)
+# harness exit 0
+# webm_trim: docs/gallery/_pending/M6/TEST-M6-06/TEST-M6-06-forward_a1_gazebo.webm: first 0.3 s cut, 3234 frames kept
+# webm_trim: docs/gallery/_pending/M6/TEST-M6-06/TEST-M6-06-forward_a1_rviz.webm: first 0.3 s cut, 3234 frames kept
+# sim_record: wrote docs/gallery/_pending/M6/TEST-M6-06/TEST-M6-06-forward_a1_gazebo.mp4
+# sim_record: wrote docs/gallery/_pending/M6/TEST-M6-06/TEST-M6-06-forward_a1_rviz.mp4
+# sim_capture: wrote docs/gallery/_pending/M6/TEST-M6-06/TEST-M6-06-forward_a1_gazebo.png
+# sim_capture: wrote docs/gallery/_pending/M6/TEST-M6-06/TEST-M6-06-forward_a1_rviz.png
+# localization log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# exit 0
+# simulation log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# leftover processes by name: 0
+# exit 0
+
+$ python3 -I docs/evidence/M6/TEST-M6_pose_check.py <prefix>  --json <prefix>_check.json
+# TEST-M6 pose check: TEST-M6-06-forward_a1; recovery False; drift None
+PASS  [rest_position] rest position error max 11.4 mm at rest point 5 (<= 50 mm, 11 rest points)
+PASS  [rest_heading] rest heading error max 0.093 deg at rest point 2 (<= 1.0 deg)
+PASS  [moving_p95_position] moving P95 position error 10.8 mm (<= 100 mm)
+PASS  [moving_p95_heading] moving P95 heading error 0.156 deg (<= 2.0 deg)
+PASS  [moving_max_position] moving maximum position error 11.9 mm at simulation time 187.5 s (<= 250 mm)
+INFO  rest points judged: 11 of 11
+INFO  track samples 1947, moving 1679, judged 1679
+INFO  moving maximum heading error 0.215 deg
+INFO  end of route: estimate error 6.5 mm, 0.053 deg; odometry error 0.0 mm, -0.001 deg; travel 28.68 m
+# result: PASS
+# pose checker exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=142)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M6/TEST-M6_run.py <prefix> --route forward
+# TEST-M6 localization run, wall 2026-11-19 01:13:15 IST; route forward (10 legs, TEST-M6_route.py); wrong start False; follower gains K_TURN 2.0, K_HEAD 2.0, K_DIST 1.0 (DEC-049)
+INFO  rest point  0 at (0.0, 0.0), travel   0.00 m: estimate error    0.0 mm, +0.000 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  1 at (6.5, 0.0), travel   6.49 m: estimate error    0.3 mm, -0.014 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  2 at (6.5, -2.6), travel   9.08 m: estimate error    3.3 mm, +0.024 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  3 at (6.5, 0.9), travel  12.56 m: estimate error    5.0 mm, +0.067 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  4 at (4.1, 0.9), travel  14.95 m: estimate error    2.9 mm, +0.070 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  5 at (4.1, 2.7), travel  16.74 m: estimate error    4.2 mm, +0.089 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  6 at (4.1, 0.6), travel  18.82 m: estimate error    7.6 mm, +0.113 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  7 at (-0.6, 0.6), travel  23.51 m: estimate error    3.7 mm, -0.019 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  8 at (-0.6, 2.6), travel  25.50 m: estimate error    6.7 mm, +0.032 deg; odometry error    0.1 mm,  +0.000 deg
+INFO  rest point  9 at (-0.6, 0.0), travel  28.09 m: estimate error    5.3 mm, +0.067 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point 10 at (0.0, 0.0), travel  28.68 m: estimate error    6.3 mm, +0.060 deg; odometry error    0.0 mm,  -0.000 deg
+# TS-030 check: spin thread ended cleanly
+INFO  route: 201.1 s simulation time in 201.9 s wall, RTF 1.00; max cross-track 9.9 mm; 11 rest points, 1995 track samples (0 missing of 1995); travel 28.68 m
+# result: route driven and recorded (judged by TEST-M6_pose_check.py)
+# harness exit 0
+# localization log: 0 [ERROR] lines
+#         1 [amcl-3] [WARN]  [amcl]: Waiting for map....
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# exit 0
+# simulation log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# leftover processes by name: 0
+# exit 0
+
+$ python3 -I docs/evidence/M6/TEST-M6_pose_check.py <prefix>  --json <prefix>_check.json
+# TEST-M6 pose check: TEST-M6-06-forward_a2; recovery False; drift None
+PASS  [rest_position] rest position error max 7.6 mm at rest point 6 (<= 50 mm, 11 rest points)
+PASS  [rest_heading] rest heading error max 0.113 deg at rest point 6 (<= 1.0 deg)
+PASS  [moving_p95_position] moving P95 position error 7.5 mm (<= 100 mm)
+PASS  [moving_p95_heading] moving P95 heading error 0.135 deg (<= 2.0 deg)
+PASS  [moving_max_position] moving maximum position error 8.2 mm at simulation time 124.4 s (<= 250 mm)
+INFO  rest points judged: 11 of 11
+INFO  track samples 1995, moving 1718, judged 1718
+INFO  moving maximum heading error 0.230 deg
+INFO  end of route: estimate error 6.3 mm, 0.060 deg; odometry error 0.0 mm, -0.000 deg; travel 28.68 m
+# result: PASS
+# pose checker exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=143)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M6/TEST-M6_run.py <prefix> --route forward
+# TEST-M6 localization run, wall 2026-11-19 01:16:55 IST; route forward (10 legs, TEST-M6_route.py); wrong start False; follower gains K_TURN 2.0, K_HEAD 2.0, K_DIST 1.0 (DEC-049)
+INFO  rest point  0 at (0.0, 0.0), travel   0.00 m: estimate error    0.0 mm, +0.000 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  1 at (6.5, 0.0), travel   6.49 m: estimate error    7.6 mm, +0.070 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  2 at (6.5, -2.6), travel   9.08 m: estimate error    4.9 mm, -0.122 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  3 at (6.5, 0.9), travel  12.56 m: estimate error    0.8 mm, +0.078 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  4 at (4.1, 0.9), travel  14.95 m: estimate error    7.1 mm, +0.166 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  5 at (4.1, 2.7), travel  16.74 m: estimate error    7.4 mm, +0.051 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  6 at (4.1, 0.6), travel  18.82 m: estimate error    7.1 mm, +0.014 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  7 at (-0.6, 0.6), travel  23.52 m: estimate error   10.2 mm, +0.091 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  8 at (-0.6, 2.6), travel  25.51 m: estimate error    9.9 mm, +0.053 deg; odometry error    0.1 mm,  +0.000 deg
+INFO  rest point  9 at (-0.6, 0.0), travel  28.09 m: estimate error    5.5 mm, -0.056 deg; odometry error    0.0 mm,  +0.001 deg
+INFO  rest point 10 at (0.0, 0.0), travel  28.68 m: estimate error    9.3 mm, -0.034 deg; odometry error    0.0 mm,  -0.000 deg
+# TS-030 check: spin thread ended cleanly
+INFO  route: 200.9 s simulation time in 202.2 s wall, RTF 0.99; max cross-track 9.7 mm; 11 rest points, 1993 track samples (0 missing of 1993); travel 28.68 m
+# result: route driven and recorded (judged by TEST-M6_pose_check.py)
+# harness exit 0
+# localization log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# exit 0
+# simulation log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# leftover processes by name: 0
+# exit 0
+
+$ python3 -I docs/evidence/M6/TEST-M6_pose_check.py <prefix>  --json <prefix>_check.json
+# TEST-M6 pose check: TEST-M6-06-forward_a3; recovery False; drift None
+PASS  [rest_position] rest position error max 10.2 mm at rest point 7 (<= 50 mm, 11 rest points)
+PASS  [rest_heading] rest heading error max 0.166 deg at rest point 4 (<= 1.0 deg)
+PASS  [moving_p95_position] moving P95 position error 10.1 mm (<= 100 mm)
+PASS  [moving_p95_heading] moving P95 heading error 0.145 deg (<= 2.0 deg)
+PASS  [moving_max_position] moving maximum position error 11.5 mm at simulation time 151.3 s (<= 250 mm)
+INFO  rest points judged: 11 of 11
+INFO  track samples 1993, moving 1722, judged 1722
+INFO  moving maximum heading error 0.182 deg
+INFO  end of route: estimate error 9.3 mm, 0.034 deg; odometry error 0.0 mm, -0.000 deg; travel 28.68 m
+# result: PASS
+# pose checker exit 0
+# TS-029 attempts declared invalid under DEC-039: 0
+
+# overall: ALL 3 VALID RUNS PASSED

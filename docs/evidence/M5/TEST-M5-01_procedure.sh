@@ -12,9 +12,13 @@
 #  5. Existing files changed in amr_ws/src since BASE: only amr_bringup/package.xml (exactly one added line,
 #     <exec_depend>slam_toolbox</exec_depend>) and amr_bringup/CMakeLists.txt (comment lines only). Every other change
 #     is a new file (M5 plan §12: "only new files" read as "no behavioural change to existing files").
+#     Compared BASE -> END, END = 9b85171, the M5 closeout commit (DEC-064, 2026-11-20): this step checks M5's own
+#     increment; later milestones' changes are checked by their own identity tests (TEST-M6-01 from 9b85171). Before
+#     DEC-064 the step compared BASE with the working tree and failed on M6's approved additions (TS-049).
 set -u
 TAG=${1:-}
 BASE=${BASE:-517608f}
+END=${END:-9b85171}
 PKGS="amr_description amr_bringup amr_gazebo_plugins"
 LOG=docs/evidence/M5/TEST-M5-01${TAG}_review.log
 X=src/amr_description/urdf/amr.urdf.xacro
@@ -52,14 +56,14 @@ for F in $FILES; do
   if git diff --quiet "$BASE" -- "$F"; then echo "unchanged  $F"; else echo "CHANGED    $F"; git diff "$BASE" -- "$F"; false; fi; rc $?
 done
 
-echo; echo "## 5. Existing files changed in amr_ws/src since $BASE"
-git diff --name-status "$BASE" -- amr_ws/src | tee "$TMP/ns.txt"
+echo; echo "## 5. Existing files changed in amr_ws/src from $BASE to $END (M5 increment, DEC-064)"
+git diff --name-status "$BASE" "$END" -- amr_ws/src | tee "$TMP/ns.txt"
 MOD=$(grep -v '^A' "$TMP/ns.txt" | awk '{print $2}' | sort | tr '\n' ' ')
 echo "# modified or removed (not new): ${MOD:-none}"
 [ "$MOD" = "amr_ws/src/amr_bringup/CMakeLists.txt amr_ws/src/amr_bringup/package.xml " ]; rc $?
-git diff -U0 "$BASE" -- amr_ws/src/amr_bringup/package.xml | grep -E '^[+-][^+-]' | tee "$TMP/p.txt"
+git diff -U0 "$BASE" "$END" -- amr_ws/src/amr_bringup/package.xml | grep -E '^[+-][^+-]' | tee "$TMP/p.txt"
 [ "$(cat "$TMP/p.txt")" = "+  <exec_depend>slam_toolbox</exec_depend>" ] && echo "package.xml: only the slam_toolbox exec_depend added"; rc $?
-git diff -U0 "$BASE" -- amr_ws/src/amr_bringup/CMakeLists.txt | grep -E '^[+-][^+-]' > "$TMP/c.txt"
+git diff -U0 "$BASE" "$END" -- amr_ws/src/amr_bringup/CMakeLists.txt | grep -E '^[+-][^+-]' > "$TMP/c.txt"
 NONCOMMENT=$(grep -v -E '^[+-]\s*#' "$TMP/c.txt" | wc -l)
 echo "# CMakeLists.txt changed lines: $(wc -l < "$TMP/c.txt"), of which not comments: $NONCOMMENT"
 [ "$NONCOMMENT" = 0 ]; rc $?

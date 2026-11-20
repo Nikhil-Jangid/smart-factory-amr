@@ -39,6 +39,11 @@ case $CMD in
     for pid in $(cat "$P.recpids"); do kill -INT "$pid" 2>/dev/null; done
     for pid in $(cat "$P.recpids"); do for _ in $(seq 20); do kill -0 "$pid" 2>/dev/null || break; timeout 0.5 tail -f /dev/null; done; done
     rm -f "$P.recpids"
+    # An empty recording (the capture pipeline ended at once, e.g. the window went away) makes webm_trim.py wait
+    # forever for a first frame (TS-046): report it and delete it instead.
+    for w in "${P}_gazebo.webm" "${P}_rviz.webm"; do
+      [ -f "$w" ] && [ ! -s "$w" ] && { echo "# sim_record: $w is empty (capture failed), deleted"; rm -f "$w"; }
+    done
     V=$(ls "${P}_gazebo.webm" "${P}_rviz.webm" 2>/dev/null)
     [ -n "$V" ] && python3 tools/webm_trim.py auto $V | sed "s|$PWD/||g"
     for w in $V; do

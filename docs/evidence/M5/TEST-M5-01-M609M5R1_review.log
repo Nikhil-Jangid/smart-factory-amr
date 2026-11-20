@@ -1,0 +1,54 @@
+# TEST-M5-01 review, 2026-11-20 21:43:39 IST, revision 1a691ac (amr_ws/src clean); baseline 517608f
+
+## 1. Build
+$ cd amr_ws && colcon build --symlink-install --packages-select amr_description amr_bringup amr_gazebo_plugins
+-- Up-to-date symlink: <home>/Projects/smart-amr-dev/amr_ws/install/amr_bringup/share/amr_bringup/cmake/amr_bringupConfig-version.cmake
+-- Up-to-date symlink: <home>/Projects/smart-amr-dev/amr_ws/install/amr_bringup/share/amr_bringup/package.xml
+Finished <<< amr_bringup [0.09s]
+
+Summary: 3 packages finished [0.26s]
+# colcon exit 0; lines matching 'warning': 0
+# exit 0
+
+## 2. Default expansion vs the M1 baseline
+identical
+# exit 0
+
+## 3. Launch-model expansions vs 517608f
+$ xacro amr.urdf.xacro use_ros2_control:=true (6452 bytes)
+identical
+# exit 0
+$ xacro amr.urdf.xacro use_ros2_control:=true use_sensors:=true (9912 bytes)
+identical
+# exit 0
+
+## 4. Simulation, controller and sensor files vs 517608f
+unchanged  amr_ws/src/amr_bringup/launch/sim.launch.py
+# exit 0
+unchanged  amr_ws/src/amr_bringup/config/controllers.yaml
+# exit 0
+unchanged  amr_ws/src/amr_description/urdf/amr.sensors.xacro
+# exit 0
+unchanged  amr_ws/src/amr_description/urdf/amr_properties.xacro
+# exit 0
+
+## 5. Existing files changed in amr_ws/src from 517608f to 9b85171 (M5 increment, DEC-064)
+M	amr_ws/src/amr_bringup/CMakeLists.txt
+A	amr_ws/src/amr_bringup/config/slam_toolbox.yaml
+A	amr_ws/src/amr_bringup/launch/slam.launch.py
+A	amr_ws/src/amr_bringup/maps/mapping_arena.data.gz
+A	amr_ws/src/amr_bringup/maps/mapping_arena.pgm
+A	amr_ws/src/amr_bringup/maps/mapping_arena.posegraph.gz
+A	amr_ws/src/amr_bringup/maps/mapping_arena.yaml
+M	amr_ws/src/amr_bringup/package.xml
+A	amr_ws/src/amr_bringup/rviz/mapping.rviz
+A	amr_ws/src/amr_bringup/worlds/mapping_arena.sdf
+# modified or removed (not new): amr_ws/src/amr_bringup/CMakeLists.txt amr_ws/src/amr_bringup/package.xml 
+# exit 0
++  <exec_depend>slam_toolbox</exec_depend>
+package.xml: only the slam_toolbox exec_depend added
+# exit 0
+# CMakeLists.txt changed lines: 2, of which not comments: 0
+# exit 0
+
+# overall: ALL STEPS PASSED

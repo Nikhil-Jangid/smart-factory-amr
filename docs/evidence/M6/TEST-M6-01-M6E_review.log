@@ -1,0 +1,76 @@
+# TEST-M6-01 review, 2026-11-20 21:43:40 IST, revision 1a691ac (amr_ws/src clean); baseline 9b85171
+
+## 1. Build
+$ cd amr_ws && colcon build --symlink-install --packages-select amr_description amr_bringup amr_gazebo_plugins
+-- Up-to-date symlink: <home>/Projects/smart-amr-dev/amr_ws/install/amr_bringup/share/amr_bringup/cmake/amr_bringupConfig-version.cmake
+-- Up-to-date symlink: <home>/Projects/smart-amr-dev/amr_ws/install/amr_bringup/share/amr_bringup/package.xml
+Finished <<< amr_bringup [0.09s]
+
+Summary: 3 packages finished [0.26s]
+# colcon exit 0; lines matching 'warning': 0
+# exit 0
+
+## 2. Default expansion vs the M1 baseline
+identical
+# exit 0
+
+## 3. Launch-model expansions vs 9b85171
+$ xacro amr.urdf.xacro use_ros2_control:=true (6452 bytes)
+identical
+# exit 0
+$ xacro amr.urdf.xacro use_ros2_control:=true use_sensors:=true (9912 bytes)
+identical
+# exit 0
+
+## 4. Simulation, controller, sensor, SLAM and reference-map files vs 9b85171
+unchanged  amr_ws/src/amr_bringup/launch/sim.launch.py
+# exit 0
+unchanged  amr_ws/src/amr_bringup/config/controllers.yaml
+# exit 0
+unchanged  amr_ws/src/amr_description/urdf/amr.sensors.xacro
+# exit 0
+unchanged  amr_ws/src/amr_description/urdf/amr_properties.xacro
+# exit 0
+unchanged  amr_ws/src/amr_bringup/config/slam_toolbox.yaml
+# exit 0
+unchanged  amr_ws/src/amr_bringup/launch/slam.launch.py
+# exit 0
+unchanged  amr_ws/src/amr_bringup/maps/mapping_arena.yaml
+# exit 0
+unchanged  amr_ws/src/amr_bringup/maps/mapping_arena.pgm
+# exit 0
+unchanged  amr_ws/src/amr_bringup/maps/mapping_arena.data.gz
+# exit 0
+unchanged  amr_ws/src/amr_bringup/maps/mapping_arena.posegraph.gz
+# exit 0
+
+## 5. Existing files changed in amr_ws/src since 9b85171
+M	amr_ws/src/amr_bringup/CMakeLists.txt
+A	amr_ws/src/amr_bringup/config/amcl.yaml
+A	amr_ws/src/amr_bringup/config/controllers_ekf.yaml
+A	amr_ws/src/amr_bringup/config/ekf.yaml
+A	amr_ws/src/amr_bringup/launch/localization.launch.py
+A	amr_ws/src/amr_bringup/maps/mapping_arena_amcl.yaml
+M	amr_ws/src/amr_bringup/package.xml
+A	amr_ws/src/amr_bringup/rviz/localization.rviz
+# modified or removed (not new): amr_ws/src/amr_bringup/CMakeLists.txt amr_ws/src/amr_bringup/package.xml 
+# exit 0
++  <exec_depend>nav2_map_server</exec_depend>
++  <exec_depend>nav2_amcl</exec_depend>
++  <exec_depend>nav2_lifecycle_manager</exec_depend>
++  <exec_depend>robot_localization</exec_depend>
++  <exec_depend>nav2_rviz_plugins</exec_depend>
+package.xml: only the five M6 exec_depend lines added
+# exit 0
+-  DIRECTORY config launch rviz worlds
++  DIRECTORY config launch maps rviz worlds
+# CMakeLists.txt changed lines: 4, of which not comments: 2
+CMakeLists.txt: only comments and the maps folder added to the install rule
+# exit 0
+
+## 6. AMCL map copy vs the reference map (DEC-062)
+origin reference [-2.071, -4.08, 0], AMCL copy [-2.046, -4.055, 0], difference [0.025, 0.025, 0]
+other keys differing: none; text identical apart from comments and origin: True
+# exit 0
+
+# overall: ALL STEPS PASSED

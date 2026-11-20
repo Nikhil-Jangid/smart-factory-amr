@@ -1,0 +1,100 @@
+# TEST-M2-04, 2026-11-20 20:15:56 IST, revision 9c8bb63 (amr_ws/src clean), headless:=false
+
+$ ros2 topic echo --once /clock   (twice, about 2 s apart)
+Traceback (most recent call last):
+  File "/opt/ros/jazzy/bin/ros2", line 33, in <module>
+    sys.exit(load_entry_point('ros2cli==0.32.14', 'console_scripts', 'ros2')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2cli/cli.py", line 91, in main
+    rc = extension.main(parser=parser, args=args)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/command/topic.py", line 41, in main
+    return extension.main(args=args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/verb/echo.py", line 219, in main
+    self.subscribe_and_spin(
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/verb/echo.py", line 260, in subscribe_and_spin
+    rclpy.spin_until_future_complete(node, self.future)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 274, in spin_until_future_complete
+    executor.spin_until_future_complete(future, timeout_sec)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 389, in spin_until_future_complete
+    self._spin_once_until_future_complete(future, timeout_sec)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 943, in _spin_once_until_future_complete
+    self._spin_once_impl(timeout_sec, future.done)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in _spin_once_impl
+    raise handler.exception()
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/task.py", line 286, in _execute_coroutine_step
+    result = coro.send(None)
+             ^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 600, in handler
+    await call_coroutine()
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 564, in _execute
+    await waitable.execute(data)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/event_handler.py", line 116, in execute
+    await rclpy.executors.await_or_execute(self.callback, taken_data)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 116, in await_or_execute
+    return callback(*args)
+           ^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/verb/echo.py", line 319, in _message_lost_event_callback
+    print(
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+clock.sec: A message was lost!!! then 12
+docs/evidence/M2/TEST-M2-04_procedure.sh: line 29: [: A message was lost!!!: integer expression expected
+# exit 2
+
+$ ros2 param get <node> use_sim_time   (every M2 runtime node)
+nodes: /cmd_vel_guard /controller_manager /diff_drive_controller /gz_ros_control /joint_state_broadcaster /robot_state_publisher /ros_gz_bridge
+/cmd_vel_guard: Boolean value is: True
+/controller_manager: Boolean value is: True
+/diff_drive_controller: Boolean value is: True
+/gz_ros_control: Boolean value is: True
+/joint_state_broadcaster: Boolean value is: True
+/robot_state_publisher: Boolean value is: True
+/ros_gz_bridge: Boolean value is: True
+# exit 0
+
+$ ros2 topic echo --once /joint_states
+name:
+- left_wheel_joint
+- right_wheel_joint
+position:
+- -5.158970456829922e-17
+- -3.058637650028534e-18
+velocity:
+- 1.4847837160545768e-17
+- 1.411992933671619e-17
+effort:
+# exit 0
+
+$ ros2 topic echo --once /diff_drive_controller/odom   (header and child frame)
+  frame_id: odom
+child_frame_id: base_footprint
+# exit 0
+
+$ ros2 run tf2_ros tf2_echo odom base_footprint   (first transform)
+At time 26.329000000
+- Translation: [-0.000, -0.000, 0.000]
+- Rotation: in Quaternion (xyzw) [0.000, 0.000, 0.000, 1.000]
+# exit 0
+
+$ ros2 run tf2_tools view_frames   (TF tree)
+[INFO] [1795185994.792869473] [view_frames]: Listening to tf data for 5.0 seconds...
+[INFO] [1795185999.794025091] [view_frames]: Generating graph...
+[INFO] [1795185999.795542928] [view_frames]: Result:tf2_msgs.srv.FrameGraph_Response(frame_yaml="left_wheel_link: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 19.119\n  most_recent_transform: 39.079000\n  oldest_transform: 34.110000\n  buffer_length: 4.969\nbase_link: \n  parent: 'base_footprint'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\nright_wheel_link: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 19.119\n  most_recent_transform: 39.079000\n  oldest_transform: 34.110000\n  buffer_length: 4.969\nbase_footprint: \n  parent: 'odom'\n  broadcaster: 'default_authority'\n  rate: 50.221\n  most_recent_transform: 39.109000\n  oldest_transform: 34.589000\n  buffer_length: 4.520\ncaster_link: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\nlidar_mount_link: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\n")
+edges: [('base_footprint', 'base_link'), ('base_link', 'caster_link'), ('base_link', 'left_wheel_link'), ('base_link', 'lidar_mount_link'), ('base_link', 'right_wheel_link'), ('odom', 'base_footprint')]
+tree == odom -> base_footprint -> M1 tree, one parent per frame: True
+# exit 0
+
+$ python3 TEST-M2_motion_measure.py tfcheck   (TF odom->base_footprint vs odometry at the same stamp)
+# TEST-M2 harness mode=tfcheck, wall 2026-11-20 20:16:40 IST
+PASS  odometry frame ids [('odom', 'base_footprint')] == [(odom, base_footprint)]
+PASS  TF odom->base_footprint equals odometry at the same stamp: 351 pairs, max 0.000000 mm, 0.000000 deg
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 460, odometry 351, joint_states 704, cmd_vel_out 703, tf 351
+# result: ALL CRITERIA PASSED
+# exit 0
+
+# launch log: 0 [ERROR] lines; leftover gz processes: 0
+# overall: AT LEAST ONE CHECK FAILED

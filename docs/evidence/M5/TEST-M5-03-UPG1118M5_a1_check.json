@@ -1,0 +1,23 @@
+{
+ "map": "TEST-M5-03-UPG1118M5_a1_map.yaml",
+ "measures": {
+  "wall_accuracy": true,
+  "ghosts": true,
+  "completeness": true,
+  "dimensions": true,
+  "l1_absent": true
+ },
+ "wall_p95_m": 0.02800000000000047,
+ "ghost_share": 0.0,
+ "completeness": 0.9989010989010989,
+ "length_m": 9.997126107079003,
+ "width_m": 7.990685509513703,
+ "wall_rotation_deg": {
+  "west": 0.054453390200523484,
+  "east": 0.026664353265174634,
+  "south": 0.03160576428393208,
+  "north": -0.0075494670776636305
+ },
+ "low_box_l1_occupied_cells": 0,
+ "pass": true
+}

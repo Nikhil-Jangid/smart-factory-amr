@@ -1,0 +1,35 @@
+# TEST-M3-13 unit tests, 2026-11-20 20:15:02 IST, revision 9c8bb63 (amr_ws/src clean)
+# gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, gtest from ament_cmake_gtest 2.5.7-1noble.20261025.230436
+
+$ cd amr_ws && colcon test --packages-select amr_gazebo_plugins --event-handlers console_direct+
+1/1 Test #1: test_imu_block_averager ..........   Passed    0.06 sec
+100% tests passed, 0 tests failed out of 1
+Total Test time (real) =   0.06 sec
+# exit 0
+
+$ cd amr_ws && colcon test-result --verbose --test-result-base build/amr_gazebo_plugins
+Summary: 14 tests, 0 errors, 0 failures, 0 skipped
+# exit 0
+
+$ amr_ws/build/amr_gazebo_plugins/test_imu_block_averager
+[==========] Running 13 tests from 2 test suites.
+[       OK ] ImuBlockAverager.FullBlockExactMeanAndNewestStamp (0 ms)
+[       OK ] ImuBlockAverager.RandomStreamMatchesNaiveMean (7 ms)
+[       OK ] ImuBlockAverager.StartupWaitsForCompleteAlignedBlock (0 ms)
+[       OK ] ImuBlockAverager.MissingSampleDropsBlock (0 ms)
+[       OK ] ImuBlockAverager.DuplicateIgnored (0 ms)
+[       OK ] ImuBlockAverager.TimeReversalResets (0 ms)
+[       OK ] ImuBlockAverager.ShutdownDiscardsPartialBlock (0 ms)
+[       OK ] ImuBlockAverager.PauseResumeContinuesBlocks (0 ms)
+[       OK ] ImuBlockAverager.WorldResetRestartsCleanly (0 ms)
+[       OK ] ImuBlockAverager.OffGridStampIgnored (0 ms)
+[       OK ] ImuDecimationConfig.Validation (0 ms)
+[       OK ] ImuDecimationConfig.ControllerRateConstraint (0 ms)
+[       OK ] ImuDecimationConfig.FiftyHertzControllerWouldAlias (0 ms)
+[==========] 13 tests from 2 test suites ran. (7 ms total)
+[  PASSED  ] 13 tests.
+# exit 0
+# gtest cases OK: 13, failed: 0 (expected 13 OK, 0 failed)
+# exit 0
+
+# overall: PASS

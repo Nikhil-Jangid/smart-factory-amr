@@ -1,0 +1,154 @@
+# TEST-M6 localization procedure, valid runs required=3, 2026-11-21 01:04:47 IST, revision 5ba09bd (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; nav2_amcl 1.3.14-1noble.20261105.140844; route forward; wrong start 1; global 0
+# launch: sim.launch.py headless:=true sensors:=true world:=mapping_arena.sdf + localization.launch.py 
+
+## attempt 1 (ROS_DOMAIN_ID=141)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M6/TEST-M6_run.py <prefix> --route forward --wrong-start
+# TEST-M6 localization run, wall 2026-11-21 01:04:58 IST; route forward (10 legs, TEST-M6_route.py); wrong start True; follower gains K_TURN 2.0, K_HEAD 2.0, K_DIST 1.0 (DEC-049)
+INFO  wrong start taken: /initialpose (+0.300, +0.400) m, +15.00 deg; truth (-0.000, +0.000) m, +0.00 deg; offset 0.500 m, +15.00 deg
+INFO  rest point  0 at (0.0, 0.0), travel   0.00 m: estimate error  484.6 mm, +14.254 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  1 at (6.5, 0.0), travel   6.49 m: estimate error   42.3 mm, -0.001 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  2 at (6.5, -2.6), travel   9.08 m: estimate error    9.5 mm, -0.089 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  3 at (6.5, 0.9), travel  12.56 m: estimate error    7.9 mm, -0.109 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  4 at (4.1, 0.9), travel  14.95 m: estimate error    4.9 mm, +0.037 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  5 at (4.1, 2.7), travel  16.74 m: estimate error    8.0 mm, +0.086 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  6 at (4.1, 0.6), travel  18.82 m: estimate error    7.5 mm, +0.005 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  7 at (-0.6, 0.6), travel  23.51 m: estimate error   13.1 mm, +0.050 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  8 at (-0.6, 2.6), travel  25.50 m: estimate error   10.6 mm, -0.099 deg; odometry error    0.1 mm,  +0.000 deg
+INFO  rest point  9 at (-0.6, 0.0), travel  28.09 m: estimate error    7.6 mm, +0.062 deg; odometry error    0.1 mm,  +0.000 deg
+INFO  rest point 10 at (0.0, 0.0), travel  28.68 m: estimate error   10.2 mm, -0.116 deg; odometry error    0.0 mm,  -0.000 deg
+# TS-030 check: spin thread ended cleanly
+INFO  route: 200.7 s simulation time in 200.7 s wall, RTF 1.00; max cross-track 9.9 mm; 11 rest points, 1997 track samples (0 missing of 1997); travel 28.68 m
+# result: route driven and recorded (judged by TEST-M6_pose_check.py)
+# harness exit 0
+# localization log: 0 [ERROR] lines
+#         1 [amcl-3] [WARN]  [amcl]: Failed to transform initial pose in time (Lookup would require extrapolation into the future.  Requested time 11.423000 but the latest data is at time 11.420000, when looking up transform from frame [base_footprint] to frame [odom])
+#         1 [amcl-3] [WARN]  [amcl]: Failed to transform initial pose in time (Lookup would require extrapolation into the future.  Requested time 13.425000 but the latest data is at time 13.400000, when looking up transform from frame [base_footprint] to frame [odom])
+#         1 [amcl-3] [WARN]  [amcl]: Failed to transform initial pose in time (Lookup would require extrapolation into the future.  Requested time 9.421000 but the latest data is at time 9.409000, when looking up transform from frame [base_footprint] to frame [odom])
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# exit 0
+# simulation log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# leftover processes by name: 0
+# exit 0
+
+$ python3 -I docs/evidence/M6/TEST-M6_pose_check.py <prefix> --recovery --json <prefix>_check.json
+# TEST-M6 pose check: TEST-M6-04-M611R1_a1; recovery True; drift None; fusion None
+PASS  [recovery_travel] converged to the rest bounds after 5.68 m of travel (<= 6.0 m), at simulation time 37.8 s
+PASS  [rest_position] rest position error max 42.3 mm at rest point 1 (<= 50 mm, 10 rest points)
+PASS  [rest_heading] rest heading error max 0.116 deg at rest point 10 (<= 1.0 deg)
+PASS  [moving_p95_position] moving P95 position error 36.6 mm (<= 100 mm)
+PASS  [moving_p95_heading] moving P95 heading error 0.176 deg (<= 2.0 deg)
+PASS  [moving_max_position] moving maximum position error 49.9 mm at simulation time 37.8 s (<= 250 mm)
+INFO  wrong start visible at simulation time 13.5 s, travel 0.00 m: error 434.7 mm, 13.48 deg
+INFO  rest points judged: 10 of 11
+INFO  track samples 1997, moving 1729, judged 1505
+INFO  moving maximum heading error 0.281 deg
+INFO  end of route: estimate error 10.2 mm, 0.116 deg; odometry error 0.0 mm, -0.000 deg; travel 28.68 m
+# result: PASS
+# pose checker exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=142)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M6/TEST-M6_run.py <prefix> --route forward --wrong-start
+# TEST-M6 localization run, wall 2026-11-21 01:08:39 IST; route forward (10 legs, TEST-M6_route.py); wrong start True; follower gains K_TURN 2.0, K_HEAD 2.0, K_DIST 1.0 (DEC-049)
+INFO  wrong start taken: /initialpose (+0.300, +0.400) m, +15.00 deg; truth (-0.000, +0.000) m, +0.00 deg; offset 0.500 m, +15.00 deg
+INFO  rest point  0 at (0.0, 0.0), travel   0.00 m: estimate error  466.0 mm, +14.143 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  1 at (6.5, 0.0), travel   6.49 m: estimate error   37.3 mm, -0.024 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  2 at (6.5, -2.6), travel   9.08 m: estimate error   12.8 mm, +0.007 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  3 at (6.5, 0.9), travel  12.56 m: estimate error    2.5 mm, +0.014 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  4 at (4.1, 0.9), travel  14.95 m: estimate error   10.1 mm, -0.016 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  5 at (4.1, 2.7), travel  16.74 m: estimate error    6.0 mm, +0.056 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  6 at (4.1, 0.6), travel  18.82 m: estimate error    3.7 mm, +0.036 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  7 at (-0.6, 0.6), travel  23.51 m: estimate error    5.8 mm, +0.003 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  8 at (-0.6, 2.6), travel  25.50 m: estimate error    9.5 mm, -0.021 deg; odometry error    0.1 mm,  +0.000 deg
+INFO  rest point  9 at (-0.6, 0.0), travel  28.08 m: estimate error   12.1 mm, +0.006 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point 10 at (0.0, 0.0), travel  28.67 m: estimate error    5.3 mm, -0.018 deg; odometry error    0.0 mm,  -0.001 deg
+# TS-030 check: spin thread ended cleanly
+INFO  route: 200.8 s simulation time in 200.8 s wall, RTF 1.00; max cross-track 9.9 mm; 11 rest points, 1998 track samples (0 missing of 1998); travel 28.67 m
+# result: route driven and recorded (judged by TEST-M6_pose_check.py)
+# harness exit 0
+# localization log: 0 [ERROR] lines
+#         1 [amcl-3] [WARN]  [amcl]: Failed to transform initial pose in time (Lookup would require extrapolation into the future.  Requested time 10.448000 but the latest data is at time 10.440000, when looking up transform from frame [base_footprint] to frame [odom])
+#         1 [amcl-3] [WARN]  [amcl]: Failed to transform initial pose in time (Lookup would require extrapolation into the future.  Requested time 6.446000 but the latest data is at time 6.440000, when looking up transform from frame [base_footprint] to frame [odom])
+#         1 [amcl-3] [WARN]  [amcl]: Failed to transform initial pose in time (Lookup would require extrapolation into the future.  Requested time 8.448000 but the latest data is at time 8.440000, when looking up transform from frame [base_footprint] to frame [odom])
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# exit 0
+# simulation log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# leftover processes by name: 0
+# exit 0
+
+$ python3 -I docs/evidence/M6/TEST-M6_pose_check.py <prefix> --recovery --json <prefix>_check.json
+# TEST-M6 pose check: TEST-M6-04-M611R1_a2; recovery True; drift None; fusion None
+PASS  [recovery_travel] converged to the rest bounds after 3.48 m of travel (<= 6.0 m), at simulation time 26.0 s
+PASS  [rest_position] rest position error max 37.3 mm at rest point 1 (<= 50 mm, 10 rest points)
+PASS  [rest_heading] rest heading error max 0.056 deg at rest point 5 (<= 1.0 deg)
+PASS  [moving_p95_position] moving P95 position error 37.3 mm (<= 100 mm)
+PASS  [moving_p95_heading] moving P95 heading error 0.123 deg (<= 2.0 deg)
+PASS  [moving_max_position] moving maximum position error 44.6 mm at simulation time 44.5 s (<= 250 mm)
+INFO  wrong start visible at simulation time 10.6 s, travel 0.00 m: error 446.2 mm, 13.74 deg
+INFO  rest points judged: 10 of 11
+INFO  track samples 1998, moving 1725, judged 1588
+INFO  moving maximum heading error 0.202 deg
+INFO  end of route: estimate error 5.3 mm, 0.018 deg; odometry error 0.0 mm, -0.001 deg; travel 28.67 m
+# result: PASS
+# pose checker exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=143)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M6/TEST-M6_run.py <prefix> --route forward --wrong-start
+# TEST-M6 localization run, wall 2026-11-21 01:12:21 IST; route forward (10 legs, TEST-M6_route.py); wrong start True; follower gains K_TURN 2.0, K_HEAD 2.0, K_DIST 1.0 (DEC-049)
+INFO  wrong start taken: /initialpose (+0.300, +0.400) m, +15.00 deg; truth (-0.000, +0.000) m, +0.00 deg; offset 0.500 m, +15.00 deg
+INFO  rest point  0 at (0.0, 0.0), travel   0.00 m: estimate error  454.9 mm, +14.606 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  1 at (6.5, 0.0), travel   6.49 m: estimate error   17.4 mm, +0.041 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  2 at (6.5, -2.6), travel   9.08 m: estimate error    5.7 mm, +0.060 deg; odometry error    0.0 mm,  -0.000 deg
+INFO  rest point  3 at (6.5, 0.9), travel  12.56 m: estimate error    3.6 mm, +0.096 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  4 at (4.1, 0.9), travel  14.95 m: estimate error    5.5 mm, +0.066 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  5 at (4.1, 2.7), travel  16.74 m: estimate error    5.6 mm, -0.069 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  6 at (4.1, 0.6), travel  18.82 m: estimate error    3.2 mm, -0.017 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  7 at (-0.6, 0.6), travel  23.51 m: estimate error    9.0 mm, +0.039 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  8 at (-0.6, 2.6), travel  25.50 m: estimate error    4.8 mm, +0.007 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point  9 at (-0.6, 0.0), travel  28.08 m: estimate error    5.4 mm, -0.032 deg; odometry error    0.0 mm,  +0.000 deg
+INFO  rest point 10 at (0.0, 0.0), travel  28.68 m: estimate error    5.6 mm, -0.005 deg; odometry error    0.0 mm,  -0.000 deg
+# TS-030 check: spin thread ended cleanly
+INFO  route: 200.9 s simulation time in 201.0 s wall, RTF 1.00; max cross-track 9.8 mm; 11 rest points, 1999 track samples (0 missing of 1999); travel 28.68 m
+# result: route driven and recorded (judged by TEST-M6_pose_check.py)
+# harness exit 0
+# localization log: 0 [ERROR] lines
+#         1 [amcl-3] [WARN]  [amcl]: Failed to transform initial pose in time (Lookup would require extrapolation into the future.  Requested time 6.172000 but the latest data is at time 6.159000, when looking up transform from frame [base_footprint] to frame [odom])
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# exit 0
+# simulation log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# leftover processes by name: 0
+# exit 0
+
+$ python3 -I docs/evidence/M6/TEST-M6_pose_check.py <prefix> --recovery --json <prefix>_check.json
+# TEST-M6 pose check: TEST-M6-04-M611R1_a3; recovery True; drift None; fusion None
+PASS  [recovery_travel] converged to the rest bounds after 2.91 m of travel (<= 6.0 m), at simulation time 19.4 s
+PASS  [rest_position] rest position error max 17.4 mm at rest point 1 (<= 50 mm, 10 rest points)
+PASS  [rest_heading] rest heading error max 0.096 deg at rest point 3 (<= 1.0 deg)
+PASS  [moving_p95_position] moving P95 position error 19.2 mm (<= 100 mm)
+PASS  [moving_p95_heading] moving P95 heading error 0.243 deg (<= 2.0 deg)
+PASS  [moving_max_position] moving maximum position error 46.6 mm at simulation time 20.4 s (<= 250 mm)
+INFO  wrong start visible at simulation time 7.2 s, travel 0.00 m: error 432.2 mm, 13.88 deg
+INFO  rest points judged: 10 of 11
+INFO  track samples 1999, moving 1727, judged 1612
+INFO  moving maximum heading error 0.348 deg
+INFO  end of route: estimate error 5.6 mm, 0.005 deg; odometry error 0.0 mm, -0.001 deg; travel 28.68 m
+# result: PASS
+# pose checker exit 0
+# TS-029 attempts declared invalid under DEC-039: 0
+
+# overall: ALL 3 VALID RUNS PASSED

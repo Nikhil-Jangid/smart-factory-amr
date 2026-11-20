@@ -1,0 +1,36 @@
+# TS-044 start-up loop: 30 launches, headless:=false, 2026-11-18 21:23:42 IST
+# revision b044cdc (amr_ws/src clean)
+# ros2_control 4.50.0-1noble.20261105.150451, diff_drive_controller 4.43.1-1noble.20261105.141205, gz_ros2_control 1.2.20-1noble.20261105.145510, rclcpp 28.1.23-1noble.20261105.084818
+# columns: launch, outcome, wall seconds from launch to both controllers active (or to the failure), odom message received
+  1 OK         5.41 s  odom=yes  stop=SIGINT  leftover=0
+  2 OK         5.34 s  odom=yes  stop=SIGINT  leftover=0
+  3 OK         5.37 s  odom=yes  stop=SIGINT  leftover=0
+  4 OK         5.36 s  odom=yes  stop=SIGINT  leftover=0
+  5 OK         5.35 s  odom=yes  stop=SIGINT  leftover=0
+  6 OK         5.36 s  odom=yes  stop=SIGINT  leftover=0
+  7 OK         5.40 s  odom=yes  stop=SIGINT  leftover=0
+  8 OK         5.45 s  odom=yes  stop=SIGINT  leftover=0
+  9 OK         5.37 s  odom=yes  stop=SIGINT  leftover=0
+ 10 OK         5.36 s  odom=yes  stop=SIGINT  leftover=0
+ 11 OK         5.46 s  odom=yes  stop=SIGINT  leftover=0
+ 12 OK         5.37 s  odom=yes  stop=SIGINT  leftover=0
+ 13 OK         5.49 s  odom=yes  stop=SIGINT  leftover=0
+ 14 OK         5.36 s  odom=yes  stop=SIGINT  leftover=0
+ 15 OK         5.39 s  odom=yes  stop=SIGINT  leftover=0
+ 16 OK         5.46 s  odom=yes  stop=SIGINT  leftover=0
+ 17 OK         5.36 s  odom=yes  stop=SIGINT  leftover=0
+ 18 OK         5.35 s  odom=yes  stop=SIGINT  leftover=0
+ 19 OK         5.37 s  odom=yes  stop=SIGINT  leftover=0
+ 20 OK         5.46 s  odom=yes  stop=SIGINT  leftover=0
+ 21 OK         5.37 s  odom=yes  stop=SIGINT  leftover=0
+ 22 OK         5.39 s  odom=yes  stop=SIGINT  leftover=0
+ 23 OK         5.36 s  odom=yes  stop=SIGINT  leftover=0
+ 24 OK         5.35 s  odom=yes  stop=SIGINT  leftover=0
+ 25 OK         5.36 s  odom=yes  stop=SIGINT  leftover=0
+ 26 OK         5.35 s  odom=yes  stop=SIGINT  leftover=0
+ 27 OK         5.47 s  odom=yes  stop=SIGINT  leftover=0
+ 28 OK         5.35 s  odom=yes  stop=SIGINT  leftover=0
+ 29 OK         5.37 s  odom=yes  stop=SIGINT  leftover=0
+ 30 OK         5.36 s  odom=yes  stop=SIGINT  leftover=0
+
+# summary: OK 30, LOADFAIL/NOODOM 0, TIMEOUT 0 of 30 launches

@@ -1,0 +1,178 @@
+# TEST-M5 mapping procedure, valid runs required=3, 2026-11-18 20:49:00 IST, revision b044cdc (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; slam_toolbox 2.8.5-1noble.20261105.115130; nav2_map_server 1.3.14-1noble.20261105.140934
+# launch: sim.launch.py headless:=false sensors:=true world:=mapping_arena.sdf + slam.launch.py
+
+## attempt 1 (ROS_DOMAIN_ID=131)
+both controllers active
+# exit 0
+# sim_record: recording gazebo window to docs/gallery/_pending/M5/TEST-M5-03/TEST-M5-03-UPG1118M5_a1_gazebo.webm
+# sim_record: recording rviz window to docs/gallery/_pending/M5/TEST-M5-03/TEST-M5-03-UPG1118M5_a1_rviz.webm
+
+$ python3 docs/evidence/M5/TEST-M5_map_run.py <prefix>_rest.csv
+# TEST-M5 mapping run, wall 2026-11-18 20:49:23 IST; route 10 legs (TEST-M5_route.py); gains K_TURN 2.0, K_HEAD 2.0, K_DIST 1.0
+PASS  rest point  0 at W0 (0.0, 0.0): SLAM error    0.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, -0.000, +0.00 deg)
+PASS  rest point  1 at W1 (6.5, 0.0): SLAM error    0.0 mm, -0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  -0.000 deg; map->odom (-0.000, -0.000, -0.00 deg)
+PASS  rest point  2 at W2 (6.5, -2.6): SLAM error    0.0 mm, -0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  -0.000 deg; map->odom (+0.000, +0.000, +0.00 deg)
+PASS  rest point  3 at W3 (6.5, 0.9): SLAM error    0.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, +0.000, +0.00 deg)
+PASS  rest point  4 at W4 (4.1, 0.9): SLAM error    0.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, +0.000, -0.00 deg)
+PASS  rest point  5 at W5 (4.1, 2.7): SLAM error   11.9 mm, +0.200 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.002, -0.014, +0.20 deg)
+PASS  rest point  6 at W6 (4.1, 0.6): SLAM error    3.7 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.004, -0.000, +0.00 deg)
+PASS  rest point  7 at W7 (-0.6, 0.6): SLAM error    7.1 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.006, -0.003, +0.00 deg)
+PASS  rest point  8 at W8 (-0.6, 2.6): SLAM error    7.1 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.006, -0.003, -0.00 deg)
+PASS  rest point  9 at W9 (-0.6, 0.0): SLAM error    7.1 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.006, -0.003, +0.00 deg)
+PASS  rest point 10 at W10 (0.0, 0.0): SLAM error    7.1 mm, -0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  -0.000 deg; map->odom (-0.006, -0.003, +0.00 deg)
+# TS-030 check: spin thread ended cleanly
+INFO  route: 200.9 s simulation time in 205.8 s wall, RTF 0.98; max cross-track 9.8 mm; 11 rest points written to TEST-M5-03-UPG1118M5_a1_rest.csv
+INFO  end of route: odometry error 0.0 mm, -0.000 deg (drift that SLAM removed); SLAM error 7.1 mm, -0.000 deg
+# result: PASS
+# harness exit 0
+
+$ ros2 run nav2_map_server map_saver_cli -f <prefix>_map --ros-args -p use_sim_time:=true
+#   [INFO]  [map_saver]: Saving map from 'map' topic to 'docs/evidence/M5/TEST-M5-03-UPG1118M5_a1_map' file
+#   [INFO]  [map_io]: Map saved
+#   [INFO]  [map_saver]: Map saved successfully
+# exit 0
+$ ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph "{filename: <prefix>_posegraph}"
+#   slam_toolbox.srv.SerializePoseGraph_Response(result=0)
+#   
+#   TEST-M5-03-UPG1118M5_a1_posegraph.posegraph: 7403501 bytes, gzip -9 333083 bytes
+#   TEST-M5-03-UPG1118M5_a1_posegraph.data: 471131 bytes, gzip -9 232683 bytes
+# exit 0
+# webm_trim: docs/gallery/_pending/M5/TEST-M5-03/TEST-M5-03-UPG1118M5_a1_gazebo.webm: first 0.7 s cut, 3225 frames kept
+# webm_trim: docs/gallery/_pending/M5/TEST-M5-03/TEST-M5-03-UPG1118M5_a1_rviz.webm: first 0.7 s cut, 3225 frames kept
+# sim_record: wrote docs/gallery/_pending/M5/TEST-M5-03/TEST-M5-03-UPG1118M5_a1_gazebo.mp4
+# sim_record: wrote docs/gallery/_pending/M5/TEST-M5-03/TEST-M5-03-UPG1118M5_a1_rviz.mp4
+# sim_capture: wrote docs/gallery/_pending/M5/TEST-M5-03/TEST-M5-03-UPG1118M5_a1_gazebo.png
+# sim_capture: wrote docs/gallery/_pending/M5/TEST-M5-03/TEST-M5-03-UPG1118M5_a1_rviz.png
+# SLAM log: 0 [ERROR] lines; lines with 'dropping' or 'queue' (dropped scans, INFO): 0
+# shutdown: CLEAN (0 [ERROR] lines; 1 processes finished cleanly)
+# exit 0
+# simulation log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# leftover processes by name: 0
+# exit 0
+
+$ python3 -I docs/evidence/M5/TEST-M5_map_check.py <prefix>_map.yaml --json <prefix>_check.json
+# map TEST-M5-03-UPG1118M5_a1_map.yaml: 202 x 162 cells, 0.05 m, origin [-2.047, -4.055]; occupied cells 986; true surfaces: 8 boxes above the scan plane, below it: ['low_box_l1']
+PASS  wall accuracy: P95 distance to the true surface 0.0280 m (<= 0.1 m); median 0.0220 m, max 0.078 m
+PASS  ghosts: 0 of 986 occupied cells farther than 0.25 m from any surface = 0.000 % (<= 0.5 %)
+PASS  completeness: 909 of 910 visible surface points have an occupied cell within 0.1 m = 99.89 % (>= 90 %)
+PASS  dimensions: interior 9.997 x 7.991 m (10.0 x 8.0 +/- 0.1); wall rotation vs the world (deg) west +0.05, east +0.03, south +0.03, north -0.01 (each <= 1.0); parallel 0.04, perpendicular 0.06 deg (<= 1.0)
+PASS  low_box_l1 (top 0.15 m, below the scan plane) absent: 0 occupied cells in its footprint (0)
+INFO  best-fit offset (not applied): dx -0.025 m, dy -0.025 m, rotation +0.00 deg (mean clipped distance 0.0081 m)
+# result: PASS
+# map checker exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=132)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M5/TEST-M5_map_run.py <prefix>_rest.csv
+# TEST-M5 mapping run, wall 2026-11-18 20:54:21 IST; route 10 legs (TEST-M5_route.py); gains K_TURN 2.0, K_HEAD 2.0, K_DIST 1.0
+PASS  rest point  0 at W0 (0.0, 0.0): SLAM error    0.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, -0.000, +0.00 deg)
+PASS  rest point  1 at W1 (6.5, 0.0): SLAM error    3.1 mm, -0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  -0.000 deg; map->odom (-0.000, -0.003, -0.00 deg)
+PASS  rest point  2 at W2 (6.5, -2.6): SLAM error    4.4 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.003, -0.003, +0.00 deg)
+PASS  rest point  3 at W3 (6.5, 0.9): SLAM error    4.5 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.003, -0.003, +0.00 deg)
+PASS  rest point  4 at W4 (4.1, 0.9): SLAM error    4.5 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.003, -0.003, +0.00 deg)
+PASS  rest point  5 at W5 (4.1, 2.7): SLAM error    7.5 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.007, -0.003, +0.00 deg)
+PASS  rest point  6 at W6 (4.1, 0.6): SLAM error    4.5 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.003, -0.003, +0.00 deg)
+PASS  rest point  7 at W7 (-0.6, 0.6): SLAM error    4.5 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.003, -0.003, +0.00 deg)
+PASS  rest point  8 at W8 (-0.6, 2.6): SLAM error    4.5 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.1 mm,  +0.000 deg; map->odom (-0.003, -0.003, +0.00 deg)
+PASS  rest point  9 at W9 (-0.6, 0.0): SLAM error    4.4 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (-0.003, -0.003, -0.00 deg)
+PASS  rest point 10 at W10 (0.0, 0.0): SLAM error    4.6 mm, -0.200 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  -0.001 deg; map->odom (-0.003, -0.003, -0.20 deg)
+# TS-030 check: spin thread ended cleanly
+INFO  route: 200.8 s simulation time in 201.7 s wall, RTF 1.00; max cross-track 9.8 mm; 11 rest points written to TEST-M5-03-UPG1118M5_a2_rest.csv
+INFO  end of route: odometry error 0.0 mm, -0.001 deg (drift that SLAM removed); SLAM error 4.6 mm, -0.200 deg
+# result: PASS
+# harness exit 0
+
+$ ros2 run nav2_map_server map_saver_cli -f <prefix>_map --ros-args -p use_sim_time:=true
+#   [INFO]  [map_saver]: Saving map from 'map' topic to 'docs/evidence/M5/TEST-M5-03-UPG1118M5_a2_map' file
+#   [INFO]  [map_io]: Map saved
+#   [INFO]  [map_saver]: Map saved successfully
+# exit 0
+$ ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph "{filename: <prefix>_posegraph}"
+#   slam_toolbox.srv.SerializePoseGraph_Response(result=0)
+#   
+#   TEST-M5-03-UPG1118M5_a2_posegraph.posegraph: 7403717 bytes, gzip -9 332941 bytes
+#   TEST-M5-03-UPG1118M5_a2_posegraph.data: 471131 bytes, gzip -9 232667 bytes
+# exit 0
+# SLAM log: 0 [ERROR] lines; lines with 'dropping' or 'queue' (dropped scans, INFO): 1
+#         1 [async_slam_toolbox_node-1] [INFO]  [slam_toolbox]: Message Filter dropping message: frame 'laser_frame' at time 5.100 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+# shutdown: CLEAN (0 [ERROR] lines; 1 processes finished cleanly)
+# exit 0
+# simulation log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# leftover processes by name: 0
+# exit 0
+
+$ python3 -I docs/evidence/M5/TEST-M5_map_check.py <prefix>_map.yaml --json <prefix>_check.json
+# map TEST-M5-03-UPG1118M5_a2_map.yaml: 202 x 162 cells, 0.05 m, origin [-2.042, -4.045]; occupied cells 1145; true surfaces: 8 boxes above the scan plane, below it: ['low_box_l1']
+PASS  wall accuracy: P95 distance to the true surface 0.0330 m (<= 0.1 m); median 0.0300 m, max 0.080 m
+PASS  ghosts: 0 of 1145 occupied cells farther than 0.25 m from any surface = 0.000 % (<= 0.5 %)
+PASS  completeness: 909 of 910 visible surface points have an occupied cell within 0.1 m = 99.89 % (>= 90 %)
+PASS  dimensions: interior 10.001 x 7.990 m (10.0 x 8.0 +/- 0.1); wall rotation vs the world (deg) west -0.04, east +0.01, south +0.04, north -0.04 (each <= 1.0); parallel 0.08, perpendicular 0.08 deg (<= 1.0)
+PASS  low_box_l1 (top 0.15 m, below the scan plane) absent: 0 occupied cells in its footprint (0)
+INFO  best-fit offset (not applied): dx -0.025 m, dy -0.025 m, rotation +0.00 deg (mean clipped distance 0.0148 m)
+# result: PASS
+# map checker exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=133)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M5/TEST-M5_map_run.py <prefix>_rest.csv
+# TEST-M5 mapping run, wall 2026-11-18 20:58:02 IST; route 10 legs (TEST-M5_route.py); gains K_TURN 2.0, K_HEAD 2.0, K_DIST 1.0
+PASS  rest point  0 at W0 (0.0, 0.0): SLAM error    0.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, +0.000, +0.00 deg)
+PASS  rest point  1 at W1 (6.5, 0.0): SLAM error   10.0 mm, -0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  -0.000 deg; map->odom (+0.000, -0.010, +0.00 deg)
+PASS  rest point  2 at W2 (6.5, -2.6): SLAM error   10.0 mm, -0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  -0.000 deg; map->odom (+0.000, -0.010, +0.00 deg)
+PASS  rest point  3 at W3 (6.5, 0.9): SLAM error    0.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, -0.000, +0.00 deg)
+PASS  rest point  4 at W4 (4.1, 0.9): SLAM error   10.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, -0.010, -0.00 deg)
+PASS  rest point  5 at W5 (4.1, 2.7): SLAM error   10.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, -0.010, +0.00 deg)
+PASS  rest point  6 at W6 (4.1, 0.6): SLAM error   10.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, -0.010, +0.00 deg)
+PASS  rest point  7 at W7 (-0.6, 0.6): SLAM error   20.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, -0.020, +0.00 deg)
+PASS  rest point  8 at W8 (-0.6, 2.6): SLAM error   20.1 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.1 mm,  +0.000 deg; map->odom (+0.000, -0.020, +0.00 deg)
+PASS  rest point  9 at W9 (-0.6, 0.0): SLAM error   10.0 mm, +0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  +0.000 deg; map->odom (+0.000, -0.010, +0.00 deg)
+PASS  rest point 10 at W10 (0.0, 0.0): SLAM error   10.0 mm, -0.000 deg (<= 50 mm, 1.0 deg); odometry error     0.0 mm,  -0.000 deg; map->odom (+0.000, -0.010, +0.00 deg)
+# TS-030 check: spin thread ended cleanly
+INFO  route: 200.8 s simulation time in 201.7 s wall, RTF 1.00; max cross-track 9.8 mm; 11 rest points written to TEST-M5-03-UPG1118M5_a3_rest.csv
+INFO  end of route: odometry error 0.0 mm, -0.000 deg (drift that SLAM removed); SLAM error 10.0 mm, -0.000 deg
+# result: PASS
+# harness exit 0
+
+$ ros2 run nav2_map_server map_saver_cli -f <prefix>_map --ros-args -p use_sim_time:=true
+#   [INFO]  [map_saver]: Saving map from 'map' topic to 'docs/evidence/M5/TEST-M5-03-UPG1118M5_a3_map' file
+#   [INFO]  [map_io]: Map saved
+#   [INFO]  [map_saver]: Map saved successfully
+# exit 0
+$ ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph "{filename: <prefix>_posegraph}"
+#   slam_toolbox.srv.SerializePoseGraph_Response(result=0)
+#   
+#   TEST-M5-03-UPG1118M5_a3_posegraph.posegraph: 7403501 bytes, gzip -9 332686 bytes
+#   TEST-M5-03-UPG1118M5_a3_posegraph.data: 471131 bytes, gzip -9 232565 bytes
+# exit 0
+# SLAM log: 0 [ERROR] lines; lines with 'dropping' or 'queue' (dropped scans, INFO): 1
+#         1 [async_slam_toolbox_node-1] [INFO]  [slam_toolbox]: Message Filter dropping message: frame 'laser_frame' at time 3.700 for reason 'discarding message because the queue is full'
+# shutdown: CLEAN (0 [ERROR] lines; 1 processes finished cleanly)
+# exit 0
+# simulation log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# exit 0
+# leftover processes by name: 0
+# exit 0
+
+$ python3 -I docs/evidence/M5/TEST-M5_map_check.py <prefix>_map.yaml --json <prefix>_check.json
+# map TEST-M5-03-UPG1118M5_a3_map.yaml: 202 x 162 cells, 0.05 m, origin [-2.047, -4.06]; occupied cells 950; true surfaces: 8 boxes above the scan plane, below it: ['low_box_l1']
+PASS  wall accuracy: P95 distance to the true surface 0.0280 m (<= 0.1 m); median 0.0280 m, max 0.078 m
+PASS  ghosts: 0 of 950 occupied cells farther than 0.25 m from any surface = 0.000 % (<= 0.5 %)
+PASS  completeness: 906 of 910 visible surface points have an occupied cell within 0.1 m = 99.56 % (>= 90 %)
+PASS  dimensions: interior 9.995 x 7.990 m (10.0 x 8.0 +/- 0.1); wall rotation vs the world (deg) west -0.03, east +0.08, south -0.02, north -0.03 (each <= 1.0); parallel 0.10, perpendicular 0.11 deg (<= 1.0)
+PASS  low_box_l1 (top 0.15 m, below the scan plane) absent: 0 occupied cells in its footprint (0)
+INFO  best-fit offset (not applied): dx -0.025 m, dy -0.025 m, rotation +0.00 deg (mean clipped distance 0.0091 m)
+# result: PASS
+# map checker exit 0
+# TS-029 attempts declared invalid under DEC-039: 0
+
+# overall: ALL 3 VALID RUNS PASSED

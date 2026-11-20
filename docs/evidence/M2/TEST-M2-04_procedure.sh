@@ -24,8 +24,9 @@ show_view
 echo "# TEST-M2-04, $(date '+%F %T %Z'), revision $(git rev-parse --short HEAD)$(git diff --quiet HEAD -- amr_ws/src && echo ' (amr_ws/src clean)' || echo ' (amr_ws/src DIRTY)'), headless:=$HL"
 for _ in $(seq 1 90); do timeout 5 ros2 control list_controllers 2>/dev/null | grep -q 'diff_drive_controller.*active' && break; timeout 1 tail -f /dev/null; done
 echo; echo '$ ros2 topic echo --once /clock   (twice, about 2 s apart)'
-# first line only: the echo output ends with a '---' separator (TS-017)
-C1=$(timeout 10 ros2 topic echo --once /clock --field clock.sec | head -1); timeout 2 tail -f /dev/null; C2=$(timeout 10 ros2 topic echo --once /clock --field clock.sec | head -1)
+# first purely numeric line: the echo output ends with a '---' separator (TS-017), and under load `ros2 topic echo`
+# prints 'A message was lost!!!' on stdout before the value (TS-048); stderr dropped (broken-pipe trace after grep -m1)
+C1=$(timeout 10 ros2 topic echo --once /clock --field clock.sec 2>/dev/null | grep -m1 -E '^[0-9]+$'); timeout 2 tail -f /dev/null; C2=$(timeout 10 ros2 topic echo --once /clock --field clock.sec 2>/dev/null | grep -m1 -E '^[0-9]+$')
 echo "clock.sec: $C1 then $C2"; [ -n "$C1" ] && [ -n "$C2" ] && [ "$C2" -gt "$C1" ]; rc $?
 echo; echo '$ ros2 param get <node> use_sim_time   (every M2 runtime node)'
 NODES=$(timeout 10 ros2 node list 2>/dev/null | grep -v -E '_ros2cli|/m2_' | sort)

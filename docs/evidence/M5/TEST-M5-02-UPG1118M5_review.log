@@ -1,0 +1,203 @@
+# TEST-M5-02 procedure, valid runs required=3, 2026-11-18 20:47:05 IST, revision b044cdc (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; slam_toolbox 2.8.5-1noble.20261105.115130; launch: sim.launch.py headless:=false sensors:=true world:=mapping_arena.sdf + slam.launch.py
+
+## attempt 1 (ROS_DOMAIN_ID=111)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M5/TEST-M5-02_interface_check.py pre <state>
+# TEST-M5-02 check mode=pre, wall 2026-11-18 20:47:13 IST
+INFO  /tf publisher nodes before SLAM: ['diff_drive_controller', 'robot_state_publisher']
+PASS  slam_toolbox is not yet a /tf publisher
+PASS  no map -> odom on /tf before SLAM starts (0 messages in 5 s of simulation time)
+PASS  no /map publisher before SLAM starts ([])
+# TS-030 check: spin thread ended cleanly
+# result: PASS
+# checker (pre) exit 0
+
+$ ros2 launch amr_bringup slam.launch.py
+# sim_record: recording gazebo window to docs/gallery/_pending/M5/TEST-M5-02/TEST-M5-02-UPG1118M5_a1_gazebo.webm
+# sim_record: recording rviz window to docs/gallery/_pending/M5/TEST-M5-02/TEST-M5-02-UPG1118M5_a1_rviz.webm
+
+$ python3 docs/evidence/M5/TEST-M5-02_interface_check.py main <state>
+# TEST-M5-02 check mode=main, wall 2026-11-18 20:47:33 IST
+PASS  /slam_toolbox lifecycle state: active
+PASS  /scan subscribers: [('slam_toolbox', 'sensor_msgs/msg/LaserScan'), ('test_m5_02', 'sensor_msgs/msg/LaserScan')]
+PASS  /map publishers: [('slam_toolbox', 'nav_msgs/msg/OccupancyGrid')]
+PASS  /map message: frame_id 'map', resolution 0.05000000074505806 m, 201 x 161 cells
+PASS  map -> odom messages during the drive: 469
+PASS  publication sequence numbers of map -> odom messages all distinct (469 distinct of 469): one writer
+INFO  map -> odom sequence numbers 706..1174, gaps 0
+PASS  every message with map -> odom carries only that transform
+PASS  /tf publisher nodes: before SLAM ['diff_drive_controller', 'robot_state_publisher'], now ['diff_drive_controller', 'robot_state_publisher', 'slam_toolbox']; added ['slam_toolbox']
+PASS  map -> odom never on /tf_static
+PASS  map -> odom stamps are simulation time (last 33.600 s, sim clock 33.480 s)
+PASS  use_sim_time = True
+PASS  max_laser_range = 12.0 (DEC-048: 12.0)
+PASS  /scan range_min = 0.11999999731779099 m (DEC-031: 0.12; SLAM Toolbox takes its minimum range from the scan, TS-038)
+INFO  min_laser_range declared by slam_toolbox: False (not read by SLAM Toolbox 2.8.5, TS-038)
+PASS  every frame has one parent (9 child frames; multiple parents: {})
+PASS  map -> odom
+PASS  odom -> base_footprint
+PASS  base_footprint -> base_link
+PASS  base_link -> lidar_mount_link
+PASS  lidar_mount_link -> laser_frame
+PASS  map -> laser_frame resolves through the tree
+INFO  drive: 9.30 s simulation time in 9.38 s wall, RTF 0.99
+INFO  scans received during the drive: 93 (10.00 Hz); /map messages: 2; pose-graph nodes (last marker array): 2
+# TS-030 check: spin thread ended cleanly
+# result: PASS
+# checker (main) exit 0
+# webm_trim: no stale-frame jump in the first 4 s of docs/gallery/_pending/M5/TEST-M5-02/TEST-M5-02-UPG1118M5_a1_gazebo.webm; nothing cut
+# sim_record: wrote docs/gallery/_pending/M5/TEST-M5-02/TEST-M5-02-UPG1118M5_a1_gazebo.mp4
+# sim_record: wrote docs/gallery/_pending/M5/TEST-M5-02/TEST-M5-02-UPG1118M5_a1_rviz.mp4
+# sim_capture: wrote docs/gallery/_pending/M5/TEST-M5-02/TEST-M5-02-UPG1118M5_a1_gazebo.png
+# sim_capture: wrote docs/gallery/_pending/M5/TEST-M5-02/TEST-M5-02-UPG1118M5_a1_rviz.png
+# SLAM log: 0 [ERROR] lines; lines with 'dropping' or 'queue' (dropped scans, INFO): 1
+#         1 [async_slam_toolbox_node-1] [INFO]  [slam_toolbox]: Message Filter dropping message: frame 'laser_frame' at time 9.300 for reason 'discarding message because the queue is full'
+# shutdown: CLEAN (0 [ERROR] lines; 1 processes finished cleanly)
+# SLAM launch leftover processes: 0
+# exit 0
+# simulation log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, SLAM, bridge, robot_state_publisher, RViz): 0
+# exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=112)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M5/TEST-M5-02_interface_check.py pre <state>
+# TEST-M5-02 check mode=pre, wall 2026-11-18 20:48:02 IST
+INFO  /tf publisher nodes before SLAM: ['diff_drive_controller', 'robot_state_publisher']
+PASS  slam_toolbox is not yet a /tf publisher
+PASS  no map -> odom on /tf before SLAM starts (0 messages in 5 s of simulation time)
+PASS  no /map publisher before SLAM starts ([])
+# TS-030 check: spin thread ended cleanly
+# result: PASS
+# checker (pre) exit 0
+
+$ ros2 launch amr_bringup slam.launch.py
+
+$ python3 docs/evidence/M5/TEST-M5-02_interface_check.py main <state>
+# TEST-M5-02 check mode=main, wall 2026-11-18 20:48:08 IST
+PASS  /slam_toolbox lifecycle state: active
+PASS  /scan subscribers: [('slam_toolbox', 'sensor_msgs/msg/LaserScan'), ('test_m5_02', 'sensor_msgs/msg/LaserScan')]
+PASS  /map publishers: [('slam_toolbox', 'nav_msgs/msg/OccupancyGrid')]
+PASS  /map message: frame_id 'map', resolution 0.05000000074505806 m, 201 x 161 cells
+PASS  map -> odom messages during the drive: 466
+PASS  publication sequence numbers of map -> odom messages all distinct (466 distinct of 466): one writer
+INFO  map -> odom sequence numbers 251..716, gaps 0
+PASS  every message with map -> odom carries only that transform
+PASS  /tf publisher nodes: before SLAM ['diff_drive_controller', 'robot_state_publisher'], now ['diff_drive_controller', 'robot_state_publisher', 'slam_toolbox']; added ['slam_toolbox']
+PASS  map -> odom never on /tf_static
+PASS  map -> odom stamps are simulation time (last 24.600 s, sim clock 24.458 s)
+PASS  use_sim_time = True
+PASS  max_laser_range = 12.0 (DEC-048: 12.0)
+PASS  /scan range_min = 0.11999999731779099 m (DEC-031: 0.12; SLAM Toolbox takes its minimum range from the scan, TS-038)
+INFO  min_laser_range declared by slam_toolbox: False (not read by SLAM Toolbox 2.8.5, TS-038)
+PASS  every frame has one parent (9 child frames; multiple parents: {})
+PASS  map -> odom
+PASS  odom -> base_footprint
+PASS  base_footprint -> base_link
+PASS  base_link -> lidar_mount_link
+PASS  lidar_mount_link -> laser_frame
+PASS  map -> laser_frame resolves through the tree
+INFO  drive: 9.29 s simulation time in 9.33 s wall, RTF 1.00
+INFO  scans received during the drive: 93 (10.01 Hz); /map messages: 1; pose-graph nodes (last marker array): 2
+# TS-030 check: spin thread ended cleanly
+# result: PASS
+# checker (main) exit 0
+# SLAM log: 0 [ERROR] lines; lines with 'dropping' or 'queue' (dropped scans, INFO): 1
+#         1 [async_slam_toolbox_node-1] [INFO]  [slam_toolbox]: Message Filter dropping message: frame 'laser_frame' at time 11.000 for reason 'discarding message because the queue is full'
+# shutdown: CLEAN (0 [ERROR] lines; 1 processes finished cleanly)
+# SLAM launch leftover processes: 0
+# exit 0
+# simulation log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, SLAM, bridge, robot_state_publisher, RViz): 0
+# exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=113)
+both controllers active
+# exit 0
+
+$ python3 docs/evidence/M5/TEST-M5-02_interface_check.py pre <state>
+# TEST-M5-02 check mode=pre, wall 2026-11-18 20:48:36 IST
+INFO  /tf publisher nodes before SLAM: ['diff_drive_controller', 'robot_state_publisher']
+PASS  slam_toolbox is not yet a /tf publisher
+PASS  no map -> odom on /tf before SLAM starts (0 messages in 5 s of simulation time)
+PASS  no /map publisher before SLAM starts ([])
+# TS-030 check: spin thread ended cleanly
+# result: PASS
+# checker (pre) exit 0
+
+$ ros2 launch amr_bringup slam.launch.py
+
+$ python3 docs/evidence/M5/TEST-M5-02_interface_check.py main <state>
+# TEST-M5-02 check mode=main, wall 2026-11-18 20:48:42 IST
+PASS  /slam_toolbox lifecycle state: active
+PASS  /scan subscribers: [('rviz', 'sensor_msgs/msg/LaserScan'), ('slam_toolbox', 'sensor_msgs/msg/LaserScan'), ('test_m5_02', 'sensor_msgs/msg/LaserScan')]
+PASS  /map publishers: [('slam_toolbox', 'nav_msgs/msg/OccupancyGrid')]
+PASS  /map message: frame_id 'map', resolution 0.05000000074505806 m, 201 x 162 cells
+PASS  map -> odom messages during the drive: 466
+PASS  publication sequence numbers of map -> odom messages all distinct (466 distinct of 466): one writer
+INFO  map -> odom sequence numbers 250..715, gaps 0
+PASS  every message with map -> odom carries only that transform
+PASS  /tf publisher nodes: before SLAM ['diff_drive_controller', 'robot_state_publisher'], now ['diff_drive_controller', 'robot_state_publisher', 'slam_toolbox']; added ['slam_toolbox']
+PASS  map -> odom never on /tf_static
+PASS  map -> odom stamps are simulation time (last 26.800 s, sim clock 26.703 s)
+PASS  use_sim_time = True
+PASS  max_laser_range = 12.0 (DEC-048: 12.0)
+PASS  /scan range_min = 0.11999999731779099 m (DEC-031: 0.12; SLAM Toolbox takes its minimum range from the scan, TS-038)
+INFO  min_laser_range declared by slam_toolbox: False (not read by SLAM Toolbox 2.8.5, TS-038)
+PASS  every frame has one parent (9 child frames; multiple parents: {})
+PASS  map -> odom
+PASS  odom -> base_footprint
+PASS  base_footprint -> base_link
+PASS  base_link -> lidar_mount_link
+PASS  lidar_mount_link -> laser_frame
+PASS  map -> laser_frame resolves through the tree
+INFO  drive: 9.26 s simulation time in 9.33 s wall, RTF 0.99
+INFO  scans received during the drive: 93 (10.04 Hz); /map messages: 1; pose-graph nodes (last marker array): 2
+# TS-030 check: spin thread ended cleanly
+# result: PASS
+# checker (main) exit 0
+# SLAM log: 0 [ERROR] lines; lines with 'dropping' or 'queue' (dropped scans, INFO): 0
+# shutdown: CLEAN (0 [ERROR] lines; 1 processes finished cleanly)
+# SLAM launch leftover processes: 0
+# exit 0
+# simulation log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, SLAM, bridge, robot_state_publisher, RViz): 0
+# exit 0
+# TS-029 attempts declared invalid under DEC-039: 0
+
+# overall: ALL 3 VALID RUNS PASSED

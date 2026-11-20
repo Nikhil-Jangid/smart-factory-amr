@@ -54,6 +54,12 @@ def m4(test, mode):
     return E(f'{test}-{mode}', f'bash {EV}/M4/TEST-M4_procedure.sh {mode} 3 {{log}}', f'{EV}/M4/{test}-{{tag}}_{mode}_review.log')
 
 
+def m6(label, env, suffix=''):
+    """M6 localization run (TEST-M6_procedure.sh, test_plan.md §11): options passed through `env`."""
+    return E(label, f'env {env} bash {EV}/M6/TEST-M6_procedure.sh 3 {{log}}',
+             f'{EV}/M6/{label[:10]}-{{tag}}{suffix}_review.log')
+
+
 def m311(mode):
     return E(f'TEST-M3-11-{mode}', f'bash {EV}/M3/TEST-M3-11_procedure.sh {mode} 3 {{log}}',
              f'{EV}/M3/TEST-M3-11-{{tag}}_{mode}_review.log')
@@ -69,6 +75,8 @@ SUITES = {
         E('TEST-M3-02', f'bash {EV}/M3/TEST-M3-02_procedure.sh -{{tag}}', f'{EV}/M3/TEST-M3-02-{{tag}}_review.log'),
         E('TEST-M4-03', f'python3 -I {EV}/M4/TEST-M4-03_recompute.py', f'{EV}/M4/TEST-M4-03-{{tag}}_recompute.log', True),
         E('TEST-M5-07', f'python3 -I {EV}/M5/TEST-M5-07_distort.py {MAP}', f'{EV}/M5/TEST-M5-07-{{tag}}_review.log', True),
+        E('TEST-M6-08', f'python3 -I {EV}/M6/TEST-M6-08_distort.py {EV}/M6/TEST-M6-08_recorded',
+          f'{EV}/M6/TEST-M6-08-{{tag}}_review.log', True),
     ],
     # TEST-TA-04: every formal test whose harness uses M2.Spinner (plan §6). Run counts as
     # in the last formal runs (M2 re-test 1, M3 §7.3 re-run, Task E).
@@ -106,9 +114,26 @@ SUITES = {
         E('TEST-M5-05', f'bash {EV}/M5/TEST-M5-05_procedure.sh {{log}}', f'{EV}/M5/TEST-M5-05-{{tag}}_review.log'),
         E('TEST-M5-06', f'bash {EV}/M5/TEST-M5-06_procedure.sh 3 {{log}}', f'{EV}/M5/TEST-M5-06-{{tag}}_review.log'),
     ],
+    # REQ-M6-13: every automatable M6 test with the commands of test_plan.md §11. Not here: TEST-M6-09 (the static,
+    # regression, m4 and m5 suites themselves) and TEST-M6-10 (observed in RViz). With SHOW=1 add NOREC=1: otherwise
+    # attempt 1 of each Gazebo procedure records into docs/gallery/_pending/.
+    'm6': [
+        E('TEST-M6-01', f'bash {EV}/M6/TEST-M6-01_procedure.sh -{{tag}}', f'{EV}/M6/TEST-M6-01-{{tag}}_review.log'),
+        E('TEST-M6-08', f'python3 -I {EV}/M6/TEST-M6-08_distort.py {EV}/M6/TEST-M6-08_recorded',
+          f'{EV}/M6/TEST-M6-08-{{tag}}_review.log', True),
+        E('TEST-M6-02', f'bash {EV}/M6/TEST-M6-02_procedure.sh 3 {{log}}', f'{EV}/M6/TEST-M6-02-{{tag}}_review.log'),
+        m6('TEST-M6-03-forward', 'ROUTE=forward', '-forward'), m6('TEST-M6-03-reverse', 'ROUTE=reverse', '-reverse'),
+        m6('TEST-M6-04', 'WRONG=1'),
+        m6('TEST-M6-05-forward', 'INJECT=1 ROUTE=forward', '-forward'),
+        m6('TEST-M6-05-reverse', 'INJECT=1 ROUTE=reverse', '-reverse'),
+        m6('TEST-M6-06-forward', f'WORLD={EV}/M6/TEST-M6_unmapped_arena.sdf ROUTE=forward', '-forward'),
+        m6('TEST-M6-06-reverse', f'WORLD={EV}/M6/TEST-M6_unmapped_arena.sdf ROUTE=reverse', '-reverse'),
+        m6('TEST-M6-07', 'FUSION=1 INJECT=sep'),
+    ],
 }
 # TEST-TA-05 (CI, .github/workflows/ci.yml; plan §7): the same entries as `static`.
 # TEST-M5-10 (2026-11-15): TEST-M5-07 (map-checker sensitivity) joins the static and ci suites.
+# 2026-11-20: TEST-M6-08 (pose-checker sensitivity) joins the static and ci suites.
 SUITES['ci'] = SUITES['static'][:]
 
 

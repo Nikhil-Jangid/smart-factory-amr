@@ -1,0 +1,36 @@
+# TEST-M6-08 review, 2026-11-18 23:55:47 IST, revision 3ed8eb6 (docs/evidence/M6 clean)
+# recorded run: Task B forward dry run 2026-11-18 23:03 IST (route forward, product AMCL settings), files TEST-M6-08_recorded_{rest,track}.csv
+$ python3 -I docs/evidence/M6/TEST-M6-08_distort.py docs/evidence/M6/TEST-M6-08_recorded
+# TEST-M6-08 checker sensitivity: recorded run TEST-M6-08_recorded (11 rest points, 1995 track samples, 1719 moving); jump at track sample 967 (simulation time 106.561 s)
+PASS  original expected PASS                             got PASS
+        pass  [rest_position] rest position error max 10.4 mm at rest point 5 (<= 50 mm, 11 rest points)
+        pass  [rest_heading] rest heading error max 0.107 deg at rest point 10 (<= 1.0 deg)
+        pass  [moving_p95_position] moving P95 position error 9.8 mm (<= 100 mm)
+        pass  [moving_p95_heading] moving P95 heading error 0.131 deg (<= 2.0 deg)
+        pass  [moving_max_position] moving maximum position error 10.4 mm at simulation time 114.6 s (<= 250 mm)
+PASS  offset   expected FAIL on rest_position            got FAIL on rest_position
+        FAIL  [rest_position] rest position error max 86.8 mm at rest point 8 (<= 50 mm, 11 rest points)
+        pass  [rest_heading] rest heading error max 0.107 deg at rest point 10 (<= 1.0 deg)
+        pass  [moving_p95_position] moving P95 position error 86.6 mm (<= 100 mm)
+        pass  [moving_p95_heading] moving P95 heading error 0.131 deg (<= 2.0 deg)
+        pass  [moving_max_position] moving maximum position error 87.4 mm at simulation time 173.8 s (<= 250 mm)
+PASS  rotation expected FAIL on rest_heading             got FAIL on rest_heading
+        pass  [rest_position] rest position error max 10.4 mm at rest point 5 (<= 50 mm, 11 rest points)
+        FAIL  [rest_heading] rest heading error max 1.607 deg at rest point 10 (<= 1.0 deg)
+        pass  [moving_p95_position] moving P95 position error 9.8 mm (<= 100 mm)
+        pass  [moving_p95_heading] moving P95 heading error 1.583 deg (<= 2.0 deg)
+        pass  [moving_max_position] moving maximum position error 10.4 mm at simulation time 114.6 s (<= 250 mm)
+PASS  jump     expected FAIL on moving_max_position      got FAIL on moving_max_position
+        pass  [rest_position] rest position error max 10.4 mm at rest point 5 (<= 50 mm, 11 rest points)
+        pass  [rest_heading] rest heading error max 0.107 deg at rest point 10 (<= 1.0 deg)
+        pass  [moving_p95_position] moving P95 position error 9.8 mm (<= 100 mm)
+        pass  [moving_p95_heading] moving P95 heading error 0.131 deg (<= 2.0 deg)
+        FAIL  [moving_max_position] moving maximum position error 302.5 mm at simulation time 106.6 s (<= 250 mm)
+PASS  delay    expected FAIL on moving_p95_position      got FAIL on moving_p95_position, moving_p95_heading
+        pass  [rest_position] rest position error max 10.4 mm at rest point 5 (<= 50 mm, 11 rest points)
+        pass  [rest_heading] rest heading error max 0.107 deg at rest point 10 (<= 1.0 deg)
+        FAIL  [moving_p95_position] moving P95 position error 130.6 mm (<= 100 mm)
+        FAIL  [moving_p95_heading] moving P95 heading error 14.330 deg (<= 2.0 deg)
+        pass  [moving_max_position] moving maximum position error 132.5 mm at simulation time 109.9 s (<= 250 mm)
+# result: PASS
+# exit 0
