@@ -1,0 +1,52 @@
+# robot_localization EKF: wheel odometry + IMU yaw-rate fusion (M6 Task D; DEC-057; M6 plan §3.4).
+# Started only by localization.launch.py ekf:=true, together with sim.launch.py
+# controllers_file:=.../controllers_ekf.yaml (enable_odom_tf: false), so this node is the only publisher of
+# TF odom -> base_footprint. Output: TF odom -> base_footprint and /odometry/filtered.
+# Parameter names checked against the installed robot_localization 3.8.4 (share/robot_localization/params/ekf.yaml).
+# Values: Selected in Task D as the implementation of DEC-057 (gate: M6 plan §12). Parameters not listed keep the installed defaults
+# (process_noise_covariance, initial_estimate_covariance, no rejection thresholds, use_control false).
+#
+# Only VELOCITIES are fused. The filter integrates them into the pose. Fusing the odometry's integrated pose as
+# well would feed its drifting heading back in as a measurement. Measurement weights come from the message
+# covariances: odometry yaw-rate variance 4.0e-4 (rad/s)^2 (DEC-042, controllers.yaml), gyro 1.0e-6 (DEC-032,
+# carried in /imu). The gyro therefore gets weight 4.0e-4 / (4.0e-4 + 1.0e-6) = 0.9975 on the yaw rate (CALC-M6-04).
+#
+# *_config order (15 booleans): x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az.
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: true
+    frequency: 50.0  # Hz: the odometry publish rate (diff_drive_controller publish_rate, DEC-026)
+    sensor_timeout: 0.1  # s: predict-only cycle if no measurement arrives in this time (installed value)
+    two_d_mode: true  # planar robot: z, roll, pitch and their rates held at 0 (REP-105 odom frame on the floor)
+    publish_tf: true
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_footprint  # DEC-016: the odometry child frame (controllers.yaml base_frame_id)
+    world_frame: odom  # this EKF publishes odom -> base_footprint; AMCL keeps map -> odom
+
+    # Wheel odometry (diff_drive_controller): forward and lateral velocity, yaw rate. vy is the non-holonomic
+    # constraint (always 0), with variance 2.5e-5 (m/s)^2 (DEC-042).
+    odom0: /diff_drive_controller/odom
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true,  true,  false,
+                   false, false, true,
+                   false, false, false]
+    odom0_queue_size: 5
+    odom0_differential: false
+    odom0_relative: false
+
+    # IMU (/imu, frame imu_link, 100 Hz, DEC-038): yaw rate only. The IMU orientation is not fused: Gazebo computes it
+    # from the simulated pose rather than integrating the gyro, so it would be an absolute heading reference that a
+    # real gyro-only IMU does not provide (and it would make the TEST-M6-07 comparison meaningless).
+    # Linear acceleration is not fused (installed default for a wheeled robot; noisier than wheel velocity).
+    imu0: /imu
+    imu0_config: [false, false, false,
+                  false, false, false,
+                  false, false, false,
+                  false, false, true,
+                  false, false, false]
+    imu0_queue_size: 10
+    imu0_differential: false
+    imu0_relative: false
+    imu0_remove_gravitational_acceleration: false  # accelerations not fused

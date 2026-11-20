@@ -1,0 +1,11 @@
+# AMCL-convention copy of mapping_arena.yaml (DEC-062, TS-045; M6). Same image, origin +0.025 m in x and y (half a
+# cell). Nav2 AMCL reads the origin as the centre of cell 0, ROS as its corner (TS-045); this copy makes AMCL place
+# the walls where they are. Served only to AMCL, on /map_amcl; /map stays mapping_arena.yaml (DEC-055).
+# Must differ from mapping_arena.yaml only in the origin and these comments (checked by the M6 consistency checker).
+image: mapping_arena.pgm
+mode: trinary
+resolution: 0.050
+origin: [-2.046, -4.055, 0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
