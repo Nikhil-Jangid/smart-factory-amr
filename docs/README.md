@@ -18,7 +18,7 @@ This directory holds the detailed engineering records. The root files (`ROADMAP.
 | Coordinate frames, links, joints, TF | [`design/frames_and_tf.md`](design/frames_and_tf.md) |
 | ROS architecture and milestone boundaries | [`architecture/ros_architecture.md`](architecture/ros_architecture.md) |
 | Test strategy, procedures, planned tests | [`testing/test_plan.md`](testing/test_plan.md) |
-| Milestone plans and implementation records | [`milestones/`](milestones/): [`M1_custom_amr.md`](milestones/M1_custom_amr.md) (closed), [`M2_basic_movement.md`](milestones/M2_basic_movement.md) (closed), [`M3_sensors.md`](milestones/M3_sensors.md) (closed), [`M3-M4_test_automation.md`](milestones/M3-M4_test_automation.md) (DEC-040, in progress) |
+| Milestone plans and implementation records | [`milestones/`](milestones/): [`M1_custom_amr.md`](milestones/M1_custom_amr.md) (closed), [`M2_basic_movement.md`](milestones/M2_basic_movement.md) (closed), [`M3_sensors.md`](milestones/M3_sensors.md) (closed), [`M3-M4_test_automation.md`](milestones/M3-M4_test_automation.md) (DEC-040, complete), [`M4_odometry.md`](milestones/M4_odometry.md) (closed), [`M5_slam.md`](milestones/M5_slam.md) (closed), [`M6_localization.md`](milestones/M6_localization.md) (closed) |
 | Troubleshooting and known issues | [`troubleshooting.md`](troubleshooting.md) |
 | Evidence files and evidence policy | [`evidence/README.md`](evidence/README.md) |
 | Screenshots and recordings, by milestone and test (demonstration material) | [`gallery/README.md`](gallery/README.md) |
@@ -49,7 +49,7 @@ Rules:
 | `REQ-Mx-nn` | REQ-M1-06 | `requirements.md` |
 | `DEC-nnn` | DEC-011 | `../DECISIONS.md` |
 | `CALC-Mx-nn` | CALC-M1-03 | `design/mass_inertia.md`, `design/mechanical_geometry.md` (M1); `design/motion_control.md` (M2) |
-| `OPEN-nn` | OPEN-01 | Unresolved design items, in the milestone plan that raises them: OPEN-01 to -07 in `milestones/M1_custom_amr.md`, OPEN-08 onward in `milestones/M2_basic_movement.md` |
+| `OPEN-nn` | OPEN-01 | Unresolved design items, in the milestone plan that raises them: OPEN-01 to -07 in `milestones/M1_custom_amr.md`, OPEN-08 to -12 in `milestones/M2_basic_movement.md`, OPEN-13 to -18 in `milestones/M3_sensors.md`, OPEN-19 to -22 in `milestones/M4_odometry.md`, OPEN-23 to -27 in `milestones/M5_slam.md`, OPEN-28 onward in `milestones/M6_localization.md` |
 | `REQ-TA-nn`, `TEST-TA-nn` | REQ-TA-03 | Test-automation step between M3 and M4 (DEC-040): `requirements.md`, `testing/test_plan.md` §8 |
 | `TEST-Mx-nn` | TEST-M1-04 | `testing/test_plan.md` (procedure), `../TEST_RESULTS.md` (result) |
 | `TS-nnn` | TS-001 | `troubleshooting.md` |

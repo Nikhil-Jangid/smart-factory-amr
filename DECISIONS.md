@@ -830,3 +830,93 @@ DEC-001 to DEC-008 predate this format and are kept as originally recorded.
 **Rationale and trade-offs:** M6 localizes on this file, so it should be correct for every ROS consumer. The correction is derived from the source, not fitted to the data, and the data agree with it. The reference map is no longer byte-identical to the `map_saver_cli` output in its origin line; the procedure states and checks the exact difference.
 **Consequences:** with the correction, the checker's best-fit offset on the reference map is (0.000, 0.000) and wall P95 0.045 m (was 0.070 m). TEST-M5-03 and TEST-M5-04 results stand as measured: the checker still reads SLAM maps as saved, so TEST-M5-06 maps carry the shift as TEST-M5-03 did (consistent with the recorded runs). Any later map made with SLAM Toolbox needs the same correction until upstream changes.
 **Follow-up:** check whether newer SLAM Toolbox releases change `toNavMap`; M6 uses the corrected file.
+
+## DEC-056 — M6 Localization Method: AMCL (OPEN-28)
+**Date:** 2026-11-18   **Status:** **Accepted** (decided 2026-11-18, approving the M6 plan §4 recommendation)
+**Context:** DEC-051 kept two inputs for M6: the `.pgm`/`.yaml` image map (AMCL) and the serialized pose graph (SLAM Toolbox localization mode).
+**Decision:** option (a): AMCL (`nav2_amcl`) on the M5 reference image map, served by `nav2_map_server`.
+**Alternatives considered:** (b) SLAM Toolbox localization mode on the pose graph; (c) both, compared.
+**Rationale and trade-offs:** M7 (Nav2) is built around AMCL; it uses only the image map, so it checks the M5 map from a second method; its particle cloud represents an uncertain or wrong start (CALC-M6-03). (b) stays possible later because the pose graph is committed (DEC-054). (c) doubles the test work for a comparison M7 does not need.
+**Consequences:** new `config/amcl.yaml` and `launch/localization.launch.py` (Task A); `maps/` gains an install rule (DEC-054).
+**Follow-up:** none.
+
+## DEC-057 — M6 Odometry and IMU Fusion: Selectable EKF (OPEN-29)
+**Date:** 2026-11-18   **Status:** **Accepted** (decided 2026-11-18)
+**Context:** DEC-042 gave the odometry a covariance for fusion, and DEC-045 deferred "odometry with the IMU on" to M6.
+**Decision:** option (a): a `robot_localization` `ekf_node` fuses the `/diff_drive_controller/odom` velocities and the `/imu` yaw rate and publishes `odom → base_footprint`. It is started by an `ekf:=true` option of `localization.launch.py`, together with `config/controllers_ekf.yaml`, whose only difference from `controllers.yaml` is `enable_odom_tf: false` (enforced by the M6 consistency checker). Default off. IMU bias is not added.
+**Alternatives considered:** (b) EKF output topic only, no TF; (c) defer fusion to the realism step (DEC-043 follow-up).
+**Rationale and trade-offs:** delivers the prepared fusion with a measurable benefit under the injected calibration error (CALC-M6-04); M1–M5 behaviour stays unchanged. Cost: a second controllers file kept in step automatically.
+**Consequences:** new `config/ekf.yaml`, `config/controllers_ekf.yaml` (Task D); TEST-M6-07.
+**Follow-up:** M7 decides whether fusion becomes the default; IMU bias stays with the DEC-043 realism follow-up.
+
+## DEC-058 — M6 Initial Pose and Global Localization (OPEN-30)
+**Date:** 2026-11-18   **Status:** **Accepted** (decided 2026-11-18)
+**Context:** AMCL can start from a known pose, from an operator's rough pose (`/initialpose`), or with particles spread over the whole map.
+**Decision:** option (a): the accuracy tests start from the known spawn pose (`set_initial_pose`, (0, 0, 0)); TEST-M6-04 tests recovery from a 0.5 m / 15° wrong start with the RViz covariance; global localization is a recorded demonstration, not an acceptance criterion.
+**Alternatives considered:** (b) global localization as an acceptance test; (c) known start only.
+**Rationale and trade-offs:** at most 2000 particles cover about 7 % of the arena's pose bins (CALC-M6-03), so a global-localization test would depend on luck or need AMCL retuning for a case a docked factory robot avoids.
+**Consequences:** TEST-M6-04; the demonstration in TEST-M6-10.
+**Follow-up:** revisit if M10 needs start-up without a known dock.
+
+## DEC-059 — M6 Localization Accuracy and Convergence Bounds (OPEN-31)
+**Date:** 2026-11-18   **Status:** **Accepted** (decided 2026-11-18)
+**Context:** the M6 tests need numeric limits (M6 plan §3.1, §3.3, §3.4).
+**Decision:** `map → base_footprint` vs ground truth: at rest ≤ 0.05 m and ≤ 1.0°; while moving (10 Hz, stamp-matched) P95 ≤ 0.10 m and ≤ 2.0°, maximum ≤ 0.25 m; wrong-start recovery to the rest bounds within 3 m of travel (amended to 4.0 m by DEC-063); fusion (separation × 1.02): fused end yaw ≤ 0.5° and fused end position ≤ 25 % of raw, raw within ± 25 % of CALC-M5-04. The bounds are fixed before any formal run; if the default AMCL parameters miss them in the Task A gate, any parameter change is a recorded decision.
+**Alternatives considered:** bounds not tied to the M7 goal tolerance.
+**Rationale and trade-offs:** one fifth of the installed Nav2 goal tolerance (0.25 m, 0.25 rad), and consistent with the M5 pose bound on the map localization depends on (CALC-M6-01).
+**Consequences:** criteria of TEST-M6-03 to -07 Accepted.
+**Follow-up:** a real robot (M13) would need wider bounds.
+
+## DEC-060 — M6 Test World, Route and Launch Structure (OPEN-32)
+**Date:** 2026-11-18   **Status:** **Accepted** (decided 2026-11-18)
+**Context:** the M6 tests need a world with a map, a repeatable route, and a launch for localization.
+**Decision:** option (a): the M5 arena (DEC-046) and route (CALC-M5-02), driven by the DEC-049 ground-truth follower in both directions; a test-only copy of the arena with three unmapped boxes in `docs/evidence/M6/`; a new `localization.launch.py` (map server, AMCL, lifecycle manager; optional EKF) beside the unchanged `sim.launch.py`.
+**Alternatives considered:** (b) a new world and route; (c) include the installed `nav2_bringup` `localization_launch.py`.
+**Rationale and trade-offs:** verified geometry and clearances, the reference map belongs to this world, comparable runs; an own three-node launch is clearer than the installed one, which rewrites parameters and adds options M6 does not use.
+**Consequences:** Tasks A and B; the reverse route and the box positions are checked for clearance in Task B.
+**Follow-up:** none.
+
+## DEC-061 — M6 AMCL Motion and Sensor Model Parameters
+**Date:** 2026-11-18   **Status:** **Accepted** (decided 2026-11-18, after the Task A gate diagnosis)
+**Context:** DEC-059 requires any AMCL parameter change to be a recorded decision. In the Task A gate, the installed Nav2 1.3.14 defaults (`alpha1`–`alpha4` 0.2, `sigma_hit` 0.2 m) gave random rest-point errors of 44–140 mm and up to 3.0° on the M5 route (two runs), against the DEC-059 bound of 0.05 m and 1.0°, while odometry was exact. The Nav2 Jazzy source shows that the alphas are variance ratios (σ_rot = √(α₁·rot² + α₂·trans²), σ_trans = √(α₃·trans² + α₄·rot²)), so 0.2 means a σ of about 45 % of every motion step; and a `sigma_hit` of 0.2 m is 20× the LiDAR noise (0.01 m, DEC-031). Scratch diagnosis D1–D9 (M6 plan §12): each change alone left random errors (D2, D3); both together removed them (D4).
+**Decision:** `alpha1` 0.0016, `alpha2` 0.0004, `alpha3` 0.0004, `alpha4` 0.0004, `sigma_hit` 0.05 m in `amr_bringup/config/amcl.yaml`; all other AMCL values stay the installed defaults. The alphas are the DEC-042 odometry error model (σ 2 % of rotation, 1 % of distance) at **twice its σ** (α = (2σ)²): α₁ = (0.04)², α₃ = (0.02)²; the cross terms α₂, α₄ (rotation noise per metre, distance noise per radian) are not in DEC-042 and are **Assumed** equal to α₃. `sigma_hit` is one map cell, about √(0.01² + 0.035²) (sensor noise and the half-diagonal quantization of a 0.05 m cell), rounded up.
+**Alternatives considered:** (a) the DEC-042 model at 1σ (α₁ 4×10⁻⁴, α₂–α₄ 1×10⁻⁴): within bounds in both scratch cases, but with the TEST-M4-09 injected errors one rest point was at 49.9 mm against 50 mm (D7), because the injected 1 % error equals the modelled σ; (b) the installed defaults with DEC-059 widened to about 0.15 m and 3°: too loose for the M7 goal tolerance.
+**Rationale and trade-offs:** derived from the approved odometry error model, not fitted to the runs; doubling σ puts the injected test errors at 0.5σ. Scratch evidence with the DEC-062 map copy: ideal odometry max 10.6 mm / 0.12° (D8), injected errors max 23.1 mm / 0.19° (D9), against 11.2 mm and 49.9 mm at 1σ. Cost: values tuned to a near-ideal simulation (with the DEC-042 assumptions); a physical robot (M13) would need measured values. Single scratch runs per case; the formal tests (3 runs each) are the verification.
+**Consequences:** `amcl.yaml` deviates from the installed file in these five lines (marked M6, DEC-061); TEST-M6-02 checks the values; TEST-M6-03 to -07 verify them.
+**Follow-up:** revisit with the DEC-043 realism additions and in M13.
+
+## DEC-062 — M6 AMCL Gets an AMCL-Convention Copy of the Map (TS-045)
+**Date:** 2026-11-18   **Status:** **Accepted** (decided 2026-11-18)
+**Context:** TS-045: Nav2 AMCL (1.3.14, `jazzy` source) reads `OccupancyGrid.info.origin` as the centre of cell 0, while ROS defines it as the corner. On the DEC-055-corrected reference map AMCL therefore sees every wall 0.025 m lower in x and y, which gave a constant bias of about 35–40 mm (scratch D2, D4). With a copy whose origin is +0.025 m the bias disappeared (D6: max 11.2 mm).
+**Decision:** option (a): `/map` keeps serving the ROS-correct `maps/mapping_arena.yaml` (DEC-055), for RViz and, from M7, Nav2. A second `map_server` (`map_server_amcl`) serves `maps/mapping_arena_amcl.yaml` (the same image; origin +0.025 m in x and y; otherwise byte-identical apart from comments) on `/map_amcl`, and AMCL reads `map_topic: map_amcl`. The M6 consistency checker enforces the exact difference. The upstream Nav2 issue is in the follow-up below.
+**Alternatives considered:** (b) serve the AMCL convention on `/map` for every consumer: RViz and the M7 costmaps would be 2.5 cm off, undoing DEC-055; (c) accept the bias as a known limitation: it uses about 70–80 % of the 0.05 m bound and hides a known error.
+**Rationale and trade-offs:** every consumer sees the walls where they are; the correction is derived from the source code, not fitted. Cost: a second map server and a second map file that must stay in step (checked automatically).
+**Consequences:** `localization.launch.py` starts four nodes; `amcl.yaml` gains `map_topic`; TEST-M6-02 checks both maps and AMCL's subscription; any later map used with AMCL needs the same copy (with the TS-041 origin correction for new SLAM maps).
+**Follow-up:** retire this when Nav2 AMCL uses the ROS corner convention. Reported upstream 2026-11-20: [ros-navigation/navigation2#6833](https://github.com/ros-navigation/navigation2/issues/6833).
+
+## DEC-063 — M6 Wrong-Start Recovery Bound Restated to 4.0 m of Travel (amends DEC-059)
+**Date:** 2026-11-18   **Status:** **Accepted** (decided 2026-11-18, after the Task B diagnosis)
+**Context:** DEC-059 set recovery from the 0.5 m / 15° wrong start (TEST-M6-04) to "the rest bounds within 3 m of travel". The 3 m came from CALC-M6-03's estimate (about 12 AMCL updates at 0.25 m), not from a measurement. In Task B (scratch runs, GUI shown, M6 plan §12), with the approved DEC-061 settings, recovery took 2.73, 2.89, 2.90 and 3.19 m (4 runs, 1 over). The heading was corrected within about 2 m; the lateral error decayed slowly on the first leg (driving east along y = 0, with the side walls 4 m away). Two candidate fixes did not help reliably: random-particle injection (`recovery_alpha_slow` 0.001, `recovery_alpha_fast` 0.1: 2.93 and 5.09 m) and `min_particles` 2000 (2.34 and 3.46 m). After recovery, every other bound held with wide margins in all 9 runs (worst 35 mm at rest, 49 mm moving maximum).
+**Decision:** the TEST-M6-04 recovery bound is **4.0 m** of ground-truth travel: the measured maximum (3.19 m) plus 25 %, rounded up. Unchanged: the wrong start itself (0.5 m, 15°, RViz covariance), the rest and moving bounds after convergence, the AMCL settings (DEC-061), and every other DEC-059 bound. The checker requires the wrong start to be visible in the estimate before it looks for convergence (M6 plan §12).
+**Alternatives considered:** (a) larger AMCL motion noise (4× or 8× the DEC-061 alphas) to spread the particles faster: untested, and it would trade against the tracking accuracy (the installed defaults gave up to 140 mm); (b) keep 3.0 m and record a likely FAIL in the formal runs; (c) the two parameter changes above, which did not help reliably.
+**Rationale and trade-offs:** the bound now reflects measured behaviour with margin, instead of an estimate. Cost: a wrong start may take up to 4 m to correct, about one sixth of the M5 route. In M7 the robot normally starts from a known pose (DEC-058), and the moving bounds still apply after convergence.
+**Consequences:** `TEST-M6_pose_check.py` uses 4.0 m; REQ-M6-06, test_plan §11 and M6 plan §3.3/§8 updated. The note in CALC-M6-03 records that its estimate was optimistic.
+**Follow-up:** if a later change (M7 tuning, DEC-043 realism additions) changes AMCL's motion model, re-measure recovery.
+
+## DEC-064 — Build-Identity Tests Check Only Their Own Milestone's Increment
+**Date:** 2026-11-20   **Status:** **Accepted** (decided 2026-11-20, TEST-M6-09 regression)
+**Context:** each milestone's build and regression identity test (TEST-M5-01, TEST-M6-01) has a step 5: existing files changed in `amr_ws/src` since the previous milestone's closeout may only be `package.xml` (an exact list of added `exec_depend` lines) and `CMakeLists.txt` (listed lines). That step compared the baseline with the working tree. In the M6 regression it failed TEST-M5-01 on M6's approved dependencies (TS-049): the rule measured the later milestone, not the M5 behaviour it guards. Steps 1–4 (build, M1 byte identity, launch-model identity, unchanged simulation, controller, sensor and SLAM files) passed and remain meaningful against the working tree.
+**Decision:** step 5 of a milestone's identity test compares its baseline with **that milestone's closeout commit** (`END`). TEST-M5-01: `517608f` (M4 closeout) → `9b85171` (M5 closeout). TEST-M6-01: `9b85171` → the working tree while M6 is open; `END` is set to the M6 closeout commit when M6 closes. Steps 1–4 are unchanged. Each later milestone's own identity test covers its increment, so the chain covers every change since M4.
+**Alternatives considered:** (a) add each later milestone's lines to the earlier tests' expected lists: every milestone would edit closed tests again; (b) drop TEST-M5-01 from the `m5` suite: loses steps 1–4 from regression.
+**Rationale and trade-offs:** each test keeps measuring what its milestone committed to, and no closed test needs editing at every milestone. Cost: step 5 of a closed milestone no longer looks at the working tree; that coverage now depends on the next milestone's identity test existing and running in its suite.
+**Consequences:** `TEST-M5-01_procedure.sh` (END = `9b85171`) and `TEST-M6-01_procedure.sh` (END variable; `robot_localization` added to its list, TS-049) changed; the TEST-M5-01 FAIL of TEST-M6-09 is kept and an R1 recorded.
+**Follow-up:** at M6 closure, set TEST-M6-01's `END` default to the closeout commit; M7's identity test starts from that commit. Done 2026-11-21: `END` = `9777615`, verified (`docs/evidence/M6/TEST-M6-01-M6C_review.log`).
+
+## DEC-065 — M6 Wrong-Start Recovery Bound Restated to 6.0 m of Travel (amends DEC-063)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21, after a 10-run characterization)
+**Context:** DEC-063 set the TEST-M6-04 recovery bound at 4.0 m: the maximum of 4 Task B dry runs (3.19 m) plus 25 %. In the `m6` suite run (TEST-M6-11, tag M611), TEST-M6-04 failed: one of 3 runs took 4.84 m. The user chose to measure before deciding. With the product settings (DEC-061), 10 further headless runs were made (`TEST-M6-04-char10_review.log`). Over all 21 wrong-start runs on record, recovery had a median of 2.93 m and a maximum of 4.84 m; 4 of 21 exceeded 4.0 m. The start error AMCL showed (78–468 mm) did not predict the recovery distance. Every run converged on the first leg of the route (6.49 m), and after recovery every bound held with wide margins. The wrong start is sent with RViz's covariance (σ 0.5 m, 15°), so each run starts from a randomly drawn particle cloud; 4 samples underestimated the spread.
+**Decision:** the TEST-M6-04 recovery bound is **6.0 m** of ground-truth travel: the measured maximum of 21 runs (4.84 m) plus 25 % (6.05 m), rounded down to stay inside the first leg (6.49 m), so it also reads "recovered before the first turn". Unchanged: the wrong start (0.5 m, 15°, RViz covariance), the rest and moving bounds after convergence, and the AMCL settings (DEC-061).
+**Alternatives considered:** (a) state the criterion as "before the end of the first leg" (same effect, tied to the route); (b) 5.0 m (about 3 % margin over the measured maximum); (c) keep 4.0 m and tune AMCL: in Task B, random-particle injection and 2000 particles did not help reliably and trade against tracking accuracy.
+**Rationale and trade-offs:** the bound now rests on 21 measured runs, not 4, with the same 25 % rule as DEC-063. Cost: a wrong start may take up to 6 m to correct, about a fifth of the M5 route. M7 starts from a known pose (DEC-058); global localization is not relied on (TEST-M6-10 demonstration).
+**Consequences:** `TEST-M6_pose_check.py` uses 6.0 m; REQ-M6-06, test_plan §11 and the M6 plan §8 updated; the TEST-M6-11 checker and mutation check follow. The TEST-M6-04 FAIL in the `m6` suite run is kept, and a TEST-M6-04 R1 is run under DEC-065. The 10 characterization runs are diagnosis data, not a formal result.
+**Follow-up:** if AMCL's motion or sensor model changes (M7 tuning, DEC-043 realism additions), re-measure recovery with at least 10 runs. TEST-M6-04 R1 (2026-11-21) recovered after 5.68 m in one run: within the bound, but above the 4.84 m the bound was derived from (`TEST_RESULTS.md` § M6 Task E); reviewed and accepted as a known risk at M6 closeout.

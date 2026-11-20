@@ -87,14 +87,15 @@ Milestone plans live in [docs/milestones/](docs/milestones/); every test result 
 - [x] Mapping test (TEST-M5-03, -07, -08, -10)
 - [x] Save map (TEST-M5-05)
 
-## M6 — Localization  ← next
-**Status:** ⚪ Not Started
-- [ ] Localization setup
-- [ ] Pose estimation
-- [ ] TF verification
-- [ ] Localization testing
+## M6 — Localization
+**Status:** ✅ Complete 2026-11-21 (plan [docs/milestones/M6_localization.md](docs/milestones/M6_localization.md); DEC-056 to DEC-065; TEST-M6-01 to -11 PASS, [TEST_RESULTS.md](TEST_RESULTS.md) § M6)
+**Carried forward (M6 plan §13):** a known start pose is required (global localization is unreliable in this arena, DEC-058); AMCL keeps its own map copy on `/map_amcl` (TS-045, DEC-062; reported upstream as [ros-navigation/navigation2#6833](https://github.com/ros-navigation/navigation2/issues/6833)); the wrong-start recovery margin is a known risk (DEC-065).
+- [x] Localization setup (TEST-M6-01, -02)
+- [x] Pose estimation (TEST-M6-03 to -07)
+- [x] TF verification (TEST-M6-02, -07, -10)
+- [x] Localization testing (TEST-M6-03 to -11)
 
-## M7 — Autonomous Navigation
+## M7 — Autonomous Navigation  ← next
 **Status:** ⚪ Not Started
 **Carried in (DEC-011, CALC-M1-05):** the Nav2 footprint must cover the wheels (width 0.435 m across the outer faces) and the caster overhang (length 0.510 m), not the chassis outline alone.
 - [ ] Nav2

@@ -127,6 +127,21 @@ Planned tests, procedures, and state definitions (`PLANNED`, `NOT RUN`, `PASS`, 
 | TEST-M5-08 | M5 | PASS (static 7/7, regression 20/20, m4 9/9 executed entries reviewed; TEST-M4-12/-03 covered by their static logs; TS-029 invalid 1, repeated) | [regression summary](docs/evidence/TA/regression-M508_summary.md), [m4 summary](docs/evidence/TA/m4-M508_summary.md), [static summary](docs/evidence/TA/static-M508_summary.md) |
 | TEST-M5-09 | M5 | PASS (observed by me: map grew, walls straight and single, W1 mapped on both faces, scan on the walls at the end, returned to the start, no jumps; logged run PASS, SLAM pose within 7.4 mm and 0.200°) | [review log](docs/evidence/M5/TEST-M5-09_review.log) |
 | TEST-M5-10 | M5 | PASS (checker 0 mismatches locally and in CI; every injected fault detected; `m5` suite present; TEST-M5-07 in `ci`; CI run #32 green) | — (checker reads my private planning files; script and log not published) |
+| TEST-M6-01 | M6 | PASS (build clean; M1, M2 and M3–M5 expansions identical; M5 product and reference-map files unchanged; existing files changed only by the four Nav2 dependency lines, the maps install rule and comments; AMCL map copy differs only by origin +0.025 m) | [review log](docs/evidence/M6/TEST-M6-01_review.log), [procedure](docs/evidence/M6/TEST-M6-01_procedure.sh) |
+| TEST-M6-02 | M6 | PASS (3 of 3 valid attempts, every interface check PASS; one `map → odom` writer; `/map` and `/map_amcl` equal their files; all shutdowns CLEAN, 0 leftovers; TS-029 invalid 0) | [review log](docs/evidence/M6/TEST-M6-02_review.log), [procedure](docs/evidence/M6/TEST-M6-02_procedure.sh), [checker](docs/evidence/M6/TEST-M6-02_interface_check.py) |
+| TEST-M6-03 | M6 | PASS 3/3 forward, 3/3 reverse (worst at rest 13.2 mm, 0.139°; moving P95 ≤ 11.7 mm, 0.148°; moving max 13.2 mm) | [forward](docs/evidence/M6/TEST-M6-03-forward_review.log), [reverse](docs/evidence/M6/TEST-M6-03-reverse_review.log) |
+| TEST-M6-04 | M6 | PASS 3/3 (recovery 2.12, 2.41, 3.47 m ≤ 4.0 m, DEC-063; afterwards rest ≤ 19.2 mm, moving max ≤ 39.0 mm) | [review log](docs/evidence/M6/TEST-M6-04_review.log) |
+| TEST-M6-04 | M6 | FAIL (`m6` suite run M611: recovery 2.36, **4.84**, 2.93 m vs DEC-063's 4.0 m; every bound after recovery PASS) | [review log](docs/evidence/M6/TEST-M6-04-M611_review.log) |
+| TEST-M6-04 R1 | M6 | PASS 3/3 under DEC-065 (recovery 5.68, 3.48, 2.91 m ≤ 6.0 m; afterwards rest ≤ 42.3 mm, moving max ≤ 49.9 mm) | [review log](docs/evidence/M6/TEST-M6-04-M611R1_review.log) |
+| TEST-M6-05 | M6 | PASS 3/3 forward, 3/3 reverse (odometry drift 198.6 mm, +0.1 %, and 438.6 mm, −0.3 %, of CALC-M5-04; localization rest ≤ 30.4 mm, moving max ≤ 33.5 mm) | [forward](docs/evidence/M6/TEST-M6-05-forward_review.log), [reverse](docs/evidence/M6/TEST-M6-05-reverse_review.log) |
+| TEST-M6-06 | M6 | PASS 3/3 forward, 3/3 reverse (unmapped boxes; rest ≤ 11.7 mm, moving max ≤ 11.9 mm) | [forward](docs/evidence/M6/TEST-M6-06-forward_review.log), [reverse](docs/evidence/M6/TEST-M6-06-reverse_review.log) |
+| TEST-M6-07 | M6 | FAIL (attempt 1: EKF parameter query got no reply, TS-047 checker defect; every fusion, accuracy and localization measure PASS in 3/3 runs) | [review log](docs/evidence/M6/TEST-M6-07_review.log) |
+| TEST-M6-07 R1 | M6 | PASS 3/3 (raw odometry 400.0 mm, +0.1 % of CALC-M5-04; fused ≤ 9.7 mm (≤ 2.4 % of raw), ≤ 0.115°; one `odom → base_footprint` writer, the EKF; localization rest ≤ 24.9 mm, moving max ≤ 24.9 mm) | [review log](docs/evidence/M6/TEST-M6-07-R1_review.log) |
+| TEST-M6-08 | M6 | PASS (original PASS; offset 0.08 m, rotation 1.5°, one 0.30 m jump and a 0.5 s delay each FAIL on their expected measure) | [review log](docs/evidence/M6/TEST-M6-08_review.log), [tool](docs/evidence/M6/TEST-M6-08_distort.py) |
+| TEST-M6-09 | M6 | FAIL (static 11/11, regression 20/20, m4 11/12, m5 5/7 PASS-candidate; TEST-M4-12 and TEST-M5-10 on unindexed batch evidence (TS-043 class), TEST-M5-01 on M6's approved dependencies (TS-049); every M1–M5 behaviour check PASS) | [static](docs/evidence/TA/static-M609S_summary.md), [regression](docs/evidence/TA/regression-M609RH_summary.md), [m4](docs/evidence/TA/m4-M609M4_summary.md), [m5](docs/evidence/TA/m5-M609M5_summary.md) |
+| TEST-M6-09 R1 | M6 | PASS (TEST-M5-01 R1 under DEC-064; records 5/5 after indexing, with TEST-M4-12 and TEST-M5-10 R1) | [TEST-M5-01 R1](docs/evidence/M5/TEST-M5-01-M609M5R1_review.log), records (not published) |
+| TEST-M6-10 | M6 | PASS (observed by me: wrong-start particles converged early, scan on the walls, no jumps; global-localization demonstration shown: one cluster, rotated about 180°, not corrected (DEC-058, not judged)) | [wrong start](docs/evidence/M6/TEST-M6-10-wrongstart_review.log), [global](docs/evidence/M6/TEST-M6-10-global_review.log) |
+| TEST-M6-11 | M6 | PASS (checker zero mismatches; mutation check 20/20 faults detected; `m6` suite 12 entries, run in full (M611); CI run 44805433769 PASS) | — (checker reads my private planning files; script and log not published) |
 | TEST-M4-10 | M4 | PASS (regression 20/20 and static 5/5 entries reviewed; M2 with GUI, M3 headless) | [regression summary](docs/evidence/TA/regression-M410_summary.md), [static summary](docs/evidence/TA/static-M410R2_summary.md) |
 
 **Disclosure:** the M0 acceptance criteria (REQ-M0-01 to REQ-M0-05 in [docs/requirements.md](docs/requirements.md)) were written on 2026-10-19, *after* TEST-M0-00 to TEST-M0-04 had been run. The tests were judged against the expected results recorded in each entry. TEST-M0-04 re-test 1 and TEST-M0-05 were run after the criteria were written.
@@ -1321,6 +1336,231 @@ Plan: [docs/milestones/M3-M4_test_automation.md](docs/milestones/M3-M4_test_auto
 - Pictures and videos of attempt 1 (`TEST-M5-09_a1_{gazebo,rviz}.{png,mp4}`; the RViz window partly covered on its left by the overlapping Gazebo window): accepted, in `docs/gallery/M5/TEST-M5-09/`.
 - **Result:** TEST-M5-09 **PASS** for REQ-M5-11 (observed by me).
 
+### Environment re-verification after the apt upgrade, 2026-11-18 19:57–21:38 IST
+**Why:** I upgraded the ROS 2 Jazzy packages with `apt-get upgrade` on 2026-11-18 (versions in [docs/environment.md](docs/environment.md) § Upgrade 2026-11-18; Gazebo Sim unchanged at 8.15.0). Every M1–M5 result was measured on the previous packages, so the existing suites were re-run unchanged before M6 implementation. Same procedures and criteria as their baselines (TEST-M5-08, TEST-M5-10).
+**Product under test:** `b044cdc`, `amr_ws/src` clean; workspace rebuilt clean (`colcon build --cmake-target clean`, then `colcon build --symlink-install`, exit 0). Serial, one simulation at a time; Gazebo GUI shown (`SHOW=1`).
+**Commands:** `python3 tools/run_suite.py static UPG1118` (exit 0), `SHOW=1 python3 tools/run_suite.py regression UPG1118R` (exit 0), `SHOW=1 python3 tools/run_suite.py m4 UPG1118M4` (exit 1), `SHOW=1 python3 tools/run_suite.py m5 UPG1118M5` (exit 1); re-tests `SHOW=1 bash docs/evidence/M2/TEST-M2_procedure.sh wallclock 3 docs/evidence/M2/TEST-M2-07-UPG1118R1_wallclock.log` and `python3 tools/run_suite.py records UPG1118RR`.
+- **Static** ([summary](docs/evidence/TA/static-UPG1118_summary.md)): 9 of 9 PASS-candidate; reviewed: build without warnings, 13 of 13 unit tests, the M1 expansion identical; the FAIL lines in TEST-M3-02 and TEST-M5-07 are their deliberate checks.
+- **Regression** ([summary](docs/evidence/TA/regression-UPG1118R_summary.md)): 20 of 20 entries PASS-candidate by the runner. Reviewed every log: 0 FAIL in counted attempts, 0 TS-029 attempts, 0 leftover processes, RTF ≥ 0.962. **TEST-M2-07 wallclock: FAIL** for this check: attempt 1 failed to load `diff_drive_controller` at start-up and the harness classed it invalid, but the test plan's validity rule covers only RTF < 0.5 (TS-044; user decision: counted as a failure, no rule change). **R1** ([log](docs/evidence/M2/TEST-M2-07-UPG1118R1_wallclock.log)): **PASS**, 3 of 3 valid runs, no invalid attempt. The failure did not reproduce in 30 further launches ([TS-044 loop log](docs/evidence/M2/TS-044_startup_loop.log)); TS-044 stays open for monitoring.
+- **m4** ([summary](docs/evidence/TA/m4-UPG1118M4_summary.md)): 10 of 11 PASS-candidate; reviewed: odometry accuracy on the upgraded `diff_drive_controller` within every DEC-044 bound; TEST-M4-09 injected errors fail their targets as required and match CALC-M4-05 ([check log](docs/evidence/M4/TEST-M4-09-UPG1118M4_check.log)). **TEST-M4-12: FAIL** on one check, the static suite's log not yet indexed (TS-043); every configuration and record check passed.
+- **m5** ([summary](docs/evidence/TA/m5-UPG1118M5_summary.md)): 6 of 7 PASS-candidate; reviewed: SLAM interface, mapping accuracy (3 valid runs), map save and reload with `map_server` 1.3.14 (the one FAIL line is the procedure's negative control), mapping with injected odometry error ([log](docs/evidence/M5/TEST-M5-06-UPG1118M5_review.log)); 0 TS-029 attempts. **TEST-M5-10: FAIL** on one check, for the same reason as TEST-M4-12 (TS-043).
+- **Records R1** (summary not published) after indexing the batch's evidence: TEST-M2-11, TEST-M3-12, TEST-M4-12, TEST-M5-10 **PASS**.
+- **Result:** **PASS** after the R1 re-tests: the upgraded packages change no M1–M5 behaviour within the existing criteria. Failures kept above: TEST-M2-07 wallclock (TS-044, open), TEST-M4-12 and TEST-M5-10 (TS-043, resolved). The milestone results in the summary table are unchanged; this record adds evidence for the new package versions.
+
 ## Record Format for Future Tests
 
 Use the record format in [docs/testing/test_plan.md §3](docs/testing/test_plan.md). It adds requirement IDs, revision, exit codes, status, and evidence to the fields used in the M0 entries above. Record failed runs as well as passing ones; a re-test gets a new dated entry.
+
+## M6 — Localization (plan [docs/milestones/M6_localization.md](docs/milestones/M6_localization.md); criteria DEC-059; AMCL parameters DEC-061, map copy DEC-062)
+
+### Task A — TEST-M6-01, 2026-11-18 22:38 IST
+**Under test:** the M6 Task A changes against the M5 closeout `9b85171`, on revision `8a515c2` (`amr_ws/src` clean). Static test, no simulation. The procedure was written and dry-run before its formal run, and its map-copy step was negative-controlled (M6 plan §12).
+**TEST-M6-01** (REQ-M6-11): `bash docs/evidence/M6/TEST-M6-01_procedure.sh`, exit 0 ([log](docs/evidence/M6/TEST-M6-01_review.log)).
+- **Build and model:**
+  - Build: colcon exit 0, 0 warning lines.
+  - Default expansion byte-identical to `TEST-M1-02_amr.urdf`.
+  - Expansions with `use_ros2_control:=true` (6452 bytes) and with `use_sensors:=true` added (9912 bytes) byte-identical to the `9b85171` expansions.
+- **Protected files:** `sim.launch.py`, `controllers.yaml`, `amr.sensors.xacro`, `amr_properties.xacro`, `slam_toolbox.yaml`, `slam.launch.py` and the four reference-map files are unchanged since `9b85171`.
+- **Existing files in `amr_ws/src` since `9b85171`:** two are modified:
+  - `package.xml`: exactly the four exec_depends `nav2_map_server`, `nav2_amcl`, `nav2_lifecycle_manager` and `nav2_rviz_plugins`;
+  - `CMakeLists.txt`: 4 changed lines, which are 2 comment lines and the install rule gaining `maps`.
+- **Map copy:** `mapping_arena_amcl.yaml` origin differs from the reference by [0.025, 0.025, 0]; no other key differs; the text is identical apart from comments and the origin (DEC-062).
+- **Negative control** (scratch, before the formal run): the map-copy step rejected an origin off by 1 µm, a changed `free_thresh`, and an unshifted copy, and accepted the real copy.
+- **Result:** TEST-M6-01 **PASS**.
+
+### Task A — TEST-M6-02, 2026-11-18 22:38–22:46 IST
+**Under test:** the localization interface (REQ-M6-01, -02, -03) on `8a515c2` (`amr_ws/src` clean). Launches:
+- `sim.launch.py headless:=false sensors:=true world:=mapping_arena.sdf`;
+- `localization.launch.py`.
+
+Versions: Gazebo 8.15.0; nav2_amcl and nav2_map_server 1.3.14. Gazebo GUI and RViz (`localization.rviz`) were shown (`SHOW=1`). The procedure and checker were dry-run once before this run (scratch, PASS).
+**TEST-M6-02:** `SHOW=1 bash docs/evidence/M6/TEST-M6-02_procedure.sh 3 docs/evidence/M6/TEST-M6-02_review.log`, exit 0 ([log](docs/evidence/M6/TEST-M6-02_review.log)). 144 PASS lines, 0 FAIL.
+- **Before localization (attempts 1–3):**
+  - `/tf` publishers were `diff_drive_controller` and `robot_state_publisher`;
+  - nobody published `map → odom`, `/map` or `/map_amcl`.
+- **After localization, every check PASS in all three attempts:**
+  - **Lifecycle:** `/map_server`, `/map_server_amcl` and `/amcl` active; `use_sim_time` true on all three; `topic_name` `map` and `map_amcl`.
+  - **AMCL parameters:**
+    - `laser_max_range` 12.0;
+    - `map_topic` `map_amcl`, `scan_topic` `scan`;
+    - frames `map` / `odom` / `base_footprint`;
+    - `set_initial_pose` true at (0, 0, 0);
+    - `alpha1` 0.0016, `alpha2`–`alpha4` 0.0004, `sigma_hit` 0.05 (DEC-061).
+  - **Maps:**
+    - `/map` comes only from `map_server`: 202 × 162 cells, 0.05 m, origin (−2.071, −4.080), 0 of 32 724 cells differing from the file;
+    - `/map_amcl` comes only from `map_server_amcl`: the same cells, origin (−2.046, −4.055);
+    - AMCL subscribes to `/map_amcl` and not to `/map`, and to `/scan`;
+    - no SLAM node is running.
+- **During the drive:**
+  - `map → odom` messages: 103 / 102 / 103, all with distinct sequence numbers (one writer);
+  - the only node added to the `/tf` publishers is `amcl`;
+  - `map → odom` is never on `/tf_static`, its stamps are simulation time, and every message carrying it carries only that transform;
+  - every frame has one parent; the chain `map → odom → base_footprint → base_link → lidar_mount_link → laser_frame` holds, and `map → laser_frame` resolves.
+- **`/amcl_pose`** comes only from `amcl`. After the drive (frame `map`), with positive variances:
+
+  | Attempt | x (m) | y (m) | yaw | var x (m²) | var y (m²) | var yaw (rad²) |
+  |---|---|---|---|---|---|---|
+  | 1 | 0.9822 | +0.0002 | 84.1° | 1.11e-4 | 7.4e-5 | 1.8e-4 |
+  | 2 | 0.9784 | −0.0001 | 80.8° | 1.34e-4 | 6.9e-5 | 1.8e-4 |
+  | 3 | 0.9791 | −0.0011 | 81.0° | 1.11e-4 | 7.1e-5 | 2.0e-4 |
+- **INFO:**
+  - RTF 0.99 / 1.00 / 0.99;
+  - `/amcl_pose` at start (0, 0, 0) with zero position variance (set initial pose);
+  - 10 `/amcl_pose` messages per attempt;
+  - 1 `/tf` writer for `amcl` in each attempt (the Task A gate's `ros2 topic info` had listed 2 endpoints; not a criterion: the sequence-number check is).
+- **Shutdown:** localization and simulation launches CLEAN in all three attempts; 0 leftover processes by process group and by name; 0 [ERROR] lines in either log; no launch log needed keeping. TS-029 invalid attempts: 0.
+- **Pictures and videos:** attempt 1 in [`docs/gallery/M6/TEST-M6-02/`](docs/gallery/M6/TEST-M6-02/).
+- **Result:** TEST-M6-02 **PASS**.
+
+### Task B — TEST-M6-08, 2026-11-18 23:55 IST
+**Under test:** the offline pose checker `TEST-M6_pose_check.py` (DEC-059 bounds; recovery bound DEC-063) on revision `3ed8eb6` (`docs/evidence/M6` clean). Offline, standard library only.
+**Input:** the Task B forward dry run (2026-11-18 23:03 IST, product settings), committed as `TEST-M6-08_recorded_{rest,track}.csv`: 11 rest points and 1995 track samples, of which 1719 are moving. This is checker input, not a localization result.
+**TEST-M6-08** (REQ-M6-10): `python3 -I docs/evidence/M6/TEST-M6-08_distort.py docs/evidence/M6/TEST-M6-08_recorded`, exit 0 ([log](docs/evidence/M6/TEST-M6-08_review.log)).
+- **Original:** PASS (rest max 10.4 mm, 0.107°; moving P95 9.8 mm, 0.131°; moving max 10.4 mm).
+- **Offset +0.08 m:** FAIL on `rest_position` (86.8 mm > 50 mm). Moving P95 86.6 mm and max 87.4 mm stay within their bounds, as designed.
+- **Rotation +1.5°:** FAIL on `rest_heading` (1.607° > 1.0°). Moving P95 heading 1.583° stays within 2.0°.
+- **One 0.30 m jump** (track sample 967, 106.6 s): FAIL on `moving_max_position` (302.5 mm > 250 mm). The P95 measures are unchanged.
+- **0.5 s delay:** FAIL on `moving_p95_position` (130.6 mm > 100 mm), and also on `moving_p95_heading` (14.33°), as expected because the turns shift as well.
+- **Result:** TEST-M6-08 **PASS** (1 PASS, 4 FAIL, each on the expected measure).
+
+### Task C — TEST-M6-03 to -06, 2026-11-18 23:58 to 2026-11-19 01:32 IST
+**Under test:** AMCL localization with the DEC-061 settings and the DEC-062 map copy, on revision `f2d344a` (`amr_ws/src` clean; the M6 tooling unchanged since `3ed8eb6`). Ground truth comes from Gazebo, and estimates come from TF looked up at the ground-truth stamp at 10 Hz. Gazebo GUI and RViz were shown; 3 valid runs per procedure (ROS_DOMAIN_ID 141–143); route 28.68 m (M5 route, forward or reversed). Criteria: DEC-059, with the recovery bound from DEC-063. Command lines are in `docs/testing/test_plan.md` §11.
+**Run validity, all 21 runs:**
+- RTF 0.97–1.00;
+- 0 missing samples in 19 runs and 1 missing in 2 runs (of 2067 and 2068; the limit is 2 %);
+- maximum cross-track ≤ 10.0 mm;
+- every shutdown CLEAN (0 `[ERROR]` lines), 0 leftover processes, 0 attempts invalid under DEC-039.
+
+Each run's data (`<log>_a<N>_{rest,track}.csv`, `_check.json`; 4.5 MB in total, every file under 0.25 MB) is committed so the checker can be re-run offline.
+
+| Test | Run | Rest max | Moving P95 | Moving max | Other |
+|---|---|---|---|---|---|
+| TEST-M6-03 forward | 1 / 2 / 3 | 10.3 / 13.2 / 9.4 mm; ≤ 0.099° | 10.6 / 11.7 / 8.8 mm; ≤ 0.133° | 12.4 / 13.2 / 10.2 mm | |
+| TEST-M6-03 reverse | 1 / 2 / 3 | 9.3 / 9.7 / 7.7 mm; ≤ 0.139° | 9.3 / 9.7 / 8.3 mm; ≤ 0.148° | 10.6 / 11.3 / 9.4 mm | |
+| TEST-M6-04 | 1 / 2 / 3 | 18.5 / 12.0 / 19.2 mm; ≤ 0.220° | 29.7 / 26.4 / 18.4 mm; ≤ 0.260° | 39.0 / 36.6 / 36.9 mm | recovery 2.12 / 2.41 / 3.47 m (≤ 4.0 m); wrong start visible at 92.6 / 81.3 / 164.2 mm |
+| TEST-M6-05 forward | 1 / 2 / 3 | 28.1 / 26.1 / 28.0 mm; ≤ 0.211° | 28.8 / 28.4 / 30.6 mm; ≤ 0.668° | 33.5 / 32.6 / 33.2 mm | odometry 198.6 mm, −3.53° each (prediction 198 mm: +0.1 %) |
+| TEST-M6-05 reverse | 1 / 2 / 3 | 26.3 / 29.8 / 30.4 mm; ≤ 0.190° | 26.1 / 27.0 / 29.3 mm; ≤ 0.738° | 28.9 / 32.9 / 31.7 mm | odometry 438.6 mm, −8.82° each (prediction 440 mm: −0.3 %) |
+| TEST-M6-06 forward | 1 / 2 / 3 | 11.4 / 7.6 / 10.2 mm; ≤ 0.166° | 10.8 / 7.5 / 10.1 mm; ≤ 0.156° | 11.9 / 8.2 / 11.5 mm | |
+| TEST-M6-06 reverse | 1 / 2 / 3 | 11.7 / 10.2 / 9.0 mm; ≤ 0.184° | 10.2 / 10.6 / 9.3 mm; ≤ 0.177° | 11.7 / 11.8 / 10.7 mm | |
+
+Bounds: rest ≤ 50 mm and 1.0°; moving P95 ≤ 100 mm and 2.0°; moving max ≤ 250 mm; TEST-M6-05 drift > 150 mm and within ±25 % of CALC-M5-04.
+
+**Results:** TEST-M6-03 **PASS** (REQ-M6-04, -05); TEST-M6-04 **PASS** (REQ-M6-06); TEST-M6-05 **PASS** (REQ-M6-07); TEST-M6-06 **PASS** (REQ-M6-08). Every procedure exited 0 with "ALL 3 VALID RUNS PASSED".
+**Observations:**
+- With exact odometry (TEST-M6-03, -06), localization error stays near 10 mm, about the 5 cm map cell divided by 5. The unmapped boxes changed nothing measurable.
+- With the injected calibration error (TEST-M6-05), error rises to about 30 mm and the moving P95 heading to about 0.7°, yet still holds 3× inside the bounds. Odometry alone was 198.6 mm and 438.6 mm off at the end. The drift is identical in every run because odometry is deterministic.
+- TEST-M6-04 run 3 recovered in 3.47 m, which would have failed DEC-059's original 3 m bound.
+**Incident during the run (not a test result):** attempt 1 of TEST-M6-04 produced an empty (0-byte) Gazebo screen recording, and the trim step waited for its first frame for about 9 minutes. That attempt's data was already written. The trim process was stopped by PID, after which the teardown ended CLEAN and the procedure continued. The recording tool was fixed before the next recorded attempt; TS-046 in `docs/troubleshooting.md`.
+
+### Task D — TEST-M6-07, 2026-11-20 19:20 to 19:32 IST
+**Under test:** odometry + IMU fusion with the `robot_localization` EKF (DEC-057; `ekf.yaml`, `controllers_ekf.yaml`, `localization.launch.py ekf:=true`) and AMCL on the fused odometry, on revision `19200ee` (`amr_ws/src` clean). Injected error: `wheel_separation_multiplier: 1.02` alone, in a test copy of `controllers_ekf.yaml` (the log lists the difference from `controllers.yaml`). Forward M5 route, 28.68 m; Gazebo GUI and RViz shown; 3 runs (ROS_DOMAIN_ID 141–143). Command: `SHOW=1 FUSION=1 INJECT=sep bash docs/evidence/M6/TEST-M6_procedure.sh 3 docs/evidence/M6/TEST-M6-07_review.log`, exit 1 ([log](docs/evidence/M6/TEST-M6-07_review.log)).
+**Run validity:** RTF 0.99–1.00; 0, 1 and 0 missing samples (of 1980–1990); maximum cross-track 9.8 mm; every shutdown CLEAN, 0 leftover processes, 0 attempts invalid under DEC-039.
+
+| Run | Fusion check pre / main | Raw odometry at the end | Fused odometry at the end | AMCL rest max | Moving P95 | Moving max |
+|---|---|---|---|---|---|---|
+| 1 | PASS / **FAIL** (parameters `{}`) | 400.0 mm, −7.060° | 6.6 mm (1.6 %), +0.071° | 20.3 mm, 0.166° | 17.2 mm, 0.328° | 20.4 mm |
+| 2 | PASS / PASS | 400.0 mm, −7.059° | 2.9 mm (0.7 %), +0.038° | 19.7 mm, 0.163° | 18.8 mm, 0.348° | 22.1 mm |
+| 3 | PASS / PASS | 400.0 mm, −7.059° | 5.6 mm (1.4 %), −0.077° | 19.6 mm, 0.129° | 17.5 mm, 0.343° | 20.9 mm |
+
+Criteria: raw within ± 25 % of CALC-M5-04 for separation × 1.02 alone (400 mm; measured +0.1 %); fused heading ≤ 0.5°; fused position ≤ 25 % of raw; DEC-059 localization bounds. Every pose-checker item PASS in all 3 runs. In all 3 runs the fusion check found: controller TF off; `/imu` gyro variance 1.0e-6 (float32 on the wire); one `odom → base_footprint` writer at 48–50 Hz, every stamp equal to a `/odometry/filtered` stamp.
+**Failure:** attempt 1, item 5 of the main fusion check: `get_parameters` on `ekf_filter_node` returned nothing. The EKF logged `failed to send response to /ekf_filter_node/get_parameters (timeout)` in the same second. Diagnosis TS-047: the reply was dropped during discovery of the just-started node; the values themselves were not wrong. Corrective action: the check repeats the query up to 3 times while there is no reply. Re-test R1 follows.
+**Result:** TEST-M6-07 **FAIL** (checker defect TS-047; kept as the original result).
+**Pictures and videos:** attempt 1 in [`docs/gallery/M6/TEST-M6-07/`](docs/gallery/M6/TEST-M6-07/).
+
+### Task D — TEST-M6-07 R1, 2026-11-20 19:33 to 19:46 IST
+**Under test:** as the original run, on revision `c2b6805` (`amr_ws/src` clean). The only change is the TS-047 fix in `TEST-M6-07_fusion_check.py` (query retry); product files unchanged since `19200ee`. Command: `SHOW=1 FUSION=1 INJECT=sep bash docs/evidence/M6/TEST-M6_procedure.sh 3 docs/evidence/M6/TEST-M6-07-R1_review.log`, exit 0 ([log](docs/evidence/M6/TEST-M6-07-R1_review.log)).
+**Run validity:** RTF 1.00; 0, 1 and 1 missing samples (of 1988); maximum cross-track ≤ 9.9 mm; every shutdown CLEAN, 0 leftover processes, 0 attempts invalid under DEC-039. The EKF parameter query was answered at the first try in all 3 runs (no TS-047 retry used).
+
+| Run | Fusion check pre / main | Raw odometry at the end | Fused odometry at the end | AMCL rest max | Moving P95 | Moving max |
+|---|---|---|---|---|---|---|
+| 1 | PASS / PASS | 400.0 mm, −7.059° | 5.3 mm (1.3 %), −0.016° | 24.9 mm, 0.134° | 18.6 mm, 0.320° | 24.9 mm |
+| 2 | PASS / PASS | 400.0 mm, −7.059° | 9.7 mm (2.4 %), −0.075° | 18.0 mm, 0.131° | 17.0 mm, 0.334° | 20.2 mm |
+| 3 | PASS / PASS | 400.0 mm, −7.059° | 6.8 mm (1.7 %), +0.115° | 19.4 mm, 0.125° | 18.4 mm, 0.336° | 22.6 mm |
+
+In every run the fusion check found:
+- the controller TF off (`enable_odom_tf` false, no `odom → base_footprint` without the EKF);
+- `/imu` gyro variance 1.0e-6 (float32 on the wire), raw odometry yaw-rate variance 4.0e-4;
+- the EKF parameters as `ekf.yaml`;
+- one `odom → base_footprint` writer at 50 Hz (251 distinct sequence numbers), added with `ekf_filter_node`, every stamp equal to a `/odometry/filtered` stamp, simulation-time stamps.
+
+**Result:** TEST-M6-07 R1 **PASS** (REQ-M6-09). Every procedure item PASS (60 PASS lines, no FAIL); "ALL 3 VALID RUNS PASSED".
+**Observations:**
+- Fusion removes the injected calibration error almost entirely: raw odometry ends 400 mm and 7.06° off, fused odometry at most 9.7 mm and 0.115° (six formal runs: 2.9–9.7 mm, ≤ 0.115°). The fused heading error is above the CALC-M6-04 estimate (about 0.09°) in some runs but always at least 4× inside the 0.5° bound.
+- AMCL accuracy with fusion (rest ≤ 24.9 mm) is between TEST-M6-03 (exact odometry, ≤ 13.2 mm) and TEST-M6-05 (the larger TEST-M4-09 error without fusion, ≤ 30.4 mm). The runs differ in their injected errors, so this is not a controlled comparison.
+**Pictures and videos:** attempt 1 in [`docs/gallery/M6/TEST-M6-07/`](docs/gallery/M6/TEST-M6-07/) (`TEST-M6-07-R1_a1_*`).
+
+### Task E — TEST-M6-09, 2026-11-20 20:15 to 21:46 IST
+**Under test:** M1–M5 behaviour with the M6 changes in place (REQ-M6-11). Commands as `docs/testing/test_plan.md` §11, one tag per suite. `static` (M609S) on revision `9c8bb63`; `regression` (M609RH), `m4` (M609M4) and `m5` (M609M5) **headless** on `1a691ac` (`amr_ws/src` clean; the only change from `9c8bb63` is the TS-048 procedure fix). Re-tests of earlier milestones run headless (rule from 2026-11-20).
+**Aborted GUI run:** a first `regression` run with the GUI (tag M609R) was stopped by PID during TEST-M2-10 when I switched regression re-tests to headless. Its TEST-M2-04 clock-step FAIL is kept ([log](docs/evidence/M2/TEST-M2-04-M609R_review.log)): `ros2 topic echo` printed "A message was lost!!!" before the value (TS-048, procedure fixed in `1a691ac`). The other partial logs of that run were superseded and are not kept.
+**Run validity:** every Gazebo entry reported RTF ≥ 0.99, CLEAN shutdowns and 0 leftover processes. TEST-M3-14 attempt 1 hit the TS-029 shutdown hang (3 launch `[ERROR]` lines, measurements PASS) and was declared invalid under DEC-039; attempt 4 completed 3 valid runs. Every log was reviewed (DEC-040 item 5).
+
+| Suite | Entries PASS-candidate | Not PASS-candidate |
+|---|---|---|
+| `static` (M609S) | 11 of 11 | — |
+| `regression` (M609RH) | 20 of 20 | — |
+| `m4` (M609M4) | 11 of 12 | TEST-M4-12: one check, `TEST-M4-03-M609S_recompute.log` not yet indexed |
+| `m5` (M609M5) | 5 of 7 | TEST-M5-10: one check, `TEST-M5-07-M609S_review.log` not yet indexed; TEST-M5-01: step 5 on M6's dependency lines (TS-049) |
+
+- **TEST-M4-12, TEST-M5-10:** the `static` suite wrote those logs earlier in the same batch. Same class as TS-043; the recorded practice (index before relying on a records checker) was not followed when the batch was started.
+- **TEST-M5-01:** step 5 compared the M4 closeout with the working tree and found the M6 lines. Steps 1–4 passed: build, M1 byte identity, launch-model identity, unchanged simulation and SLAM files. TEST-M6-01 had the matching gap: its list lacked Task D's `robot_localization`. Diagnosis in TS-049; user decision DEC-064.
+
+**Result:** TEST-M6-09 **FAIL** (kept as the original result).
+
+### Task E — TEST-M6-09 R1, 2026-11-20 21:40 to 21:46 IST
+**Under test:** the three failed entries, after the batch evidence was indexed and DEC-064 was applied (TEST-M5-01 step 5: `517608f` → `9b85171`; TEST-M6-01: five M6 lines).
+- TEST-M5-01 R1: PASS, every step ([log](docs/evidence/M5/TEST-M5-01-M609M5R1_review.log)).
+- `records` suite (M609RR): 5 of 5 PASS-candidate, including TEST-M4-12 R1 and TEST-M5-10 R1 (summary not published).
+- TEST-M6-01 on the Task E working tree with the corrected list: PASS ([log](docs/evidence/M6/TEST-M6-01-M6E_review.log)). Before the correction, a scratch run of TEST-M6-01 at HEAD failed step 5, so the corrected step still detects a missing line (also covered by the TEST-M6-11 mutation check).
+
+**Result:** TEST-M6-09 R1 **PASS** (REQ-M6-11). With M6 in place, every M1–M5 suite entry passes.
+
+### Task E — TEST-M6-10, 2026-11-20 22:32 to 22:42 IST
+**Under test:** localization as seen in RViz `localization.rviz` (REQ-M6-12), revision `00f1b75` (`amr_ws/src` clean), GUI and RViz shown, one run each. Commands as `docs/testing/test_plan.md` §11: `SHOW=1 WRONG=1` (wrong start, as TEST-M6-04) and `SHOW=1 GLOBAL=1` (global-localization demonstration, DEC-058; the `GLOBAL=1` option was added for this test in `00f1b75`).
+**Observed by user:**
+- Wrong start: "particles converged early, scan on walls, no jumps".
+- Global localization: "particles scattered then one cluster, scan rotated off walls, no jumps".
+
+**Instrument record (supporting the observation):**
+- Wrong start: start error 453 mm, 14.4°; converged after 2.10 m of travel (≤ 4.0 m); afterwards rest ≤ 13.5 mm, ≤ 0.19°, moving P95 22.9 mm, maximum 34.7 mm; RTF 0.99; shutdowns CLEAN; checker PASS ([log](docs/evidence/M6/TEST-M6-10-wrongstart_review.log)).
+- Global localization: the service call succeeded; the estimate started 3.5 m and 67° off and, from the first long leg, held a heading error of 179.8–180.0° with a position error of 2.5–8.9 m depending on the robot's position; end of route 6.0 m, 179.9°. It was never corrected (checker FAIL on every bound, expected and not judged, DEC-058). Wheel odometry exact throughout ([log](docs/evidence/M6/TEST-M6-10-global_review.log)).
+
+**Result:** TEST-M6-10 **PASS** (observed by me): the wrong-start convergence, the scan on the walls and the absence of TF jumps were observed, and the global-localization demonstration was shown.
+**Observation:** global localization locked onto one wrong cluster, rotated about 180°, which matches what I saw in RViz ("scan rotated off walls"). This is consistent with a near-symmetry of the arena under a half turn (not verified geometrically). With all particles in that cluster and no random-particle injection (DEC-061), AMCL had no hypothesis left near the truth. It supports DEC-058 (known start pose); for M7 it means the robot must start from a known or user-given pose.
+**Pictures and videos:** both runs in [`docs/gallery/M6/TEST-M6-10/`](docs/gallery/M6/TEST-M6-10/).
+
+### Task E — `m6` suite run, TEST-M6-04 characterization and TEST-M6-04 R1, 2026-11-20 22:46 to 2026-11-21 01:15 IST
+**Under test:** every automatable M6 test through `python3 tools/run_suite.py m6 M611` (REQ-M6-13), **headless** (regression re-tests always run headless), on revision `b3d975b` (`amr_ws/src` clean). Then a 10-run diagnosis batch and TEST-M6-04 R1 on `5ba09bd` (DEC-065; product files unchanged).
+**Run validity:** RTF 0.99–1.00 in every Gazebo entry; every shutdown CLEAN or handled; 0 leftover processes. TEST-M6-05 forward attempt 3 hit the TS-029 shutdown hang (measurements PASS) and was declared invalid under DEC-039; its full launch logs are kept, and attempt 4 completed 3 valid runs. Every log was reviewed (DEC-040 item 5).
+
+| Entry | Result (worst value over the valid runs) |
+|---|---|
+| TEST-M6-11, -01, -08 | PASS-candidate (checker, build identity under DEC-064, pose-checker sensitivity) |
+| TEST-M6-02 | PASS-candidate, 3 valid runs |
+| TEST-M6-03 forward / reverse | PASS-candidate; worst position error 11.8 / 11.6 mm |
+| **TEST-M6-04** | **FAIL**: recovery 2.36, **4.84**, 2.93 m vs 4.0 m (DEC-063); every bound after recovery PASS |
+| TEST-M6-05 forward / reverse | PASS-candidate; 36.9 / 34.5 mm |
+| TEST-M6-06 forward / reverse | PASS-candidate; 11.8 / 10.5 mm |
+| TEST-M6-07 | PASS-candidate; 22.9 mm (EKF fusion) |
+
+**Diagnosis (measure before deciding):** 10 headless wrong-start runs with the product settings ([log](docs/evidence/M6/TEST-M6-04-char10_review.log); diagnosis data, not a formal result). Recovery: 3.25, 2.18, 3.25, 4.01, 4.62, 2.16, 4.53, 3.50, 3.77, 1.61 m. The start error AMCL showed was 78.5–468.1 mm, and after recovery every bound held (rest ≤ 26.2 mm, moving maximum ≤ 75.4 mm). With the 11 earlier runs (Task B dry runs 2.73, 2.89, 2.90, 3.19; TEST-M6-04 2.12, 2.41, 3.47; TEST-M6-10 2.10; this suite run 2.36, 4.84, 2.93): 21 runs, median 2.93 m, maximum 4.84 m, 4 over 4.0 m. The start error did not predict the recovery distance (a 173 mm start took 4.62 m; a 467 mm start took 1.61 m), and every run converged on the first leg (6.49 m). User decision **DEC-065**: the bound is 6.0 m, AMCL unchanged.
+
+**TEST-M6-04 R1** (DEC-065, `WRONG=1 bash docs/evidence/M6/TEST-M6_procedure.sh 3 docs/evidence/M6/TEST-M6-04-M611R1_review.log`, headless):
+
+| Run | Start error shown | Recovery | Rest max | Moving P95 | Moving max |
+|---|---|---|---|---|---|
+| 1 | 434.7 mm, 13.48° | 5.68 m | 42.3 mm, 0.116° | 36.6 mm | 49.9 mm |
+| 2 | 446.2 mm, 13.74° | 3.48 m | 37.3 mm, 0.056° | 37.3 mm | 44.6 mm |
+| 3 | 432.2 mm, 13.88° | 2.91 m | 17.4 mm, 0.096° | 19.2 mm | 46.6 mm |
+
+**Result:** `m6` suite run: TEST-M6-04 **FAIL** (kept); TEST-M6-04 R1 **PASS** (REQ-M6-06). The suite ran every automatable M6 test (part of TEST-M6-11's automation criterion, recorded with TEST-M6-11).
+**Observation:** run 1 of R1 set a new maximum (5.68 m), about 5 % under the DEC-065 bound and above the 4.84 m the bound was derived from. Its 42.3 mm rest error was at rest point 1, 0.8 m after convergence, while the estimate was still settling. The recovery distribution has a longer tail than 21 runs showed (24 runs now: median 2.93 m, maximum 5.68 m). The bound held, but a future formal run could exceed it. Accepted as a known risk at closeout (DEC-065 follow-up).
+
+### Task E — TEST-M6-11, 2026-11-21 01:16 to 01:21 IST
+**Under test:** M6 configuration against DEC-043 and DEC-055 to DEC-065, the M6 records under DEC-041, the evidence index and links, and the automation (REQ-M6-13), on revision `222aa52`. Commands as `docs/testing/test_plan.md` §11.
+- `python3 tools/run_suite.py records M611F`: 5 of 5 PASS-candidate, TEST-M2-11, TEST-M3-12, TEST-M4-12, TEST-M5-10 and TEST-M6-11 (summary and TEST-M6-11 log not published).
+- `python3 -I docs/evidence/M6/TEST-M6-11_mutation_check.py`: 20 of 20 injected faults DETECTED; `python3 tools/run_suite.py m6 M611F --dry-run`: the 12 entries of the `m6` suite (log not published).
+- The `m6` suite was run in full the evening before (tag M611; record above).
+- CI: `gh workflow run ci.yml --ref main -f records=true`, [run 44805433769](https://github.com/Nikhil-Jangid/smart-amr-dev/actions/runs/44805433769): **success**. Record checkers 5 of 5, GPU-free suite 6 of 6 (TEST-M3-01, -M3-13, -M3-02, -M4-03, -M5-07, -M6-08), TEST-TA-06 drawing check PASS.
+
+Defects found while the checker was built and used, all corrected before this run: DEC-041 slips from Tasks A, C and D; the missing TEST-M6-07 traceability entry; my own missing link and restated numbers in Task E (`e5011be`, fixed in `b3d975b`). Checker limitations corrected: the "observed by me" label and attempt numbers above 9.
+**Result:** TEST-M6-11 **PASS** (REQ-M6-13).

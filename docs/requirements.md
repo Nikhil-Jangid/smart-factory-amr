@@ -205,6 +205,26 @@ Plan and analysis (CALC-M5-01 to -04): [milestones/M5_slam.md](milestones/M5_sla
 | REQ-M5-10 | Records consistent under DEC-041; automation | TEST-M5-10 zero mismatches; `m5` suite; TEST-M5-07 and -10 in CI |
 | REQ-M5-11 | Live mapping visible in RViz | `mapping.rviz`, observed by me (TEST-M5-09) |
 
+## M6 — Localization (plan approved 2026-11-18; DEC-056 to DEC-060; AMCL parameters DEC-061, map copy DEC-062)
+
+Plan and analysis (CALC-M6-01 to -04): [milestones/M6_localization.md](milestones/M6_localization.md). Criteria Accepted: DEC-059 (2026-11-18). Results only in [TEST_RESULTS.md](../TEST_RESULTS.md) (DEC-041).
+
+| ID | Requirement | Acceptance criterion |
+|---|---|---|
+| REQ-M6-01 | M5 reference map installed and served on `/map` unchanged | Served grid equals the file cell by cell (TEST-M6-02) |
+| REQ-M6-02 | Localization (OPEN-28) on sim time from `/scan` and the odometry TF; only `map → odom` publisher; SLAM not running | TEST-M6-02 |
+| REQ-M6-03 | Complete TF tree; pose estimate published with covariance | TEST-M6-02 |
+| REQ-M6-04 | Pose accuracy at rest from a known start | ≤ 0.05 m and ≤ 1.0° at every rest point (TEST-M6-03) |
+| REQ-M6-05 | Pose accuracy while moving | P95 ≤ 0.10 m and ≤ 2.0°, maximum ≤ 0.25 m (TEST-M6-03) |
+| REQ-M6-06 | Recovery from a wrong initial pose | 0.5 m / 15° offset: rest bounds within 6.0 m of travel (TEST-M6-04; DEC-065, amending DEC-063's 4.0 m and DEC-059's 3 m) |
+| REQ-M6-07 | Robust to odometry error | REQ-M6-04/-05 bounds hold with the TEST-M4-09 overrides (TEST-M6-05) |
+| REQ-M6-08 | Robust to unmapped obstacles | REQ-M6-04/-05 bounds hold in the test-only world (TEST-M6-06) |
+| REQ-M6-09 | Odometry + IMU fusion (OPEN-29) | One `odom → base_footprint` publisher; fused end yaw ≤ 0.5°, position ≤ 25 % of raw (TEST-M6-07) |
+| REQ-M6-10 | The pose checker detects wrong estimates | 4 distortions FAIL, the recorded log PASSES (TEST-M6-08) |
+| REQ-M6-11 | No M1–M5 regression | Build clean; expansions and M5 files unchanged; suites pass (TEST-M6-01, -09) |
+| REQ-M6-12 | Localization visible in RViz | `localization.rviz`, observed by me (TEST-M6-10) |
+| REQ-M6-13 | Records consistent under DEC-041; automation | TEST-M6-11 zero mismatches; `m6` suite; TEST-M6-08 and -11 in CI |
+
 ## M4 traceability matrix
 
 | Requirement | Design decision | Calculation | Implementation | Test | Result |
@@ -236,3 +256,21 @@ Plan and analysis (CALC-M5-01 to -04): [milestones/M5_slam.md](milestones/M5_sla
 | REQ-M5-09 | DEC-053 | — | — | TEST-M5-01, TEST-M5-08 | TEST-M5-01 PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task A); TEST-M5-08 PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task D) |
 | REQ-M5-10 | DEC-041 | — | `tools/run_suite.py` (`m5` suite), `.github/workflows/ci.yml` | TEST-M5-10 | PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task D) |
 | REQ-M5-11 | DEC-050 | — | `rviz/mapping.rviz` | TEST-M5-09 | PASS 2026-11-15 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M5 Task D) |
+
+## M6 traceability matrix
+
+| Requirement | Design decision | Calculation | Implementation | Test | Result |
+|---|---|---|---|---|---|
+| REQ-M6-01 | DEC-054, DEC-055, DEC-060 | — | `launch/localization.launch.py`, `maps/mapping_arena.*` | TEST-M6-02 | PASS 2026-11-18 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task A) |
+| REQ-M6-02 | DEC-056, DEC-060, DEC-062 | — | `config/amcl.yaml`, `launch/localization.launch.py`, `maps/mapping_arena_amcl.yaml` | TEST-M6-02 | PASS 2026-11-18 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task A) |
+| REQ-M6-03 | DEC-056 | — | `config/amcl.yaml` | TEST-M6-02 | PASS 2026-11-18 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task A) |
+| REQ-M6-04 | DEC-058, DEC-059, DEC-061, DEC-062 | CALC-M6-01 | `config/amcl.yaml` | TEST-M6-03 | PASS 2026-11-19 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task C) |
+| REQ-M6-05 | DEC-059, DEC-061 | CALC-M6-01, -02 | `config/amcl.yaml` | TEST-M6-03 | PASS 2026-11-19 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task C) |
+| REQ-M6-06 | DEC-058, DEC-059, DEC-063 | CALC-M6-03 | `config/amcl.yaml` | TEST-M6-04 | PASS 2026-11-19; FAIL 2026-11-20; R1 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task E) |
+| REQ-M6-07 | DEC-043, DEC-059, DEC-061 | — | `config/amcl.yaml` | TEST-M6-05 | PASS 2026-11-19 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task C) |
+| REQ-M6-08 | DEC-059, DEC-060 | — | — | TEST-M6-06 | PASS 2026-11-19 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task C) |
+| REQ-M6-09 | DEC-057 | CALC-M6-04 | `config/ekf.yaml`, `config/controllers_ekf.yaml`, `launch/localization.launch.py` (`ekf:=true`) | TEST-M6-07 | FAIL 2026-11-20; R1 PASS 2026-11-20 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task D) |
+| REQ-M6-10 | DEC-059, DEC-063 | — | `docs/evidence/M6/TEST-M6_pose_check.py` | TEST-M6-08 | PASS 2026-11-18 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task B) |
+| REQ-M6-11 | DEC-060 | — | — | TEST-M6-01, TEST-M6-09 | TEST-M6-01 PASS 2026-11-18 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task A); TEST-M6-09 FAIL 2026-11-20; R1 PASS 2026-11-20 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task E) |
+| REQ-M6-12 | DEC-056 | — | `rviz/localization.rviz` | TEST-M6-10 | PASS 2026-11-20, observed by me ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task E) |
+| REQ-M6-13 | DEC-041 | — | — | TEST-M6-11 | PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task E) |

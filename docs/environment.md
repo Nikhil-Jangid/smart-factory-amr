@@ -1,6 +1,6 @@
 # Development Environment
 
-**Status:** The versions below were captured by TEST-M0-05 on 2026-10-19 ([evidence log](evidence/M0/TEST-M0-05_environment_inventory.log)). Functional M0 verification is TEST-M0-01 to TEST-M0-04 (see [`../TEST_RESULTS.md`](../TEST_RESULTS.md)).
+**Status:** The versions below were captured by TEST-M0-05 on 2026-10-19 ([evidence log](evidence/M0/TEST-M0-05_environment_inventory.log)), updated after the apt upgrade of 2026-11-18 (§ Upgrade 2026-11-18). Functional M0 verification is TEST-M0-01 to TEST-M0-04 (see [`../TEST_RESULTS.md`](../TEST_RESULTS.md)).
 
 This is the single source of truth for environment and dependency versions. Update it whenever the toolchain changes.
 
@@ -9,7 +9,7 @@ This is the single source of truth for environment and dependency versions. Upda
 | Item | Value | Source |
 |---|---|---|
 | OS | Ubuntu 24.04.5 LTS (native install, not a VM or container) | `lsb_release -ds` |
-| Kernel | 7.0.0-38-generic | `uname -r` |
+| Kernel | 7.0.0-43-generic (7.0.0-38 at TEST-M0-05) | `uname -r` |
 | ROS 2 | Jazzy, binary install at `/opt/ros/jazzy`, sourced from `~/.bashrc` | `$ROS_DISTRO`, `~/.bashrc` |
 | Gazebo | Gazebo Sim 8.15.0 (Harmonic) | `gz sim --version` |
 | Python | 3.12.3 | `python3 --version` |
@@ -26,15 +26,15 @@ This is the single source of truth for environment and dependency versions. Upda
 
 Note: with `SUBNET` discovery and domain 0, other ROS 2 machines on the same network can see this machine's topics. Revisit if that causes interference.
 
-## Installed ROS 2 / Gazebo packages (from `dpkg -l`, 2026-10-19)
+## Installed ROS 2 / Gazebo packages (from `dpkg -l`, 2026-10-19; upgraded rows from `dpkg-query`, 2026-11-18)
 
 | Package | Version | First milestone that uses it |
 |---|---|---|
 | `ros-jazzy-demo-nodes-cpp` | 0.33.11 | M0 (verified) |
 | `ros-jazzy-rviz2` | 14.1.24 | M0 (verified), M1 (verified, TEST-M1-04) |
-| `ros-jazzy-ros-gz` | 1.0.24 | M0 (verified) |
-| `ros-jazzy-ros-gz-bridge` | 1.0.24 | M0 (verified, TEST-M0-04 and re-test 1), M2 |
-| `ros-jazzy-ros-gz-sim` | 1.0.24 | M1 (verified, TEST-M1-06/07) |
+| `ros-jazzy-ros-gz` | 1.0.25 (1.0.24 until 2026-11-18) | M0 (verified) |
+| `ros-jazzy-ros-gz-bridge` | 1.0.25 (1.0.24 until 2026-11-18) | M0 (verified, TEST-M0-04 and re-test 1), M2 |
+| `ros-jazzy-ros-gz-sim` | 1.0.25 (1.0.24 until 2026-11-18) | M1 (verified, TEST-M1-06/07) |
 | `ros-jazzy-xacro` | 2.1.1 | M1 (verified, TEST-M1-02/08) |
 | `ros-jazzy-urdf` | 2.10.1 | M1 (verified indirectly through `robot_state_publisher`, TEST-M1-04) |
 | `ros-jazzy-robot-state-publisher` | 3.3.4 | M1 (verified, TEST-M1-04/05) |
@@ -44,14 +44,16 @@ Note: with `SUBNET` discovery and domain 0, other ROS 2 machines on the same net
 | `ros-jazzy-tf2-ros` | 0.36.23 | M1 (verified, `tf2_echo`, TEST-M1-04) |
 | `ros-jazzy-tf2-tools` | 0.36.23 | M1 (verified, `view_frames`, TEST-M1-05) |
 | `ros-jazzy-launch-ros` | 0.26.13 | M1 (verified, TEST-M1-04/06) |
-| `ros-jazzy-ros2-control` | 4.48.1 | M2 |
-| `ros-jazzy-ros2-controllers` | 4.42.1 | M2 |
-| `ros-jazzy-diff-drive-controller` | 4.42.1 | M2 |
+| `ros-jazzy-ros2-control` | 4.50.0 (4.48.1 until 2026-11-18) | M2 |
+| `ros-jazzy-ros2-controllers` | 4.43.1 (4.42.1 until 2026-11-18) | M2 |
+| `ros-jazzy-diff-drive-controller` | 4.43.1 (4.42.1 until 2026-11-18) | M2 |
 | `ros-jazzy-gz-ros2-control` | 1.2.20 | M2 |
 | `ros-jazzy-teleop-twist-keyboard` | 2.4.1 | M2 |
 | `ros-jazzy-slam-toolbox` | 2.8.5 | M5 |
-| `ros-jazzy-navigation2` | 1.3.13 | M7 |
-| `ros-jazzy-nav2-bringup` | 1.3.13 | M7 |
+| `ros-jazzy-navigation2` | 1.3.14 (1.3.13 until 2026-11-18) | M7 |
+| `ros-jazzy-nav2-bringup` | 1.3.14 (1.3.13 until 2026-11-18) | M7 |
+| `ros-jazzy-nav2-amcl`, `ros-jazzy-nav2-map-server`, `ros-jazzy-nav2-lifecycle-manager` | 1.3.14 | M5 (`map_server`, TEST-M5-05), M6 |
+| `ros-jazzy-robot-localization` | 3.8.4 | M6 |
 | `graphviz` | 2.42.2 | M1 (diagram generation; verified, TEST-M1-03/05 PDFs) |
 
 Build dependencies of `amr_gazebo_plugins` (M3, DEC-038; versions from `dpkg-query`, 2026-11-03). They were already installed with ROS 2 Jazzy; nothing new was installed. Verified by TEST-M3-01 re-test 2 (build) and TEST-M3-13 (gtest):
@@ -62,7 +64,7 @@ Build dependencies of `amr_gazebo_plugins` (M3, DEC-038; versions from `dpkg-que
 | `ros-jazzy-gz-plugin-vendor` | 0.0.5 | `gz-plugin::register` (`GZ_ADD_PLUGIN`) |
 | `ros-jazzy-gz-transport-vendor` | 0.0.9 | gz-transport 13 (`/imu_raw` subscription, `/imu` publication) |
 | `ros-jazzy-gz-msgs-vendor` | 0.0.8 | gz-msgs 10 (`gz.msgs.IMU`) |
-| `ros-jazzy-ament-cmake-gtest` | 2.5.6 | Unit tests (TEST-M3-13) |
+| `ros-jazzy-ament-cmake-gtest` | 2.5.7 (2.5.6 until 2026-11-18) | Unit tests (TEST-M3-13) |
 
 The plugin is found by Gazebo through `GZ_SIM_SYSTEM_PLUGIN_PATH`. The package's environment hook prepends `<install>/amr_gazebo_plugins/lib` when `amr_ws/install/setup.bash` is sourced.
 
@@ -97,5 +99,9 @@ Command-line tools:
 - Runs `tools/run_suite.py ci` (TEST-M3-01, -13, -02; TEST-M4-03 from 2026-11-13) on pushes to `main` that change `amr_ws/**`, `tools/**`, `docs/evidence/**/*.py|*.sh` or `.github/workflows/**`. It can also be started by hand (`gh workflow run ci.yml`).
 - No GPU: the Gazebo sensor tests stay local (DEC-040 item 4). Logs are uploaded as an artifact for 7 days; CI never records a test result.
 - About 3 min per run (Measured; about 115 s of it is the dependency install). Job timeout 10 min. The account's monthly allowance is shown in GitHub Settings → Billing; the hard stop against paid usage is the account's $0 Actions budget, set on 2026-11-04 (DEC-040 amendment). No dependency cache.
+
+## Upgrade 2026-11-18 (user, `apt-get upgrade`, 19:53–19:54 IST)
+- 381 `ros-jazzy-*` packages changed. Version changes that the project uses: ros2_control / `controller_manager` / `hardware_interface` 4.48.1 → 4.50.0; ros2_controllers (`diff_drive_controller`, `joint_state_broadcaster`) 4.42.1 → 4.43.1; ros_gz (bridge, sim) 1.0.24 → 1.0.25; Nav2 (`nav2_amcl`, `nav2_map_server`, `nav2_lifecycle_manager`, `nav2_bringup`) 1.3.13 → 1.3.14; `robot_localization` 3.8.3 → 3.8.4; `rclcpp` 28.1.22 → 28.1.23; `rclpy` 7.1.12 → 7.1.13; `rmw_fastrtps_cpp` 8.4.4 → 8.4.5. Rebuilt at the same version: `gz_sim_vendor` 0.0.13 (Gazebo Sim still 8.15.0), `gz_ros2_control` 1.2.20, `slam_toolbox` 2.8.5, `xacro`, `rviz2`, `robot_state_publisher`, `tf2_ros`. Source: `/var/log/apt/history.log`.
+- Re-verification: clean rebuild of `amr_ws` (exit 0), then the `static`, `regression`, `m4` and `m5` suites on the upgraded packages, results in `TEST_RESULTS.md` (§ Environment re-verification 2026-11-18). Findings: TS-043 (records checkers and the batch's own unindexed logs), TS-044 (one controller-load failure at start-up, not reproduced in 30 launches; open, monitoring).
 
 Workspace layout: see DEC-008 in [`../DECISIONS.md`](../DECISIONS.md).
