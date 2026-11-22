@@ -9,7 +9,8 @@
 #  3. Expansions with use_ros2_control:=true and with use_ros2_control:=true use_sensors:=true (the M2 and M3-M5
 #     launch models) byte-identical to the BASE expansions: M6 does not change the robot.
 #  4. sim.launch.py, controllers.yaml, amr.sensors.xacro, amr_properties.xacro, slam_toolbox.yaml, slam.launch.py and
-#     the four M5 reference map files unchanged since BASE (git diff empty).
+#     the four M5 reference map files unchanged since BASE (git diff empty); sim.launch.py may add exactly the
+#     DEC-075 gui_config lines listed in TEST-M7-01 step 7 (DEC-080, 2026-11-23).
 #  5. Existing files changed in amr_ws/src from BASE to END: only amr_bringup/package.xml (exactly the five added
 #     exec_depend lines: nav2_map_server, nav2_amcl, nav2_lifecycle_manager, robot_localization (Task D, DEC-057;
 #     added to this list 2026-11-20, TS-049), nav2_rviz_plugins) and
@@ -54,12 +55,22 @@ for ARGS in "use_ros2_control:=true" "use_ros2_control:=true use_sensors:=true";
   cmp "$TMP/base.urdf" "$TMP/now.urdf" && echo identical; rc $?
 done
 
+# DEC-080 (2026-11-23): sim.launch.py may differ from BASE only by the DEC-075 gui_config option, exactly the lines
+# TEST-M7-01 step 7 allows (read from its SIM_EXPECTED block: one list, kept in TEST-M7-01). Any other change fails.
+dec075_only() {
+  git diff -U0 "$BASE" -- "$1" | grep -E '^-[^-]' > "$TMP/s_rm.txt"
+  git diff -U0 "$BASE" -- "$1" | grep -E '^\+[^+]' > "$TMP/s_add.txt"
+  sed -n "/<<'SIM_EXPECTED'/,/^SIM_EXPECTED\$/p" docs/evidence/M7/TEST-M7-01_procedure.sh | sed '1d;$d' > "$TMP/s_exp.txt"
+  [ -s "$TMP/s_exp.txt" ] && [ ! -s "$TMP/s_rm.txt" ] && cmp -s "$TMP/s_exp.txt" "$TMP/s_add.txt"
+}
 echo; echo "## 4. Simulation, controller, sensor, SLAM and reference-map files vs $BASE"
 FILES="$B/launch/sim.launch.py $B/config/controllers.yaml amr_ws/src/amr_description/urdf/amr.sensors.xacro
 amr_ws/src/amr_description/urdf/amr_properties.xacro $B/config/slam_toolbox.yaml $B/launch/slam.launch.py
 $B/maps/mapping_arena.yaml $B/maps/mapping_arena.pgm $B/maps/mapping_arena.data.gz $B/maps/mapping_arena.posegraph.gz"
 for F in $FILES; do
-  if [ -e "$F" ] && git diff --quiet "$BASE" -- "$F"; then echo "unchanged  $F"; else echo "CHANGED    $F"; git diff --stat "$BASE" -- "$F"; false; fi; rc $?
+  if [ -e "$F" ] && git diff --quiet "$BASE" -- "$F"; then echo "unchanged  $F"
+  elif [ "${F##*/}" = sim.launch.py ] && dec075_only "$F"; then echo "DEC-075    $F: only the gui_config option added (DEC-080)"
+  else echo "CHANGED    $F"; git diff --stat "$BASE" -- "$F"; false; fi; rc $?
 done
 
 echo; echo "## 5. Existing files changed in amr_ws/src from $BASE to ${END:-the working tree} (M6 increment, DEC-064)"

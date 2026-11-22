@@ -1,0 +1,32 @@
+# CALC-M7-05 goal check with the plan's first placement rule (footprint >= 0.8 m from every obstacle except L1,
+# >= 1.5 m from L1; M7 plan §3.5, Proposed). Run 2026-11-21 14:2x IST on tree 9b23d13 + the first version of
+# TEST-M7_goals.py (before DEC-076). Output copied verbatim from the session console; the script was then changed to
+# the DEC-076 rule (final output: CALC-M7-05_goal_check.log). Kept as the negative result that led to DEC-076.
+# Hand check: G2 footprint left edge y 1.3 + 0.2175 = 1.5175, B1 south face y 2.2 -> 0.6825 m. G4 (yaw 180) rear edge
+# x 2.5 + 0.385 = 2.885, W1 west face x 3.4 -> 0.515 m. Alcove between L1 (east face x 0.7) and W1 (x 3.4) is 2.70 m
+# wide; the rule needs 0.51 + 0.8 + 1.5 = 2.81 m (yaw 0/180) or 0.435 + 0.8 + 1.5 = 2.735 m (yaw +-90): infeasible.
+# M7 goal set (CALC-M7-05), world mapping_arena.sdf (9 obstacles), footprint from nav2.yaml (10 vertices, circumscribed radius 0.386 m), map mapping_arena.yaml (202 x 162 cells at 0.05 m, x -2.071 to 8.029, y -4.080 to 4.020)
+PASS  G1 ( 6.50, -2.60,  -90.0 deg) placement: footprint gap 1.179 m to pillar_p2 (>= 0.8), 5.582 m to L1 (>= 1.5)
+PASS  G1 turn in place: swept-circle gap 1.014 m to wall_south (>= 0.1, DEC-073)
+PASS  G1 map: 79 cells under the footprint, 0 not free
+FAIL  G2 ( 6.50,  1.30,    0.0 deg) placement: footprint gap 0.683 m to box_b1 (>= 0.8), 6.458 m to L1 (>= 1.5)
+PASS  G2 turn in place: swept-circle gap 0.514 m to box_b1 (>= 0.1, DEC-073)
+PASS  G2 map: 79 cells under the footprint, 0 not free
+PASS  G3 ( 4.10,  2.70,   90.0 deg) placement: footprint gap 1.175 m to wall_north (>= 0.8), 5.679 m to L1 (>= 1.5)
+PASS  G3 turn in place: swept-circle gap 0.914 m to wall_north (>= 0.1, DEC-073)
+PASS  G3 map: 77 cells under the footprint, 0 not free
+FAIL  G4 ( 2.50, -2.80,  180.0 deg) placement: footprint gap 0.515 m to partition_w1 (>= 0.8), 1.675 m to L1 (>= 1.5)
+PASS  G4 turn in place: swept-circle gap 0.514 m to partition_w1 (>= 0.1, DEC-073)
+PASS  G4 map: 78 cells under the footprint, 0 not free
+PASS  G5 (-0.60,  2.60,   90.0 deg) placement: footprint gap 1.183 m to wall_west (>= 0.8), 4.599 m to L1 (>= 1.5)
+PASS  G5 turn in place: swept-circle gap 1.014 m to wall_north (>= 0.1, DEC-073)
+PASS  G5 map: 77 cells under the footprint, 0 not free
+PASS  G6 ( 0.00,  0.00,    0.0 deg) placement: footprint gap 1.615 m to wall_west (>= 0.8), 2.095 m to L1 (>= 1.5)
+PASS  G6 turn in place: swept-circle gap 1.614 m to wall_west (>= 0.1, DEC-073)
+PASS  G6 map: 79 cells under the footprint, 0 not free
+PASS  invalid goal inside_P1 (2.0, 2.0) lies inside P1 (x 1.85-2.15, y 1.85-2.15)
+PASS  invalid goal outside_map (12.0, 0.0) lies outside the map extent
+PASS  sequence G1-G2-G3-G4-G5-G6 and route G1-G3-G5-G6 use the goal set and end at the start
+PASS  cancel goal G1 is 7.00 m away (> 2 x 1.0 m)
+# result: FAIL
+# exit 1

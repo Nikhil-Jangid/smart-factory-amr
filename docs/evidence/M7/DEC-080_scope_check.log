@@ -1,0 +1,17 @@
+# DEC-080 scope check, 2026-11-23 01:52:43 IST, revision 8bbebeb
+
+## docs/evidence/M5/TEST-M5-01_procedure.sh
+# BASE 517608f
+PASS  working tree: allowed
+PASS  spawn pose default 0.0 -> 0.1: rejected
+PASS  one extra comment line: rejected
+PASS  one gui_config line removed: rejected
+
+## docs/evidence/M6/TEST-M6-01_procedure.sh
+# BASE 9b85171
+PASS  working tree: allowed
+PASS  spawn pose default 0.0 -> 0.1: rejected
+PASS  one extra comment line: rejected
+PASS  one gui_config line removed: rejected
+
+# overall: ALL CASES AS EXPECTED

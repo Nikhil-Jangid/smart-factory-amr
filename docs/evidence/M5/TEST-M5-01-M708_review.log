@@ -1,0 +1,91 @@
+# TEST-M5-01 review, 2026-11-22 23:52:12 IST, revision 8bbebeb (amr_ws/src clean); baseline 517608f
+
+## 1. Build
+$ cd amr_ws && colcon build --symlink-install --packages-select amr_description amr_bringup amr_gazebo_plugins
+-- Up-to-date symlink: <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/cmake/amr_bringupConfig-version.cmake
+-- Up-to-date symlink: <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/package.xml
+Finished <<< amr_bringup [0.09s]
+
+Summary: 3 packages finished [0.26s]
+# colcon exit 0; lines matching 'warning': 0
+# exit 0
+
+## 2. Default expansion vs the M1 baseline
+identical
+# exit 0
+
+## 3. Launch-model expansions vs 517608f
+$ xacro amr.urdf.xacro use_ros2_control:=true (6452 bytes)
+identical
+# exit 0
+$ xacro amr.urdf.xacro use_ros2_control:=true use_sensors:=true (9912 bytes)
+identical
+# exit 0
+
+## 4. Simulation, controller and sensor files vs 517608f
+CHANGED    amr_ws/src/amr_bringup/launch/sim.launch.py
+diff --git a/amr_ws/src/amr_bringup/launch/sim.launch.py b/amr_ws/src/amr_bringup/launch/sim.launch.py
+index 71188fd..7b80999 100644
+--- a/amr_ws/src/amr_bringup/launch/sim.launch.py
++++ b/amr_ws/src/amr_bringup/launch/sim.launch.py
+@@ -20,6 +20,10 @@ world name `empty`, and the model expanded with use_sensors:=false (byte-identic
+                  (default: the stock empty.sdf). The spawn uses the <world name> read from the file.
+ M4 option: controllers_file:=<path> loads another ros2_control parameter file. It exists for the
+ TEST-M4-09 test-only calibration overrides (DEC-043); the default is the package's config/controllers.yaml.
++M7 option (DEC-075; screen recordings only): gui_config:=<file> starts the Gazebo GUI with that layout
++(`gz sim --gui-config`). A bare name is resolved in this package's config/ directory, e.g.
++gui_config:=gazebo_gui_capture.config (no side panels, 960 x 1000 px). Default empty: the command is unchanged
++(`gz sim -r [-s] <world>`) and Gazebo loads the user's own GUI layout. Ignored with headless:=true.
+ M3 sensor tests: ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf
+ Keyboard control (TEST-M2-09), in a second terminal:
+   ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args \
+@@ -66,6 +70,10 @@ def gazebo_process(context):
+         cmd.append('-s')
+         if is_true(context, 'sensors'):
+             cmd.append('--headless-rendering')
++    gui_config = LaunchConfiguration('gui_config').perform(context)
++    if gui_config and not is_true(context, 'headless'):  # DEC-075: recordings only; default leaves cmd unchanged
++        packaged = os.path.join(get_package_share_directory('amr_bringup'), 'config', gui_config)
++        cmd += ['--gui-config', packaged if os.path.isfile(packaged) else gui_config]
+     cmd.append(world)
+     return [SetLaunchConfiguration('world_name', world_name),
+             ExecuteProcess(cmd=cmd, output='screen', on_exit=Shutdown())]
+@@ -92,6 +100,10 @@ def generate_launch_description():
+                                       [FindPackageShare('amr_bringup'), 'config', 'controllers.yaml']),
+                                   description='ros2_control parameter file (default: this package\'s '
+                                               'config/controllers.yaml). M4 test-only overrides (TEST-M4-09) only')]
++    args += [DeclareLaunchArgument('gui_config', default_value='',
++                                   description='Gazebo GUI layout file for screen recordings (DEC-075): a file in '
++                                               'amr_bringup/config (e.g. gazebo_gui_capture.config) or a path; '
++                                               'default empty = the user\'s own layout, command unchanged')]
+     args += [
+         DeclareLaunchArgument(name, default_value='0.0',
+                               description=f'Spawn pose of base_footprint in the world: {name} (m or rad)')
+# exit 1
+unchanged  amr_ws/src/amr_bringup/config/controllers.yaml
+# exit 0
+unchanged  amr_ws/src/amr_description/urdf/amr.sensors.xacro
+# exit 0
+unchanged  amr_ws/src/amr_description/urdf/amr_properties.xacro
+# exit 0
+
+## 5. Existing files changed in amr_ws/src from 517608f to 9b85171 (M5 increment, DEC-064)
+M	amr_ws/src/amr_bringup/CMakeLists.txt
+A	amr_ws/src/amr_bringup/config/slam_toolbox.yaml
+A	amr_ws/src/amr_bringup/launch/slam.launch.py
+A	amr_ws/src/amr_bringup/maps/mapping_arena.data.gz
+A	amr_ws/src/amr_bringup/maps/mapping_arena.pgm
+A	amr_ws/src/amr_bringup/maps/mapping_arena.posegraph.gz
+A	amr_ws/src/amr_bringup/maps/mapping_arena.yaml
+M	amr_ws/src/amr_bringup/package.xml
+A	amr_ws/src/amr_bringup/rviz/mapping.rviz
+A	amr_ws/src/amr_bringup/worlds/mapping_arena.sdf
+# modified or removed (not new): amr_ws/src/amr_bringup/CMakeLists.txt amr_ws/src/amr_bringup/package.xml 
+# exit 0
++  <exec_depend>slam_toolbox</exec_depend>
+package.xml: only the slam_toolbox exec_depend added
+# exit 0
+# CMakeLists.txt changed lines: 2, of which not comments: 0
+# exit 0
+
+# overall: AT LEAST ONE STEP FAILED

@@ -1,0 +1,8 @@
+# TEST-M7-07 checker sensitivity on TaskB-dry4_sequence (TEST-M7-03 criteria)
+PASS  original log: all criteria PASS
+PASS  arrival_offset: expected FAIL on arrival_position; failed measures ['arrival_position']
+PASS  arrival_rotate: expected FAIL on arrival_heading; failed measures ['arrival_heading']
+PASS  path_into_obst: expected FAIL on clearance; failed measures ['clearance']
+PASS  cmd_fast: expected FAIL on cmd_limits; failed measures ['cmd_limits']
+PASS  loc_shift: expected FAIL on moving_p95_position; failed measures ['moving_max_position', 'moving_p95_position']
+# result: PASS (1 original PASS and 5 distortions FAIL required)

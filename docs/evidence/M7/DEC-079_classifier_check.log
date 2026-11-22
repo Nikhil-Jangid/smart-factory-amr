@@ -1,0 +1,21 @@
+# DEC-079 classifier check, 2026-11-21 15:19:46 IST, revision b8fc601
+## 1. kept launch logs: class before DEC-079 -> after
+PASS  1 -> 1  docs/evidence/M1/TEST-M1-04_display_launch_sanitized.log
+PASS  0 -> 0  docs/evidence/M1/TEST-M1-06_gazebo_launch_sanitized.log
+PASS  1 -> 1  docs/evidence/M3/FEAS-M3_launch_run1.log
+PASS  0 -> 0  docs/evidence/M3/FEAS-M3_launch_run2.log
+PASS  0 -> 0  docs/evidence/M3/TEST-M3-10_gui_launch.log
+PASS  3 -> 3  docs/evidence/M3/TS-029_V2_run15_launch.log
+PASS  0 -> 0  docs/evidence/M6/TEST-M6-05-M611-forward_a3_loc_launch.log
+PASS  3 -> 3  docs/evidence/M6/TEST-M6-05-M611-forward_a3_sim_launch.log
+## 2. the TS-039 log
+# shutdown: TS-039 (only gz-5 (GUI front end) escalated after SIGINT (SIGINT->SIGTERM, died 1 (GUI front end); ESRCH, SIGKILL GUI); all other processes finished cleanly)
+PASS  exit 4 (TS-039)
+## 3. near-miss copies (expected OTHER, exit 1)
+PASS  no_marks: exit 1; # shutdown: OTHER (gz exit code 1 not in the TS-039 pattern: ['SIGINT->SIGTERM', 'died 1 (GUI front end)'], front-end marks [])
+PASS  server_only: exit 1; # shutdown: OTHER ([ERROR] [gz-5] not in the TS-029 signature: process has died [pid 34329, exit code 1, cmd 'gz sim -s -r --gui-config <share_b>/conf
+PASS  exit2: exit 1; # shutdown: OTHER ([ERROR] [gz-5] not in the TS-029 signature: process has died [pid 34329, exit code 2, cmd 'gz sim -r --gui-config <share_b>/config/
+PASS  sigkill: exit 1; # shutdown: OTHER (gz exit code 1 not in the TS-039 pattern: ['SIGINT->SIGTERM', 'SIGTERM->SIGKILL', 'died 1 (GUI front end)'], front-end marks ['ESRC
+PASS  other_err: exit 1; # shutdown: OTHER ([ERROR] not part of the gz shutdown escalation: [parameter_bridge-2] process has died [pid 1, exit code 1, cmd x].)
+PASS  mark_other_proc: exit 1; # shutdown: OTHER (gz exit code 1 not in the TS-039 pattern: ['SIGINT->SIGTERM', 'died 1 (GUI front end)'], front-end marks [])
+# result: PASS

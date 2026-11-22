@@ -1,0 +1,66 @@
+[INFO] [launch]: All log files can be found below <home>/.ros/log/2026-11-23-00-37-07-472246-<host>-41857
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [map_server-1]: process started with pid [41864]
+[INFO] [map_server-2]: process started with pid [41865]
+[INFO] [amcl-3]: process started with pid [41866]
+[INFO] [lifecycle_manager-4]: process started with pid [41867]
+[lifecycle_manager-4] [INFO] [1795374427.570638044] [lifecycle_manager_localization]: Creating
+[amcl-3] [INFO] [1795374427.573709907] [amcl]: 
+[amcl-3] 	amcl lifecycle node launched. 
+[amcl-3] 	Waiting on external lifecycle transitions to activate
+[amcl-3] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[map_server-2] [INFO] [1795374427.574623734] [map_server_amcl]: 
+[map_server-2] 	map_server_amcl lifecycle node launched. 
+[map_server-2] 	Waiting on external lifecycle transitions to activate
+[map_server-2] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[map_server-2] [INFO] [1795374427.574725201] [map_server_amcl]: Creating
+[amcl-3] [INFO] [1795374427.574823778] [amcl]: Creating
+[lifecycle_manager-4] [INFO] [1795374427.576097565] [lifecycle_manager_localization]: [34m[1mCreating and initializing lifecycle service clients[0m[0m
+[map_server-1] [INFO] [1795374427.584022347] [map_server]: 
+[map_server-1] 	map_server lifecycle node launched. 
+[map_server-1] 	Waiting on external lifecycle transitions to activate
+[map_server-1] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[map_server-1] [INFO] [1795374427.584152391] [map_server]: Creating
+[lifecycle_manager-4] [INFO] [1795374427.585179498] [lifecycle_manager_localization]: [34m[1mStarting managed nodes bringup...[0m[0m
+[lifecycle_manager-4] [INFO] [1795374427.585216805] [lifecycle_manager_localization]: [34m[1mConfiguring map_server[0m[0m
+[map_server-1] [INFO] [1795374427.855204753] [map_server]: Configuring
+[map_server-1] [INFO] [1795374427.855269230] [map_io]: Loading yaml file: <share_b>/maps/mapping_arena.yaml
+[map_server-1] [INFO] [1795374427.855527601] [map_io]: resolution: 0.05
+[map_server-1] [INFO] [1795374427.855540354] [map_io]: origin[0]: -2.071
+[map_server-1] [INFO] [1795374427.855545597] [map_io]: origin[1]: -4.08
+[map_server-1] [INFO] [1795374427.855550835] [map_io]: origin[2]: 0
+[map_server-1] [INFO] [1795374427.855555360] [map_io]: free_thresh: 0.196
+[map_server-1] [INFO] [1795374427.855559507] [map_io]: occupied_thresh: 0.65
+[map_server-1] [INFO] [1795374427.855564428] [map_io]: mode: trinary
+[map_server-1] [INFO] [1795374427.855569132] [map_io]: negate: 0
+[map_server-1] [INFO] [1795374427.855743693] [map_io]: Loading image_file: <share_b>/maps/mapping_arena.pgm
+[map_server-1] [INFO] [1795374427.856440717] [map_io]: Read map <share_b>/maps/mapping_arena.pgm: 202 X 162 map @ 0.05 m/cell
+[map_server-1] [WARN] [1795374427.962141648] [map_server.rclcpp]: failed to send response to /map_server/change_state (timeout): client will not receive response, at ./src/rmw_response.cpp:153, at ./src/rcl/service.c:400
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [lifecycle_manager-4]: sending signal 'SIGINT' to process[lifecycle_manager-4]
+[INFO] [amcl-3]: sending signal 'SIGINT' to process[amcl-3]
+[INFO] [map_server-2]: sending signal 'SIGINT' to process[map_server-2]
+[INFO] [map_server-1]: sending signal 'SIGINT' to process[map_server-1]
+[lifecycle_manager-4] [INFO] [1795374518.222906157] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[lifecycle_manager-4] [INFO] [1795374518.222979556] [lifecycle_manager_localization]: Running Nav2 LifecycleManager rcl preshutdown (lifecycle_manager_localization)
+[amcl-3] [INFO] [1795374518.223304767] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[amcl-3] [INFO] [1795374518.223365604] [amcl]: Running Nav2 LifecycleNode rcl preshutdown (amcl)
+[amcl-3] [INFO] [1795374518.223398049] [amcl]: Destroying bond (amcl) to lifecycle manager.
+[map_server-2] [INFO] [1795374518.223747388] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[map_server-2] [INFO] [1795374518.223807486] [map_server_amcl]: Running Nav2 LifecycleNode rcl preshutdown (map_server_amcl)
+[map_server-2] [INFO] [1795374518.223835717] [map_server_amcl]: Destroying bond (map_server_amcl) to lifecycle manager.
+[map_server-1] [INFO] [1795374518.224058852] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[map_server-1] [INFO] [1795374518.224127840] [map_server]: Running Nav2 LifecycleNode rcl preshutdown (map_server)
+[map_server-1] [INFO] [1795374518.224184203] [map_server]: Cleaning up
+[map_server-1] [INFO] [1795374518.224207557] [map_server]: Destroying bond (map_server) to lifecycle manager.
+[map_server-2] [INFO] [1795374518.224404423] [map_server_amcl]: Destroying
+[amcl-3] [INFO] [1795374518.224713869] [amcl]: Destroying
+[map_server-1] [INFO] [1795374518.226195686] [map_server]: Destroying
+[INFO] [amcl-3]: process has finished cleanly [pid 41866]
+[INFO] [map_server-2]: process has finished cleanly [pid 41865]
+[INFO] [map_server-1]: process has finished cleanly [pid 41864]
+[ERROR] [lifecycle_manager-4]: process[lifecycle_manager-4] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+[INFO] [lifecycle_manager-4]: sending signal 'SIGTERM' to process[lifecycle_manager-4]
+[ERROR] [lifecycle_manager-4]: process[lifecycle_manager-4] failed to terminate '10.0' seconds after receiving 'SIGTERM', escalating to 'SIGKILL'
+[INFO] [lifecycle_manager-4]: sending signal 'SIGKILL' to process[lifecycle_manager-4]
+[ERROR] [lifecycle_manager-4]: process has died [pid 41867, exit code -9, cmd '/opt/ros/jazzy/lib/nav2_lifecycle_manager/lifecycle_manager --ros-args -r __node:=lifecycle_manager_localization --params-file /tmp/launch_params_u1lnyua3 --params-file /tmp/launch_params_svys6sho'].

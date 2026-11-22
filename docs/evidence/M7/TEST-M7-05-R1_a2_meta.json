@@ -1,0 +1,17 @@
+{
+ "mode": "invalid",
+ "wall_start": "2026-11-21 15:24:06 IST",
+ "cmd_vel_publishers_start": [
+  "velocity_smoother geometry_msgs/msg/TwistStamped"
+ ],
+ "cmd_vel_publishers_end": [
+  "velocity_smoother geometry_msgs/msg/TwistStamped"
+ ],
+ "sim_duration": 27.801000000000002,
+ "wall_duration": 28.588518799000667,
+ "rtf": 0.9724533193014465,
+ "track_samples": 294,
+ "missing_samples": 0,
+ "travel": 0.0,
+ "goals": 2
+}

@@ -1,0 +1,43 @@
+# CALC-M7-05 goal check R1, after DEC-078 (route G1-G3-G5). Command: python3 -I docs/evidence/M7/TEST-M7_goals.py (2026-11-21 14:47 IST, tree f071a2b + Task B working files)
+# M7 goal set (CALC-M7-05), world mapping_arena.sdf (9 obstacles), footprint from nav2.yaml (10 vertices, circumscribed radius 0.386 m), map mapping_arena.yaml (202 x 162 cells at 0.05 m, x -2.071 to 8.029, y -4.080 to 4.020)
+PASS  G1 ( 6.50, -2.60,  -90.0 deg) placement: centre 1.400 m from wall_south (>= inflation radius 0.7), footprint 5.582 m from L1 (>= 1.5)
+INFO  G1 footprint gap to the nearest obstacle other than L1: 1.179 m (pillar_p2)
+PASS  G1 turn in place: swept-circle gap 1.014 m to wall_south (>= 0.1, DEC-073)
+PASS  G1 map: 79 cells under the footprint, 0 not free
+PASS  G2 ( 6.50,  1.30,    0.0 deg) placement: centre 0.900 m from box_b1 (>= inflation radius 0.7), footprint 6.458 m from L1 (>= 1.5)
+INFO  G2 footprint gap to the nearest obstacle other than L1: 0.683 m (box_b1)
+PASS  G2 turn in place: swept-circle gap 0.514 m to box_b1 (>= 0.1, DEC-073)
+PASS  G2 map: 79 cells under the footprint, 0 not free
+PASS  G3 ( 4.10,  2.70,   90.0 deg) placement: centre 1.300 m from wall_north (>= inflation radius 0.7), footprint 5.679 m from L1 (>= 1.5)
+INFO  G3 footprint gap to the nearest obstacle other than L1: 1.175 m (wall_north)
+PASS  G3 turn in place: swept-circle gap 0.914 m to wall_north (>= 0.1, DEC-073)
+PASS  G3 map: 77 cells under the footprint, 0 not free
+PASS  G4 ( 2.50, -2.80,  180.0 deg) placement: centre 0.900 m from partition_w1 (>= inflation radius 0.7), footprint 1.675 m from L1 (>= 1.5)
+INFO  G4 footprint gap to the nearest obstacle other than L1: 0.515 m (partition_w1)
+PASS  G4 turn in place: swept-circle gap 0.514 m to partition_w1 (>= 0.1, DEC-073)
+PASS  G4 map: 78 cells under the footprint, 0 not free
+PASS  G5 (-0.60,  2.60,   90.0 deg) placement: centre 1.400 m from wall_north (>= inflation radius 0.7), footprint 4.599 m from L1 (>= 1.5)
+INFO  G5 footprint gap to the nearest obstacle other than L1: 1.183 m (wall_west)
+PASS  G5 turn in place: swept-circle gap 1.014 m to wall_north (>= 0.1, DEC-073)
+PASS  G5 map: 77 cells under the footprint, 0 not free
+PASS  G6 ( 0.00,  0.00,    0.0 deg) placement: centre 2.000 m from wall_west (>= inflation radius 0.7), footprint 2.095 m from L1 (>= 1.5)
+INFO  G6 footprint gap to the nearest obstacle other than L1: 1.615 m (wall_west)
+PASS  G6 turn in place: swept-circle gap 1.614 m to wall_west (>= 0.1, DEC-073)
+PASS  G6 map: 79 cells under the footprint, 0 not free
+PASS  invalid goal inside_P1 (2.0, 2.0) lies inside P1 (x 1.85-2.15, y 1.85-2.15)
+PASS  invalid goal outside_map (12.0, 0.0) lies outside the map extent
+PASS  sequence G1-G2-G3-G4-G5-G6 ends at the start; route G1-G3-G5 uses the goal set and ends 2.67 m from the start (>= 1.0 m, DEC-078)
+PASS  cancel goal G1 is 7.00 m away (> 2 x 1.0 m)
+INFO  sequence: -> G1: straight line  7.00 m, goal heading change  90.0 deg
+INFO  sequence: -> G2: straight line  3.90 m, goal heading change  90.0 deg
+INFO  sequence: -> G3: straight line  2.78 m, goal heading change  90.0 deg
+INFO  sequence: -> G4: straight line  5.73 m, goal heading change  90.0 deg
+INFO  sequence: -> G5: straight line  6.23 m, goal heading change  90.0 deg
+INFO  sequence: -> G6: straight line  2.67 m, goal heading change  90.0 deg
+INFO  sequence: straight-line total 28.30 m (the planned path is longer: it goes around obstacles)
+INFO  route: -> G1: straight line  7.00 m, goal heading change  90.0 deg
+INFO  route: -> G3: straight line  5.82 m, goal heading change 180.0 deg
+INFO  route: -> G5: straight line  4.70 m, goal heading change   0.0 deg
+INFO  route: straight-line total 17.52 m (the planned path is longer: it goes around obstacles)
+# result: PASS
+# exit 0

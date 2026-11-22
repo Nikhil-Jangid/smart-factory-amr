@@ -130,10 +130,21 @@ SUITES = {
         m6('TEST-M6-06-reverse', f'WORLD={EV}/M6/TEST-M6_unmapped_arena.sdf ROUTE=reverse', '-reverse'),
         m6('TEST-M6-07', 'FUSION=1 INJECT=sep'),
     ],
+    # REQ-M7-13: every automatable M7 test. Not here: TEST-M7-08 (the regression suites themselves) and TEST-M7-09
+    # (observed in RViz). Gazebo entries take SHOW=1 from the environment.
+    'm7': [
+        E('TEST-M7-01', f'bash {EV}/M7/TEST-M7-01_procedure.sh -{{tag}}', f'{EV}/M7/TEST-M7-01-{{tag}}_review.log'),
+        E('TEST-M7-07', f'python3 -I {EV}/M7/TEST-M7-07_distort.py {EV}/M7/TaskB-dry4_sequence',
+          f'{EV}/M7/TEST-M7-07-{{tag}}_review.log', True),
+        E('TEST-M7-02', f'bash {EV}/M7/TEST-M7-02_procedure.sh 3 {{log}}', f'{EV}/M7/TEST-M7-02-{{tag}}_review.log'),
+    ] + [E(t, f'bash {EV}/M7/TEST-M7_procedure.sh {t} 3 {{log}}', f'{EV}/M7/{t}-{{tag}}_review.log')
+         for t in ('TEST-M7-03', 'TEST-M7-04', 'TEST-M7-05', 'TEST-M7-06')],
 }
 # TEST-TA-05 (CI, .github/workflows/ci.yml; plan §7): the same entries as `static`.
 # TEST-M5-10 (2026-11-15): TEST-M5-07 (map-checker sensitivity) joins the static and ci suites.
 # 2026-11-20: TEST-M6-08 (pose-checker sensitivity) joins the static and ci suites.
+# 2026-11-22: TEST-M7-07 (navigation-checker sensitivity) joins the static and ci suites.
+SUITES['static'].append(SUITES['m7'][1])
 SUITES['ci'] = SUITES['static'][:]
 
 

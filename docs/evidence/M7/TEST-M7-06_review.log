@@ -1,0 +1,173 @@
+# TEST-M7-06 procedure (mode cancel), valid runs required=3, 2026-11-21 15:25:57 IST, revision 5e3b728 (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; navigation2 1.3.14-1noble.20261109.092756; launch: sim.launch.py headless:=false gui_config:=gazebo_gui_capture.config sensors:=true world:=mapping_arena.sdf + localization.launch.py + navigation.launch.py
+
+## attempt 1 (ROS_DOMAIN_ID=166)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+# sim_record: recording gazebo window to docs/gallery/_pending/M7/TEST-M7-06/TEST-M7-06_a1_gazebo.webm
+# sim_record: recording rviz window to docs/gallery/_pending/M7/TEST-M7-06/TEST-M7-06_a1_rviz.webm
+
+$ python3 docs/evidence/M7/TEST-M7_nav_run.py TEST-M7-06_a1 --mode cancel
+# TEST-M7 navigation run, wall 2026-11-21 15:26:28 IST; mode cancel; goals TEST-M7_goals.py
+INFO  cancel_G1: CANCELED after 3.8 s; settled truth (+1.070, -0.036) m, -4.73 deg; travel 1.07 m; first plan 7.42 m (5 plans)
+# TS-030 check: spin thread ended cleanly
+INFO  run: 12.0 s simulation time in 13.6 s wall, RTF 0.88; 134 track samples (1 missing of 135); 220 command messages; travel 1.07 m; /cmd_vel publishers ['velocity_smoother geometry_msgs/msg/TwistStamped'] -> ['velocity_smoother geometry_msgs/msg/TwistStamped']
+# result: run completed and recorded (judged by TEST-M7_nav_check.py)
+# harness exit 0
+
+$ python3 -I docs/evidence/M7/TEST-M7_nav_check.py TEST-M7-06_a1 --test TEST-M7-06
+# M7 navigation check (TEST-M7-06): TEST-M7-06_a1
+PASS  cancel_status: result CANCELED (CANCELED expected); cancel accepted after 1.021 m of travel
+PASS  cancel_stop: travel from the cancel acceptance to the end of the hold 49.3 mm (<= 150 mm)
+PASS  cancel_still: still (<= 0.01 m/s) for 5 s: from 0.3 s after the cancel, maximum speed 2.73 mm/s
+PASS  cmd_limits: /cmd_vel within DEC-025: 110 of 110; v 0.000..0.300 m/s (limits -0.25..0.5), |w| max 0.058 rad/s (limit 1.0)
+PASS  cmd_stamps: /cmd_vel stamps within the guard window: |clock - stamp| max 0.010 s (<= 0.5 s)
+PASS  guard_drops: guard forwarded 110 of 110 /cmd_vel messages (zero drops required; 0 forwarded with the stamp clamped to the guard clock)
+PASS  publishers: /cmd_vel publishers at start ['velocity_smoother geometry_msgs/msg/TwistStamped'], at end ['velocity_smoother geometry_msgs/msg/TwistStamped'] (expected ['velocity_smoother geometry_msgs/msg/TwistStamped'])
+INFO  RTF 0.88; 12.0 s simulation time; travel 1.07 m; 1 of 135 samples missing
+# result: PASS
+# checker exit 0
+# webm_trim: no stale-frame jump in the first 4 s of docs/gallery/_pending/M7/TEST-M7-06/TEST-M7-06_a1_gazebo.webm; nothing cut
+# sim_record: wrote docs/gallery/_pending/M7/TEST-M7-06/TEST-M7-06_a1_gazebo.mp4
+# sim_record: wrote docs/gallery/_pending/M7/TEST-M7-06/TEST-M7-06_a1_rviz.mp4
+# sim_capture: wrote docs/gallery/_pending/M7/TEST-M7-06/TEST-M7-06_a1_gazebo.png
+# sim_capture: wrote docs/gallery/_pending/M7/TEST-M7-06/TEST-M7-06_a1_rviz.png
+# navigation launch log: 0 [ERROR] lines
+#         1 [controller_server-2] [WARN]  [controller_server]: No goal checker was specified in parameter 'current_goal_checker'. Server will use only plugin loaded general_goal_checker . This warning will appear once.
+#         1 [controller_server-2] [WARN]  [controller_server]: No progress checker was specified in parameter 'current_progress_checker'. Server will use only plugin loaded progress_checker . This warning will appear once.
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=167)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+
+$ python3 docs/evidence/M7/TEST-M7_nav_run.py TEST-M7-06_a2 --mode cancel
+# TEST-M7 navigation run, wall 2026-11-21 15:27:21 IST; mode cancel; goals TEST-M7_goals.py
+INFO  cancel_G1: CANCELED after 3.8 s; settled truth (+1.076, -0.044) m, -4.63 deg; travel 1.08 m; first plan 7.42 m (4 plans)
+# TS-030 check: spin thread ended cleanly
+INFO  run: 12.0 s simulation time in 12.6 s wall, RTF 0.95; 136 track samples (0 missing of 136); 202 command messages; travel 1.08 m; /cmd_vel publishers ['velocity_smoother geometry_msgs/msg/TwistStamped'] -> ['velocity_smoother geometry_msgs/msg/TwistStamped']
+# result: run completed and recorded (judged by TEST-M7_nav_check.py)
+# harness exit 0
+
+$ python3 -I docs/evidence/M7/TEST-M7_nav_check.py TEST-M7-06_a2 --test TEST-M7-06
+# M7 navigation check (TEST-M7-06): TEST-M7-06_a2
+PASS  cancel_status: result CANCELED (CANCELED expected); cancel accepted after 1.022 m of travel
+PASS  cancel_stop: travel from the cancel acceptance to the end of the hold 52.9 mm (<= 150 mm)
+PASS  cancel_still: still (<= 0.01 m/s) for 5 s: from 0.3 s after the cancel, maximum speed 8.39 mm/s
+PASS  cmd_limits: /cmd_vel within DEC-025: 101 of 101; v 0.000..0.300 m/s (limits -0.25..0.5), |w| max 0.052 rad/s (limit 1.0)
+PASS  cmd_stamps: /cmd_vel stamps within the guard window: |clock - stamp| max 0.003 s (<= 0.5 s)
+PASS  guard_drops: guard forwarded 101 of 101 /cmd_vel messages (zero drops required; 0 forwarded with the stamp clamped to the guard clock)
+PASS  publishers: /cmd_vel publishers at start ['velocity_smoother geometry_msgs/msg/TwistStamped'], at end ['velocity_smoother geometry_msgs/msg/TwistStamped'] (expected ['velocity_smoother geometry_msgs/msg/TwistStamped'])
+INFO  RTF 0.95; 12.0 s simulation time; travel 1.08 m; 0 of 136 samples missing
+# result: PASS
+# checker exit 0
+# navigation launch log: 1 [ERROR] lines
+#         1 [bt_navigator-4] [ERROR]  [bt_navigator_navigate_to_pose_rclcpp_node]: Failed to get result for follow_path in node halt!
+#         1 [controller_server-2] [WARN]  [controller_server]: No goal checker was specified in parameter 'current_goal_checker'. Server will use only plugin loaded general_goal_checker . This warning will appear once.
+#         1 [controller_server-2] [WARN]  [controller_server]: No progress checker was specified in parameter 'current_progress_checker'. Server will use only plugin loaded progress_checker . This warning will appear once.
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=168)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+
+$ python3 docs/evidence/M7/TEST-M7_nav_run.py TEST-M7-06_a3 --mode cancel
+# TEST-M7 navigation run, wall 2026-11-21 15:27:58 IST; mode cancel; goals TEST-M7_goals.py
+INFO  cancel_G1: CANCELED after 3.8 s; settled truth (+1.070, -0.045) m, -4.75 deg; travel 1.07 m; first plan 7.42 m (4 plans)
+# TS-030 check: spin thread ended cleanly
+INFO  run: 11.9 s simulation time in 12.3 s wall, RTF 0.96; 136 track samples (0 missing of 136); 198 command messages; travel 1.07 m; /cmd_vel publishers ['velocity_smoother geometry_msgs/msg/TwistStamped'] -> ['velocity_smoother geometry_msgs/msg/TwistStamped']
+# result: run completed and recorded (judged by TEST-M7_nav_check.py)
+# harness exit 0
+
+$ python3 -I docs/evidence/M7/TEST-M7_nav_check.py TEST-M7-06_a3 --test TEST-M7-06
+# M7 navigation check (TEST-M7-06): TEST-M7-06_a3
+PASS  cancel_status: result CANCELED (CANCELED expected); cancel accepted after 1.029 m of travel
+PASS  cancel_stop: travel from the cancel acceptance to the end of the hold 39.1 mm (<= 150 mm)
+PASS  cancel_still: still (<= 0.01 m/s) for 5 s: from 0.2 s after the cancel, maximum speed 5.76 mm/s
+PASS  cmd_limits: /cmd_vel within DEC-025: 99 of 99; v 0.000..0.300 m/s (limits -0.25..0.5), |w| max 0.050 rad/s (limit 1.0)
+PASS  cmd_stamps: /cmd_vel stamps within the guard window: |clock - stamp| max 0.002 s (<= 0.5 s)
+PASS  guard_drops: guard forwarded 99 of 99 /cmd_vel messages (zero drops required; 0 forwarded with the stamp clamped to the guard clock)
+PASS  publishers: /cmd_vel publishers at start ['velocity_smoother geometry_msgs/msg/TwistStamped'], at end ['velocity_smoother geometry_msgs/msg/TwistStamped'] (expected ['velocity_smoother geometry_msgs/msg/TwistStamped'])
+INFO  RTF 0.96; 11.9 s simulation time; travel 1.07 m; 0 of 136 samples missing
+# result: PASS
+# checker exit 0
+# navigation launch log: 0 [ERROR] lines
+#         1 [controller_server-2] [WARN]  [controller_server]: No goal checker was specified in parameter 'current_goal_checker'. Server will use only plugin loaded general_goal_checker . This warning will appear once.
+#         1 [controller_server-2] [WARN]  [controller_server]: No progress checker was specified in parameter 'current_progress_checker'. Server will use only plugin loaded progress_checker . This warning will appear once.
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+#         1 [amcl-3] [WARN]  [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+# TS-029 attempts declared invalid under DEC-039: 0; TS-039 attempts declared invalid under DEC-079: 0
+
+# overall: ALL 3 VALID RUNS PASSED

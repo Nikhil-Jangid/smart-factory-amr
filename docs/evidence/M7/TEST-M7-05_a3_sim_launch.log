@@ -1,0 +1,111 @@
+[INFO] [launch]: All log files can be found below <home>/.ros/log/2026-11-21-15-16-10-942802-<host>-34301
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [robot_state_publisher-1]: process started with pid [34325]
+[INFO] [parameter_bridge-2]: process started with pid [34326]
+[INFO] [parameter_bridge-3]: process started with pid [34327]
+[INFO] [cmd_vel_guard-4]: process started with pid [34328]
+[INFO] [gz-5]: process started with pid [34329]
+[INFO] [create-6]: process started with pid [34330]
+[create-6] [INFO] [1795254371.099219052] [ros_gz_sim]: Waiting messages on topic [robot_description].
+[cmd_vel_guard-4] [INFO] [1795254371.101363933] [cmd_vel_guard]: forwarding commands with |now - stamp| <= 0.500 s
+[robot_state_publisher-1] [INFO] [1795254371.106581533] [robot_state_publisher]: Robot initialized
+[parameter_bridge-2] [INFO] [1795254371.120826668] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[create-6] [INFO] [1795254371.663287472] [ros_gz_sim]: Entity creation successful.
+[INFO] [create-6]: process has finished cleanly [pid 34330]
+[INFO] [spawner-7]: process started with pid [34477]
+[spawner-7] [INFO] [1795254372.040104137] [spawner_joint_state_broadcaster]: waiting for service /controller_manager/list_controllers to become available...
+[parameter_bridge-3] [INFO] [1795254372.120302113] [sensor_bridge]: Creating GZ->ROS Bridge: [/scan (gz.msgs.LaserScan) -> /scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-3] [INFO] [1795254372.123584787] [sensor_bridge]: Creating GZ->ROS Bridge: [/imu (gz.msgs.IMU) -> /imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [INFO] [1795254373.283801117] [gz_ros_control]: Loading controller_manager
+[gz-5] [INFO] [1795254373.290242779] [controller_manager]: Using ROS clock for triggering controller manager cycles.
+[gz-5] [WARN] [1795254373.290263717] [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+[gz-5] [INFO] [1795254373.294918332] [controller_manager]: Subscribing to '/robot_description' topic for robot description.
+[gz-5] [WARN] [1795254373.294983191] [gz_ros_control]: Waiting RM to load and initialize hardware...
+[gz-5] [INFO] [1795254373.465415115] [controller_manager]: Received robot description from topic.
+[gz-5] [INFO] [1795254373.465483680] [controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[gz-5] [INFO] [1795254373.469301402] [gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gz-5] [INFO] [1795254373.469362776] [gz_ros_control]: Loading joint: left_wheel_joint
+[gz-5] [INFO] [1795254373.469376104] [gz_ros_control]: 	State:
+[gz-5] [INFO] [1795254373.469387524] [gz_ros_control]: 		 position
+[gz-5] [INFO] [1795254373.469396065] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1795254373.469407806] [gz_ros_control]: 	Command:
+[gz-5] [INFO] [1795254373.469419564] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1795254373.469439691] [gz_ros_control]: Loading joint: right_wheel_joint
+[gz-5] [INFO] [1795254373.469447836] [gz_ros_control]: 	State:
+[gz-5] [INFO] [1795254373.469454432] [gz_ros_control]: 		 position
+[gz-5] [INFO] [1795254373.469461843] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1795254373.469468782] [gz_ros_control]: 	Command:
+[gz-5] [INFO] [1795254373.469475470] [gz_ros_control]: 		 velocity
+[gz-5] [INFO] [1795254373.469528371] [gz_ros_control]: Loading sensor: imu
+[gz-5] [INFO] [1795254373.469541030] [gz_ros_control]: 	State:
+[gz-5] [WARN] [1795254373.469548349] [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gz-5] [INFO] [1795254373.469638104] [controller_manager]: Initialize hardware 'AmrGazeboSystem' 
+[gz-5] [WARN] [1795254373.469658821] [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+[gz-5] [INFO] [1795254373.469723509] [controller_manager]: Successful initialization of hardware 'AmrGazeboSystem'
+[gz-5] [INFO] [1795254373.469835585] [controller_manager]: Activating component 'AmrGazeboSystem'.
+[gz-5] [INFO] [1795254373.469851412] [resource_manager]: 'configure' hardware 'AmrGazeboSystem' 
+[gz-5] [INFO] [1795254373.469863373] [gz_ros_control]: System Successfully configured!
+[gz-5] [INFO] [1795254373.469871586] [resource_manager]: Successful 'configure' of hardware 'AmrGazeboSystem'
+[gz-5] [INFO] [1795254373.469880421] [resource_manager]: 'activate' hardware 'AmrGazeboSystem' 
+[gz-5] [INFO] [1795254373.469897134] [resource_manager]: Successful 'activate' of hardware 'AmrGazeboSystem'
+[gz-5] [WARN] [1795254373.469974555] [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+[gz-5] [INFO] [1795254373.469984125] [controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[gz-5] [INFO] [1795254373.542818402] [controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[gz-5] [INFO] [1795254373.542896625] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[gz-5] [INFO] [1795254373.547813279] [controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file <share_b>/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-7] [INFO] [1795254373.557186263] [spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[gz-5] [INFO] [1795254373.558497336] [controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[gz-5] [INFO] [1795254373.558801364] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[gz-5] [INFO] [1795254373.570207970] [controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[gz-5] [WARN] [1795254375.361443053] [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+[gz-5] [amr_gazebo_plugins::ImuDecimator] active: /imu_raw (1000 Hz) -> /imu (100 Hz), block 10, physics step 0.001 s
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<data-string>:L136]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="amr"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<data-string>:L170]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-5] [INFO] [1795254375.567566070] [controller_manager]: Successfully switched controllers!
+[spawner-7] [INFO] [1795254375.578557040] [spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[INFO] [spawner-7]: process has finished cleanly [pid 34477]
+[INFO] [spawner-8]: process started with pid [34745]
+[spawner-8] [INFO] [1795254376.232006483] [spawner_diff_drive_controller]: waiting for service /controller_manager/list_controllers to become available...
+[gz-5] [INFO] [1795254376.484919976] [controller_manager]: Loading controller : 'diff_drive_controller' of type 'diff_drive_controller/DiffDriveController'
+[gz-5] [INFO] [1795254376.485119346] [controller_manager]: Loading controller 'diff_drive_controller'
+[gz-5] [INFO] [1795254376.492180617] [controller_manager]: Controller 'diff_drive_controller' node arguments: --ros-args --params-file <share_b>/config/controllers.yaml -p use_sim_time:=true --param use_sim_time:=true 
+[spawner-8] [INFO] [1795254376.514585581] [spawner_diff_drive_controller]: Loaded diff_drive_controller
+[gz-5] [INFO] [1795254376.515638778] [controller_manager]: Configuring controller: 'diff_drive_controller'
+[gz-5] [INFO] [1795254376.537722609] [controller_manager]: Activating controllers: [ diff_drive_controller ]
+[gz-5] [INFO] [1795254376.543279898] [controller_manager]: Successfully switched controllers!
+[spawner-8] [INFO] [1795254376.554646336] [spawner_diff_drive_controller]: Configured and activated diff_drive_controller
+[INFO] [spawner-8]: process has finished cleanly [pid 34745]
+[gz-5] [WARN] [1795254377.032384393] [diff_drive_controller]: Velocity command timed out. Braking.
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [gz-5]: sending signal 'SIGINT' to process[gz-5]
+[INFO] [cmd_vel_guard-4]: sending signal 'SIGINT' to process[cmd_vel_guard-4]
+[INFO] [parameter_bridge-3]: sending signal 'SIGINT' to process[parameter_bridge-3]
+[INFO] [parameter_bridge-2]: sending signal 'SIGINT' to process[parameter_bridge-2]
+[INFO] [robot_state_publisher-1]: sending signal 'SIGINT' to process[robot_state_publisher-1]
+[cmd_vel_guard-4] [INFO] [1795254422.598028880] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[parameter_bridge-3] [INFO] [1795254422.598992065] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[parameter_bridge-2] [INFO] [1795254422.600168332] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-1] [INFO] [1795254422.601227302] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [cmd_vel_guard-4]: process has finished cleanly [pid 34328]
+[INFO] [robot_state_publisher-1]: process has finished cleanly [pid 34325]
+[INFO] [parameter_bridge-2]: process has finished cleanly [pid 34326]
+[INFO] [parameter_bridge-3]: process has finished cleanly [pid 34327]
+[ERROR] [gz-5]: process[gz-5] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+[INFO] [gz-5]: sending signal 'SIGTERM' to process[gz-5]
+[gz-5] [INFO] [1795254427.956267375] [controller_manager.pal_statistics]: Async messages lost 0
+[gz-5] [INFO] [1795254427.956314943] [controller_manager.pal_statistics]: publish_async_failures_ 0
+[gz-5] [INFO] [1795254427.957231201] [controller_manager.pal_statistics]: Async messages lost 0
+[gz-5] [INFO] [1795254427.957244741] [controller_manager.pal_statistics]: publish_async_failures_ 1
+[gz-5] [amr_gazebo_plugins::ImuDecimator] shutdown: raw samples 51515, published 5150, dropped_incomplete 0, discarded_partial 2, missing_samples 0, duplicates 0, off_grid 0, resets 0
+[gz-5] /opt/ros/jazzy/opt/gz_sim_vendor/lib/ruby/gz/cmdsim8.rb:201:in `kill': No such process (Errno::ESRCH)
+[gz-5] 	from /opt/ros/jazzy/opt/gz_sim_vendor/lib/ruby/gz/cmdsim8.rb:201:in `killProcess'
+[gz-5] 	from /opt/ros/jazzy/opt/gz_sim_vendor/lib/ruby/gz/cmdsim8.rb:569:in `handle_signal'
+[gz-5] 	from /opt/ros/jazzy/opt/gz_sim_vendor/lib/ruby/gz/cmdsim8.rb:579:in `block in execute'
+[gz-5] 	from /opt/ros/jazzy/opt/gz_sim_vendor/lib/ruby/gz/cmdsim8.rb:584:in `wait2'
+[gz-5] 	from /opt/ros/jazzy/opt/gz_sim_vendor/lib/ruby/gz/cmdsim8.rb:584:in `execute'
+[gz-5] 	from /opt/ros/jazzy/opt/gz_tools_vendor/bin/gz:317:in `<main>'
+[gz-5] Escalating to SIGKILL on [Gazebo Sim GUI]
+[ERROR] [gz-5]: process has died [pid 34329, exit code 1, cmd 'gz sim -r --gui-config <share_b>/config/gazebo_gui_capture.config <share_b>/worlds/mapping_arena.sdf'].
+[INFO] [launch]: process[gz-5] was required: shutting down launched system

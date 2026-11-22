@@ -1,0 +1,8 @@
+# TEST-M4-03 recomputation: TEST-M4-03_record.csv; r = 0.075 m, b = 0.4 m (amr_properties.xacro)
+PASS  odometry messages paired with their control cycle (start point)
+INFO  35 of 701 paired odometry stamps are earlier than their joint_states stamp (max 1.000 ms; TS-035)
+INFO  1451 joint_states, 701 odometry messages; odometry path 1.670 m, turned 150.4 deg in total
+PASS  700 of 700 odometry messages compared (>= 95 %)
+PASS  max position difference 0.000000 mm <= 1 mm
+PASS  max yaw difference 0.00000000 deg <= 0.01 deg
+# overall: ALL CHECKS PASSED

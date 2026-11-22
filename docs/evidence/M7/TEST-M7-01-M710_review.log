@@ -1,0 +1,102 @@
+# TEST-M7-01 review, 2026-11-23 02:53:18 IST, revision 85cd1e1 (amr_ws/src clean); baseline 9777615
+# nav2_bt_navigator 1.3.14-1noble.20261109.090516
+
+## 1. Build
+$ cd amr_ws && colcon build --symlink-install --packages-select amr_description amr_bringup amr_gazebo_plugins
+-- Up-to-date symlink: <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/cmake/amr_bringupConfig-version.cmake
+-- Up-to-date symlink: <home>/Projects/smart-factory-amr/amr_ws/install/amr_bringup/share/amr_bringup/package.xml
+Finished <<< amr_bringup [0.09s]
+
+Summary: 3 packages finished [0.26s]
+# colcon exit 0; lines matching 'warning': 0
+# exit 0
+
+## 2. Default expansion vs the M1 baseline
+identical
+# exit 0
+
+## 3. Launch-model expansions vs 9777615
+$ xacro amr.urdf.xacro use_ros2_control:=true (6452 bytes)
+identical
+# exit 0
+$ xacro amr.urdf.xacro use_ros2_control:=true use_sensors:=true (9912 bytes)
+identical
+# exit 0
+
+## 4. Simulation, controller, sensor, SLAM, localization and map files vs 9777615
+unchanged  amr_ws/src/amr_bringup/src/cmd_vel_guard.cpp
+# exit 0
+unchanged  amr_ws/src/amr_bringup/config/sensor_bridge.yaml
+# exit 0
+unchanged  amr_ws/src/amr_bringup/config/controllers.yaml
+# exit 0
+unchanged  amr_ws/src/amr_bringup/config/controllers_ekf.yaml
+# exit 0
+unchanged  amr_ws/src/amr_bringup/worlds/mapping_arena.sdf
+# exit 0
+unchanged  amr_ws/src/amr_description/urdf/amr.sensors.xacro
+# exit 0
+unchanged  amr_ws/src/amr_description/urdf/amr_properties.xacro
+# exit 0
+unchanged  amr_ws/src/amr_bringup/config/slam_toolbox.yaml
+# exit 0
+unchanged  amr_ws/src/amr_bringup/launch/slam.launch.py
+# exit 0
+unchanged  amr_ws/src/amr_bringup/launch/localization.launch.py
+# exit 0
+unchanged  amr_ws/src/amr_bringup/config/amcl.yaml
+# exit 0
+unchanged  amr_ws/src/amr_bringup/config/ekf.yaml
+# exit 0
+unchanged  amr_ws/src/amr_bringup/maps/mapping_arena.yaml
+# exit 0
+unchanged  amr_ws/src/amr_bringup/maps/mapping_arena.pgm
+# exit 0
+unchanged  amr_ws/src/amr_bringup/maps/mapping_arena.data.gz
+# exit 0
+unchanged  amr_ws/src/amr_bringup/maps/mapping_arena.posegraph.gz
+# exit 0
+unchanged  amr_ws/src/amr_bringup/maps/mapping_arena_amcl.yaml
+# exit 0
+
+## 5. Existing files changed in amr_ws/src from 9777615 to the working tree (M7 increment, DEC-064)
+M	amr_ws/src/amr_bringup/CMakeLists.txt
+A	amr_ws/src/amr_bringup/behavior_trees/navigate_through_poses.xml
+A	amr_ws/src/amr_bringup/behavior_trees/navigate_to_pose.xml
+A	amr_ws/src/amr_bringup/config/gazebo_gui_capture.config
+A	amr_ws/src/amr_bringup/config/nav2.yaml
+A	amr_ws/src/amr_bringup/launch/navigation.launch.py
+M	amr_ws/src/amr_bringup/launch/sim.launch.py
+M	amr_ws/src/amr_bringup/package.xml
+A	amr_ws/src/amr_bringup/rviz/navigation.rviz
+# modified or removed (not new): amr_ws/src/amr_bringup/CMakeLists.txt amr_ws/src/amr_bringup/launch/sim.launch.py amr_ws/src/amr_bringup/package.xml 
+# exit 0
++  <exec_depend>nav2_planner</exec_depend>
++  <exec_depend>nav2_controller</exec_depend>
++  <exec_depend>nav2_behaviors</exec_depend>
++  <exec_depend>nav2_bt_navigator</exec_depend>
++  <exec_depend>nav2_velocity_smoother</exec_depend>
++  <exec_depend>nav2_navfn_planner</exec_depend>
++  <exec_depend>nav2_regulated_pure_pursuit_controller</exec_depend>
+package.xml: only the seven M7 exec_depend lines added
+# exit 0
+-  DIRECTORY config launch maps rviz worlds
++  DIRECTORY behavior_trees config launch maps rviz worlds
+# CMakeLists.txt changed lines: 3, of which not comments: 2
+CMakeLists.txt: only comments and the behavior_trees folder added to the install rule
+# exit 0
+
+## 6. Behavior trees vs the installed Nav2 trees (DEC-071)
+$ diff <(installed navigate_to_pose tree without its comment, Spin and BackUp lines) <(navigate_to_pose.xml without its comment)
+identical apart from the comment; installed lines removed: 2 (Spin, BackUp)
+# exit 0
+$ diff <(installed navigate_through_poses tree without its comment, Spin and BackUp lines) <(navigate_through_poses.xml without its comment)
+identical apart from the comment; installed lines removed: 2 (Spin, BackUp)
+# exit 0
+
+## 7. sim.launch.py vs 9777615: only the DEC-075 gui_config option added
+# lines removed: 0; lines added: 12 (expected 0 and 12)
+sim.launch.py: only the gui_config option added
+# exit 0
+
+# overall: ALL STEPS PASSED

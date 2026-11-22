@@ -3,10 +3,14 @@
 
 Usage (same ROS_DOMAIN_ID / GZ_PARTITION as the running simulation; Gazebo started with the GUI):
     python3 tools/sim_capture.py view <x> <y> <z> <tx> <ty> <tz>   point the Gazebo camera from (x,y,z) at (tx,ty,tz)
+    python3 tools/sim_capture.py follow <model> <ox> <oy> <oz> [gain]  camera follows <model> at offset (ox, oy, oz) m;
+                                                                   gain 0..1 (default 0.2) = camera catch-up per update
     python3 tools/sim_capture.py shot <out_prefix>                 -> <out_prefix>_gazebo.png, <out_prefix>_rviz.png
 
 Gazebo: the 3D view through the GUI's Screenshot plugin (service /gui/screenshot, loaded by the default gz-sim 8 GUI
-config); the camera through /gui/move_to/pose. RViz: the window is captured with `xwd`, which needs RViz on X11
+config); the camera through /gui/move_to/pose, or
+(follow, added 2026-11-21 for navigation videos: a fixed whole-arena view leaves the robot a few pixels wide) through
+the /gui/track topic (gz.msgs.CameraTrack, FOLLOW_LOOK_AT: the camera keeps the offset and looks at the model). RViz: the window is captured with `xwd`, which needs RViz on X11
 (start it with QT_QPA_PLATFORM=xcb under Wayland), and is converted to PNG here (XWD ZPixmap, 24/32 bit).
 A missing window or a failed service is reported and skipped; the exit code is 0 unless no image was written.
 """
@@ -38,8 +42,27 @@ def view(x, y, z, tx, ty, tz):
     q = (cy * cp, -sy * sp, cy * sp, sy * cp)  # w, x, y, z for roll 0
     req = (f'pose: {{position: {{x: {x}, y: {y}, z: {z}}}, '
            f'orientation: {{w: {q[0]}, x: {q[1]}, y: {q[2]}, z: {q[3]}}}}}')
+    gz_service('/gui/follow', 'gz.msgs.StringMsg', 'gz.msgs.Boolean', 'data: ""')  # stop a follow (if any) first
     ok = gz_service('/gui/move_to/pose', 'gz.msgs.GUICamera', 'gz.msgs.Boolean', req)
     print(f'# sim_capture: gazebo camera {"set" if ok else "NOT set"} ({x}, {y}, {z}) -> ({tx}, {ty}, {tz})')
+    return ok
+
+
+def follow(model, ox, oy, oz, gain=0.2):
+    """Camera follows <model> at offset (ox, oy, oz) m and keeps looking at it (CameraTrack FOLLOW_LOOK_AT on the GUI's
+    /gui/track topic, gz-gui 8). The older /gui/follow service only sets the target: the GUI's default gain then
+    leaves the camera metres behind a moving robot, and /gui/follow/p_gain does not exist in this version."""
+    ent = f'{{name: "{model}"}}'
+    msg = (f'track_mode: FOLLOW_LOOK_AT, follow_target: {ent}, track_target: {ent}, '
+           f'follow_offset: {{x: {ox}, y: {oy}, z: {oz}}}, follow_pgain: {gain}, track_pgain: {gain}')
+    ok = False
+    for _ in range(3):  # a single publish can be missed before the GUI's subscription is matched
+        r = subprocess.run(['gz', 'topic', '-t', '/gui/track', '-m', 'gz.msgs.CameraTrack', '-p', msg],
+                           capture_output=True, text=True)
+        ok = ok or r.returncode == 0
+        time.sleep(0.3)
+    print(f'# sim_capture: gazebo camera {"follows" if ok else "NOT following"} {model} at offset '
+          f'({ox}, {oy}, {oz}), gain {gain}')
     return ok
 
 
@@ -99,6 +122,8 @@ def shot(prefix):
 def main():
     if len(sys.argv) == 8 and sys.argv[1] == 'view':
         return 0 if view(*map(float, sys.argv[2:])) else 1
+    if len(sys.argv) in (6, 7) and sys.argv[1] == 'follow':
+        return 0 if follow(sys.argv[2], *map(float, sys.argv[3:])) else 1
     if len(sys.argv) == 3 and sys.argv[1] == 'shot':
         return 0 if shot(sys.argv[2]) else 1
     print(__doc__)

@@ -1,0 +1,246 @@
+# TEST-M7-05 procedure (mode invalid), valid runs required=3, 2026-11-23 03:11:07 IST, revision 85cd1e1 (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; navigation2 1.3.14-1noble.20261109.092756; launch: sim.launch.py headless:=false gui_config:=gazebo_gui_capture.config sensors:=true world:=mapping_arena.sdf + localization.launch.py + navigation.launch.py
+
+## attempt 1 (ROS_DOMAIN_ID=161)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+# sim_record: recording gazebo window to docs/gallery/_pending/M7/TEST-M7-05/TEST-M7-05-M710_a1_gazebo.webm
+# sim_record: recording rviz window to docs/gallery/_pending/M7/TEST-M7-05/TEST-M7-05-M710_a1_rviz.webm
+
+$ python3 docs/evidence/M7/TEST-M7_nav_run.py TEST-M7-05-M710_a1 --mode invalid
+# TEST-M7 navigation run, wall 2026-11-23 03:11:41 IST; mode invalid; goals TEST-M7_goals.py
+INFO  inside_P1: ABORTED after 22.9 s; settled truth (-0.000, +0.000) m, +0.00 deg; travel 0.00 m; first plan none (0 plans)
+INFO  outside_map: ABORTED after 0.1 s; settled truth (-0.000, +0.000) m, +0.00 deg; travel 0.00 m; first plan none (0 plans)
+# TS-030 check: spin thread ended cleanly
+INFO  run: 27.1 s simulation time in 32.7 s wall, RTF 0.83; 280 track samples (1 missing of 281); 0 command messages; travel 0.00 m; /cmd_vel publishers ['velocity_smoother geometry_msgs/msg/TwistStamped'] -> ['velocity_smoother geometry_msgs/msg/TwistStamped']
+# result: run completed and recorded (judged by TEST-M7_nav_check.py)
+# harness exit 0
+
+$ python3 -I docs/evidence/M7/TEST-M7_nav_check.py TEST-M7-05-M710_a1 --test TEST-M7-05
+# M7 navigation check (TEST-M7-05): TEST-M7-05-M710_a1
+PASS  invalid_status: results: inside_P1 ABORTED, outside_map ABORTED (expected ['inside_P1', 'outside_map'], ABORTED or REJECTED)
+PASS  invalid_time: answered after inside_P1 22.9 s, outside_map 0.1 s (<= 60 s)
+PASS  invalid_motion: ground-truth travel inside_P1 0.0 mm, outside_map 0.0 mm (<= 50 mm)
+PASS  cmd_limits: /cmd_vel within DEC-025: 0 of 0; v 0.000..0.000 m/s (limits -0.25..0.5), |w| max 0.000 rad/s (limit 1.0)
+PASS  cmd_stamps: /cmd_vel stamps within the guard window: |clock - stamp| max nan s (<= 0.5 s)
+PASS  guard_drops: guard forwarded 0 of 0 /cmd_vel messages (zero drops required; 0 forwarded with the stamp clamped to the guard clock)
+PASS  publishers: /cmd_vel publishers at start ['velocity_smoother geometry_msgs/msg/TwistStamped'], at end ['velocity_smoother geometry_msgs/msg/TwistStamped'] (expected ['velocity_smoother geometry_msgs/msg/TwistStamped'])
+INFO  RTF 0.83; 27.1 s simulation time; travel 0.00 m; 1 of 281 samples missing
+# result: PASS
+# checker exit 0
+# webm_trim: docs/gallery/_pending/M7/TEST-M7-05/TEST-M7-05-M710_a1_gazebo.webm: first 0.2 s cut, 702 frames kept
+# webm_trim: docs/gallery/_pending/M7/TEST-M7-05/TEST-M7-05-M710_a1_rviz.webm: first 0.2 s cut, 700 frames kept
+# sim_record: wrote docs/gallery/_pending/M7/TEST-M7-05/TEST-M7-05-M710_a1_gazebo.mp4
+# sim_record: wrote docs/gallery/_pending/M7/TEST-M7-05/TEST-M7-05-M710_a1_rviz.mp4
+# sim_capture: wrote docs/gallery/_pending/M7/TEST-M7-05/TEST-M7-05-M710_a1_gazebo.png
+# sim_capture: wrote docs/gallery/_pending/M7/TEST-M7-05/TEST-M7-05-M710_a1_rviz.png
+# navigation launch log: 2 [ERROR] lines
+#         2 [bt_navigator-4] [ERROR]  [bt_navigator]: Goal failed
+#         2 [bt_navigator-4] [WARN]  [bt_navigator]: [navigate_to_pose] [ActionServer] Aborting handle.
+#        15 [planner_server-1] [WARN]  [planner_server]: [compute_path_to_pose] [ActionServer] Aborting handle.
+#         1 [planner_server-1] [WARN]  [planner_server]: GridBased plugin failed to plan from (-0.00, -0.00) to (12.00, 0.00): "Goal Coordinates of(12.000000, 0.000000) was outside bounds"
+#        14 [planner_server-1] [WARN]  [planner_server]: GridBased plugin failed to plan from (-0.00, -0.00) to (2.00, 2.00): "Failed to create plan with tolerance of: 0.000000"
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=162)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+
+$ python3 docs/evidence/M7/TEST-M7_nav_run.py TEST-M7-05-M710_a2 --mode invalid
+# TEST-M7 navigation run, wall 2026-11-23 03:13:11 IST; mode invalid; goals TEST-M7_goals.py
+INFO  inside_P1: ABORTED after 22.7 s; settled truth (-0.000, +0.000) m, +0.00 deg; travel 0.00 m; first plan none (0 plans)
+INFO  outside_map: ABORTED after 0.1 s; settled truth (-0.000, +0.000) m, +0.00 deg; travel 0.00 m; first plan none (0 plans)
+# TS-030 check: spin thread ended cleanly
+INFO  run: 26.9 s simulation time in 29.4 s wall, RTF 0.92; 270 track samples (0 missing of 270); 0 command messages; travel 0.00 m; /cmd_vel publishers ['velocity_smoother geometry_msgs/msg/TwistStamped'] -> ['velocity_smoother geometry_msgs/msg/TwistStamped']
+# result: run completed and recorded (judged by TEST-M7_nav_check.py)
+# harness exit 0
+
+$ python3 -I docs/evidence/M7/TEST-M7_nav_check.py TEST-M7-05-M710_a2 --test TEST-M7-05
+# M7 navigation check (TEST-M7-05): TEST-M7-05-M710_a2
+PASS  invalid_status: results: inside_P1 ABORTED, outside_map ABORTED (expected ['inside_P1', 'outside_map'], ABORTED or REJECTED)
+PASS  invalid_time: answered after inside_P1 22.7 s, outside_map 0.1 s (<= 60 s)
+PASS  invalid_motion: ground-truth travel inside_P1 0.0 mm, outside_map 0.0 mm (<= 50 mm)
+PASS  cmd_limits: /cmd_vel within DEC-025: 0 of 0; v 0.000..0.000 m/s (limits -0.25..0.5), |w| max 0.000 rad/s (limit 1.0)
+PASS  cmd_stamps: /cmd_vel stamps within the guard window: |clock - stamp| max nan s (<= 0.5 s)
+PASS  guard_drops: guard forwarded 0 of 0 /cmd_vel messages (zero drops required; 0 forwarded with the stamp clamped to the guard clock)
+PASS  publishers: /cmd_vel publishers at start ['velocity_smoother geometry_msgs/msg/TwistStamped'], at end ['velocity_smoother geometry_msgs/msg/TwistStamped'] (expected ['velocity_smoother geometry_msgs/msg/TwistStamped'])
+INFO  RTF 0.92; 26.9 s simulation time; travel 0.00 m; 0 of 270 samples missing
+# result: PASS
+# checker exit 0
+# navigation launch log: 2 [ERROR] lines
+#         2 [bt_navigator-4] [ERROR]  [bt_navigator]: Goal failed
+#         2 [bt_navigator-4] [WARN]  [bt_navigator]: [navigate_to_pose] [ActionServer] Aborting handle.
+#        15 [planner_server-1] [WARN]  [planner_server]: [compute_path_to_pose] [ActionServer] Aborting handle.
+#         1 [planner_server-1] [WARN]  [planner_server]: GridBased plugin failed to plan from (-0.00, -0.00) to (12.00, 0.00): "Goal Coordinates of(12.000000, 0.000000) was outside bounds"
+#        14 [planner_server-1] [WARN]  [planner_server]: GridBased plugin failed to plan from (-0.00, -0.00) to (2.00, 2.00): "Failed to create plan with tolerance of: 0.000000"
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=163)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+
+$ python3 docs/evidence/M7/TEST-M7_nav_run.py TEST-M7-05-M710_a3 --mode invalid
+# TEST-M7 navigation run, wall 2026-11-23 03:14:11 IST; mode invalid; goals TEST-M7_goals.py
+INFO  inside_P1: ABORTED after 22.4 s; settled truth (-0.000, +0.000) m, +0.00 deg; travel 0.00 m; first plan none (0 plans)
+INFO  outside_map: ABORTED after 0.1 s; settled truth (-0.000, +0.000) m, +0.00 deg; travel 0.00 m; first plan none (0 plans)
+# TS-030 check: spin thread ended cleanly
+INFO  run: 26.7 s simulation time in 29.3 s wall, RTF 0.91; 268 track samples (0 missing of 268); 0 command messages; travel 0.00 m; /cmd_vel publishers ['velocity_smoother geometry_msgs/msg/TwistStamped'] -> ['velocity_smoother geometry_msgs/msg/TwistStamped']
+# result: run completed and recorded (judged by TEST-M7_nav_check.py)
+# harness exit 0
+
+$ python3 -I docs/evidence/M7/TEST-M7_nav_check.py TEST-M7-05-M710_a3 --test TEST-M7-05
+# M7 navigation check (TEST-M7-05): TEST-M7-05-M710_a3
+PASS  invalid_status: results: inside_P1 ABORTED, outside_map ABORTED (expected ['inside_P1', 'outside_map'], ABORTED or REJECTED)
+PASS  invalid_time: answered after inside_P1 22.4 s, outside_map 0.1 s (<= 60 s)
+PASS  invalid_motion: ground-truth travel inside_P1 0.0 mm, outside_map 0.0 mm (<= 50 mm)
+PASS  cmd_limits: /cmd_vel within DEC-025: 0 of 0; v 0.000..0.000 m/s (limits -0.25..0.5), |w| max 0.000 rad/s (limit 1.0)
+PASS  cmd_stamps: /cmd_vel stamps within the guard window: |clock - stamp| max nan s (<= 0.5 s)
+PASS  guard_drops: guard forwarded 0 of 0 /cmd_vel messages (zero drops required; 0 forwarded with the stamp clamped to the guard clock)
+PASS  publishers: /cmd_vel publishers at start ['velocity_smoother geometry_msgs/msg/TwistStamped'], at end ['velocity_smoother geometry_msgs/msg/TwistStamped'] (expected ['velocity_smoother geometry_msgs/msg/TwistStamped'])
+INFO  RTF 0.91; 26.7 s simulation time; travel 0.00 m; 0 of 268 samples missing
+# result: PASS
+# checker exit 0
+# navigation launch log: 2 [ERROR] lines
+#         2 [bt_navigator-4] [ERROR]  [bt_navigator]: Goal failed
+#         2 [bt_navigator-4] [WARN]  [bt_navigator]: [navigate_to_pose] [ActionServer] Aborting handle.
+#        15 [planner_server-1] [WARN]  [planner_server]: [compute_path_to_pose] [ActionServer] Aborting handle.
+#         1 [planner_server-1] [WARN]  [planner_server]: GridBased plugin failed to plan from (-0.00, -0.00) to (12.00, 0.00): "Goal Coordinates of(12.000000, 0.000000) was outside bounds"
+#        14 [planner_server-1] [WARN]  [planner_server]: GridBased plugin failed to plan from (-0.00, -0.00) to (2.00, 2.00): "Failed to create plan with tolerance of: 0.000000"
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 2 [ERROR] lines
+#         1 [ERROR] [gz-5]: process[gz-5] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+#         1 [ERROR] [gz-5]: process has died [pid 83941, exit code 1, cmd 'gz sim -r --gui-config <share_b>/config/gazebo_gui_capture.config <share_b>/worlds/mapping_arena.sdf'].
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: TS-039 (only gz-5 (GUI front end) escalated after SIGINT (SIGINT->SIGTERM, died 1 (GUI front end); ESRCH, SIGKILL GUI); all other processes finished cleanly)
+# simulation launch leftover processes: 0
+# DEC-079: TS-039 (GUI front end) shutdown signature only; launch-log condition not counted for this attempt
+# attempt 3 INVALID under DEC-079 (checks passed; not counted, repeated)
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+# full launch logs kept: TEST-M7-05-M710_a3_{sim,loc,nav}_launch.log
+# attempt 3 INVALID (not counted)
+
+## attempt 4 (ROS_DOMAIN_ID=164)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+
+$ python3 docs/evidence/M7/TEST-M7_nav_run.py TEST-M7-05-M710_a4 --mode invalid
+# TEST-M7 navigation run, wall 2026-11-23 03:15:12 IST; mode invalid; goals TEST-M7_goals.py
+INFO  inside_P1: ABORTED after 22.5 s; settled truth (-0.000, +0.000) m, +0.00 deg; travel 0.00 m; first plan none (0 plans)
+INFO  outside_map: ABORTED after 0.1 s; settled truth (-0.000, +0.000) m, +0.00 deg; travel 0.00 m; first plan none (0 plans)
+# TS-030 check: spin thread ended cleanly
+INFO  run: 26.9 s simulation time in 29.3 s wall, RTF 0.92; 269 track samples (0 missing of 269); 0 command messages; travel 0.00 m; /cmd_vel publishers ['velocity_smoother geometry_msgs/msg/TwistStamped'] -> ['velocity_smoother geometry_msgs/msg/TwistStamped']
+# result: run completed and recorded (judged by TEST-M7_nav_check.py)
+# harness exit 0
+
+$ python3 -I docs/evidence/M7/TEST-M7_nav_check.py TEST-M7-05-M710_a4 --test TEST-M7-05
+# M7 navigation check (TEST-M7-05): TEST-M7-05-M710_a4
+PASS  invalid_status: results: inside_P1 ABORTED, outside_map ABORTED (expected ['inside_P1', 'outside_map'], ABORTED or REJECTED)
+PASS  invalid_time: answered after inside_P1 22.5 s, outside_map 0.1 s (<= 60 s)
+PASS  invalid_motion: ground-truth travel inside_P1 0.0 mm, outside_map 0.0 mm (<= 50 mm)
+PASS  cmd_limits: /cmd_vel within DEC-025: 0 of 0; v 0.000..0.000 m/s (limits -0.25..0.5), |w| max 0.000 rad/s (limit 1.0)
+PASS  cmd_stamps: /cmd_vel stamps within the guard window: |clock - stamp| max nan s (<= 0.5 s)
+PASS  guard_drops: guard forwarded 0 of 0 /cmd_vel messages (zero drops required; 0 forwarded with the stamp clamped to the guard clock)
+PASS  publishers: /cmd_vel publishers at start ['velocity_smoother geometry_msgs/msg/TwistStamped'], at end ['velocity_smoother geometry_msgs/msg/TwistStamped'] (expected ['velocity_smoother geometry_msgs/msg/TwistStamped'])
+INFO  RTF 0.92; 26.9 s simulation time; travel 0.00 m; 0 of 269 samples missing
+# result: PASS
+# checker exit 0
+# navigation launch log: 2 [ERROR] lines
+#         2 [bt_navigator-4] [ERROR]  [bt_navigator]: Goal failed
+#         2 [bt_navigator-4] [WARN]  [bt_navigator]: [navigate_to_pose] [ActionServer] Aborting handle.
+#        15 [planner_server-1] [WARN]  [planner_server]: [compute_path_to_pose] [ActionServer] Aborting handle.
+#         1 [planner_server-1] [WARN]  [planner_server]: GridBased plugin failed to plan from (-0.00, -0.00) to (12.00, 0.00): "Goal Coordinates of(12.000000, 0.000000) was outside bounds"
+#        14 [planner_server-1] [WARN]  [planner_server]: GridBased plugin failed to plan from (-0.00, -0.00) to (2.00, 2.00): "Failed to create plan with tolerance of: 0.000000"
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+# TS-029 attempts declared invalid under DEC-039: 0; TS-039 attempts declared invalid under DEC-079: 1
+
+# overall: ALL 3 VALID RUNS PASSED

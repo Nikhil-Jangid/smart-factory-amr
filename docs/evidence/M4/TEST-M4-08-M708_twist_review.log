@@ -1,0 +1,54 @@
+# TEST-M4 procedure: mode=twist, valid runs required=3, 2026-11-22 23:41:47 IST
+# revision 8bbebeb (amr_ws/src clean)
+# launch arguments: headless:=true
+# ros2_control 4.50.0-1noble.20261105.150451, diff_drive_controller 4.43.1-1noble.20261105.141205, gz_ros2_control 1.2.20-1noble.20261105.145510
+
+## attempt 1 (ROS_DOMAIN_ID=81, GZ_PARTITION=amr_m4_twist_<pid>_1)
+# TEST-M4 harness mode=twist, wall 2026-11-22 23:41:47 IST
+PASS  straight: odometry twist mean +0.20039, ground truth +0.20000 (m/s), error +0.195 %, |.| <= 2 %, sign equal (215 / 253 samples)
+PASS  rotate: odometry twist mean +0.50091, ground truth +0.50000 (rad/s), error +0.183 %, |.| <= 2 %, sign equal (214 / 253 samples)
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 1134, odometry 903, joint_states 1926, tf 902
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 2 (ROS_DOMAIN_ID=82, GZ_PARTITION=amr_m4_twist_<pid>_2)
+# TEST-M4 harness mode=twist, wall 2026-11-22 23:42:12 IST
+PASS  straight: odometry twist mean +0.20079, ground truth +0.20000 (m/s), error +0.393 %, |.| <= 2 %, sign equal (215 / 253 samples)
+PASS  rotate: odometry twist mean +0.50214, ground truth +0.50000 (rad/s), error +0.428 %, |.| <= 2 %, sign equal (215 / 253 samples)
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 1131, odometry 901, joint_states 1922, tf 901
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+## attempt 3 (ROS_DOMAIN_ID=83, GZ_PARTITION=amr_m4_twist_<pid>_3)
+# TEST-M4 harness mode=twist, wall 2026-11-22 23:42:37 IST
+PASS  straight: odometry twist mean +0.20035, ground truth +0.20000 (m/s), error +0.177 %, |.| <= 2 %, sign equal (215 / 253 samples)
+PASS  rotate: odometry twist mean +0.50082, ground truth +0.50000 (rad/s), error +0.164 %, |.| <= 2 %, sign equal (215 / 253 samples)
+INFO  RTF over the measurement window = 1.000 (valid if >= 0.5)
+# TS-030 check: spin thread ended cleanly
+# samples: ground truth 1233, odometry 901, joint_states 2096, tf 900
+# result: ALL CRITERIA PASSED
+# harness exit 0; launch log: 0 [ERROR] lines; leftover gz processes: 0
+#         1 [gz-4] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-4] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-4] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         1 [gz-4] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-4] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-4] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+
+# overall: ALL 3 VALID RUNS PASSED

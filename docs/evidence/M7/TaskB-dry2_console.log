@@ -1,0 +1,22 @@
+# dry run 2026-11-21 14:34:27 IST, revision f071a2b
+# controllers active
+# amcl active
+
+## mode invalid
+# TEST-M7 navigation run, wall 2026-11-21 14:34:51 IST; mode invalid; goals TEST-M7_goals.py
+INFO  inside_P1: ABORTED after 34.8 s; settled truth (+1.395, +2.387) m, +11.53 deg; travel 2.85 m; first plan 3.80 m (10 plans)
+INFO  outside_map: ABORTED after 0.1 s; settled truth (+1.395, +2.387) m, +11.53 deg; travel 0.00 m; first plan none (0 plans)
+# TS-030 check: spin thread ended cleanly
+INFO  run: 39.1 s simulation time in 39.6 s wall, RTF 0.99; 411 track samples (0 missing of 411); 488 command messages; travel 2.85 m; /cmd_vel publishers ['velocity_smoother geometry_msgs/msg/TwistStamped'] -> ['velocity_smoother geometry_msgs/msg/TwistStamped']
+# result: run completed and recorded (judged by TEST-M7_nav_check.py)
+# exit 0
+
+## mode route
+# TEST-M7 navigation run, wall 2026-11-21 14:35:40 IST; mode route; goals TEST-M7_goals.py
+INFO  route_G1-G3-G5-G6: SUCCEEDED after 76.1 s; settled truth (-0.028, +0.100) m, +4.54 deg; travel 19.39 m; first plan 21.28 m (27 plans)
+# TS-030 check: spin thread ended cleanly
+INFO  run: 78.3 s simulation time in 81.1 s wall, RTF 0.96; 761 track samples (0 missing of 761); 3192 command messages; travel 19.39 m; /cmd_vel publishers ['velocity_smoother geometry_msgs/msg/TwistStamped'] -> ['velocity_smoother geometry_msgs/msg/TwistStamped']
+# result: run completed and recorded (judged by TEST-M7_nav_check.py)
+# exit 0
+# leftovers: 0
+# done 14:37:15

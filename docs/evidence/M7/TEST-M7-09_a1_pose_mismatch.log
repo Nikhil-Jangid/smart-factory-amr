@@ -1,0 +1,7 @@
+# TEST-M7-09 attempt 1: ground truth vs localization estimate, measured live after the user's report of an L1 contact, 2026-11-23 02:40:24 IST, revision 66d197f
+$ gz topic -e -t /world/mapping_arena/pose/info -n 1   (model amr)
+ground truth: x 0.111 m, y -2.900 m, yaw -92.5 deg
+$ ros2 run tf2_ros tf2_echo map base_footprint
+- Translation: [0.065, -0.121, 0.000]
+- Rotation: in RPY (degree) [0.000, 0.000, -5.127]
+# L1 (low_box_l1, mapping_arena.sdf): centre (0.5, -2.5), 0.4 x 0.4 x 0.15 m; not in the map, below the 0.230 m LiDAR scan plane (M7 plan §3.2)

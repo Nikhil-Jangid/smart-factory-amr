@@ -1,0 +1,17 @@
+{
+ "mode": "cancel",
+ "wall_start": "2026-11-23 03:17:20 IST",
+ "cmd_vel_publishers_start": [
+  "velocity_smoother geometry_msgs/msg/TwistStamped"
+ ],
+ "cmd_vel_publishers_end": [
+  "velocity_smoother geometry_msgs/msg/TwistStamped"
+ ],
+ "sim_duration": 11.953,
+ "wall_duration": 13.661754986000233,
+ "rtf": 0.8749241962140833,
+ "track_samples": 136,
+ "missing_samples": 0,
+ "travel": 1.0677750840433415,
+ "goals": 1
+}

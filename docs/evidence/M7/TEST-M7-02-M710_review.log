@@ -1,0 +1,316 @@
+# TEST-M7-02 procedure, valid runs required=3, 2026-11-23 02:53:23 IST, revision 85cd1e1 (amr_ws/src clean)
+# Gazebo Sim, version 8.15.0; navigation2 1.3.14-1noble.20261109.092756; launch: sim.launch.py headless:=false sensors:=true world:=mapping_arena.sdf + localization.launch.py + navigation.launch.py
+
+## attempt 1 (ROS_DOMAIN_ID=171)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+# sim_record: recording gazebo window to docs/gallery/_pending/M7/TEST-M7-02/TEST-M7-02-M710_a1_gazebo.webm
+# sim_record: recording rviz window to docs/gallery/_pending/M7/TEST-M7-02/TEST-M7-02-M710_a1_rviz.webm
+
+$ python3 docs/evidence/M7/TEST-M7-02_interface_check.py
+# TEST-M7-02 check, wall 2026-11-23 02:53:52 IST
+PASS  /planner_server lifecycle state: active
+PASS  /controller_server lifecycle state: active
+PASS  /behavior_server lifecycle state: active
+PASS  /bt_navigator lifecycle state: active
+PASS  /velocity_smoother lifecycle state: active
+PASS  /map_server lifecycle state: active
+PASS  /map_server_amcl lifecycle state: active
+PASS  /amcl lifecycle state: active
+PASS  /planner_server use_sim_time = True
+PASS  /controller_server use_sim_time = True
+PASS  /behavior_server use_sim_time = True
+PASS  /bt_navigator use_sim_time = True
+PASS  /velocity_smoother use_sim_time = True
+PASS  /local_costmap/local_costmap use_sim_time = True
+PASS  /global_costmap/global_costmap use_sim_time = True
+PASS  /controller_server enable_stamped_cmd_vel = True (expected True)
+PASS  /controller_server odom_topic = '/diff_drive_controller/odom' (expected '/diff_drive_controller/odom')
+PASS  /controller_server FollowPath.plugin = 'nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController' (expected 'nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController')
+PASS  /controller_server FollowPath.desired_linear_vel = 0.3 (expected 0.3)
+PASS  /controller_server FollowPath.allow_reversing = False (expected False)
+PASS  /controller_server FollowPath.rotate_to_heading_angular_vel = 1.0 (expected 1.0)
+PASS  /controller_server FollowPath.max_angular_accel = 2.0 (expected 2.0)
+PASS  /controller_server general_goal_checker.xy_goal_tolerance = 0.1 (expected 0.1)
+PASS  /controller_server general_goal_checker.yaw_goal_tolerance = 0.1 (expected 0.1)
+PASS  /planner_server GridBased.plugin = 'nav2_navfn_planner::NavfnPlanner' (expected 'nav2_navfn_planner::NavfnPlanner')
+PASS  /planner_server GridBased.tolerance = 0.0 (expected 0.0)
+PASS  /planner_server GridBased.allow_unknown = False (expected False)
+PASS  /behavior_server enable_stamped_cmd_vel = True (expected True)
+PASS  /behavior_server behavior_plugins = ['wait'] (expected ['wait'])
+PASS  /velocity_smoother enable_stamped_cmd_vel = True (expected True)
+PASS  /velocity_smoother stamp_smoothed_velocity_with_smoothing_time = True (expected True)
+PASS  /velocity_smoother odom_topic = '/diff_drive_controller/odom' (expected '/diff_drive_controller/odom')
+PASS  /velocity_smoother max_velocity = [0.5, 0.0, 1.0] (expected [0.5, 0.0, 1.0])
+PASS  /velocity_smoother min_velocity = [-0.25, 0.0, -1.0] (expected [-0.25, 0.0, -1.0])
+PASS  /velocity_smoother max_accel = [0.5, 0.0, 2.0] (expected [0.5, 0.0, 2.0])
+PASS  /velocity_smoother max_decel = [-1.0, 0.0, -2.0] (expected [-1.0, 0.0, -2.0])
+PASS  /bt_navigator odom_topic = '/diff_drive_controller/odom' (expected '/diff_drive_controller/odom')
+PASS  /bt_navigator default_nav_to_pose_bt_xml = <share>/'amr_bringup/behavior_trees/navigate_to_pose.xml' (file exists: True)
+PASS  /bt_navigator default_nav_through_poses_bt_xml = <share>/'amr_bringup/behavior_trees/navigate_through_poses.xml' (file exists: True)
+PASS  /map subscribers: ['global_costmap', 'rviz', 'test_m7_02'] (global_costmap expected)
+PASS  /map_amcl subscribers: ['amcl'] (no costmap)
+PASS  /global_costmap/costmap: frame 'map', 202 x 162 cells, resolution 0.050 m, origin (-2.0710, -4.0800); /map: 202 x 162, 0.050 m, (-2.0710, -4.0800)
+INFO  costmap layers: local ['voxel_layer', 'inflation_layer'], global ['static_layer', 'obstacle_layer', 'inflation_layer']
+PASS  /local_costmap/local_costmap footprint parameter equals CALC-M7-01 (10 vertices)
+INFO  /local_costmap/local_costmap footprint_padding = 0.009999999776482582 m (installed default, kept)
+PASS  /local_costmap/published_footprint (frame 'odom') in base_link equals CALC-M7-01 padded by 0.009999999776482582 m: largest vertex difference 0.0000 m
+PASS  /global_costmap/global_costmap footprint parameter equals CALC-M7-01 (10 vertices)
+INFO  /global_costmap/global_costmap footprint_padding = 0.009999999776482582 m (installed default, kept)
+PASS  /global_costmap/published_footprint (frame 'map') in base_link equals CALC-M7-01 padded by 0.009999999776482582 m: largest vertex difference 0.0000 m
+PASS  /cmd_vel publishers: [('velocity_smoother', 'geometry_msgs/msg/TwistStamped')]
+PASS  /cmd_vel subscribers (besides this checker): ['cmd_vel_guard']
+PASS  /cmd_vel_nav publishers: [('behavior_server', 'geometry_msgs/msg/TwistStamped'), ('controller_server', 'geometry_msgs/msg/TwistStamped')]
+PASS  /cmd_vel_nav subscribers: ['velocity_smoother']
+PASS  /diff_drive_controller/cmd_vel publishers: [('cmd_vel_guard', 'geometry_msgs/msg/TwistStamped')]
+PASS  NavigateToPose action server /navigate_to_pose available
+PASS  goal (1.0, 0.0, 0 deg): accepted True, result SUCCEEDED
+PASS  /cmd_vel messages during the goal: 133, non-zero: 113
+PASS  every /cmd_vel stamp is simulation time within the guard window: |clock - stamp| 0.000..0.003 s (<= 0.5 s)
+PASS  guard forwarded every /cmd_vel message: 133 of 133 matched by velocity and the guard stamp rule (0 with the stamp clamped; 133 guard outputs)
+PASS  commands within DEC-025: v 0.000..0.300 m/s (limits -0.25..0.5), |w| max 0.035 rad/s (limit 1.0)
+INFO  final pose in map (AMCL estimate): (+0.903, +0.004) m, yaw -1.99 deg
+INFO  goal: 5.23 s simulation time in 5.67 s wall, RTF 0.92
+# TS-030 check: spin thread ended cleanly
+# result: PASS
+# checker exit 0
+# webm_trim: docs/gallery/_pending/M7/TEST-M7-02/TEST-M7-02-M710_a1_gazebo.webm: first 1.1 s cut, 261 frames kept
+# webm_trim: docs/gallery/_pending/M7/TEST-M7-02/TEST-M7-02-M710_a1_rviz.webm: first 1.1 s cut, 261 frames kept
+# sim_record: wrote docs/gallery/_pending/M7/TEST-M7-02/TEST-M7-02-M710_a1_gazebo.mp4
+# sim_record: wrote docs/gallery/_pending/M7/TEST-M7-02/TEST-M7-02-M710_a1_rviz.mp4
+# sim_capture: wrote docs/gallery/_pending/M7/TEST-M7-02/TEST-M7-02-M710_a1_gazebo.png
+# sim_capture: wrote docs/gallery/_pending/M7/TEST-M7-02/TEST-M7-02-M710_a1_rviz.png
+# navigation launch log: 0 [ERROR] lines
+#         1 [controller_server-2] [WARN]  [controller_server]: No goal checker was specified in parameter 'current_goal_checker'. Server will use only plugin loaded general_goal_checker . This warning will appear once.
+#         1 [controller_server-2] [WARN]  [controller_server]: No progress checker was specified in parameter 'current_progress_checker'. Server will use only plugin loaded progress_checker . This warning will appear once.
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+#         1 [amcl-3] [WARN]  [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+
+## attempt 2 (ROS_DOMAIN_ID=172)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+
+$ python3 docs/evidence/M7/TEST-M7-02_interface_check.py
+# TEST-M7-02 check, wall 2026-11-23 02:54:36 IST
+PASS  /planner_server lifecycle state: active
+PASS  /controller_server lifecycle state: active
+PASS  /behavior_server lifecycle state: active
+PASS  /bt_navigator lifecycle state: active
+PASS  /velocity_smoother lifecycle state: active
+PASS  /map_server lifecycle state: active
+PASS  /map_server_amcl lifecycle state: active
+PASS  /amcl lifecycle state: active
+PASS  /planner_server use_sim_time = True
+PASS  /controller_server use_sim_time = True
+PASS  /behavior_server use_sim_time = True
+PASS  /bt_navigator use_sim_time = True
+PASS  /velocity_smoother use_sim_time = True
+PASS  /local_costmap/local_costmap use_sim_time = True
+PASS  /global_costmap/global_costmap use_sim_time = True
+PASS  /controller_server enable_stamped_cmd_vel = True (expected True)
+PASS  /controller_server odom_topic = '/diff_drive_controller/odom' (expected '/diff_drive_controller/odom')
+PASS  /controller_server FollowPath.plugin = 'nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController' (expected 'nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController')
+PASS  /controller_server FollowPath.desired_linear_vel = 0.3 (expected 0.3)
+PASS  /controller_server FollowPath.allow_reversing = False (expected False)
+PASS  /controller_server FollowPath.rotate_to_heading_angular_vel = 1.0 (expected 1.0)
+PASS  /controller_server FollowPath.max_angular_accel = 2.0 (expected 2.0)
+PASS  /controller_server general_goal_checker.xy_goal_tolerance = 0.1 (expected 0.1)
+PASS  /controller_server general_goal_checker.yaw_goal_tolerance = 0.1 (expected 0.1)
+PASS  /planner_server GridBased.plugin = 'nav2_navfn_planner::NavfnPlanner' (expected 'nav2_navfn_planner::NavfnPlanner')
+PASS  /planner_server GridBased.tolerance = 0.0 (expected 0.0)
+PASS  /planner_server GridBased.allow_unknown = False (expected False)
+PASS  /behavior_server enable_stamped_cmd_vel = True (expected True)
+PASS  /behavior_server behavior_plugins = ['wait'] (expected ['wait'])
+PASS  /velocity_smoother enable_stamped_cmd_vel = True (expected True)
+PASS  /velocity_smoother stamp_smoothed_velocity_with_smoothing_time = True (expected True)
+PASS  /velocity_smoother odom_topic = '/diff_drive_controller/odom' (expected '/diff_drive_controller/odom')
+PASS  /velocity_smoother max_velocity = [0.5, 0.0, 1.0] (expected [0.5, 0.0, 1.0])
+PASS  /velocity_smoother min_velocity = [-0.25, 0.0, -1.0] (expected [-0.25, 0.0, -1.0])
+PASS  /velocity_smoother max_accel = [0.5, 0.0, 2.0] (expected [0.5, 0.0, 2.0])
+PASS  /velocity_smoother max_decel = [-1.0, 0.0, -2.0] (expected [-1.0, 0.0, -2.0])
+PASS  /bt_navigator odom_topic = '/diff_drive_controller/odom' (expected '/diff_drive_controller/odom')
+PASS  /bt_navigator default_nav_to_pose_bt_xml = <share>/'amr_bringup/behavior_trees/navigate_to_pose.xml' (file exists: True)
+PASS  /bt_navigator default_nav_through_poses_bt_xml = <share>/'amr_bringup/behavior_trees/navigate_through_poses.xml' (file exists: True)
+PASS  /map subscribers: ['global_costmap', 'rviz', 'test_m7_02'] (global_costmap expected)
+PASS  /map_amcl subscribers: ['amcl'] (no costmap)
+PASS  /global_costmap/costmap: frame 'map', 202 x 162 cells, resolution 0.050 m, origin (-2.0710, -4.0800); /map: 202 x 162, 0.050 m, (-2.0710, -4.0800)
+INFO  costmap layers: local ['voxel_layer', 'inflation_layer'], global ['static_layer', 'obstacle_layer', 'inflation_layer']
+PASS  /local_costmap/local_costmap footprint parameter equals CALC-M7-01 (10 vertices)
+INFO  /local_costmap/local_costmap footprint_padding = 0.009999999776482582 m (installed default, kept)
+PASS  /local_costmap/published_footprint (frame 'odom') in base_link equals CALC-M7-01 padded by 0.009999999776482582 m: largest vertex difference 0.0000 m
+PASS  /global_costmap/global_costmap footprint parameter equals CALC-M7-01 (10 vertices)
+INFO  /global_costmap/global_costmap footprint_padding = 0.009999999776482582 m (installed default, kept)
+PASS  /global_costmap/published_footprint (frame 'map') in base_link equals CALC-M7-01 padded by 0.009999999776482582 m: largest vertex difference 0.0000 m
+PASS  /cmd_vel publishers: [('velocity_smoother', 'geometry_msgs/msg/TwistStamped')]
+PASS  /cmd_vel subscribers (besides this checker): ['cmd_vel_guard']
+PASS  /cmd_vel_nav publishers: [('behavior_server', 'geometry_msgs/msg/TwistStamped'), ('controller_server', 'geometry_msgs/msg/TwistStamped')]
+PASS  /cmd_vel_nav subscribers: ['velocity_smoother']
+PASS  /diff_drive_controller/cmd_vel publishers: [('cmd_vel_guard', 'geometry_msgs/msg/TwistStamped')]
+PASS  NavigateToPose action server /navigate_to_pose available
+PASS  goal (1.0, 0.0, 0 deg): accepted True, result SUCCEEDED
+PASS  /cmd_vel messages during the goal: 129, non-zero: 109
+PASS  every /cmd_vel stamp is simulation time within the guard window: |clock - stamp| 0.000..0.004 s (<= 0.5 s)
+PASS  guard forwarded every /cmd_vel message: 129 of 129 matched by velocity and the guard stamp rule (0 with the stamp clamped; 129 guard outputs)
+PASS  commands within DEC-025: v 0.000..0.300 m/s (limits -0.25..0.5), |w| max 0.036 rad/s (limit 1.0)
+INFO  final pose in map (AMCL estimate): (+0.905, +0.004) m, yaw -2.17 deg
+INFO  goal: 5.21 s simulation time in 5.46 s wall, RTF 0.95
+# TS-030 check: spin thread ended cleanly
+# result: PASS
+# checker exit 0
+# navigation launch log: 0 [ERROR] lines
+#         1 [controller_server-2] [WARN]  [controller_server]: No goal checker was specified in parameter 'current_goal_checker'. Server will use only plugin loaded general_goal_checker . This warning will appear once.
+#         1 [controller_server-2] [WARN]  [controller_server]: No progress checker was specified in parameter 'current_progress_checker'. Server will use only plugin loaded progress_checker . This warning will appear once.
+#         1 [planner_server-1] [WARN]  [planner_server.rclcpp]: failed to send response to /planner_server/get_state (timeout): client will not receive response, at ./src/rmw_response.cpp:153, at ./src/rcl/service.c:400
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+#         1 [amcl-3] [WARN]  [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+
+## attempt 3 (ROS_DOMAIN_ID=173)
+both controllers active
+# exit 0
+
+$ ros2 launch amr_bringup localization.launch.py
+amcl: active [3]
+
+$ ros2 launch amr_bringup navigation.launch.py
+
+$ python3 docs/evidence/M7/TEST-M7-02_interface_check.py
+# TEST-M7-02 check, wall 2026-11-23 02:55:09 IST
+PASS  /planner_server lifecycle state: active
+PASS  /controller_server lifecycle state: active
+PASS  /behavior_server lifecycle state: active
+PASS  /bt_navigator lifecycle state: active
+PASS  /velocity_smoother lifecycle state: active
+PASS  /map_server lifecycle state: active
+PASS  /map_server_amcl lifecycle state: active
+PASS  /amcl lifecycle state: active
+PASS  /planner_server use_sim_time = True
+PASS  /controller_server use_sim_time = True
+PASS  /behavior_server use_sim_time = True
+PASS  /bt_navigator use_sim_time = True
+PASS  /velocity_smoother use_sim_time = True
+PASS  /local_costmap/local_costmap use_sim_time = True
+PASS  /global_costmap/global_costmap use_sim_time = True
+PASS  /controller_server enable_stamped_cmd_vel = True (expected True)
+PASS  /controller_server odom_topic = '/diff_drive_controller/odom' (expected '/diff_drive_controller/odom')
+PASS  /controller_server FollowPath.plugin = 'nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController' (expected 'nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController')
+PASS  /controller_server FollowPath.desired_linear_vel = 0.3 (expected 0.3)
+PASS  /controller_server FollowPath.allow_reversing = False (expected False)
+PASS  /controller_server FollowPath.rotate_to_heading_angular_vel = 1.0 (expected 1.0)
+PASS  /controller_server FollowPath.max_angular_accel = 2.0 (expected 2.0)
+PASS  /controller_server general_goal_checker.xy_goal_tolerance = 0.1 (expected 0.1)
+PASS  /controller_server general_goal_checker.yaw_goal_tolerance = 0.1 (expected 0.1)
+PASS  /planner_server GridBased.plugin = 'nav2_navfn_planner::NavfnPlanner' (expected 'nav2_navfn_planner::NavfnPlanner')
+PASS  /planner_server GridBased.tolerance = 0.0 (expected 0.0)
+PASS  /planner_server GridBased.allow_unknown = False (expected False)
+PASS  /behavior_server enable_stamped_cmd_vel = True (expected True)
+PASS  /behavior_server behavior_plugins = ['wait'] (expected ['wait'])
+PASS  /velocity_smoother enable_stamped_cmd_vel = True (expected True)
+PASS  /velocity_smoother stamp_smoothed_velocity_with_smoothing_time = True (expected True)
+PASS  /velocity_smoother odom_topic = '/diff_drive_controller/odom' (expected '/diff_drive_controller/odom')
+PASS  /velocity_smoother max_velocity = [0.5, 0.0, 1.0] (expected [0.5, 0.0, 1.0])
+PASS  /velocity_smoother min_velocity = [-0.25, 0.0, -1.0] (expected [-0.25, 0.0, -1.0])
+PASS  /velocity_smoother max_accel = [0.5, 0.0, 2.0] (expected [0.5, 0.0, 2.0])
+PASS  /velocity_smoother max_decel = [-1.0, 0.0, -2.0] (expected [-1.0, 0.0, -2.0])
+PASS  /bt_navigator odom_topic = '/diff_drive_controller/odom' (expected '/diff_drive_controller/odom')
+PASS  /bt_navigator default_nav_to_pose_bt_xml = <share>/'amr_bringup/behavior_trees/navigate_to_pose.xml' (file exists: True)
+PASS  /bt_navigator default_nav_through_poses_bt_xml = <share>/'amr_bringup/behavior_trees/navigate_through_poses.xml' (file exists: True)
+PASS  /map subscribers: ['global_costmap', 'rviz', 'test_m7_02'] (global_costmap expected)
+PASS  /map_amcl subscribers: ['amcl'] (no costmap)
+PASS  /global_costmap/costmap: frame 'map', 202 x 162 cells, resolution 0.050 m, origin (-2.0710, -4.0800); /map: 202 x 162, 0.050 m, (-2.0710, -4.0800)
+INFO  costmap layers: local ['voxel_layer', 'inflation_layer'], global ['static_layer', 'obstacle_layer', 'inflation_layer']
+PASS  /local_costmap/local_costmap footprint parameter equals CALC-M7-01 (10 vertices)
+INFO  /local_costmap/local_costmap footprint_padding = 0.009999999776482582 m (installed default, kept)
+PASS  /local_costmap/published_footprint (frame 'odom') in base_link equals CALC-M7-01 padded by 0.009999999776482582 m: largest vertex difference 0.0000 m
+PASS  /global_costmap/global_costmap footprint parameter equals CALC-M7-01 (10 vertices)
+INFO  /global_costmap/global_costmap footprint_padding = 0.009999999776482582 m (installed default, kept)
+PASS  /global_costmap/published_footprint (frame 'map') in base_link equals CALC-M7-01 padded by 0.009999999776482582 m: largest vertex difference 0.0000 m
+PASS  /cmd_vel publishers: [('velocity_smoother', 'geometry_msgs/msg/TwistStamped')]
+PASS  /cmd_vel subscribers (besides this checker): ['cmd_vel_guard']
+PASS  /cmd_vel_nav publishers: [('behavior_server', 'geometry_msgs/msg/TwistStamped'), ('controller_server', 'geometry_msgs/msg/TwistStamped')]
+PASS  /cmd_vel_nav subscribers: ['velocity_smoother']
+PASS  /diff_drive_controller/cmd_vel publishers: [('cmd_vel_guard', 'geometry_msgs/msg/TwistStamped')]
+PASS  NavigateToPose action server /navigate_to_pose available
+PASS  goal (1.0, 0.0, 0 deg): accepted True, result SUCCEEDED
+PASS  /cmd_vel messages during the goal: 131, non-zero: 110
+PASS  every /cmd_vel stamp is simulation time within the guard window: |clock - stamp| 0.000..0.003 s (<= 0.5 s)
+PASS  guard forwarded every /cmd_vel message: 131 of 131 matched by velocity and the guard stamp rule (0 with the stamp clamped; 131 guard outputs)
+PASS  commands within DEC-025: v 0.000..0.300 m/s (limits -0.25..0.5), |w| max 0.035 rad/s (limit 1.0)
+INFO  final pose in map (AMCL estimate): (+0.904, +0.004) m, yaw -2.04 deg
+INFO  goal: 5.25 s simulation time in 5.55 s wall, RTF 0.95
+# TS-030 check: spin thread ended cleanly
+# result: PASS
+# checker exit 0
+# navigation launch log: 0 [ERROR] lines
+#         1 [controller_server-2] [WARN]  [controller_server]: No goal checker was specified in parameter 'current_goal_checker'. Server will use only plugin loaded general_goal_checker . This warning will appear once.
+#         1 [controller_server-2] [WARN]  [controller_server]: No progress checker was specified in parameter 'current_progress_checker'. Server will use only plugin loaded progress_checker . This warning will appear once.
+# shutdown: CLEAN (0 [ERROR] lines; 6 processes finished cleanly)
+# navigation launch leftover processes: 0
+# exit 0
+# localization launch log: 0 [ERROR] lines
+# shutdown: CLEAN (0 [ERROR] lines; 4 processes finished cleanly)
+# localization launch leftover processes: 0
+# exit 0
+# simulation launch log: 0 [ERROR] lines
+#         1 [gz-5] [WARN]  [controller_manager]: Component 'AmrGazeboSystem' does not have read or write statistics initialized, skipping registration.
+#         1 [gz-5] [WARN]  [controller_manager.hardware_component.system.AmrGazeboSystem]: Executor is not available during hardware component initialization for 'AmrGazeboSystem'. Skipping node creation!
+#         1 [gz-5] [WARN]  [controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+#         2 [gz-5] [WARN]  [diff_drive_controller]: Velocity command timed out. Braking.
+#         1 [gz-5] [WARN]  [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+#         1 [gz-5] [WARN]  [gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+#         1 [gz-5] [WARN]  [gz_ros_control]: Waiting RM to load and initialize hardware...
+# shutdown: CLEAN (0 [ERROR] lines; 8 processes finished cleanly)
+# simulation launch leftover processes: 0
+# exit 0
+# leftover processes by name (gz sim, map servers, AMCL, Nav2 servers, lifecycle managers, bridge, robot_state_publisher, RViz): 0
+# exit 0
+# TS-029 attempts declared invalid under DEC-039: 0
+
+# overall: ALL 3 VALID RUNS PASSED

@@ -1,0 +1,23 @@
+{
+ "map": "TEST-M5-06-M708_a2_map.yaml",
+ "measures": {
+  "wall_accuracy": true,
+  "ghosts": true,
+  "completeness": true,
+  "dimensions": true,
+  "l1_absent": true
+ },
+ "wall_p95_m": 0.036000000000001364,
+ "ghost_share": 0.0,
+ "completeness": 0.9967032967032967,
+ "length_m": 10.004229629633498,
+ "width_m": 7.988289149489782,
+ "wall_rotation_deg": {
+  "west": 0.07421951288933483,
+  "east": 0.07309787693631359,
+  "south": 0.10166955358708242,
+  "north": 0.02931842889245097
+ },
+ "low_box_l1_occupied_cells": 0,
+ "pass": true
+}
