@@ -1,0 +1,196 @@
+# Nav2 parameters for M7 navigation (DEC-066, Task A).
+# These are the bt_navigator, controller_server, local_costmap, global_costmap, planner_server, behavior_server and
+# velocity_smoother sections of the installed Nav2 1.3.14 file
+# /opt/ros/jazzy/share/nav2_bringup/params/nav2_params.yaml, copied unchanged except for the lines marked "M7":
+#   - FollowPath: Regulated Pure Pursuit instead of MPPI (DEC-067); the MPPI block is replaced as a whole;
+#   - footprint (DEC-069, CALC-M7-01): the convex hull of chassis, wheels and caster replaces robot_radius 0.22;
+#   - goal checker tolerances 0.10 m / 0.10 rad (DEC-073);
+#   - odometry topic /diff_drive_controller/odom; stamped commands; velocity smoother limits = DEC-025 (DEC-070);
+#   - behavior_server: the wait behavior only (DEC-071; the behavior trees have no spin or back-up).
+#   - NavFn tolerance 0.0 and allow_unknown false (DEC-077): a goal on an occupied or unknown cell fails planning at
+#     once, without motion (TEST-M7-05; TS-053).
+# Kept as installed: robot_base_frame base_link (directly above base_footprint, DEC-016, so the footprint x and y are
+# the same in both), NavFn (DEC-068) apart from tolerance and allow_unknown, the inflation layer (0.70 m >= the 0.386 m circumscribed radius, CALC-M7-02),
+# the obstacle and voxel layers (avoidance is M8).
+# The behavior-tree files are set by launch/navigation.launch.py (they need the installed share path).
+# Started by launch/navigation.launch.py (DEC-066), which forces use_sim_time true.
+bt_navigator:
+  ros__parameters:
+    global_frame: map
+    robot_base_frame: base_link
+    odom_topic: /diff_drive_controller/odom  # M7 (DEC-070): the controller's odometry; installed /odom
+    bt_loop_duration: 10
+    default_server_timeout: 20
+    wait_for_service_timeout: 1000
+    action_server_result_timeout: 900.0
+    navigators: ["navigate_to_pose", "navigate_through_poses"]
+    navigate_to_pose:
+      plugin: "nav2_bt_navigator::NavigateToPoseNavigator"
+    navigate_through_poses:
+      plugin: "nav2_bt_navigator::NavigateThroughPosesNavigator"
+    error_code_names:
+      - compute_path_error_code
+      - follow_path_error_code
+
+controller_server:
+  ros__parameters:
+    controller_frequency: 20.0
+    costmap_update_timeout: 0.30
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.5
+    min_theta_velocity_threshold: 0.001
+    failure_tolerance: 0.3
+    odom_topic: /diff_drive_controller/odom  # M7 (DEC-070): velocity feedback; plugin default "odom" has no publisher here
+    enable_stamped_cmd_vel: true  # M7 (DEC-070, DEC-029): TwistStamped with simulation-time stamps
+    progress_checker_plugins: ["progress_checker"]
+    goal_checker_plugins: ["general_goal_checker"]
+    controller_plugins: ["FollowPath"]
+    use_realtime_priority: false
+
+    # Progress checker parameters
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.5
+      movement_time_allowance: 10.0
+    general_goal_checker:
+      stateful: True
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.10  # M7 (DEC-073): m; installed 0.25
+      yaw_goal_tolerance: 0.10  # M7 (DEC-073): rad (5.7 deg); installed 0.25
+    # M7 (DEC-067): Regulated Pure Pursuit replaces the installed MPPI block. Values not listed are the plugin's
+    # defaults (recorded from `ros2 param dump /controller_server` in the Task A gate).
+    FollowPath:
+      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"  # M7 (DEC-067)
+      desired_linear_vel: 0.30  # M7 (DEC-070, CALC-M7-03): m/s, 60 % of the DEC-025 forward limit
+      rotate_to_heading_angular_vel: 1.0  # M7 (DEC-070): rad/s, the DEC-025 limit; plugin default 1.8
+      max_angular_accel: 2.0  # M7 (DEC-070): rad/s^2, the DEC-025 limit; plugin default 3.2
+      use_rotate_to_heading: true  # M7 (DEC-067): turn in place towards the path and the goal heading
+      allow_reversing: false  # M7 (DEC-070): no reversing
+      use_collision_detection: true  # M7 (DEC-067): footprint checked against the local costmap
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      global_frame: odom
+      robot_base_frame: base_link
+      rolling_window: true
+      width: 3
+      height: 3
+      resolution: 0.05
+      # M7 (DEC-069, CALC-M7-01): replaces robot_radius 0.22; convex hull of chassis, wheels and caster (m)
+      footprint: "[[0.125, 0.175], [0.075, 0.2175], [-0.075, 0.2175], [-0.325, 0.175], [-0.385, 0.025], [-0.385, -0.025], [-0.325, -0.175], [-0.075, -0.2175], [0.075, -0.2175], [0.125, -0.175]]"
+      plugins: ["voxel_layer", "inflation_layer"]
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.0
+        inflation_radius: 0.70
+      voxel_layer:
+        plugin: "nav2_costmap_2d::VoxelLayer"
+        enabled: True
+        publish_voxel_map: True
+        origin_z: 0.0
+        z_resolution: 0.05
+        z_voxels: 16
+        max_obstacle_height: 2.0
+        mark_threshold: 0
+        observation_sources: scan
+        scan:
+          topic: /scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+          raytrace_max_range: 3.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 2.5
+          obstacle_min_range: 0.0
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: True
+      always_send_full_costmap: True
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      update_frequency: 1.0
+      publish_frequency: 1.0
+      global_frame: map
+      robot_base_frame: base_link
+      # M7 (DEC-069, CALC-M7-01): replaces robot_radius 0.22; same polygon as the local costmap
+      footprint: "[[0.125, 0.175], [0.075, 0.2175], [-0.075, 0.2175], [-0.325, 0.175], [-0.385, 0.025], [-0.385, -0.025], [-0.325, -0.175], [-0.075, -0.2175], [0.075, -0.2175], [0.125, -0.175]]"
+      resolution: 0.05
+      track_unknown_space: true
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: True
+        observation_sources: scan
+        scan:
+          topic: /scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+          raytrace_max_range: 3.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 2.5
+          obstacle_min_range: 0.0
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: True
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.0
+        inflation_radius: 0.7
+      always_send_full_costmap: True
+
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 20.0
+    planner_plugins: ["GridBased"]
+    costmap_update_timeout: 1.0
+    GridBased:
+      plugin: "nav2_navfn_planner::NavfnPlanner"
+      tolerance: 0.0  # M7 (DEC-077): installed 0.5 planned to the nearest free cell beside a goal in an obstacle
+      use_astar: false
+      allow_unknown: false  # M7 (DEC-077): installed true planned into the unknown interior of pillar P1 (TS-053)
+
+behavior_server:
+  ros__parameters:
+    local_costmap_topic: local_costmap/costmap_raw
+    global_costmap_topic: global_costmap/costmap_raw
+    local_footprint_topic: local_costmap/published_footprint
+    global_footprint_topic: global_costmap/published_footprint
+    cycle_frequency: 10.0
+    enable_stamped_cmd_vel: true  # M7 (DEC-070)
+    behavior_plugins: ["wait"]  # M7 (DEC-071): installed ["spin", "backup", "drive_on_heading", "assisted_teleop", "wait"]
+    wait:
+      plugin: "nav2_behaviors::Wait"
+    local_frame: odom
+    global_frame: map
+    robot_base_frame: base_link
+    transform_tolerance: 0.1
+    simulate_ahead_time: 2.0
+    max_rotational_vel: 1.0
+    min_rotational_vel: 0.4
+    rotational_acc_lim: 3.2
+
+velocity_smoother:
+  ros__parameters:
+    smoothing_frequency: 20.0
+    # M7 (DEC-070, TS-050): stamp each output with the smoother's own (simulation) time. Installed False copies the
+    # controller's stamp, which ages while the smoother repeats the last command; cmd_vel_guard then rejects it (DEC-029).
+    stamp_smoothed_velocity_with_smoothing_time: True
+    scale_velocities: False
+    feedback: "OPEN_LOOP"
+    enable_stamped_cmd_vel: true  # M7 (DEC-070)
+    max_velocity: [0.5, 0.0, 1.0]  # M7 (DEC-070, DEC-025): m/s, -, rad/s; installed [0.5, 0.0, 2.0]
+    min_velocity: [-0.25, 0.0, -1.0]  # M7 (DEC-070, DEC-025); installed [-0.5, 0.0, -2.0]
+    max_accel: [0.5, 0.0, 2.0]  # M7 (DEC-070, DEC-025): m/s^2, -, rad/s^2; installed [2.5, 0.0, 3.2]
+    max_decel: [-1.0, 0.0, -2.0]  # M7 (DEC-070, DEC-025): braking 1.0 m/s^2; installed [-2.5, 0.0, -3.2]
+    odom_topic: "/diff_drive_controller/odom"  # M7 (DEC-070); installed "odom" (used only with feedback CLOSED_LOOP)
+    odom_duration: 0.1
+    deadband_velocity: [0.0, 0.0, 0.0]
+    velocity_timeout: 1.0

@@ -19,8 +19,9 @@ install(TARGETS cmd_vel_guard DESTINATION lib/${PROJECT_NAME})
 # M3 test world (DEC-034); M5: slam.launch.py, slam_toolbox.yaml, mapping.rviz and the mapping arena (DEC-046, DEC-048, DEC-050).
 # M6: localization.launch.py, amcl.yaml, localization.rviz (DEC-056, DEC-060) and the maps folder with the M5 reference
 # map and its AMCL-convention copy (DEC-054: installed from M6, when first used by a launch file; DEC-062).
+# M7: navigation.launch.py, nav2.yaml, navigation.rviz (DEC-066) and the behavior trees (DEC-071).
 install(
-  DIRECTORY config launch maps rviz worlds
+  DIRECTORY behavior_trees config launch maps rviz worlds
   DESTINATION share/${PROJECT_NAME}
   PATTERN ".gitkeep" EXCLUDE
 )

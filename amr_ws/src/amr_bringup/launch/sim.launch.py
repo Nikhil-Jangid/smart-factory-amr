@@ -20,6 +20,10 @@ world name `empty`, and the model expanded with use_sensors:=false (byte-identic
                  (default: the stock empty.sdf). The spawn uses the <world name> read from the file.
 M4 option: controllers_file:=<path> loads another ros2_control parameter file. It exists for the
 TEST-M4-09 test-only calibration overrides (DEC-043); the default is the package's config/controllers.yaml.
+M7 option (DEC-075; screen recordings only): gui_config:=<file> starts the Gazebo GUI with that layout
+(`gz sim --gui-config`). A bare name is resolved in this package's config/ directory, e.g.
+gui_config:=gazebo_gui_capture.config (no side panels, 960 x 1000 px). Default empty: the command is unchanged
+(`gz sim -r [-s] <world>`) and Gazebo loads the user's own GUI layout. Ignored with headless:=true.
 M3 sensor tests: ros2 launch amr_bringup sim.launch.py headless:=true sensors:=true world:=sensor_test.sdf
 Keyboard control (TEST-M2-09), in a second terminal:
   ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args \
@@ -66,6 +70,10 @@ def gazebo_process(context):
         cmd.append('-s')
         if is_true(context, 'sensors'):
             cmd.append('--headless-rendering')
+    gui_config = LaunchConfiguration('gui_config').perform(context)
+    if gui_config and not is_true(context, 'headless'):  # DEC-075: recordings only; default leaves cmd unchanged
+        packaged = os.path.join(get_package_share_directory('amr_bringup'), 'config', gui_config)
+        cmd += ['--gui-config', packaged if os.path.isfile(packaged) else gui_config]
     cmd.append(world)
     return [SetLaunchConfiguration('world_name', world_name),
             ExecuteProcess(cmd=cmd, output='screen', on_exit=Shutdown())]
@@ -92,6 +100,10 @@ def generate_launch_description():
                                       [FindPackageShare('amr_bringup'), 'config', 'controllers.yaml']),
                                   description='ros2_control parameter file (default: this package\'s '
                                               'config/controllers.yaml). M4 test-only overrides (TEST-M4-09) only')]
+    args += [DeclareLaunchArgument('gui_config', default_value='',
+                                   description='Gazebo GUI layout file for screen recordings (DEC-075): a file in '
+                                               'amr_bringup/config (e.g. gazebo_gui_capture.config) or a path; '
+                                               'default empty = the user\'s own layout, command unchanged')]
     args += [
         DeclareLaunchArgument(name, default_value='0.0',
                               description=f'Spawn pose of base_footprint in the world: {name} (m or rad)')
