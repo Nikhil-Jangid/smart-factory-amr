@@ -14,12 +14,12 @@ every decision has a recorded rationale, and every result is backed by a log in 
 
 <table>
   <tr>
-    <td><a href="docs/gallery/M6/TEST-M6-05/TEST-M6-05-forward_a1_gazebo.mp4"><img src="docs/gallery/M6/TEST-M6-05/TEST-M6-05-forward_a1_gazebo.png" alt="Gazebo: the AMR driving the test route in the arena"></a></td>
-    <td><a href="docs/gallery/M6/TEST-M6-05/TEST-M6-05-forward_a1_rviz.mp4"><img src="docs/gallery/M6/TEST-M6-05/TEST-M6-05-forward_a1_rviz.png" alt="RViz: AMCL localizing the robot on the saved map while the odometry drifts"></a></td>
+    <td><a href="docs/gallery/M7/TEST-M7-03/TEST-M7-03_a1_gazebo.mp4"><img src="docs/gallery/M7/TEST-M7-03/TEST-M7-03_a1_gazebo.png" alt="Gazebo: the AMR in the arena after navigating to six goals"></a></td>
+    <td><a href="docs/gallery/M7/TEST-M7-03/TEST-M7-03_a1_rviz.mp4"><img src="docs/gallery/M7/TEST-M7-03/TEST-M7-03_a1_rviz.png" alt="RViz: Nav2 paths to six goals on the saved map, with both costmaps and the robot footprint"></a></td>
   </tr>
   <tr>
-    <td align="center"><sub>Gazebo: the true motion on the 28.8 m test route (TEST-M6-05). Click for the video.</sub></td>
-    <td align="center"><sub>RViz: AMCL keeps the robot on the saved map although its wheel odometry is deliberately miscalibrated.</sub></td>
+    <td align="center"><sub>Gazebo: the true motion while Nav2 drives the robot to six goals in turn (TEST-M7-03). Click for the video.</sub></td>
+    <td align="center"><sub>RViz: the paths Nav2 planned on the saved map, the costmaps, and the robot's real footprint.</sub></td>
   </tr>
 </table>
 
@@ -43,8 +43,8 @@ every decision has a recorded rationale, and every result is backed by a log in 
 | M4 | Wheel odometry, verified against Gazebo ground truth | ✅ Done |
 | M5 | SLAM (`slam_toolbox`), map verified against the world file | ✅ Done |
 | M6 | Localization (AMCL on the saved map, optional wheel + IMU fusion) | ✅ Done |
-| M7 | Autonomous navigation (Nav2) | ⏭️ Next |
-| M8 | Obstacle avoidance (incl. a low-obstacle depth camera) | ⚪ Planned |
+| M7 | Autonomous navigation (Nav2: planner, controller, costmaps, behavior trees) | ✅ Done |
+| M8 | Obstacle avoidance (incl. a low-obstacle depth camera) | ⏭️ Next |
 | M9 | Factory environment | ⚪ Planned |
 | M10 | Task automation (pickup and delivery) | ⚪ Planned |
 | M11 | Vision (AprilTag / station identification) | ⚪ Planned |
@@ -60,8 +60,8 @@ flowchart LR
   M10 --> M11[M11 Vision] --> M12[M12 Dashboard] -.-> M13[M13 Hardware]
   classDef done fill:#2e7d32,color:#fff,stroke:#1b5e20;
   classDef next fill:#f9a825,color:#000,stroke:#f57f17;
-  class M0,M1,M2,M3,TA,M4,M5,M6 done;
-  class M7 next;
+  class M0,M1,M2,M3,TA,M4,M5,M6,M7 done;
+  class M8 next;
 ```
 
 ## Highlights
@@ -95,10 +95,21 @@ flowchart LR
   ([TEST-M6-07](TEST_RESULTS.md)). From the source code I found that Nav2 AMCL reads the map origin differently from
   the rest of ROS (half a cell off), gave AMCL its own corrected map copy, and reported it as
   [ros-navigation/navigation2#6833](https://github.com/ros-navigation/navigation2/issues/6833) ([TS-045](docs/troubleshooting.md), [DEC-062](DECISIONS.md)).
+- **Autonomous navigation judged against ground truth, not Nav2's own "succeeded".** Nav2 drives the robot to six
+  goals across the arena and along a three-goal route, with my own launch file, the robot's real 10-point footprint,
+  the Regulated Pure Pursuit controller and behavior trees without blind spin or back-up recoveries. An offline checker
+  judges every run on Gazebo's pose: arrival within 0.105 m and 5.7° (bound 0.15 m / 7°), at least 0.475 m from every
+  obstacle (bound 0.10 m), every command within the speed limits ([TEST-M7-03/-04](TEST_RESULTS.md)). Goals inside an
+  obstacle or outside the map are refused without motion, and a cancelled goal stops within 53 mm
+  ([TEST-M7-05/-06](TEST_RESULTS.md)). The checker is shown to fail five distorted runs ([TEST-M7-07](TEST_RESULTS.md)).
+- **A limitation found on purpose and stated.** I set a goal on a 0.15 m box that lies below the LiDAR plane. Nav2
+  accepted it, the robot drove into the box, AMCL lost the pose, and Nav2 then reported later goals as succeeded in the
+  wrong estimate ([TEST-M7-09](TEST_RESULTS.md), [TS-058](docs/troubleshooting.md)). That is the input to M8: low-obstacle
+  sensing plus stall and localization-loss detection.
 - **A safety guard for commands.** `cmd_vel_guard` (C++) drops velocity commands whose stamp is stale in *simulation*
   time. I found that wall-clock-stamped commands would otherwise never time out ([TS-015](docs/troubleshooting.md),
   [DEC-029](DECISIONS.md)).
-- **Reproducible testing.** 77 test IDs with written procedures, pass criteria fixed *before* each run, a suite runner
+- **Reproducible testing.** 82 test IDs with written procedures, pass criteria fixed *before* each run, a suite runner
   that refuses unsafe runs, and GitHub Actions for the GPU-free checks. Failures are kept, not hidden.
 
 ## Gallery
@@ -119,6 +130,10 @@ an earlier, headless test covered. Details: [docs/gallery/README.md](docs/galler
 | **M6:** AMCL localization on the saved map | [<img src="docs/gallery/M6/TEST-M6-03/TEST-M6-03-forward_a1_gazebo.png" width="380">](docs/gallery/M6/TEST-M6-03/TEST-M6-03-forward_a1_gazebo.mp4) | [<img src="docs/gallery/M6/TEST-M6-03/TEST-M6-03-forward_a1_rviz.png" width="380">](docs/gallery/M6/TEST-M6-03/TEST-M6-03-forward_a1_rviz.mp4) |
 | **M6:** recovery from a wrong start (0.5 m, 15°) | [<img src="docs/gallery/M6/TEST-M6-10/TEST-M6-10-wrongstart_a1_gazebo.png" width="380">](docs/gallery/M6/TEST-M6-10/TEST-M6-10-wrongstart_a1_gazebo.mp4) | [<img src="docs/gallery/M6/TEST-M6-10/TEST-M6-10-wrongstart_a1_rviz.png" width="380">](docs/gallery/M6/TEST-M6-10/TEST-M6-10-wrongstart_a1_rviz.mp4) |
 | **M6:** wheel odometry + IMU fused by an EKF | [<img src="docs/gallery/M6/TEST-M6-07/TEST-M6-07-R1_a1_gazebo.png" width="380">](docs/gallery/M6/TEST-M6-07/TEST-M6-07-R1_a1_gazebo.mp4) | [<img src="docs/gallery/M6/TEST-M6-07/TEST-M6-07-R1_a1_rviz.png" width="380">](docs/gallery/M6/TEST-M6-07/TEST-M6-07-R1_a1_rviz.mp4) |
+| **M7:** Nav2 drives to six goals in turn | [<img src="docs/gallery/M7/TEST-M7-03/TEST-M7-03_a1_gazebo.png" width="380">](docs/gallery/M7/TEST-M7-03/TEST-M7-03_a1_gazebo.mp4) | [<img src="docs/gallery/M7/TEST-M7-03/TEST-M7-03_a1_rviz.png" width="380">](docs/gallery/M7/TEST-M7-03/TEST-M7-03_a1_rviz.mp4) |
+| **M7:** a three-goal route as one path | [<img src="docs/gallery/M7/TEST-M7-04/TEST-M7-04_a1_gazebo.png" width="380">](docs/gallery/M7/TEST-M7-04/TEST-M7-04_a1_gazebo.mp4) | [<img src="docs/gallery/M7/TEST-M7-04/TEST-M7-04_a1_rviz.png" width="380">](docs/gallery/M7/TEST-M7-04/TEST-M7-04_a1_rviz.mp4) |
+| **M7:** a goal cancelled after 1 m: the robot stops | [<img src="docs/gallery/M7/TEST-M7-06/TEST-M7-06_a1_gazebo.png" width="380">](docs/gallery/M7/TEST-M7-06/TEST-M7-06_a1_gazebo.mp4) | [<img src="docs/gallery/M7/TEST-M7-06/TEST-M7-06_a1_rviz.png" width="380">](docs/gallery/M7/TEST-M7-06/TEST-M7-06_a1_rviz.mp4) |
+| **M7:** goals from RViz, then my probe on the invisible low box | [<img src="docs/gallery/M7/TEST-M7-09/TEST-M7-09_a1_gazebo.png" width="380">](docs/gallery/M7/TEST-M7-09/TEST-M7-09_a1_gazebo.mp4) | [<img src="docs/gallery/M7/TEST-M7-09/TEST-M7-09_a1_rviz.png" width="380">](docs/gallery/M7/TEST-M7-09/TEST-M7-09_a1_rviz.mp4) |
 | **M4:** injected 2 % track error: the odometry over-turns | [<img src="docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_L_square_ccw_a1_gazebo.png" width="380">](docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_L_square_ccw_a1_gazebo.mp4) | [<img src="docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_L_square_ccw_a1_rviz.png" width="380">](docs/gallery/M4/TEST-M4-09/TEST-M4-09-R1_L_square_ccw_a1_rviz.mp4) |
 
 ## The robot
@@ -145,6 +160,7 @@ same Xacro properties that build the simulated robot, so every dimension shown i
 | Odometry covariance | from an assumed 1 % distance / 2 % rotation error model | DEC-042, CALC-M4-04 |
 | SLAM | `slam_toolbox` online asynchronous mode, 0.05 m map cells | DEC-048, `slam_toolbox.yaml` |
 | Localization | `nav2_amcl` on the saved map, motion noise from the odometry error model; optional `robot_localization` EKF | DEC-056, DEC-057, DEC-061, `amcl.yaml`, `ekf.yaml` |
+| Navigation | Nav2: NavFn planner, Regulated Pure Pursuit at 0.30 m/s, velocity smoother with the DEC-025 limits, 10-point footprint, goal tolerance 0.10 m / 0.10 rad | DEC-066 to DEC-073, `nav2.yaml` |
 
 Values are owned by the Xacro properties and the controller configuration; the documents name them, and checkers
 compare the two. Every parameter is labelled **Selected**, **Proposed**, **Assumed**, **Calculated**, **Measured** or
@@ -176,9 +192,15 @@ flowchart LR
   mapsrv[map_server: saved map] -- /map_amcl --> amcl[AMCL]
   lidar -- /scan --> amcl
   amcl -- TF map→odom, /amcl_pose --> rviz
+  goal[RViz goal / test harness] -- NavigateToPose --> bt[bt_navigator + behavior tree]
+  bt --> planner[planner_server: NavFn]
+  bt --> ctrl[controller_server: RPP]
+  ctrl -- cmd_vel_nav --> smoother[velocity_smoother]
+  smoother -- /cmd_vel TwistStamped --> guard
 ```
 
 SLAM (mapping) and AMCL (localization on the saved map) are alternatives: only one of them publishes `map → odom`.
+Nav2 runs on top of AMCL; its commands pass through the same guard as teleop.
 
 ```mermaid
 flowchart TD
@@ -298,6 +320,29 @@ Frames follow REP-103/REP-105 ([frames_and_tf.md](docs/design/frames_and_tf.md))
 - Plan and record: [M6_localization.md](docs/milestones/M6_localization.md)
 </details>
 
+<details>
+<summary><b>M7: Autonomous navigation</b> (✅ 2026-11-23)</summary>
+
+- **Built:** `navigation.launch.py` with the Nav2 planner, controller, behavior and BT-navigator servers and the
+  velocity smoother on simulation time; `nav2.yaml` (NavFn, Regulated Pure Pursuit, global and local costmaps with
+  the 10-point footprint from the Xacro model); behavior trees without spin and back-up recoveries; an RViz
+  navigation view; a goal set whose clearance is checked against the world file; a listen-only navigation harness and
+  an offline checker that judges every run on Gazebo ground truth; the `m7` suite.
+- **Tests:** TEST-M7-01 to -10: build and regression identity, the navigation interface, six single goals, a
+  three-goal route, invalid goals, cancel, checker sensitivity, regression of M1–M6, RViz goals (observed by me), and
+  records and CI.
+- **Failures kept:** TEST-M7-05 failed once on a GUI shutdown exit code (an upstream signature, handled by an
+  extended invalid-run rule, DEC-079); the M7 regression failed once because I reused a run tag across suites and the
+  runner refused to overwrite logs, and because two older identity tests did not yet allow the M7 recording option
+  (DEC-080).
+- **Found in dry runs, before any formal test:** a goal inside a pillar was approximated rather than refused (the map
+  shows the pillar's inside as unknown; DEC-077); a route ending at the start "succeeded" without moving (DEC-078);
+  the smoother republished stale command stamps that the guard dropped (TS-050).
+- **Limitations, stated:** low obstacles below the LiDAR plane are invisible to Nav2 (TS-058, M8); Nav2 judges success
+  on the estimate, so a lost localization is not noticed; a known start pose is still required.
+- Plan and record: [M7_navigation.md](docs/milestones/M7_navigation.md)
+</details>
+
 ## Key decisions
 
 All decisions, with the alternatives and trade-offs: [DECISIONS.md](DECISIONS.md).
@@ -323,6 +368,11 @@ All decisions, with the alternatives and trade-offs: [DECISIONS.md](DECISIONS.md
 | DEC-061 | AMCL motion noise from the odometry error model, not the defaults | The defaults gave up to 140 mm of error at rest; the derived values keep it near 10 mm |
 | DEC-062 | AMCL gets its own half-cell-shifted map copy | Fixes an upstream origin mismatch without moving the map for RViz and Nav2 |
 | DEC-065 | Wrong-start recovery bound restated from 21 measured runs | A failed bound is re-measured before it is changed |
+| DEC-067 | Regulated Pure Pursuit as the local controller | On a known static map the robot should follow the plan; few parameters, predictable, low CPU |
+| DEC-069 | The real 10-point footprint (wheels and caster included) | A circle would block the arena's 1.0 m gaps; a rectangle inflates the turning circle by 15 % |
+| DEC-071 | No spin or back-up recoveries in the behavior trees | On a known map they rarely help, and backing up blind could hit the invisible low box; failures are reported, not hidden |
+| DEC-073 | Arrival judged on ground truth (0.15 m / 7°), clearance ≥ 0.10 m from every obstacle | Nav2's "succeeded" uses its own estimate; the test must not |
+| DEC-077 | The planner refuses goals on occupied or unknown cells | An approximated goal drove the robot to a pillar instead of refusing it |
 
 ## How I test
 
@@ -338,7 +388,7 @@ All decisions, with the alternatives and trade-offs: [DECISIONS.md](DECISIONS.md
    record with a diagnosis and a re-test. GUI checks are recorded as "observed by me".
 6. **Automation.** `tools/run_suite.py` runs suites serially and refuses to start when a simulation is still running;
    CI runs the build, the unit tests, the model regression (including M1 byte identity), the odometry recomputation
-   and the map- and pose-checker sensitivity tests.
+   and the map-, pose- and navigation-checker sensitivity tests.
    Gazebo sensor tests stay local, because hosted runners have no GPU.
 
 ## Problems I solved
@@ -355,17 +405,21 @@ All decisions, with the alternatives and trade-offs: [DECISIONS.md](DECISIONS.md
 | Saved SLAM maps were 0.025 m off | SLAM Toolbox writes the first cell's centre as the map origin, ROS expects its corner | Reference map origin corrected and re-verified (TS-041, DEC-055) |
 | AMCL saw every wall 0.025 m off on a correct map | Nav2 AMCL reads the map origin as the centre of cell 0 (found in its source) | Separate half-cell-shifted map copy for AMCL; reported upstream (TS-045, DEC-062) |
 | Regression of a closed milestone failed on the next milestone's approved changes | The build-identity test compared against the working tree | Each identity test checks only its own milestone's increment (TS-049, DEC-064) |
+| A goal inside a pillar drove the robot to the pillar | The map shows the pillar's inside as unknown, and NavFn may plan into unknown space | `allow_unknown: false`, `tolerance: 0.0` (TS-053, DEC-077) |
+| A route "succeeded" at once without moving | It ended where the robot stood; the goal checker compares with the path's end | Route ends away from the start, checked by the goal set (TS-054, DEC-078) |
+| The guard dropped Nav2's commands | The velocity smoother re-stamped old commands with the controller's last stamp | Smoother stamps with its own simulation time (TS-050) |
 | Test harness fell up to 0.7 s behind simulation time | rclpy processing every 1 kHz `/clock` message | Simulation time taken from the Gazebo pose stream (TS-013) |
 
-All 48 entries, including the small ones: [docs/troubleshooting.md](docs/troubleshooting.md).
+All 57 entries, including the small ones: [docs/troubleshooting.md](docs/troubleshooting.md).
 
 ## Repository layout
 
 ```
 amr_ws/src/
   amr_description/        robot model: properties, inertia macros, URDF/Xacro, sensors, display/spawn launches
-  amr_bringup/            simulation bring-up: sim.launch.py, slam.launch.py, localization.launch.py, controllers,
-                          AMCL and EKF configuration, bridge, worlds, maps, RViz configs, cmd_vel_guard
+  amr_bringup/            simulation bring-up: sim.launch.py, slam.launch.py, localization.launch.py,
+                          navigation.launch.py, controllers, AMCL, EKF and Nav2 configuration, behavior trees,
+                          bridge, worlds, maps, RViz configs, cmd_vel_guard
   amr_gazebo_plugins/     ImuDecimator Gazebo system plugin + unit tests
 tools/                    suite runner, capture and demo scripts, geometry drawing generator
 docs/
@@ -407,6 +461,9 @@ ros2 launch amr_bringup sim.launch.py
 #   ros2 launch amr_bringup sim.launch.py sensors:=true world:=mapping_arena.sdf
 #   ros2 launch amr_bringup localization.launch.py
 #   rviz2 -d $(ros2 pkg prefix amr_bringup)/share/amr_bringup/rviz/localization.rviz --ros-args -p use_sim_time:=true
+# Autonomous navigation: the two localization commands above, then Nav2 and its view; send goals with "Nav2 Goal"
+#   ros2 launch amr_bringup navigation.launch.py
+#   rviz2 -d $(ros2 pkg prefix amr_bringup)/share/amr_bringup/rviz/navigation.rviz --ros-args -p use_sim_time:=true
 # Drive it (another terminal)
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -p stamped:=true -p frame_id:=base_footprint -p use_sim_time:=true -r cmd_vel:=/cmd_vel
 
@@ -421,7 +478,7 @@ The engineering facts (parameters, decisions, results and evidence) all live in 
 
 A note on the records: this repository is a clean copy of my development history, so the revision hashes quoted in
 the test records and logs refer to my development repository. The records-consistency checkers (TEST-M2-11,
-TEST-M3-12, TEST-M4-12, TEST-M5-10, TEST-M6-11) also check private planning files, so their scripts and logs are not included.
+TEST-M3-12, TEST-M4-12, TEST-M5-10, TEST-M6-11, TEST-M7-10) also check private planning files, so their scripts and logs are not included.
 
 ## License and contact
 

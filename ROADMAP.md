@@ -95,17 +95,18 @@ Milestone plans live in [docs/milestones/](docs/milestones/); every test result 
 - [x] TF verification (TEST-M6-02, -07, -10)
 - [x] Localization testing (TEST-M6-03 to -11)
 
-## M7 — Autonomous Navigation  ← next
-**Status:** ⚪ Not Started
+## M7 — Autonomous Navigation
+**Status:** ✅ Complete 2026-11-23 (plan [docs/milestones/M7_navigation.md](docs/milestones/M7_navigation.md); DEC-066 to DEC-080; TEST-M7-01 to -10 PASS, [TEST_RESULTS.md](TEST_RESULTS.md) § M7)
+**Carried forward (M7 plan §13):** low obstacles below the LiDAR plane are invisible to Nav2, which leads to contact, localization loss and false successes (TS-058, an M8 input); Nav2 judges success on the estimate; a known start pose is still required; dropped lifecycle replies at start-up are watched (TS-055).
 **Carried in (DEC-011, CALC-M1-05):** the Nav2 footprint must cover the wheels (width 0.435 m across the outer faces) and the caster overhang (length 0.510 m), not the chassis outline alone.
-- [ ] Nav2
-- [ ] Costmaps
-- [ ] Global planner
-- [ ] Local controller
-- [ ] Goal navigation
-- [ ] Navigation testing
+- [x] Nav2 (`navigation.launch.py`, `nav2.yaml`, behavior trees; TEST-M7-02)
+- [x] Costmaps (global on `/map`, local rolling window; CALC-M7-01 footprint; TEST-M7-02)
+- [x] Global planner (NavFn, DEC-068, DEC-077; TEST-M7-03, -05)
+- [x] Local controller (RPP and velocity smoother, DEC-067, DEC-070; TEST-M7-03 to -06)
+- [x] Goal navigation (single goals, route, cancel, RViz goals; TEST-M7-03, -04, -06, -09)
+- [x] Navigation testing (TEST-M7-07 to -10)
 
-## M8 — Obstacle Avoidance
+## M8 — Obstacle Avoidance  ← next
 **Status:** ⚪ Not Started
 **Carried in (DEC-037, 2026-11-03):** a forward, down-tilted depth camera for low obstacles, with parameters to be decided in M8 with evidence. Planning must cover the eight DEC-037 requirements: front-only coverage behaviour, pitch sensitivity, small-part detection range, stopping distance including latency, floor-filter thresholds, an explicit depth-noise model (noise-free simulation is not hardware validation), an RTF re-check, and no change to DEC-031 without a separate decision.
 - [ ] Low-obstacle depth camera (DEC-037)

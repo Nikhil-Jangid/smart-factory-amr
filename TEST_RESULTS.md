@@ -142,6 +142,20 @@ Planned tests, procedures, and state definitions (`PLANNED`, `NOT RUN`, `PASS`, 
 | TEST-M6-09 R1 | M6 | PASS (TEST-M5-01 R1 under DEC-064; records 5/5 after indexing, with TEST-M4-12 and TEST-M5-10 R1) | [TEST-M5-01 R1](docs/evidence/M5/TEST-M5-01-M609M5R1_review.log), records (not published) |
 | TEST-M6-10 | M6 | PASS (observed by me: wrong-start particles converged early, scan on the walls, no jumps; global-localization demonstration shown: one cluster, rotated about 180°, not corrected (DEC-058, not judged)) | [wrong start](docs/evidence/M6/TEST-M6-10-wrongstart_review.log), [global](docs/evidence/M6/TEST-M6-10-global_review.log) |
 | TEST-M6-11 | M6 | PASS (checker zero mismatches; mutation check 20/20 faults detected; `m6` suite 12 entries, run in full (M611); CI run 44805433769 PASS) | — (checker reads my private planning files; script and log not published) |
+| TEST-M7-01 | M7 | PASS (build clean; M1, M2 and M3–M6 expansions identical; 17 simulation, localization and map files unchanged since `9777615`; existing files changed only by the seven Nav2 dependency lines, the `behavior_trees` install rule and comments; both behavior trees = installed minus Spin and BackUp) | [review log](docs/evidence/M7/TEST-M7-01_review.log), [procedure](docs/evidence/M7/TEST-M7-01_procedure.sh) |
+| TEST-M7-01 R1 | M7 | PASS (after DEC-075: 27 steps exit 0; `sim.launch.py` changed only by the 12 added `gui_config` lines, 0 removed; negative control with one stray line FAIL as expected) | [review log](docs/evidence/M7/TEST-M7-01-R1_review.log), [procedure](docs/evidence/M7/TEST-M7-01_procedure.sh) |
+| TEST-M7-02 | M7 | PASS (3 of 3 valid attempts, 165 PASS lines, 0 FAIL; one `/cmd_vel` publisher; every command forwarded by the guard; footprints = CALC-M7-01 + 0.01 m padding; all shutdowns CLEAN, 0 leftovers; TS-029 invalid 0) | [review log](docs/evidence/M7/TEST-M7-02_review.log), [procedure](docs/evidence/M7/TEST-M7-02_procedure.sh), [checker](docs/evidence/M7/TEST-M7-02_interface_check.py) |
+| TEST-M7-02 R1 | M7 | PASS (after DEC-077 and TS-052: 3 of 3 valid attempts, 171 PASS lines, 0 FAIL; NavFn `tolerance` 0.0 and `allow_unknown` false read back; every command forwarded under the guard stamp rule; all shutdowns CLEAN, 0 leftovers; TS-029 invalid 0) | [review log](docs/evidence/M7/TEST-M7-02-R1_review.log), [procedure](docs/evidence/M7/TEST-M7-02_procedure.sh), [checker](docs/evidence/M7/TEST-M7-02_interface_check.py) |
+| TEST-M7-07 | M7 | PASS (checker sensitivity: the dry-run-4 sequence log PASSES; the five distorted copies FAIL on arrival_position, arrival_heading, clearance, cmd_limits and moving_p95_position respectively) | [review log](docs/evidence/M7/TEST-M7-07_review.log), [tool](docs/evidence/M7/TEST-M7-07_distort.py), [checker](docs/evidence/M7/TEST-M7_nav_check.py) |
+| TEST-M7-03 | M7 | PASS (3 of 3: G1–G6 all SUCCEEDED; arrival ≤ 0.105 m and ≤ 5.66°; time ≤ 1.02× nominal; clearance ≥ 0.481 m; moving P95 ≤ 11.9 mm; 0 guard drops; shutdowns CLEAN) | [review log](docs/evidence/M7/TEST-M7-03_review.log), [procedure](docs/evidence/M7/TEST-M7_procedure.sh) |
+| TEST-M7-04 | M7 | PASS (3 of 3: route G1 → G3 → G5 SUCCEEDED in 63.4–63.8 s, 0.78× nominal; final arrival ≤ 0.101 m and ≤ 5.48°; clearance ≥ 0.475 m; moving P95 ≤ 8.9 mm; 0 guard drops; shutdowns CLEAN) | [review log](docs/evidence/M7/TEST-M7-04_review.log), [procedure](docs/evidence/M7/TEST-M7_procedure.sh) |
+| TEST-M7-05 | M7 | **FAIL** (measurements PASS in 3 of 3: both goals ABORTED, 0.0 mm of motion, no commands; attempt 3's simulation shutdown exited 1, TS-039, outside DEC-039; handled by DEC-079, re-run as R1) | [review log](docs/evidence/M7/TEST-M7-05_review.log), [kept launch logs](docs/evidence/M7/TEST-M7-05_a3_sim_launch.log) |
+| TEST-M7-05 R1 | M7 | PASS (after DEC-079: 3 of 3; both goals ABORTED, inside P1 after 22.5–23.6 s, outside the map after 0.1 s; 0.0 mm of motion, no commands; all shutdowns CLEAN, TS-039 invalid 0) | [review log](docs/evidence/M7/TEST-M7-05-R1_review.log) |
+| TEST-M7-06 | M7 | PASS (3 of 3: CANCELED after 1.021–1.029 m; 39.1–52.9 mm of travel after the cancel; stopped within 0.4–0.5 s, then 0.0 mm/s; shutdowns CLEAN) | [review log](docs/evidence/M7/TEST-M7-06_review.log) |
+| TEST-M7-08 | M7 | **FAIL** (headless, `8bbebeb`: static 11/11, regression 20/20, m4 9/11, m5 3/7, m6 8/12 PASS-candidate; six offline entries REFUSED because one tag was reused across suites; TEST-M5-01 and TEST-M6-01 failed on the DEC-075 `sim.launch.py` option, handled by DEC-080; TEST-M5-02 and TEST-M6-03 reverse each failed one attempt on a dropped lifecycle `change_state` reply, TS-055; re-run as R1) | [static](docs/evidence/TA/static-M708_summary.md), [regression](docs/evidence/TA/regression-M708_summary.md), [m4](docs/evidence/TA/m4-M708_summary.md), [m5](docs/evidence/TA/m5-M708_summary.md), [m6](docs/evidence/TA/m6-M708_summary.md) summaries |
+| TEST-M7-08 R1 | M7 | PASS (after DEC-080: records 6/6, ci 7/7 after the TS-056 fix, TEST-M5-01 and TEST-M6-01 every step, TEST-M5-02 and TEST-M6-03 reverse 3 of 3 valid runs, shutdowns CLEAN) | records summary (not published), [ci summary](docs/evidence/TA/ci-M708C2_summary.md); [TEST-M6-03 reverse log](docs/evidence/M6/TEST-M6-03-M708R1-reverse_review.log) |
+| TEST-M7-09 | M7 | PASS (observed by me: path, both costmaps and footprint shown; six goals reached without contact; goals inside a wall refused. L1 probe shown, not judged: the robot drove into the invisible low box, localization was lost, later successes false; TS-058, M8) | [review log](docs/evidence/M7/TEST-M7-09_review.log), [pose mismatch](docs/evidence/M7/TEST-M7-09_a1_pose_mismatch.log) |
+| TEST-M7-10 | M7 | PASS (checker all checks passed; mutation check 21/21 faults detected; `m7` suite 8 of 8 entries, GUI shown; TEST-M7-05 attempt 3 INVALID under DEC-079 and repeated; all other shutdowns CLEAN, 0 leftovers) | [summary](docs/evidence/TA/m7-M710_summary.md), checker and mutation logs not published |
 | TEST-M4-10 | M4 | PASS (regression 20/20 and static 5/5 entries reviewed; M2 with GUI, M3 headless) | [regression summary](docs/evidence/TA/regression-M410_summary.md), [static summary](docs/evidence/TA/static-M410R2_summary.md) |
 
 **Disclosure:** the M0 acceptance criteria (REQ-M0-01 to REQ-M0-05 in [docs/requirements.md](docs/requirements.md)) were written on 2026-10-19, *after* TEST-M0-00 to TEST-M0-04 had been run. The tests were judged against the expected results recorded in each entry. TEST-M0-04 re-test 1 and TEST-M0-05 were run after the criteria were written.
@@ -1564,3 +1578,157 @@ In every run the fusion check found:
 
 Defects found while the checker was built and used, all corrected before this run: DEC-041 slips from Tasks A, C and D; the missing TEST-M6-07 traceability entry; my own missing link and restated numbers in Task E (`e5011be`, fixed in `b3d975b`). Checker limitations corrected: the "observed by me" label and attempt numbers above 9.
 **Result:** TEST-M6-11 **PASS** (REQ-M6-13).
+
+## M7 — Autonomous Navigation (plan [docs/milestones/M7_navigation.md](docs/milestones/M7_navigation.md); criteria DEC-073; architecture DEC-066 to DEC-072)
+
+### Task A — integration gate (scratch), 2026-11-21 03:05–03:40 IST
+**Not a formal test** (M7 plan §7: gate before any formal run). Gazebo GUI and RViz (`navigation.rviz`) shown; three launches (`sim.launch.py sensors:=true world:=mapping_arena.sdf`, `localization.launch.py`, `navigation.launch.py`). Logs in the session scratch directory, not kept.
+- **Servers:** the five navigation servers `active` (autostart); `use_sim_time` true.
+- **Map:** `/map` read by `global_costmap` (and RViz); `/map_amcl` only by `map_server_amcl` and `amcl` (DEC-062).
+- **Footprint:** both costmaps' `footprint` parameter = CALC-M7-01; the published polygon = CALC-M7-01 moved outwards by `footprint_padding` 0.01 m (Nav2 default, kept).
+- **Command path:** `/cmd_vel` `TwistStamped`, one publisher (`velocity_smoother`), one subscriber (`cmd_vel_guard`); `cmd_vel_nav` has two publishers (controller, behaviors).
+- **Defaults found wrong for this robot, corrected in `nav2.yaml` before the formal runs** (implementing DEC-070; no engineering value changed):
+  - `controller_server` `odom_topic` defaulted to `odom`, which has no publisher here: set to `/diff_drive_controller/odom` (TS-051).
+  - With `stamp_smoothed_velocity_with_smoothing_time` False (installed), the guard rejected one smoother command (stamp age 0.521 s > 0.5 s) during the G1 drive: set to True (TS-050).
+- **Goals** (`ros2 action send_goal /navigate_to_pose`), ground truth from `gz model -m amr -p`:
+
+  | Goal | Settings | Result | Stop vs goal | Commands |
+  |---|---|---|---|---|
+  | G1 (6.5, −2.6, −90°) | before both fixes | SUCCEEDED | 0.097 m, −3.3° | v 0..0.300 m/s, \|w\| ≤ 0.894 rad/s; stamp age ≤ 0.957 s; 622 sent, 612 forwarded (1 rejected; the rest in flight at the window edges, not attributed) |
+  | G6 (0, 0, 0°) | after both fixes | SUCCEEDED | 0.092 m, −5.6° | v 0..0.300 m/s, \|w\| ≤ 1.000 rad/s; stamp age ≤ 0.002 s; 679 sent, 679 forwarded, 0 rejected |
+- **RTF** with GUI + LiDAR + AMCL + Nav2 during G1: median 1.00 (minimum single sample 0.14).
+- **Default-parameter observations** (inform, do not change, the DEC-073 bounds): the 0.10 m / 0.10 rad goal checker was met without visible oscillation on both goals; RPP plugin defaults recorded from `ros2 param dump /controller_server` (lookahead 0.3–0.9 m, `rotate_to_heading_min_angle` 0.785 rad, regulated and cost-regulated scaling on).
+
+### Task A — TEST-M7-01, 2026-11-21 03:55 IST
+**Under test:** the M7 Task A changes against the M6 closeout `9777615` (DEC-064), on revision `e0474ba` (`amr_ws/src` clean). Static test, no simulation. The procedure was dry-run on the uncommitted working tree before its formal run; the dry run found a defect in the procedure's own step 6 (its Spin/BackUp search also matched the trees' header comment), corrected before the formal run.
+**TEST-M7-01** (REQ-M7-11): `bash docs/evidence/M7/TEST-M7-01_procedure.sh`, exit 0 ([log](docs/evidence/M7/TEST-M7-01_review.log)). 27 steps, all exit 0.
+- **Build and model:** colcon exit 0, 0 warning lines; default expansion byte-identical to `TEST-M1-02_amr.urdf`; the `use_ros2_control:=true` (6452 bytes) and `use_sensors:=true` (9912 bytes) expansions byte-identical to `9777615`.
+- **Protected files unchanged since `9777615`:** `sim.launch.py`, `cmd_vel_guard.cpp`, `sensor_bridge.yaml`, `controllers.yaml`, `controllers_ekf.yaml`, `mapping_arena.sdf`, `amr.sensors.xacro`, `amr_properties.xacro`, `slam_toolbox.yaml`, `slam.launch.py`, `localization.launch.py`, `amcl.yaml`, `ekf.yaml` and the five map files.
+- **Existing files changed:** `package.xml` (exactly the seven exec_depends `nav2_planner`, `nav2_controller`, `nav2_behaviors`, `nav2_bt_navigator`, `nav2_velocity_smoother`, `nav2_navfn_planner`, `nav2_regulated_pure_pursuit_controller`) and `CMakeLists.txt` (3 changed lines: 1 comment and the install rule gaining `behavior_trees`). Every other change is a new file.
+- **Behavior trees:** each equals the installed Nav2 1.3.14 tree (`*_w_replanning_and_recovery.xml`) apart from its header comment, with exactly two installed lines removed (Spin, BackUp) (DEC-071).
+- **Result:** TEST-M7-01 **PASS**.
+
+### Task A — TEST-M7-02, 2026-11-21 03:55–04:00 IST
+**Under test:** the navigation interface (REQ-M7-01, -02, -03) on `e0474ba` (`amr_ws/src` clean). Launches: `sim.launch.py headless:=false sensors:=true world:=mapping_arena.sdf`, `localization.launch.py`, `navigation.launch.py`. Versions: Gazebo 8.15.0; navigation2 1.3.14. Gazebo GUI and RViz (`navigation.rviz`) shown (`SHOW=1`). The procedure and checker were dry-run once headless before this run (scratch, PASS).
+**TEST-M7-02:** `SHOW=1 bash docs/evidence/M7/TEST-M7-02_procedure.sh 3 docs/evidence/M7/TEST-M7-02_review.log`, exit 0 ([log](docs/evidence/M7/TEST-M7-02_review.log)). 165 PASS lines, 0 FAIL.
+- **Every check PASS in all three attempts:**
+  - **Lifecycle:** the five navigation servers and the three M6 localization nodes `active`; `use_sim_time` true on the five servers and both costmap nodes.
+  - **Parameters read back from the running nodes:** RPP (`desired_linear_vel` 0.30, no reversing, rotate-to-heading 1.0 rad/s, angular acceleration 2.0 rad/s²), NavFn, goal checker 0.10 m / 0.10 rad, stamped commands on controller, behaviors and smoother, smoother limits [0.5, 0, 1.0] / [−0.25, 0, −1.0] / accel [0.5, 0, 2.0] / decel [−1.0, 0, −2.0], smoother self-stamping, odometry `/diff_drive_controller/odom`, behaviors `['wait']`, the package's own behavior trees.
+  - **Map:** `global_costmap` subscribes to `/map`; no costmap subscribes to `/map_amcl`; `/global_costmap/costmap` frame `map`, 202 × 162 cells, 0.05 m, origin (−2.071, −4.080), the same as `/map`.
+  - **Footprint:** both `footprint` parameters = CALC-M7-01; both published footprints (local in `odom`, global in `map`), transformed into `base_link`, = CALC-M7-01 padded by 0.01 m, largest vertex difference 0.0000 m.
+  - **Command path:** `/cmd_vel` published only by `velocity_smoother` (`TwistStamped`), read only by `cmd_vel_guard`; `cmd_vel_nav` published by `behavior_server` and `controller_server`, read only by `velocity_smoother`; `/diff_drive_controller/cmd_vel` published only by `cmd_vel_guard`.
+- **Navigation goal (1.0, 0.0, 0°)** (interface check, not a DEC-074 goal):
+
+  | Attempt | Result | `/cmd_vel` (non-zero) | Forwarded by the guard | \|clock − stamp\| | v range | \|w\| max | Final pose (AMCL) | RTF |
+  |---|---|---|---|---|---|---|---|---|
+  | 1 | SUCCEEDED | 134 (114) | 134 of 134 | 0.000–0.004 s | 0–0.300 m/s | 0.037 rad/s | (0.904, 0.004), −2.08° | 0.91 |
+  | 2 | SUCCEEDED | 130 (110) | 130 of 130 | 0.000–0.003 s | 0–0.300 m/s | 0.035 rad/s | (0.904, 0.004), −2.15° | 0.95 |
+  | 3 | SUCCEEDED | 138 (118) | 138 of 138 | 0.000–0.003 s | 0–0.300 m/s | 0.035 rad/s | (0.903, 0.004), −2.18° | 0.88 |
+- **INFO:** local costmap layers `voxel_layer`, `inflation_layer` (no static layer, installed configuration); global `static_layer`, `obstacle_layer`, `inflation_layer`. The final poses are AMCL estimates, about 0.096 m short of the goal: inside the 0.10 m goal-checker tolerance, as the checker stops on the first pose within it (arrival accuracy against ground truth is TEST-M7-03).
+- **Shutdown:** navigation, localization and simulation launches CLEAN in all three attempts; 0 [ERROR] lines; 0 leftover processes by group and by name. TS-029 invalid attempts: 0. Navigation log warnings: the controller's once-only notes that no `current_goal_checker` / `current_progress_checker` was named (it uses the single loaded plugin).
+- **Pictures and videos:** not used for the gallery (the TEST-M7-02 R1 captures are).
+- **Result:** TEST-M7-02 **PASS**.
+
+### Task A follow-up — TEST-M7-01 R1, 2026-11-21 04:25 IST
+**Under test:** DEC-075 (optional Gazebo GUI layout for screen recordings, decided 2026-11-21) on revision `da18313` (`amr_ws/src` clean): `sim.launch.py` gains the `gui_config` argument, `config/gazebo_gui_capture.config` is new. TEST-M7-01 changed with it: `sim.launch.py` left step 4 (unchanged files) and has its own step 7 (diff from `9777615` removes no line and adds exactly the 12 `gui_config` lines).
+**TEST-M7-01 R1** (REQ-M7-11): `bash docs/evidence/M7/TEST-M7-01_procedure.sh -R1`, exit 0 ([log](docs/evidence/M7/TEST-M7-01-R1_review.log)). 27 steps, all exit 0.
+- Build, M1 byte identity and the two launch-model expansions: as TEST-M7-01.
+- Step 4: the 16 remaining protected files unchanged since `9777615`.
+- Step 5: existing files changed are `CMakeLists.txt`, `launch/sim.launch.py` and `package.xml`; the `package.xml` and `CMakeLists.txt` checks as TEST-M7-01; new files include `config/gazebo_gui_capture.config`.
+- Step 6: both behavior trees as TEST-M7-01.
+- Step 7: `sim.launch.py` 0 lines removed, 12 added, equal to the expected DEC-075 lines.
+- **Negative control** (scratch, after the formal run): one stray comment line appended to `sim.launch.py` made step 7 FAIL (13 lines added, the extra line shown) and the run exit 1; the file was then restored with `git checkout`.
+- **Not re-run:** TEST-M7-02 (its launch arguments do not include `gui_config`, so the `gz sim` command it starts is the one it was run with); the M2–M6 suites are re-run headless in TEST-M7-08.
+- **Result:** TEST-M7-01 R1 **PASS**.
+
+### Task B — dry runs, 2026-11-21 14:26–14:46 IST (scratch, not formal tests)
+Four dry runs of `TEST-M7_nav_run.py` with Gazebo GUI and RViz shown (`docs/evidence/M7/TaskB_dryrun.sh`; consoles `TaskB-dry1_console.log` to `-dry4`), judged afterwards with `TEST-M7_nav_check.py`. Kept as the record of what the harness found before any formal run:
+- Dry run 1 (tree `f071a2b`, installed NavFn defaults): sequence, route and cancel completed. Checker: `guard_drops` FAIL in sequence and route, a checker defect (TS-052, fixed); route `clearance` FAIL (0.089 m to P1) because the route started where the inside-P1 goal had parked the robot; TEST-M7-05 `invalid_motion` FAIL: the goal inside P1 was driven to, 3.05 m (TS-053).
+- Dry run 2 (NavFn `tolerance` 0.0): inside-P1 still driven to (2.85 m). The first fix was insufficient.
+- Dry run 3 (scratch parameter copy with `allow_unknown` false): both invalid goals ABORTED with 0.00 m of motion; the route from the spawn pose "SUCCEEDED" after 0.1 s without motion (TS-054).
+- Dry run 4 (DEC-077 and DEC-078 values): invalid, sequence, route and cancel all PASS every checker criterion. Sequence: arrival ≤ 0.102 m and ≤ 6.17°, clearance minimum 0.483 m, moving P95 9.7 mm, goal times 0.84×–1.02× nominal.
+
+### Task B — TEST-M7-07, 2026-11-21 14:48 IST
+**TEST-M7-07** (REQ-M7-10): `python3 -I docs/evidence/M7/TEST-M7-07_distort.py docs/evidence/M7/TaskB-dry4_sequence` on revision `2b62a94` (tree clean), exit 0 ([log](docs/evidence/M7/TEST-M7-07_review.log)).
+- Original log (dry run 4 sequence, G1 to G6): every TEST-M7-03 criterion PASS.
+- `arrival_offset` (+0.20 m): FAIL on `arrival_position` only. `arrival_rotate` (+10°): FAIL on `arrival_heading` only. `path_into_obst` (1 s of track moved to a 0.03 m footprint gap): FAIL on `clearance` only. `cmd_fast` (one command 0.6 m/s): FAIL on `cmd_limits` only. `loc_shift` (estimate +0.30 m): FAIL on `moving_p95_position` and `moving_max_position`.
+- **Result:** TEST-M7-07 **PASS**.
+
+### Task B — TEST-M7-02 R1, 2026-11-21 14:48–14:50 IST
+**Under test:** DEC-077 (`nav2.yaml`: NavFn `tolerance` 0.0, `allow_unknown` false) and the TS-052 guard matching, on revision `2b62a94` (`amr_ws/src` clean). The check gained the two parameters; the procedure's camera is the M5 view (DEC-075 amendment).
+**TEST-M7-02 R1:** `SHOW=1 bash docs/evidence/M7/TEST-M7-02_procedure.sh 3 docs/evidence/M7/TEST-M7-02-R1_review.log`, exit 0 ([log](docs/evidence/M7/TEST-M7-02-R1_review.log)). 171 PASS lines, 0 FAIL; Gazebo GUI and RViz shown in all 3 attempts, attempt 1 recorded.
+- Every attempt: servers active, both new parameters read back, guard forwarded 126/126, 128/128, 127/127 (0 clamped), RTF 0.96–0.97, shutdowns CLEAN, 0 leftovers; TS-029 invalid 0.
+- **Pictures and videos:** attempt 1 in [`docs/gallery/M7/TEST-M7-02/`](docs/gallery/M7/TEST-M7-02/).
+- **Result:** TEST-M7-02 R1 **PASS**.
+
+### Task C — TEST-M7-03, 2026-11-21 14:58–15:07 IST
+**Command:** `SHOW=1 bash docs/evidence/M7/TEST-M7_procedure.sh TEST-M7-03 3 docs/evidence/M7/TEST-M7-03_review.log`, revision `b8fc601` (`amr_ws/src` clean), exit 0 ([log](docs/evidence/M7/TEST-M7-03_review.log); recordings `TEST-M7-03_a{1,2,3}_*`). Each attempt from a fresh simulation at the spawn pose; Gazebo GUI (capture layout, M5 camera) and RViz shown in every attempt (`SHOW=1` applies to all attempts; only attempt 1 is recorded).
+- All 18 goals SUCCEEDED. Arrival (ground truth after the hold): 0.084–0.105 m, 3.71–5.66° (≤ 0.15 m, ≤ 7.0°). Time 0.85×–1.02× nominal (≤ 2.0×). Clearance minimum 0.481 m (pillar P2; ≥ 0.10 m, L1 included). Moving localization: P95 10.3–11.9 mm and 0.149–0.169°, maximum 15.4 mm. Commands: 2729–2847 per run, v 0.000–0.300 m/s, |w| ≤ 1.000 rad/s, stamps ≤ 0.035 s from the clock; guard forwarded all (1–10 per run with the stamp clamped, TS-052 rule); one `/cmd_vel` publisher (velocity_smoother).
+- RTF 0.94–0.98, 0 samples missing; all shutdowns CLEAN, 0 leftovers; TS-029 invalid 0.
+- **Pictures and videos:** attempt 1 in [`docs/gallery/M7/TEST-M7-03/`](docs/gallery/M7/TEST-M7-03/).
+- **Result:** TEST-M7-03 **PASS**.
+
+### Task C — TEST-M7-04, 2026-11-21 15:08–15:13 IST
+**Command:** `SHOW=1 bash docs/evidence/M7/TEST-M7_procedure.sh TEST-M7-04 3 docs/evidence/M7/TEST-M7-04_review.log`, revision `b8fc601`, exit 0 ([log](docs/evidence/M7/TEST-M7-04_review.log)).
+- Route G1 → G3 → G5 (one NavigateThroughPoses goal) SUCCEEDED in 63.8, 63.4, 63.5 s (0.78× of 81.6 s nominal); 16.70–16.75 m driven. Final arrival 0.097–0.101 m, 3.66–5.48°. Clearance minimum 0.475 m (P2). Moving P95 8.1–8.9 mm and 0.084–0.123°, maximum 11.2 mm. Commands within DEC-025, 0 guard drops, one publisher.
+- RTF 0.96–0.98, 0 samples missing; all shutdowns CLEAN, 0 leftovers; TS-029 invalid 0.
+- **Pictures and videos:** attempt 1 in [`docs/gallery/M7/TEST-M7-04/`](docs/gallery/M7/TEST-M7-04/).
+- **Result:** TEST-M7-04 **PASS**.
+
+### Task C — TEST-M7-05, 2026-11-21 15:13–15:17 IST
+**Command:** `SHOW=1 bash docs/evidence/M7/TEST-M7_procedure.sh TEST-M7-05 3 docs/evidence/M7/TEST-M7-05_review.log`, revision `b8fc601`, exit 1 ([log](docs/evidence/M7/TEST-M7-05_review.log)).
+- Measurements, all 3 attempts: inside_P1 ABORTED after 23.8–24.4 s, outside_map ABORTED after 0.1 s (≤ 60 s); ground-truth motion 0.0 mm (≤ 50 mm); no command published; one publisher. RTF 0.97–0.98.
+- Shutdown: attempts 1 and 2 CLEAN. **Attempt 3:** the simulation launch's `gz sim` (GUI front end) did not stop within 5 s of SIGINT, was sent SIGTERM and died with exit code 1 after an `Errno::ESRCH` traceback and `Escalating to SIGKILL on [Gazebo Sim GUI]`; 0 leftovers. Classifier OTHER (DEC-039 covers −9/−15 only), so the attempt FAILED. Full launch logs kept (`TEST-M7-05_a3_{sim,loc,nav}_launch.log`). Diagnosis: TS-039 recurrence (docs/troubleshooting.md).
+- Corrective action: DEC-079: with the GUI, this exact signature makes an attempt INVALID, as DEC-039 does headless. Classifier and procedure changed; `DEC-079_classifier_check.sh` PASS ([log](docs/evidence/M7/DEC-079_classifier_check.log)).
+- **Result:** TEST-M7-05 **FAIL** (shutdown only). Re-run as R1 under DEC-079.
+
+### Task C — TEST-M7-05 R1, 2026-11-21 15:22–15:25 IST
+**Command:** `SHOW=1 bash docs/evidence/M7/TEST-M7_procedure.sh TEST-M7-05 3 docs/evidence/M7/TEST-M7-05-R1_review.log`, revision `5e3b728` (`amr_ws/src` clean; DEC-079 in the procedure), exit 0 ([log](docs/evidence/M7/TEST-M7-05-R1_review.log)).
+- All 3 attempts: inside_P1 ABORTED after 23.6, 23.4, 22.5 s; outside_map ABORTED after 0.1 s; ground-truth motion 0.0 mm; no command published; one publisher.
+- All shutdowns CLEAN, 0 leftovers; TS-029 invalid 0, TS-039 invalid 0 (DEC-079 not needed).
+- **Result:** TEST-M7-05 R1 **PASS**.
+
+### Task C — TEST-M7-06, 2026-11-21 15:25–15:28 IST
+**Command:** `SHOW=1 bash docs/evidence/M7/TEST-M7_procedure.sh TEST-M7-06 3 docs/evidence/M7/TEST-M7-06_review.log`, revision `5e3b728`, exit 0 ([log](docs/evidence/M7/TEST-M7-06_review.log)).
+- Cancel of the G1 goal accepted after 1.021, 1.022, 1.029 m of travel; result CANCELED (3.8 s after the goal was accepted). Travel from the cancel acceptance to the end of the hold 49.3, 52.9, 39.1 mm (≤ 150 mm). Stillness (≤ 0.01 m/s for 5 s) found from 0.3, 0.3, 0.2 s after the cancel; maximum speed in that window 2.73, 8.39, 5.76 mm/s.
+- The window maxima are the last deceleration sample: ground-truth speed after the cancel falls from about 0.2–0.3 m/s to 0.0 mm/s within 0.4–0.5 s and stays 0.0 to the end of the hold in every attempt (recomputed from `TEST-M7-06_a{1,2,3}_track.csv`).
+- Commands within DEC-025 (99–110 per run), 0 guard drops, one publisher. RTF 0.88–0.96; 1 of 135 samples missing in attempt 1 (≤ 2 %). All shutdowns CLEAN, 0 leftovers; TS-029 and TS-039 invalid 0.
+- **Result:** TEST-M7-06 **PASS**. With TEST-M7-03, -04 and -05 R1, Task C's tests are complete.
+
+### Task D — TEST-M7-08, 2026-11-22 23:08 to 2026-11-23 01:49 IST
+**Command:** `for s in static regression m4 m5 m6; do python3 tools/run_suite.py $s M708; done`, headless, revision `8bbebeb` (`amr_ws/src` clean throughout). Summaries: [static](docs/evidence/TA/static-M708_summary.md), [regression](docs/evidence/TA/regression-M708_summary.md), [m4](docs/evidence/TA/m4-M708_summary.md), [m5](docs/evidence/TA/m5-M708_summary.md), [m6](docs/evidence/TA/m6-M708_summary.md); evidence index rows "TEST-M7-08".
+- **Files changed during the run** (not product files): TEST-M7-10 work edited `tools/run_suite.py` (new `m7` suite; TEST-M7-10 and TEST-M7-07 added to `static`), records and the evidence index (`docs/evidence/README.md`, `docs/milestones/M7_navigation.md`, `docs/requirements.md`, `docs/testing/test_plan.md`) after `static` had finished. Each suite starts the runner afresh; the m4, m5 and m6 commands were compared with the `8bbebeb` runner and are identical. `amr_ws/src` and the test procedures were not changed.
+- **static** (exit 0): 11 of 11 PASS-candidate. **regression** (exit 0): 20 of 20.
+- **m4, m5, m6** (exit 1 each): the same tag M708 was used for every suite, so the runner refused the six offline entries whose logs `static` had already written (TEST-M4-12, -03; TEST-M5-10, -07; TEST-M6-11, -08). They ran in `static` with the same command on the same tree and passed. Procedure defect of this batch; later batches use one tag per suite.
+- **Executed entries:** 51 of 55 PASS-candidate. Failed:
+  - TEST-M5-01 and TEST-M6-01: step 4 only, `sim.launch.py` CHANGED vs their baselines by the M7 `gui_config` option (DEC-075). Every other step passed ([M5 log](docs/evidence/M5/TEST-M5-01-M708_review.log), [M6 log](docs/evidence/M6/TEST-M6-01-M708_review.log)). Resolved by DEC-080.
+  - TEST-M5-02: attempt 2 main check, `slam_toolbox` stayed `inactive` after a dropped `change_state` reply (TS-055); attempts 1 and 3 passed ([log](docs/evidence/M5/TEST-M5-02-M708_review.log)).
+  - TEST-M6-03 reverse: attempt 3 AMCL stayed `unconfigured` (harness exit 2, INVALID, not counted); its localization shutdown then escalated to SIGKILL of the lifecycle manager, which fails the test (TS-055). Attempts 1, 2 and 4 passed, end-of-route error 2.1 mm in attempt 4 ([log](docs/evidence/M6/TEST-M6-03-M708-reverse_review.log)).
+- **Review of the passing logs:** every FAIL line is explained: quoted history in PASS lines (TEST-M2-11, -M5-10, -M6-11 records checks), TEST-M3-02's expected scope assertions (TS-016, TS-023), and the injected faults of the sensitivity tests (TEST-M5-07, -M6-08). TS-029 invalid 0; leftover processes 0 in every attempt.
+- **Result:** TEST-M7-08 **FAIL** (kept as the original result). Re-run of the failed and refused entries: TEST-M7-08 R1.
+
+### Task D — TEST-M7-08 R1, 2026-11-23 01:58 to 02:13 IST
+**Under test:** the six refused and four failed entries of TEST-M7-08, headless, one tag per run, on `6331b91` (DEC-080 in TEST-M5-01 and TEST-M6-01; `amr_ws/src` unchanged since `8bbebeb`).
+- `records` suite (M708RR): 6 of 6 PASS-candidate, including TEST-M4-12, -M5-10 and -M6-11 (summary not published).
+- `ci` suite (M708C): 6 of 7 PASS-candidate, including TEST-M4-03, -M5-07 and -M6-08; TEST-M7-07 exited 0 but was NO-OVERALL, as in GitHub CI on the same commit (TS-056) ([summary](docs/evidence/TA/ci-M708C_summary.md)). After the fix (the tool also prints an overall line; its checks are unchanged), `ci` (M708C2, working tree): 7 of 7 ([summary](docs/evidence/TA/ci-M708C2_summary.md)).
+- TEST-M5-01 and TEST-M6-01 (M708R1): every step passed; step 4 prints the DEC-080 line for `sim.launch.py` ([M5 log](docs/evidence/M5/TEST-M5-01-M708R1_review.log), [M6 log](docs/evidence/M6/TEST-M6-01-M708R1_review.log)).
+- TEST-M5-02 (M708R1): 3 of 3 valid runs, `slam_toolbox` active in each, TS-029 invalid 0 ([log](docs/evidence/M5/TEST-M5-02-M708R1_review.log)).
+- TEST-M6-03 reverse (M708R1): 3 of 3 valid runs, no invalid attempt; end-of-route error 2.9 to 7.6 mm; all shutdowns CLEAN, 0 leftovers ([log](docs/evidence/M6/TEST-M6-03-M708R1-reverse_review.log)). TS-055 did not recur.
+- Remaining FAIL lines in passing logs: TEST-M3-02's expected scope assertions and TEST-M5-07's injected distortions.
+- **Result:** TEST-M7-08 R1 **PASS** (REQ-M7-11). With M7 in place, every M2–M6 suite entry passes.
+
+### Task D — TEST-M7-09, 2026-11-23 02:18 to 02:42 IST
+**Command:** `SHOW=1 DONE_FLAG=<file> bash docs/evidence/M7/TEST-M7_procedure.sh TEST-M7-09 1 docs/evidence/M7/TEST-M7-09_review.log`, revision `66d197f` (`amr_ws/src` clean; the procedure's new `observe` mode and `TEST-M7-09_goal_status.py` were uncommitted at run time and are committed with this record). GUI and RViz shown, recorded ([log](docs/evidence/M7/TEST-M7-09_review.log)).
+- **Earlier session, not a valid formal run** (02:18 to 02:26): started from an ad-hoc script (`TEST-M7-09_session.sh`, now superseded). My observation was the same (path, both costmaps and footprint shown; five goals reached without contact; goals inside a wall did nothing; 6 SUCCEEDED, 4 ABORTED). But the script lacked `set -m`, so all three launches ignored SIGINT and were stopped with SIGTERM, leaving 16 processes. No video was taken ([log](docs/evidence/M7/TEST-M7-09_session.log); TS-057).
+- **Observed by user** (formal run): "1 yes 2 yes 3 yes 4 6 and yes 5 nothing happened": the planned path, both costmaps and the footprint shown; six goals reached without contact; goals inside a wall did nothing.
+- **Supporting record:** 11 goals with a final status: 8 SUCCEEDED, 3 ABORTED (the goals inside a wall, refused without motion, DEC-077) ([status echo](docs/evidence/M7/TEST-M7-09_a1_status.txt)). All three launches stopped CLEAN, 0 leftovers.
+- **Low-box probe (shown, not judged; decided 2026-11-23):** after the six goals, I deliberately set a goal on L1, which is invisible to the LiDAR and not in the map (M7 plan §3.2). Nav2 accepted it and the robot drove into the box at about 215 s of the video and stopped there. The estimate then diverged: about 2.78 m and 87° from ground truth, measured live ([log](docs/evidence/M7/TEST-M7-09_a1_pose_mismatch.log)). The later SUCCEEDED results are in that wrong estimate. Documented M7 limitation; known issue TS-058, carried into M8.
+- **Result:** TEST-M7-09 **PASS** (observed by me; REQ-M7-12), with the L1 probe recorded as a demonstrated known limitation.
+
+### Task D — TEST-M7-10, 2026-11-23 02:53 to 03:18 IST
+**Command:** `SHOW=1 python3 tools/run_suite.py m7 M710`, revision `85cd1e1` (`amr_ws/src` clean), GUI and RViz shown; attempt 1 of each navigation test recorded to the gallery's pending folder ([summary](docs/evidence/TA/m7-M710_summary.md)).
+- Consistency checker (records under DEC-041, configuration against DEC-025 and DEC-062 to DEC-080, evidence index, automation): ALL CHECKS PASSED (log (not published)). Mutation check on the final tree: control PASS, 21 of 21 injected faults detected (log (not published)).
+- Suite entries, all PASS-candidate and reviewed: TEST-M7-01 (every step), TEST-M7-07 (original PASS, five distortions FAIL), TEST-M7-02, -03, -04, -05, -06 (3 of 3 valid runs each).
+- TEST-M7-05 attempt 3: measurements passed; the GUI shutdown showed the TS-039 signature, so the attempt was INVALID under DEC-079 and repeated; attempt 4 passed (kept launch logs `TEST-M7-05-M710_a3_*_launch.log`). Every other shutdown CLEAN; 0 leftover processes in all 16 attempts; TS-029 invalid 0; RTF 0.79 to 1.00.
+- CI: TEST-M7-07 runs in the `ci` slice on every code push (green from `66d197f`, after TS-056); TEST-M7-10 is in the `records` slice, which runs on manual dispatch.
+- **Result:** TEST-M7-10 **PASS** (REQ-M7-13). With it, TEST-M7-01 to -10 are all PASS.

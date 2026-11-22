@@ -225,6 +225,26 @@ Plan and analysis (CALC-M6-01 to -04): [milestones/M6_localization.md](milestone
 | REQ-M6-12 | Localization visible in RViz | `localization.rviz`, observed by me (TEST-M6-10) |
 | REQ-M6-13 | Records consistent under DEC-041; automation | TEST-M6-11 zero mismatches; `m6` suite; TEST-M6-08 and -11 in CI |
 
+## M7 — Autonomous Navigation (plan approved 2026-11-21; DEC-066 to DEC-074)
+
+Plan and analysis (CALC-M7-01 to -05): [milestones/M7_navigation.md](milestones/M7_navigation.md). Criteria Accepted: DEC-073 (2026-11-21). Results only in [TEST_RESULTS.md](../TEST_RESULTS.md) (DEC-041).
+
+| ID | Requirement | Acceptance criterion |
+|---|---|---|
+| REQ-M7-01 | Navigation servers (OPEN-33 to -35, -38) on simulation time, lifecycle-managed; costmaps on `/map` (DEC-062) | TEST-M7-02 |
+| REQ-M7-02 | Both costmaps use the footprint per OPEN-36 | Published footprint equals CALC-M7-01 (TEST-M7-02) |
+| REQ-M7-03 | Commands only as `TwistStamped` on `/cmd_vel` through `cmd_vel_guard`, simulation-time stamps, within DEC-025 | One publisher; zero guard drops (TEST-M7-02, -03, -04) |
+| REQ-M7-04 | Single goals reached accurately | Arrival ≤ 0.15 m and ≤ 7.0° (ground truth); time ≤ 2.0× nominal (TEST-M7-03) |
+| REQ-M7-05 | Multi-pose route followed to its final goal | As REQ-M7-04 (TEST-M7-04) |
+| REQ-M7-06 | Clearance from every world obstacle, including unseen ones | Footprint ≥ 0.10 m from every obstacle incl. L1 (TEST-M7-03, -04) |
+| REQ-M7-07 | Localization within the DEC-059 moving bounds while navigating | TEST-M7-03, -04 |
+| REQ-M7-08 | Invalid goals fail without unsafe motion | ABORTED or REJECTED within 60 s; ≤ 0.05 m of motion (TEST-M7-05) |
+| REQ-M7-09 | Cancel stops the robot | Stop within 0.15 m of travel, then still for 5 s (TEST-M7-06) |
+| REQ-M7-10 | The navigation checker detects wrong results | 5 distortions FAIL, the recorded log PASSES (TEST-M7-07) |
+| REQ-M7-11 | No M1–M6 regression | Build clean; expansions and M6 files unchanged; suites pass (TEST-M7-01, -08) |
+| REQ-M7-12 | Navigation visible and commandable in RViz | `navigation.rviz`, observed by me (TEST-M7-09) |
+| REQ-M7-13 | Records consistent under DEC-041; automation | TEST-M7-10 zero mismatches; `m7` suite; TEST-M7-07 and -10 in CI |
+
 ## M4 traceability matrix
 
 | Requirement | Design decision | Calculation | Implementation | Test | Result |
@@ -274,3 +294,21 @@ Plan and analysis (CALC-M6-01 to -04): [milestones/M6_localization.md](milestone
 | REQ-M6-11 | DEC-060 | — | — | TEST-M6-01, TEST-M6-09 | TEST-M6-01 PASS 2026-11-18 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task A); TEST-M6-09 FAIL 2026-11-20; R1 PASS 2026-11-20 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task E) |
 | REQ-M6-12 | DEC-056 | — | `rviz/localization.rviz` | TEST-M6-10 | PASS 2026-11-20, observed by me ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task E) |
 | REQ-M6-13 | DEC-041 | — | — | TEST-M6-11 | PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M6 Task E) |
+
+## M7 traceability matrix
+
+| Requirement | Design decision | Calculation | Implementation | Test | Result |
+|---|---|---|---|---|---|
+| REQ-M7-01 | DEC-066, DEC-067, DEC-068, DEC-062 | — | `launch/navigation.launch.py`, `config/nav2.yaml` | TEST-M7-02 | PASS 2026-11-21; R1 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task A, Task B) |
+| REQ-M7-02 | DEC-069 | CALC-M7-01 | `config/nav2.yaml` (`footprint`, both costmaps) | TEST-M7-02 | PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task A) |
+| REQ-M7-03 | DEC-070, DEC-029, DEC-025 | — | `config/nav2.yaml` (stamped output, smoother limits), `launch/navigation.launch.py` (remappings) | TEST-M7-02, TEST-M7-03, TEST-M7-04 | TEST-M7-02 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task A); TEST-M7-03 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C); TEST-M7-04 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C) |
+| REQ-M7-04 | DEC-073, DEC-074 | CALC-M7-03, CALC-M7-05 | — | TEST-M7-03 | PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C) |
+| REQ-M7-05 | DEC-073, DEC-074 | CALC-M7-05 | `behavior_trees/navigate_through_poses.xml` | TEST-M7-04 | PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C) |
+| REQ-M7-06 | DEC-069, DEC-071, DEC-073 | CALC-M7-02 | — | TEST-M7-03, TEST-M7-04 | TEST-M7-03 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C); TEST-M7-04 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C) |
+| REQ-M7-07 | DEC-059, DEC-072 | — | — | TEST-M7-03, TEST-M7-04 | TEST-M7-03 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C); TEST-M7-04 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C) |
+| REQ-M7-08 | DEC-073 | — | — | TEST-M7-05 | FAIL 2026-11-21; R1 PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C) |
+| REQ-M7-09 | DEC-073 | — | — | TEST-M7-06 | PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task C) |
+| REQ-M7-10 | DEC-073 | — | `docs/evidence/M7/TEST-M7_nav_check.py`, `TEST-M7-07_distort.py` | TEST-M7-07 | PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task B) |
+| REQ-M7-11 | DEC-064, DEC-066, DEC-075 | — | — | TEST-M7-01, TEST-M7-08 | TEST-M7-01 PASS 2026-11-21; R1 (after DEC-075) PASS 2026-11-21 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task A); TEST-M7-08 FAIL 2026-11-23; R1 PASS 2026-11-23 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task D) |
+| REQ-M7-12 | DEC-066 | — | `rviz/navigation.rviz` | TEST-M7-09 | PASS 2026-11-23, observed by me ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task D) |
+| REQ-M7-13 | DEC-041 | — | — | TEST-M7-10 | PASS 2026-11-23 ([TEST_RESULTS.md](../TEST_RESULTS.md) § M7 Task D) |

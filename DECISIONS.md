@@ -920,3 +920,147 @@ DEC-001 to DEC-008 predate this format and are kept as originally recorded.
 **Rationale and trade-offs:** the bound now rests on 21 measured runs, not 4, with the same 25 % rule as DEC-063. Cost: a wrong start may take up to 6 m to correct, about a fifth of the M5 route. M7 starts from a known pose (DEC-058); global localization is not relied on (TEST-M6-10 demonstration).
 **Consequences:** `TEST-M6_pose_check.py` uses 6.0 m; REQ-M6-06, test_plan §11 and the M6 plan §8 updated; the TEST-M6-11 checker and mutation check follow. The TEST-M6-04 FAIL in the `m6` suite run is kept, and a TEST-M6-04 R1 is run under DEC-065. The 10 characterization runs are diagnosis data, not a formal result.
 **Follow-up:** if AMCL's motion or sensor model changes (M7 tuning, DEC-043 realism additions), re-measure recovery with at least 10 runs. TEST-M6-04 R1 (2026-11-21) recovered after 5.68 m in one run: within the bound, but above the 4.84 m the bound was derived from (`TEST_RESULTS.md` § M6 Task E); reviewed and accepted as a known risk at M6 closeout.
+
+## DEC-066 — M7 Navigation Launch Structure (OPEN-33)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21, approving the M7 plan §4 recommendation)
+**Context:** Nav2 consists of several lifecycle servers; the installed `nav2_bringup` launch files start more servers than M7 uses and rewrite parameters.
+**Decision:** option (a): an own `amr_bringup/launch/navigation.launch.py` that starts `planner_server`, `controller_server`, `behavior_server`, `bt_navigator`, `velocity_smoother` and `lifecycle_manager_navigation` (autostart) on simulation time, with an own `config/nav2.yaml` (the installed defaults for these servers plus the M7 changes, each commented). It runs beside the unchanged `sim.launch.py` and `localization.launch.py`.
+**Alternatives considered:** (b) the installed `navigation_launch.py` with our parameter file; (c) the installed `bringup_launch.py`, which also starts its own localization.
+**Rationale and trade-offs:** as DEC-060: every node and remapping is visible in one short file; the installed launch adds the collision monitor, docking, route, smoother and waypoint-follower servers M7 does not use. (c) would replace the verified M6 localization.
+**Consequences:** new `navigation.launch.py`, `nav2.yaml`, `navigation.rviz` (Task A); `package.xml` dependencies; TEST-M7-01 and -02.
+**Follow-up:** M8 adds the collision monitor if its plan chooses it.
+
+## DEC-067 — M7 Local Controller: Regulated Pure Pursuit (OPEN-34)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** the controller server turns the planned path into velocity commands; Nav2 1.3.14 installs RPP, MPPI (the default) and DWB.
+**Decision:** option (a): `nav2_regulated_pure_pursuit_controller` (look-ahead path following, curvature and proximity speed regulation, rotate-to-heading at the path start and the goal, footprint collision checking).
+**Alternatives considered:** (b) MPPI (trajectory sampling with critics); (c) DWB (velocity sampling with critics).
+**Rationale and trade-offs:** on a known static map the robot needs to follow the planned path, not search alternatives; RPP has few parameters, predictable behaviour and low CPU (real-time factor with the GUI). Cost: no local re-routing around unmapped obstacles; it slows and stops instead.
+**Consequences:** `nav2.yaml` `FollowPath` uses RPP; TEST-M7-03 to -06.
+**Follow-up:** M8 (dynamic obstacles) may revisit the controller with evidence.
+
+## DEC-068 — M7 Global Planner: NavFn (OPEN-35)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** the planner server finds a path on the global costmap.
+**Decision:** option (a): `nav2_navfn_planner` (the installed default), parameters as installed unless the Task A gate records a reason.
+**Alternatives considered:** (b) Smac 2D; (c) Smac Hybrid-A* or State Lattice (kinematically feasible paths).
+**Rationale and trade-offs:** the robot turns in place, so kinematic feasibility (c) adds nothing; NavFn is the standard and needs almost no parameters. NavFn plans for `base_link` as a point; the inflation layer and the clearance measurement cover the footprint (CALC-M7-01, CALC-M7-02).
+**Consequences:** `nav2.yaml` `GridBased` uses NavFn.
+**Follow-up:** none.
+
+## DEC-069 — M7 Robot Footprint: Convex-Hull Polygon (OPEN-36)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** DEC-011 and CALC-M1-05 require the Nav2 footprint to cover the wheels and the caster overhang; the installed default is a 0.22 m circle.
+**Decision:** option (a): the 10-point convex hull of the chassis, the wheels and the caster sphere in `base_footprint` (CALC-M7-01), in both costmaps; circumscribed radius 0.386 m, inscribed radius 0.125 m.
+**Alternatives considered:** (b) the bounding rectangle (circumscribed radius 0.442 m); (c) a circle of radius 0.386 m (0.77 m wide for every check).
+**Rationale and trade-offs:** the real outline makes collision checks exact; (b) inflates the turning circle by 15 % at no gain; (c) would block the arena's 1.0 m gaps. The small inscribed radius is a property of the axle position, handled by inflation ≥ the circumscribed radius and the clearance measurement.
+**Consequences:** `nav2.yaml` footprint; TEST-M7-02 checks the published footprint; the consistency checker compares it with the Xacro values.
+**Follow-up:** if the model geometry changes, CALC-M7-01 and the footprint change with it (checked automatically).
+
+## DEC-070 — M7 Command Path and Speed (OPEN-37)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** DEC-029 requires stamped simulation-time commands on `/cmd_vel` through `cmd_vel_guard`; DEC-025 sets the robot's limits.
+**Decision:** option (a): RPP desired speed 0.30 m/s, angular ≤ 1.0 rad/s, reversing disabled; the velocity smoother with exactly the DEC-025 limits (+0.5 / −0.25 m/s, ±1.0 rad/s; acceleration 0.5 m/s², deceleration 1.0 m/s², angular ±2.0 rad/s²); `enable_stamped_cmd_vel: true` on every publishing node; the smoother publishes on `/cmd_vel` → `cmd_vel_guard` → `diff_drive_controller` (unchanged); odometry topic `/diff_drive_controller/odom`.
+**Alternatives considered:** (b) no velocity smoother; (c) as (a) at 0.5 m/s.
+**Rationale and trade-offs:** with the DEC-025 values the smoother never commands what the controller would have to clip, so the two limiters agree; 0.30 m/s keeps margin on the arena's turns (CALC-M7-03). Speed can rise in M9.
+**Consequences:** `nav2.yaml` controller and smoother sections; the consistency checker compares the smoother limits with `controllers.yaml`; TEST-M7-02 checks type, publisher count and stamps.
+**Follow-up:** M9 revisits the speed for the factory world.
+
+## DEC-071 — M7 Behavior Tree without Motion Recoveries (OPEN-38)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** the installed behavior trees recover from failures by clearing costmaps, spinning, waiting and backing up 0.30 m.
+**Decision:** option (a): own copies of the installed `navigate_to_pose_w_replanning_and_recovery.xml` and `navigate_through_poses_w_replanning_and_recovery.xml` without the spin and back-up recoveries; re-planning, costmap clearing and wait stay. `behavior_server` loads the wait behavior only.
+**Alternatives considered:** (b) the installed trees unchanged; (c) no recoveries.
+**Rationale and trade-offs:** on a known static map motion recoveries rarely help, and backing up blind can drive into the invisible L1 (CALC-M7-02); planner and controller failures are reported instead of hidden.
+**Consequences:** `amr_bringup/behavior_trees/` with an install rule; TEST-M7-05 expects a clean failure without motion.
+**Follow-up:** M8 may restore motion recoveries with evidence.
+
+## DEC-072 — M7 Keeps Wheel Odometry as the Default (OPEN-39; DEC-057 follow-up)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** DEC-057 made odometry + IMU fusion selectable (`ekf:=true`) and left the default to M7.
+**Decision:** option (a): the default stays `ekf:=false` (the controller publishes `odom → base_footprint`); the EKF remains an option.
+**Alternatives considered:** (b) make the EKF the default in M7.
+**Rationale and trade-offs:** in this simulation the wheel odometry is near-ideal; the fusion benefit was shown only with injected errors (TEST-M6-07). Changing the TF source under every M7 test brings no measurable gain.
+**Consequences:** M7 tests run without the EKF; `localization.launch.py` unchanged.
+**Follow-up:** revisit with the DEC-043 realism additions or M13.
+
+## DEC-073 — M7 Navigation Acceptance Bounds (OPEN-40)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** the M7 tests need numeric limits (M7 plan §3.3, §3.4).
+**Decision:** goal checker `xy_goal_tolerance` 0.10 m, `yaw_goal_tolerance` 0.10 rad; arrival against ground truth ≤ 0.15 m and ≤ 7.0°; clearance between the footprint at the ground-truth pose and every world obstacle, including L1, ≥ 0.10 m; every `/cmd_vel` within DEC-025, zero guard drops, one publisher; DEC-059 moving bounds during navigation; each goal within 2.0× the nominal time (path length at 0.30 m/s plus heading change at 0.5 rad/s); invalid goals ABORTED or REJECTED within 60 s with ≤ 0.05 m of motion; cancel: stop within 0.15 m of travel, then still (≤ 0.01 m/s) for 5 s.
+**Alternatives considered:** the installed goal tolerance (0.25 m, 0.25 rad), with arrival bounds to match.
+**Rationale and trade-offs:** arrival = goal tolerance + the DEC-059 localization bound; the clearance margin is two map cells; the cancel distance is 2.5× the calculated stopping distance (CALC-M7-03); M10 docking needs the tighter tolerance.
+**Consequences:** criteria of TEST-M7-03 to -07 Accepted; fixed before any formal run.
+**Follow-up:** a missed bound in Task C is a recorded decision with evidence (as DEC-063, DEC-065), not silent tuning.
+
+## DEC-074 — M7 Test World and Goals (OPEN-41)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** the M7 tests need a world with a verified map and repeatable goals.
+**Decision:** option (a): the M5 arena (DEC-046) and reference map (DEC-055, AMCL copy DEC-062) with the CALC-M7-05 goal set G1 to G6 (finalized in Task B with a clearance check against the world file), one `NavigateThroughPoses` route G1 → G3 → G5 → G6, invalid goals inside P1 and outside the map, and a cancel during the first leg; known start pose (DEC-058).
+**Alternatives considered:** (b) a new world, or waiting for the M9 factory world.
+**Rationale and trade-offs:** map (M5) and localization (M6) are verified on this world, so a failure can be attributed to navigation.
+**Consequences:** `docs/evidence/M7/TEST-M7_goals.py` owns the goal values (Task B).
+**Follow-up:** the factory world and its goals are M9.
+
+## DEC-075 — Optional Gazebo GUI Layout for Screen Recordings (`sim.launch.py gui_config`)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** I judged the TEST-M7-02 videos poor. Besides the downscaled recording and the distant camera (fixed in `tools/`, `a299c66`), the Gazebo GUI's default "Component inspector" and "Entity tree" side panels cover about 43 % of the Gazebo window, so the 3D view in a half-screen recording is narrow. Scripts cannot resize or rearrange windows on this Wayland desktop (`docs/environment.md`), and the panels come from the user's default GUI layout, which `sim.launch.py` does not set. `sim.launch.py` is protected by TEST-M7-01 (unchanged since M6, DEC-064).
+**Decision:** option (b), which I chose: `sim.launch.py` gains an optional `gui_config` argument (default empty). When set and not headless, Gazebo starts with `--gui-config <file>`; a bare name is resolved in `amr_bringup/config/`. New file `config/gazebo_gui_capture.config`: the installed gz-sim 8 default layout without the two side panels, window 960 × 1000 px, quick-start dialog off. The change to `sim.launch.py` is additions only. TEST-M7-01 step 4 no longer requires `sim.launch.py` to be unchanged; a new step requires that its diff from `9777615` removes no line and adds only the `gui_config` option.
+**Alternatives considered:** (a) collapsing the panel by hand in the window-layout pause before each recording (no code change; repeated manual work); editing the user's `~/.gz/sim/8/gui.config` (outside the repository; changes every Gazebo session of the user).
+**Rationale and trade-offs:** with the default empty, the `gz sim` command line is exactly the M2–M6 one, so no earlier test changes; the layout affects only the GUI, never the simulation server, physics or sensors. Cost: one protected file changes, so the identity test changes with it.
+**Consequences:** recordings of TEST-M7-03 and -04 (and later milestones) use `gui_config:=gazebo_gui_capture.config` with the follow camera (`tools/sim_capture.py follow`, about 2.0 m behind and 1.5 m up) and end with a whole-arena view (user request). Formal tests that do not record keep the default.
+**Follow-up:** TEST-M7-01 re-run on the change (R1).
+**Amendment (user, 2026-11-21, after comparing the M4/M5 and M7 videos):** the Gazebo camera of M7 recordings is the fixed M5 overhead view `0.8 0.0 8.0 → 3.0 0.0 0` (`TEST-M5_procedure.sh`) for the whole run, not the follow camera and not the far TEST-M6-02 view `-7.5 0.0 10.0 → 3.2 0.0 0` (arena about 40 % of the frame). The panel-free layout, native-size video and `navigation.rviz` stay. TEST-M7-02's procedure uses the M5 view from R1.
+
+## DEC-076 — M7 Goal Placement Rule (amends DEC-074; CALC-M7-05)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** DEC-074 left the goal values to be finalized in Task B with a clearance check against the world file. The M7 plan §3.5 proposed that each goal keep the robot footprint ≥ 0.8 m from every obstacle and ≥ 1.5 m from L1 (the M5 route rule, CALC-M5-02, where the margin served LiDAR mapping). The Task B check (`docs/evidence/M7/TEST-M7_goals.py`) failed it for G2 (0.683 m to B1) and G4 (0.515 m to W1) ([log](docs/evidence/M7/CALC-M7-05_goal_check_first-rule_FAIL.log)). In the alcove west of W1 the rule cannot hold at all: the alcove is 2.70 m wide between L1 and W1, and the rule needs 2.735 m (heading ±90°) or 2.81 m (heading 0°/180°).
+**Decision:** keep G1–G6, the route, the invalid goals and the cancel goal unchanged. Replace the 0.8 m footprint margin with: each goal centre (`base_footprint`) ≥ the costmap inflation radius (0.70 m, `nav2.yaml`) from every obstacle, so the goal has zero inflation cost; the circle swept by the footprint when turning in place at the goal ≥ 0.10 m from every obstacle, L1 included (DEC-073); the footprint ≥ 1.5 m from L1 (kept); every map cell under the footprint free in `/map`. Result: all checks PASS; smallest margins G2 and G4, centre 0.900 m, swept circle 0.514 m ([log](docs/evidence/M7/CALC-M7-05_goal_check.log)).
+**Alternatives considered:** (b) move G2 to (6.5, 1.1) and G4 to (2.2, −2.8), with the L1 margin lowered to 1.3 m for G4; (c) move G2 and take G4 out of the alcove (loses the "around the free end of W1" case).
+**Rationale and trade-offs:** the margin that matters to navigation at a goal is the costmap cost there and the clearance during the final turn, both checked against what Nav2 and the world actually contain; the 0.8 m figure had no navigation basis and is geometrically impossible for the alcove goal. The goals stay as approved, so DEC-073 bounds and the test design do not change. Cost: G2 and G4 sit 0.68 m and 0.52 m (footprint) from the nearest obstacle, so arrival there is a tighter test of the controller; the DEC-073 clearance (≥ 0.10 m over the whole run) still decides.
+**Consequences:** CALC-M7-05 finalized (Selected); `TEST-M7_goals.py` owns the values and the rule. M7 plan §3.5 updated.
+**Follow-up:** none beyond Task C, which measures the clearance during the runs.
+
+## DEC-077 — M7 Planner Refuses Goals on Occupied or Unknown Cells (NavFn `tolerance`, `allow_unknown`)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21, in two steps: tolerance first; `allow_unknown` added after the first fix was shown insufficient)
+**Context:** DEC-073 requires an invalid goal to end ABORTED or REJECTED within 60 s with ≤ 0.05 m of motion (TEST-M7-05). In the Task B dry run the goal inside pillar P1 was not refused: NavFn planned 3.70 m, the robot drove 3.05 m to the pillar and Nav2 aborted after 34.9 s. First diagnosis: the installed NavFn `tolerance: 0.5` (plan to the nearest free cell within 0.5 m). Setting it to 0.0 did not help (dry run: 2.85 m driven). Root cause (TS-053): in the M5 reference map P1's interior is **unknown**, and its north face is not marked occupied, so with the installed `allow_unknown: true` NavFn planned through the gap into the pillar. The goal outside the map was refused correctly (0.1 s, no motion).
+**Decision:** in `config/nav2.yaml`, NavFn `tolerance: 0.0` and `allow_unknown: false`. Both are needed: without `allow_unknown: false` the planner enters the unknown interior; with `tolerance` 0.5 it would replace the goal by the free cells about 0.25 m north of P1.
+**Alternatives considered:** keep the defaults and restate the TEST-M7-05 criterion (motion toward the nearest free point allowed); keep the defaults and add a costmap goal check before planning (BT condition or node); `allow_unknown: false` alone.
+**Rationale and trade-offs:** the arena interior and every valid goal are free cells (CALC-M7-05), so valid navigation is unaffected; goals in obstacles or unmapped space must be refused, not approximated, especially for M10 station goals. Cost: Nav2 will not plan through unmapped space; with the map verified (M5), that is wanted. The map defect (P1's open north face) is recorded, not repaired (map changes are out of M7 scope; TS-041 follow-up).
+**Consequences:** TEST-M7-02 reads both values back (from R1); TEST-M7-02 is re-run (R1). Verified in scratch: both invalid goals ABORTED with 0.00 m of motion.
+**Follow-up:** TEST-M7-05 in Task C.
+
+## DEC-078 — M7 Through-Poses Route Ends Away From the Start (amends DEC-074)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21)
+**Context:** the DEC-074 route G1 → G3 → G5 → G6 ends at G6 = the spawn pose. In the Task B dry run started from the spawn pose, NavigateThroughPoses reported SUCCEEDED after 0.1 s without motion: the controller's goal checker compares the robot with the end of the path, which is where the robot stands (TS-054). TEST-M7-04 starts from the spawn pose (DEC-058), so it would always pass without driving.
+**Decision:** the route is G1 → G3 → G5 (17.5 m straight-line, ends 2.67 m from the start). `TEST-M7_goals.py` checks that the route ends ≥ 1.0 m from the start.
+**Alternatives considered:** G1 → G3 → G5 → G4 (ends in the alcove west of W1); keeping G1 → G3 → G5 → G6 with a lead-in NavigateToPose goal before it.
+**Rationale and trade-offs:** uses only goals already checked (CALC-M7-05) and still crosses the whole arena; the return to the start is covered by G6 in TEST-M7-03. Cost: the route no longer ends where it starts.
+**Consequences:** TEST-M7-04 criteria unchanged except the route; M7 plan §3.5 and §8, test plan updated.
+**Follow-up:** none.
+
+## DEC-079 — TS-039 GUI Shutdown Signature: Invalid-Run Rule Extended to the `gz sim` Front End (amends DEC-039)
+**Date:** 2026-11-21   **Status:** **Accepted** (decided 2026-11-21). Second recorded exception under the "judgment over rules" principle; narrows to the GUI case only.
+**Context:** TEST-M7-05 (`b8fc601`, `SHOW=1`) passed every measurement in all 3 attempts, but attempt 3's simulation launch logged the SIGINT→SIGTERM escalation of `gz sim` and then `process has died [..., exit code 1, cmd 'gz sim -r --gui-config ...']`, 0 leftovers. DEC-039 accepts only exit codes −9/−15, so the classifier returned OTHER and the attempt FAILED. This is TS-039 recurring (first seen in TEST-M5-02, 1 in 17 GUI shutdowns), now with the full launch log, which the M5 record set as the condition for proposing a rule change. The log shows the gz-sim 8 front end's own output: an `Errno::ESRCH` traceback from `cmdsim8.rb:201` (`killProcess`, called from the signal handler) and `Escalating to SIGKILL on [Gazebo Sim GUI]`. With the GUI, `gz sim` is a Ruby front end that forks the server and the GUI into their own process groups; its INT/TERM traps stop each child with a 5 s wait and then `return 1`. A slow child makes the front end outlast ros2 launch's 5 s SIGINT grace, the launch sends SIGTERM, the trap runs again and the front end exits 1. This happens after every measurement; it is an upstream shutdown race, not project code.
+**Decision:**
+1. With the Gazebo GUI on (`SHOW=1`), an attempt is **INVALID** (recorded, not counted, repeated, never a PASS) when its measurement checks passed and its simulation launch log shows exactly the TS-039 signature, judged by `TEST-M3_launch_shutdown_classify.py` (new exit code 4): the user SIGINT; the single `gz sim` process's SIGINT→SIGTERM escalation (required); its death with exit code 1 and a command without `-s` (required); in its output after the SIGINT, `Escalating to SIGKILL on [Gazebo Sim GUI]` and/or the `cmdsim8.rb` `Errno::ESRCH` traceback (at least one required); no other `[ERROR]` line (no SIGTERM→SIGKILL); every other process finished cleanly; 0 leftover processes in the launch group and by name.
+2. Unchanged: every measurement criterion; DEC-039 for the headless form; any other unclean shutdown fails the attempt; attempt limit runs + 3; each occurrence and a total are printed (`# ... TS-039 attempts declared invalid under DEC-079: N`) and reported per test in `TEST_RESULTS.md`.
+3. Implemented in `TEST-M7_procedure.sh` (TEST-M7-03 to -06) before any run under the rule. Procedures written before DEC-079 treat exit 4 as a failure (they accept only 0 and 3), so their behaviour is unchanged. Verified by `docs/evidence/M7/DEC-079_classifier_check.sh` ([log](docs/evidence/M7/DEC-079_classifier_check.log)): every kept launch log keeps its class, the TEST-M7-05 log classifies TS-039, six near-miss copies classify OTHER.
+4. TEST-M7-05 keeps its FAIL; it is re-run as R1 under this rule.
+**Alternatives considered:** no rule change and re-run (the same race can fail any shown run again, about 1 in 10–20 GUI shutdowns); formal runs headless with a separate showcase run (departs from showing current-milestone tests); a longer launch SIGINT grace for `gz sim` in `sim.launch.py` (changes a file TEST-M7-01 pins and needs its own validation).
+**Rationale and trade-offs:** the same treatment DEC-039 gives the headless form; the signature is narrow and checked by negative cases. Cost: a shown attempt that hits the race must be repeated.
+**Retirement:** when gz-sim's front end no longer races the launch's grace (an upstream fix in the installed release), or when formal runs no longer use the GUI.
+**Follow-up:** TS-039 updated.
+
+## DEC-080 — Earlier Build-Identity Tests Accept the DEC-075 `sim.launch.py` Option (amends DEC-064 for one file)
+**Date:** 2026-11-23   **Status:** **Accepted** (decided 2026-11-23).
+**Context:** in the TEST-M7-08 regression batch (tag M708, `8bbebeb`), TEST-M5-01 and TEST-M6-01 failed only step 4: `sim.launch.py` differs from their baselines (`517608f`, `9b85171`) by the M7 `gui_config` option (DEC-075, `da18313`, 12 added lines, none removed). Every other step passed. Step 4 compares the baseline with the working tree, so any later approved change to the file fails it. DEC-064 moved step 5 (changed files) to the milestone's own increment but left step 4 on the working tree. TEST-M7-01 step 7 already checks the same change line by line (`SIM_EXPECTED` block).
+**Decision:**
+1. In TEST-M5-01 and TEST-M6-01 step 4, `sim.launch.py` passes when it is unchanged, **or** when its diff from BASE removes no line and adds exactly the lines of TEST-M7-01's `SIM_EXPECTED` block (read from that file, so the list exists once). The step prints `DEC-075 … (DEC-080)` for that case.
+2. Unchanged: every other file of step 4 must still be unchanged; any other change to `sim.launch.py` (a changed, added or missing line) fails; steps 1–3 and 5.
+3. Verified by `docs/evidence/M7/DEC-080_scope_check.sh` ([log](docs/evidence/M7/DEC-080_scope_check.log)): the working tree is allowed for both procedures, three tampered copies are rejected.
+4. TEST-M5-01 and TEST-M6-01 keep their M708 FAIL; they are re-run under this rule.
+**Alternatives considered:** compare step 4 with a later commit (as DEC-064 does for step 5): simpler, but the old tests would then stop checking the file at all and rely only on TEST-M7-01; leave the step failing until a re-baseline at M7 closure (every regression run until then fails); a separate allow-list per test (three copies of the same lines).
+**Rationale and trade-offs:** the narrowest change that keeps the old tests guarding the file. Cost: TEST-M5-01 and TEST-M6-01 now depend on the TEST-M7-01 procedure file; if its `SIM_EXPECTED` block is missing, the list is empty and the step fails (safe side).
+**Retirement:** when a later milestone re-baselines these tests, or if `sim.launch.py` changes again (that change needs its own decision).
+**Follow-up:** TEST-M5-01, TEST-M6-01 re-run (TEST-M7-08 R1).

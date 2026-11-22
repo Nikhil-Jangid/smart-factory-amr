@@ -25,7 +25,7 @@ rejected media (Git keeps every committed file in its history).
    or a missing robot is deleted and re-captured.
 3. Accepted files move to `docs/gallery/<milestone>/<TEST-ID>/` and are committed once
    (per milestone or per accepted batch); rejected files are deleted.
-4. Size budget: videos short (H.264 MP4, CRF 18; about 0.1–0.4 MB each so far), a few per milestone; no Git LFS (paid storage).
+4. Size budget: H.264 MP4, CRF 18, native window size. Measured on the accepted media (2026-11-23): M4 about 0.3 MB per video; M5 and M6 navigation runs Gazebo about 0.2–2 MB and RViz about 0.4–10 MB (the costmap and scan layers change every frame); M5 29 MB and M6 80 MB in total. Idle footage before and after the motion is cut with `tools/sim_record.sh trim`. No Git LFS (paid storage).
 
 ## Contents (accepted)
 
@@ -52,6 +52,12 @@ rejected media (Git keeps every committed file in its history).
 | M6 | [TEST-M6-06](M6/TEST-M6-06/) | `TEST-M6-06-{forward,reverse}_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | Localization with unmapped boxes in the arena: the scan shows the boxes, the pose stays on the map |
 | M6 | [TEST-M6-07](M6/TEST-M6-07/) | `TEST-M6-07{,-R1}_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | Wheel odometry + IMU fusion with the EKF: in RViz the raw odometry trail drifts while the fused estimate and AMCL stay on course (original run and R1) |
 | M6 | [TEST-M6-10](M6/TEST-M6-10/) | `TEST-M6-10-{wrongstart,global}_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | The RViz test I observed: wrong-start convergence, and the global-localization demonstration, where the particles spread over the map and settle on a pose turned by a half turn |
+| M7 | [TEST-M7-02](M7/TEST-M7-02/) | `TEST-M7-02-R1_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture (R1) | The Nav2 integration gate: one short goal; RViz shows the plan, both costmaps and the footprint |
+| M7 | [TEST-M7-03](M7/TEST-M7-03/) | `TEST-M7-03_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | Single goals G1 to G6 in sequence: each planned path in RViz and the robot driving it in Gazebo |
+| M7 | [TEST-M7-04](M7/TEST-M7-04/) | `TEST-M7-04_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | The through-poses route G1 → G3 → G5 as one path |
+| M7 | [TEST-M7-05](M7/TEST-M7-05/) | `TEST-M7-05-R1_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture (R1) | Invalid goals (inside pillar P1, outside the map) refused: the robot does not move |
+| M7 | [TEST-M7-06](M7/TEST-M7-06/) | `TEST-M7-06_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | A goal cancelled after 1 m: the robot stops |
+| M7 | [TEST-M7-09](M7/TEST-M7-09/) | `TEST-M7-09_a1_{gazebo,rviz}.{png,mp4}` | Test-run capture | The RViz test I observed: goals sent with the Nav2 goal tool, then my deliberate probe on the low box L1: the robot drives into it (invisible to the LiDAR) and localization is lost (TS-058). Trimmed to the motion |
 
 Finalized on 2026-11-13 (first batch: 22 PNG, 18 MP4, 5.7 MB; second batch, TEST-M4-11: 4 PNG, 4 MP4, 1.6 MB, captured on `adfc7ea`). The re-created demonstrations were made on the robot code of `4db5197` (`amr_ws/src` unchanged since), with the capture tools as committed in `1d426eb`; the TEST-M4-09 R1 captures come from the formal run on `4db5197`. Videos converted from WebM to MP4 afterwards (`2b5037f`).
 
@@ -60,6 +66,23 @@ M5: TEST-M5-03 attempt 1 captures (2 PNG, 2 MP4, 8.6 MB) accepted on 2026-11-15,
 M5: TEST-M5-06 attempt 1 captures (2 PNG, 2 MP4) accepted on 2026-11-15, from the formal run on `6cb8f23`; windows side by side, camera view as TEST-M5-02 R1. TEST-M5-09 attempt 1 captures (2 PNG, 2 MP4) accepted on 2026-11-15, from the formal run on `7f3d65b`; one laptop screen, so the RViz window is partly covered on its left by the Gazebo window.
 
 M6: test-run captures (attempt 1 of each formal GUI run; 20 PNG, 27 MP4, about 83 MB), selected on 2026-11-21 after the M6 closure. Revisions: TEST-M6-02 `8a515c2`; TEST-M6-03 to -06 `f2d344a`; TEST-M6-07 `19200ee`, R1 `c2b6805`; TEST-M6-10 `00f1b75`. The videos are full route length (about 3.5 min each), larger than the earlier milestones' clips.
+
+M7: test-run captures (attempt 1 of each formal GUI run; 12 PNG, 12 MP4, about 32 MB) selected on 2026-11-23, at the M7 closure. Revisions: TEST-M7-02 R1 `2b62a94`; TEST-M7-03, -04 `b8fc601`; TEST-M7-05 R1, -06 `5e3b728`; TEST-M7-09 `66d197f` (procedure mode `observe`, committed in `85cd1e1`), trimmed with `tools/sim_record.sh trim` (5 to 256 s). Capture layout and fixed M5 camera view (DEC-075). The TEST-M7-10 (M710) re-run captures are not committed.
+
+## Recording rule (2026-11-23)
+
+1. **Every formal test of the current milestone that uses the simulation is shown and recorded**, as in M4, M5 and M6:
+   run with `SHOW=1`; attempt 1 gets a video of the Gazebo and RViz windows and screenshots of both, into
+   `docs/gallery/_pending/<milestone>/<TEST-ID>/`. Tests I observe myself (e.g. TEST-M7-09) are recorded too.
+2. **Regression suites and re-runs of earlier formal tests are headless and not recorded by default.** Record one only
+   when the record needs the video or pictures as proof or documentation; say why in `TEST_RESULTS.md`.
+3. **One recording method everywhere.** Every recording comes from the milestone's shared procedure with `SHOW=1`
+   (`TEST-M4_procedure.sh`, `TEST-M5_procedure.sh`, `TEST-M6_procedure.sh`, `TEST-M7_procedure.sh`), which uses
+   `tools/sim_record.sh` (started before motion, stopped after it) and `tools/sim_capture.py` (camera `view`/`follow`,
+   `shot`). Window layout, Gazebo GUI layout and camera views (DEC-075), frame rate and encoding are the same for every
+   test; only the scene differs. A new formal test is added as a mode of that procedure, never as a separate script
+   (TS-057). The procedure may be extended, but its recording and teardown code is reused unchanged.
+4. Before a formal run, confirm the procedure records (with `SHOW=1`) and has job control (`set -m`, TS-011).
 
 ## How to regenerate
 
